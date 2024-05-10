@@ -9,10 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 #if DEBUG
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
+.UseSqlServer(builder.Configuration.GetConnectionString("Database"), x => x.MigrationsAssembly("Famnances.DataCore")));
 #else
 builder.Services.AddDbContext<DatabaseContext>(options =>options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
+.UseSqlServer(builder.Configuration.GetConnectionString("Database"), x => x.MigrationsAssembly("Famnances.DataCore")));
 #endif
 
 // Add services to the container.
