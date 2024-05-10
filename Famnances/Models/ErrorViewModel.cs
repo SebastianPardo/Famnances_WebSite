@@ -1,4 +1,4 @@
-namespace OhMyMoney.Models
+namespace Famnances.Models
 {
     public class ErrorViewModel
     {

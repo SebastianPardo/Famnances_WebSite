@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using OhMyMoney.Business.Interfaces;
-using OhMyMoney.DataCore.Data;
-using OhMyMoney.Helpers;
+using Famnances.Business.Interfaces;
+using Famnances.DataCore.Data;
+using Famnances.Helpers;
 using Google.Apis.Auth.AspNetCore3;
 
 var builder = WebApplication.CreateBuilder(args);

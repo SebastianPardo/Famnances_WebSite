@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using OhMyMoney.Models;
+using Famnances.Models;
 using System.Diagnostics;
 
-namespace OhMyMoney.Controllers
+namespace Famnances.Controllers
 {
     public class HomeController : Controller
     {

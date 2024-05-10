@@ -27,8 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="OhMyMoney.DataCore">
-      <HintPath>..\..\OhMyMoney_DataModel\OhMyMoney\OhMyMoney.DataCore\bin\Debug\net7.0\OhMyMoney.DataCore.dll</HintPath>
+    <Reference Include="Famnances.DataCore">
+      <HintPath>..\..\Famnances_DataModel\Famnances\Famnances.DataCore\bin\Debug\net7.0\Famnances.DataCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 

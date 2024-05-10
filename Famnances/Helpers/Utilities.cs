@@ -1,4 +1,4 @@
-﻿namespace OhMyMoney.Helpers
+﻿namespace Famnances.Helpers
 {
     public class Utilities
     {

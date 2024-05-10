@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using OhMyMoney.Business.Interfaces;
-using OhMyMoney.Models;
+using Famnances.Business.Interfaces;
+using Famnances.Models;
 
-namespace OhMyMoney.Controllers
+namespace Famnances.Controllers
 {
     public class LoginController : Controller
     {

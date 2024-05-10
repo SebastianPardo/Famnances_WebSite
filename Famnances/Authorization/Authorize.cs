@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Text.Json;
 using System.Net.Http.Headers;
-using OhMyMoney.DataCore.Entities;
+using Famnances.DataCore.Entities;
 
-namespace OhMyMoney.Authorization
+namespace Famnances.Authorization
 {
     public class Authorize : Attribute, IAuthorizationFilter
     {

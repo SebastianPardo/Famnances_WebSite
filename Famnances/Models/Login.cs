@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace OhMyMoney.Models
+namespace Famnances.Models
 {
     public class Login
     {

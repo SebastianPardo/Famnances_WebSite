@@ -1,4 +1,4 @@
-﻿namespace OhMyMoney.Business.Interfaces
+﻿namespace Famnances.Business.Interfaces
 {
     public interface IHttpHelper
     {

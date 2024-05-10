@@ -3,9 +3,9 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using OhMyMoney.Business.Interfaces;
+using Famnances.Business.Interfaces;
 
-namespace OhMyMoney.Helpers
+namespace Famnances.Helpers
 {
     public class HttpHelper : IHttpHelper
     {
