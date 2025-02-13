@@ -6,20 +6,15 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Famnances.Business.Interfaces;
-using Famnances.Models;
+using Famnances.Helpers.Interfaces;
+using Famnances.Helpers;
+using Famnances.Models.ViewModels;
 
 namespace Famnances.Controllers
 {
     public class LoginController : Controller
     {
         IHttpHelper HttpHelper;
-
-#if DEBUG
-        public const string BASE_ROUTE_SERVICE = "https://localhost:7238/Api/";
-#else        
-        public const string BASE_ROUTE_SERVICE = "";
-#endif
 
         public LoginController(IHttpHelper httpHelper)
         {
@@ -32,17 +27,6 @@ namespace Famnances.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> LogoutReport()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            }
-            HttpContext.Session.Remove("token");
-            HttpContext.Session.Remove("email");
-            return Redirect("../Gmail/Report");
-        }
-
         public async Task<IActionResult> Logout()
         {
             if (User.Identity.IsAuthenticated)
@@ -57,7 +41,7 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(Login login)
         {
-            var user = await HttpHelper.Post<LoginResponse>(BASE_ROUTE_SERVICE + "Account/Authenticate", login);
+            var user = await HttpHelper.Post<LoginResponse>($"{Constants.ACCOUNT_URI}/Authenticate", login);
             HttpContext.Session.SetString("token", user.Token);
             HttpContext.Session.SetString("email", user.Email);
             return Redirect("../Home/Index");
@@ -77,7 +61,7 @@ namespace Famnances.Controllers
             var oauthSerivce = new Oauth2Service(new BaseClientService.Initializer { HttpClientInitializer = cred2 });
             var userinfo = await oauthSerivce.Userinfo.Get().ExecuteAsync();
             GoogleAuthenticateRequest googleAuthenticateRequest = new GoogleAuthenticateRequest { Param_1 = userinfo.Email, Param_2 = accessToken };
-            var user = await HttpHelper.Post<LoginResponse>(BASE_ROUTE_SERVICE + "Account/GoogleAuthenticate", googleAuthenticateRequest);
+            var user = await HttpHelper.Post<LoginResponse>($"{Constants.ACCOUNT_URI}/GoogleAuthenticate", googleAuthenticateRequest);
             HttpContext.Session.SetString("token", user.Token);
             return Redirect("../Home/Index");
         }

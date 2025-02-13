@@ -1,19 +1,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
-using Famnances.Business.Interfaces;
-using Famnances.DataCore.Data;
 using Famnances.Helpers;
 using Google.Apis.Auth.AspNetCore3;
+using Famnances.Helpers.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-
-#if DEBUG
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-.UseSqlServer(builder.Configuration.GetConnectionString("Database"), x => x.MigrationsAssembly("Famnances.DataCore")));
-#else
-builder.Services.AddDbContext<DatabaseContext>(options =>options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
-.UseSqlServer(builder.Configuration.GetConnectionString("Database"), x => x.MigrationsAssembly("Famnances.DataCore")));
-#endif
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -41,7 +31,6 @@ builder.Services.AddAuthentication(o =>
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -59,7 +48,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");

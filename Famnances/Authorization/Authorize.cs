@@ -8,16 +8,12 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Text.Json;
 using System.Net.Http.Headers;
 using Famnances.DataCore.Entities;
+using Famnances.Helpers;
 
 namespace Famnances.Authorization
 {
     public class Authorize : Attribute, IAuthorizationFilter
     {
-#if DEBUG
-        public const string BASE_ROUTE_SERVICE = "";
-#else
-        public const string BASE_ROUTE_SERVICE = "";
-#endif
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
             Task<AuthenticateResult> authResult0 = filterContext.HttpContext.AuthenticateAsync();
@@ -36,7 +32,7 @@ namespace Famnances.Authorization
                 email = userinfo.Email;
             }
 ;
-            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(BASE_ROUTE_SERVICE + "User/GetByEmail/" + email));
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri($"{Constants.USER_URI}/GetByEmail/{email}"));
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             HttpClient httpClient = new HttpClient();
             var response = httpClient.Send(request);

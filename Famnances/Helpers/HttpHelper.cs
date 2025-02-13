@@ -1,9 +1,9 @@
+using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Components;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using Famnances.Business.Interfaces;
 
 namespace Famnances.Helpers
 {
@@ -65,7 +65,10 @@ namespace Famnances.Helpers
         {
             var request = new HttpRequestMessage(method, uri);
             if (value != null)
+            {
+                var obj = JsonSerializer.Serialize(value);
                 request.Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json");
+            }
             return request;
         }
 
@@ -105,6 +108,11 @@ namespace Famnances.Helpers
                 }
 
                 await handleErrors(response);
+
+                if (response.Content.Headers.ContentType != null && response.Content.Headers.ContentType.MediaType == "text/plain")
+                {
+                    return (T)(object) await response.Content.ReadAsStringAsync();
+                }
 
                 var options = new JsonSerializerOptions();
                 options.PropertyNameCaseInsensitive = true;

@@ -1,4 +1,4 @@
-namespace Famnances.Models;
+namespace Famnances.Models.ViewModels;
 
 using System.ComponentModel.DataAnnotations;
 

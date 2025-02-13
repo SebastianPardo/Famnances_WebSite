@@ -1,4 +1,4 @@
-﻿namespace Famnances.Business.Interfaces
+﻿namespace Famnances.Helpers.Interfaces
 {
     public interface IHttpHelper
     {
