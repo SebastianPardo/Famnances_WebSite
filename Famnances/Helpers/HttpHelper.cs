@@ -14,7 +14,7 @@ namespace Famnances.Helpers
         public HttpHelper( NavigationManager navigationManager, IHttpContextAccessor httpContext  )
         {
             NavigationManager = navigationManager;
-            Token = httpContext.HttpContext.Session.GetString("token");
+            Token = httpContext.HttpContext.Session.GetString("TOKEN");
         }
 
         public async Task<T> Get<T>(string uri)

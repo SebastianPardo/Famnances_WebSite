@@ -2,10 +2,13 @@
 {
     public class Constants
     {
+        public const string TOKEN = "TOKEN";
+        public const string ACCOUNT_ID = "ACCOUNT";
+
 #if DEBUG
 
-        public const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
-        public const string FAMNACES_SERVICES_URI = "https://localhost:7246/Api/";
+        private const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
+        private const string FAMNACES_SERVICES_URI = "https://localhost:7246/Api/";
 #else
         public const string FAMNACES_SERVICES_URI = "";  
 #endif
@@ -13,5 +16,6 @@
         public const string ACCOUNT_URI = AUTH_SERVICES_URI + "Account";
 
         public const string USER_URI = FAMNACES_SERVICES_URI + "User";
+        public const string MANAGEMENT_URI = FAMNACES_SERVICES_URI + "Management";
     }
 }

@@ -1,8 +1,46 @@
-﻿$(document).ready(function () {
-    $('.dropdown-toggle').removeClass('btn-light');
-    $('.dropdown-toggle').addClass('btn-outline-secondary');
-    $('.dropdown-toggle').addClass('btn-bd-mybutton');
+﻿let preloader = $('#preloader');
+if (preloader) {
+    window.addEventListener('load', () => { preloader.hide(); });
+    window.addEventListener('submit', () => { preloader.show(); })
+}
+
+/////////////////////////////////////////////////////////////////////////
+
+$(document).ready(function () {
+    $('select').select2({ theme: 'bootstrap-5' });
+    $("select.no-search").select2({ theme: 'bootstrap-5', minimumResultsForSearch: Infinity })
 });
+
+function enableFields(...fields) {
+    for (const field of fields) {
+        if (field.attr('type') === 'checkbox') {
+            field.prop('disabled', false);
+        }
+        else {
+            field.removeAttr('disabled');
+            if (field.is('select')) {
+                field.prop('disabled', false);
+                //field.selectpicker('refresh');
+            }
+        }
+    }
+}
+
+function disableFields(...fields) {
+    for (const field of fields) {
+        if (field.attr('type') === 'checkbox') {
+            field.prop('disabled', true);
+        }
+        else {
+            field.attr('disabled', 'true');
+            if (field.is('select')) {
+                field.prop('disabled', true);
+                //field.selectpicker('refresh');
+            }
+        }
+    }
+}
+
 function request(options) {
     var getUrl = window.location;
     var baseUrl = getUrl.protocol + "//" + getUrl.host + "/"
@@ -28,38 +66,15 @@ function request(options) {
     });
 }
 
-function enableFields(...fields) {
-    for (const field of fields) {
-        if (field.attr('type') === 'checkbox') {
-            field.prop('disabled', false);
-        }
-        else {
-            field.removeAttr('disabled');
-            if (field.is('select')) {
-                field.prop('disabled', false);
-                field.selectpicker('refresh');
+function fillSelect(options) {
+    enableFields(options.field);
+    request({
+        url: options.url,
+        type: "GET",
+        callback: function (response) {
+            for (let item of response) {
+                options.field.append('<option value="' + item[options.value] + '">' + item[options.text] + '</option>');
             }
         }
-    }
-}
-
-function disableFields(...fields) {
-    for (const field of fields) {
-        if (field.attr('type') === 'checkbox') {
-            field.prop('disabled', true);
-        }
-        else {
-            field.attr('disabled', 'true');
-            if (field.is('select')) {
-                field.prop('disabled', true);
-                field.selectpicker('refresh');
-            }
-        }
-    }
-}
-
-let preloader = $('#preloader');
-if (preloader) {
-    window.addEventListener('load', () => { preloader.hide(); });
-    window.addEventListener('submit', () => { preloader.show(); })
+    });
 }

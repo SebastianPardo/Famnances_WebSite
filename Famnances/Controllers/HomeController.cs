@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Famnances.Models;
-using System.Diagnostics;
+using Famnances.AuthMiddleware;
 
 namespace Famnances.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

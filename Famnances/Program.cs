@@ -2,8 +2,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Famnances.Helpers;
 using Google.Apis.Auth.AspNetCore3;
 using Famnances.Helpers.Interfaces;
+using Famnances.AuthMiddleware.Interfaces;
+using Famnances.AuthMiddleware;
+using Famnances.AuthMiddleware.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -28,6 +33,7 @@ builder.Services.AddAuthentication(o =>
           googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
       });
 
+builder.Services.AddSingleton<ITokenHandler, TokenHandler>();
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
 
 var app = builder.Build();
