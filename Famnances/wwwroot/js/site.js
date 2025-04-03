@@ -7,6 +7,17 @@ if (preloader) {
 /////////////////////////////////////////////////////////////////////////
 
 $(document).ready(function () {
+    $(window).scroll(function () {
+        if ($(window).width() > 992) {
+            if ($(this).scrollTop() > 50) {
+                $('.sticky-top .container').addClass('shadow-sm').css('max-width', '100%');
+            } else {
+                $('.sticky-top .container').removeClass('shadow-sm').css('max-width', $('.topbar .container').width());
+            }
+        } else {
+            $('.sticky-top .container').addClass('shadow-sm').css('max-width', '100%');
+        }
+    });
     $('select').select2({ theme: 'bootstrap-5' });
     $("select.no-search").select2({ theme: 'bootstrap-5', minimumResultsForSearch: Infinity })
 });
