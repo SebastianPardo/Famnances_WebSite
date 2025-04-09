@@ -11,11 +11,17 @@ $(document).ready(function () {
         if ($(window).width() > 992) {
             if ($(this).scrollTop() > 50) {
                 $('.sticky-top .container').addClass('shadow-sm').css('max-width', '100%');
+                $('#menu').addClass('ms-auto');
+                $('#logo-img').attr("src", '/images/Logo_2_white.png');
             } else {
-                $('.sticky-top .container').removeClass('shadow-sm').css('max-width', $('.topbar .container').width());
+                $('.sticky-top .container').removeClass('shadow-sm').css('max-width', '90%');
+                $('#menu').removeClass('ms-auto');
+                $('#logo-img').attr("src", '/images/no-logo.png');
             }
         } else {
-            $('.sticky-top .container').addClass('shadow-sm').css('max-width', '100%');
+            $('.sticky-top .container').addClass('shadow-sm').css('max-width', '90%');
+            $('#menu').addClass('ms-auto');
+            $('#logo-img').attr("src", '/images/Logo_2_white.png');
         }
     });
     $('select').select2({ theme: 'bootstrap-5' });
