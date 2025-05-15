@@ -57,7 +57,7 @@
 
 .navbar .dropdown-toggle::after {
     border: none;
-    content: "\f107" !important;
+    /*content: "\f107" !important;*/
     font-family: "Font Awesome 5 Free";
     font-weight: 600;
     vertical-align: middle;
