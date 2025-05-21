@@ -1,6 +1,6 @@
 :root {
     --bs-primary: #005555;
-    --bs-secondary: #00204a;
+    --bs-secondary: #01377e;
     --bs-success: #04BF55;
     --bs-info: #05A3FF;
     --bs-warning: #FFC94F;
@@ -15,7 +15,7 @@
     --bs-orange: #fd7e14;
     --bs-yellow: #ffc107;
     --bs-green: #198754;
-    --bs-teal: #0555550d;
+    --bs-teal: #05555503;
     --bs-cyan: #0dcaf0;
     --bs-white: #fff;
     --bs-gray: #6c757d;
@@ -30,7 +30,7 @@
     --bs-gray-800: #343a40;
     --bs-gray-900: #212529;
     --bs-primary-rgb: 0, 85, 85;
-    --bs-secondary-rgb: 0, 32, 74;
+    --bs-secondary-rgb: 1, 55, 126;
     --bs-success-rgb: 4, 191, 85;
     --bs-info-rgb: 5, 163, 255;
     --bs-warning-rgb: 255, 201, 79;
