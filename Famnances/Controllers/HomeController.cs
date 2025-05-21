@@ -1,5 +1,7 @@
+using Famnances.DataCore.ServicesModels;
+using Famnances.Helpers;
+using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Famnances.AuthMiddleware;
 
 namespace Famnances.Controllers
 {
@@ -7,15 +9,18 @@ namespace Famnances.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        IHttpHelper _httpHelper;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHttpHelper httpHelper)
         {
             _logger = logger;
+            _httpHelper = httpHelper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals");
+            return View(homeSummary);
         }
 
         public IActionResult Privacy()

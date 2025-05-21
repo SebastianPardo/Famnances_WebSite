@@ -17,5 +17,6 @@
 
         public const string USER_URI = FAMNACES_SERVICES_URI + "User";
         public const string MANAGEMENT_URI = FAMNACES_SERVICES_URI + "Management";
+        public const string ACCOUNTING_URI = FAMNACES_SERVICES_URI + "Accounting";
     }
 }

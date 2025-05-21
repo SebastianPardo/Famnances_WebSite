@@ -1,9 +1,51 @@
-﻿@{
+﻿@model Famnances.DataCore.ServicesModels.SummaryModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row justify-content-md-center">
-    <div class="col-lg-6 mb-4 order-0">
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between mb-4">
+                    <div class="col-11 d-flex align-items-start">
+                        <div class="avatar flex-shrink-0 me-2">
+                            <img src="~/images/icons/calendar.png"
+                                 alt="chart success"
+                                 class="rounded" />
+                        </div>
+                        <span class="fw-semibold d-block mb-1 fs-4 me-2">Period</span>
+                    </div>
+                </div>
+                <div class="col text-end">
+                    <h5 class="card-title mb-2 text-primary">@Model.PeriodStartDate.ToString("MMM dd, yyyy")  -  @Model.PeriodEndDate.ToString("MMM dd, yyyy")</h5>
+                </div>
+                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex">
+                    <div class="col-11 d-flex align-items-start">
+                        <div class="avatar flex-shrink-0 me-2">
+                            <img src="~/images/icons/wallet-dark.png"
+                                 alt="chart success"
+                                 class="rounded" />
+                        </div>
+                        <span class="fw-semibold d-block mb-1 fs-4">Full budget</span>
+                    </div>
+                </div>
+                <div class="col text-end">
+                    <h3 class="card-title mb-2 text-secondary">$@Model.FullBudget</h3>
+                </div>
+                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex justify-content-between">
@@ -13,7 +55,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4 me-2">Current Budget</span>
+                        <span class="fw-semibold d-block mb-1 fs-4 me-2">Current balance</span>
                     </div>
                     <div class="col-1 align-items-end">
                         <div class="dropdown">
@@ -26,23 +68,19 @@
                                 <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
+                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <span class="d-block mb-1 align-self-end fs-6">Jan 1, 2025 - Feb 1, 2025</span>
                 <div class="col text-end">
-                    <h3 class="card-title mb-2 text-success">$123.99</h3>
+                    <h3 class="card-title mb-2 text-success">$@Model.PeriodBalance.@Model.PeriodCentsBalance</h3>
                 </div>
                 @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
             </div>
         </div>
     </div>
-</div>
-
-<div class="row">
     <div class="col-lg-3 col-md-6 col-12 mb-4">
         <div class="card">
             <div class="card-body">
@@ -66,30 +104,33 @@
                                 <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
+                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col text-end">
-                    <h3 class="card-title mb-2 text-danger">$123.99</h3>
+                    <h3 class="card-title mb-2 text-danger">$@Model.PeriodExpenses</h3>
                 </div>
                 @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
             </div>
         </div>
     </div>
+</div>
+
+<div class="row">
     <div class="col-lg-3 col-md-6 col-12 mb-4">
         <div class="card">
             <div class="card-body">
-                <div class="card-title d-flex">
+                <div class="card-title d-flex justify-content-between">
                     <div class="col-11 d-flex align-items-start">
                         <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/wallet.png"
+                            <img src="~/images/icons/home.png"
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Full budget</span>
+                        <span class="fw-semibold d-block mb-1 fs-4 me-2">Home Savings</span>
                     </div>
                     <div class="col-1 align-items-end">
                         <div class="dropdown">
@@ -102,14 +143,14 @@
                                 <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
+                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col text-end">
-                    <h3 class="card-title mb-2 text-info">$123.99</h3>
+                    <h3 class="card-title mb-2 text-primary">$@Model.PeriodBalance.@Model.PeriodCentsBalance</h3>
                 </div>
                 @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
             </div>
@@ -121,11 +162,11 @@
                 <div class="card-title d-flex">
                     <div class="col-11 d-flex align-items-start">
                         <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/dollar.png"
+                            <img src="~/images/icons/piggy-dark.png"
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Saving expenses</span>
+                        <span class="fw-semibold d-block mb-1 fs-4">Total Savings</span>
                     </div>
                     <div class="col-1 align-items-end">
                         <div class="dropdown">
@@ -138,14 +179,14 @@
                                 <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
+                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col text-end">
-                    <h3 class="card-title mb-2 text-danger">$123.99</h3>
+                    <h3 class="card-title mb-2 text-secondary">$@Model.TotalSavings</h3>
                 </div>
                 @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
             </div>
@@ -174,14 +215,50 @@
                                 <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
+                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col text-end">
-                    <h3 class="card-title mb-2 text-success">$123.99</h3>
+                    <h3 class="card-title mb-2 text-success">$@Model.PeriodSavings</h3>
+                </div>
+                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex">
+                    <div class="col-11 d-flex align-items-start">
+                        <div class="avatar flex-shrink-0 me-2">
+                            <img src="~/images/icons/dollar.png"
+                                 alt="chart success"
+                                 class="rounded" />
+                        </div>
+                        <span class="fw-semibold d-block mb-1 fs-4">Saving expenses</span>
+                    </div>
+                    <div class="col-1 align-items-end">
+                        <div class="dropdown">
+                            <button class="btn p-0"
+                                    type="button"
+                                    id="cardOpt3"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
+                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
+                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-end">
+                    <h3 class="card-title mb-2 text-danger">$@Model.PeriodSavingsExpeses</h3>
                 </div>
                 @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
             </div>
