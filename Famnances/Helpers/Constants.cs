@@ -13,6 +13,7 @@
         public const string FAMNACES_SERVICES_URI = "";  
 #endif
         
+        public const string AUTH_URI = AUTH_SERVICES_URI + "Auth";
         public const string ACCOUNT_URI = AUTH_SERVICES_URI + "Account";
 
         public const string USER_URI = FAMNACES_SERVICES_URI + "User";

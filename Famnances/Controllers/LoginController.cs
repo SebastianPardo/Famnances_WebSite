@@ -41,7 +41,7 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(Login login)
         {
-            LoginResponse user = await HttpHelper.Post<LoginResponse>($"{Constants.ACCOUNT_URI}/Authenticate", login);
+            LoginResponse user = await HttpHelper.Post<LoginResponse>($"{Constants.AUTH_URI}/Authenticate", login);
             HttpContext.Session.SetString(Constants.TOKEN, user.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, user.AccountId.ToString());
             return Redirect("../Home/Index");
@@ -61,7 +61,7 @@ namespace Famnances.Controllers
             var oauthSerivce = new Oauth2Service(new BaseClientService.Initializer { HttpClientInitializer = cred2 });
             var userinfo = await oauthSerivce.Userinfo.Get().ExecuteAsync();
             GoogleAuthenticateRequest googleAuthenticateRequest = new GoogleAuthenticateRequest { Param_1 = userinfo.Email, Param_2 = accessToken };
-            var account = await HttpHelper.Post<LoginResponse>($"{Constants.ACCOUNT_URI}/GoogleAuthenticate", googleAuthenticateRequest);
+            var account = await HttpHelper.Post<LoginResponse>($"{Constants.AUTH_URI}/GoogleAuthenticate", googleAuthenticateRequest);
             HttpContext.Session.SetString(Constants.TOKEN, account.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, account.AccountId.ToString());
             if (account.IsFirstLogin)
