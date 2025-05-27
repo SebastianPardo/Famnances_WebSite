@@ -32,10 +32,10 @@
 
   <ItemGroup>
     <Reference Include="Famnances.AuthMiddleware">
-      <HintPath>..\..\Famnances_DataModel\Famnances\Famnances.AuthMiddleware\bin\Debug\net8.0\Famnances.AuthMiddleware.dll</HintPath>
+      <HintPath>..\..\Famnances_DataModel\Famnances.AuthMiddleware\bin\Debug\net8.0\Famnances.AuthMiddleware.dll</HintPath>
     </Reference>
     <Reference Include="Famnances.DataCore">
-      <HintPath>..\..\Famnances_DataModel\Famnances\Famnances.AuthMiddleware\bin\Debug\net8.0\Famnances.DataCore.dll</HintPath>
+      <HintPath>..\..\Famnances_DataModel\Famnances.DataCore\bin\Debug\net8.0\Famnances.DataCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 
