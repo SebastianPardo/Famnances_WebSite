@@ -65,7 +65,7 @@ namespace Famnances.Controllers
             HttpContext.Session.SetString(Constants.TOKEN, account.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, account.AccountId.ToString());
             if (account.IsFirstLogin)
-                return RedirectToAction("Details", "User");
+                return RedirectToAction("Details", "Users");
             return RedirectToAction("Index","Home");
         }
     }

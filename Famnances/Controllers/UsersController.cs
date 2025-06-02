@@ -1,35 +1,31 @@
-﻿using Famnances.AuthMiddleware;
-using Famnances.DataCore.Entities;
+﻿using Famnances.DataCore.Entities;
+using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Threading.Tasks;
-using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
 {
-    //[Authorize]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         IHttpHelper _httpHelper;
-
-        public UserController(IHttpHelper httpHelper)
+        public UsersController(IHttpHelper httpHelper)
         {
             _httpHelper = httpHelper;
         }
-
         public IActionResult Index()
         {
             return View();
         }
 
-        public async Task<IActionResult> Details(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> Details()
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
-            ViewBag.Countries = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.MANAGEMENT_URI}/GetCountries"), "Id", "Name");
-            ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.MANAGEMENT_URI}/GetPeriods"), "Id", "Name");
-            return View(user??new User());
+            ViewBag.Countries = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.COUNTRIES_URI}"), "Id", "Name");
+            ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "Name");
+            return View(user ?? new User());
         }
 
         [HttpPost]
@@ -43,13 +39,13 @@ namespace Famnances.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProvincesByCountry(Guid countryId)
         {
-            return Ok(await _httpHelper.Get<List<Province>>($"{Constants.MANAGEMENT_URI}/GetProvincesByCountry/{countryId}"));
+            return Ok(await _httpHelper.Get<List<Province>>($"{Constants.PROVINCES_URI}/GetProvincesByCountry/{countryId}"));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetCitiesByProvince(Guid provinceId)
         {
-            return Ok(await _httpHelper.Get<List<Province>>($"{Constants.MANAGEMENT_URI}/GetCitiesByProvince/{provinceId}"));
+            return Ok(await _httpHelper.Get<List<Province>>($"{Constants.CITIES_URI}/GetCitiesByProvince/{provinceId}"));
         }
     }
 }

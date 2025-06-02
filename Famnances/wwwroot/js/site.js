@@ -6,6 +6,7 @@ if (preloader) {
 
 /////////////////////////////////////////////////////////////////////////
 
+
 $(document).ready(function () {
     $(window).scroll(function () {
         if ($(window).width() > 992) {
@@ -26,6 +27,13 @@ $(document).ready(function () {
     });
     $('select').select2({ theme: 'bootstrap-5' });
     $("select.no-search").select2({ theme: 'bootstrap-5', minimumResultsForSearch: Infinity })
+    $("table").DataTable({
+        autowidth:true,
+        responsive:true,
+        ordering: false,
+        lengthChange: false,
+        searching: false,
+    });
 });
 
 function enableFields(...fields) {

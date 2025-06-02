@@ -10,7 +10,7 @@
     $('#Country').change(function () {
         fillSelect({
             field: $("#Province"),
-            url: 'User/GetProvincesByCountry?countryId=' + $('#Country').val(),
+            url: 'Users/GetProvincesByCountry?countryId=' + $('#Country').val(),
             value: "id",
             text: "name"
         });
@@ -19,7 +19,7 @@
     $('#Province').change(function () {
         fillSelect({
             field: $("#CityId"),
-            url: 'User/GetCitiesByProvince?provinceId=' + $('#Province').val(),
+            url: 'Users/GetCitiesByProvince?provinceId=' + $('#Province').val(),
             value: "id",
             text: "name"
         });

@@ -1,7 +1,7 @@
 ﻿@model Famnances.DataCore.Entities.User
 <div class="card">
     <div class="card-body">
-        <form asp-action="Details" asp-controller="User" method="post">
+        <form asp-action="Details" asp-controller="Users" method="post">
             <div class="row">
                 <div class="col-md-3">
                     <label asp-for="FirstName" class="control-label text-start"></label>
@@ -94,7 +94,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-2">
                     <label class="control-label">&nbsp;</label>
-                    <input type="submit" class="btn btn-primary form-control" value="Save"  />
+                    <input type="submit" class="btn btn-primary form-control" value="Save" />
                 </div>
             </div>
         </form>
@@ -102,5 +102,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/User/Create.js"></script>
+    <script src="~/js/Users/Create.js"></script>
 }
