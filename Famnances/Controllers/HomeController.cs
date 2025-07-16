@@ -1,3 +1,4 @@
+using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
@@ -19,6 +20,10 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetCurrentPeriod");
+            if (totals == null) {
+                totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.ACCOUNTING_URI}/CalculatePeriod");
+            }
             var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals");
             return View(homeSummary);
         }
