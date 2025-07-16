@@ -35,19 +35,30 @@ namespace Famnances.Controllers
             if (ModelState.IsValid)
             {
                 entity.Id = Guid.NewGuid();
-                var budget = await _httpHelper.Post<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}", entity);
+                var budget = await _httpHelper.Post<ExpensesBudget>($"{Constants.BUDGETS_URI}", entity);
                 return RedirectToAction(nameof(Index));
             }
             return View(entity);
         }
 
-        public IActionResult Edit(Guid id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
         {
-            return View();
+            var budget = await _httpHelper.Get<ExpensesBudget>($"{Constants.BUDGETS_URI}/{id}");
+            return View(budget);
         }
 
-        public IActionResult Edit(ExpensesBudget entity)
+        [HttpPost]
+        public async Task<IActionResult> Edit(ExpensesBudget entity)
         {
+            if (ModelState.IsValid)
+            {
+                var budget = await _httpHelper.Put<bool>($"{Constants.BUDGETS_URI}", entity);
+                if (budget)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
             return View(entity);
         }
 
