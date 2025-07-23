@@ -14,18 +14,17 @@ namespace Famnances.Controllers
     public class InflowsController : Controller
     {
         IHttpHelper _httpHelper;
-        private readonly DatabaseContext _context;
 
-        public InflowsController(IHttpHelper httpHelper, DatabaseContext context)
+        public InflowsController(IHttpHelper httpHelper)
         {
             _httpHelper = httpHelper;
-            _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.Inflow.Include(i => i.User);
-            return View(await databaseContext.ToListAsync());
+
+            var inflow = await _httpHelper.Get<List<Inflow>>($"{Constants.INFLOWS_URI}");
+            return View(inflow);
         }
 
         // GET: Inflows/Details/5
@@ -36,9 +35,7 @@ namespace Famnances.Controllers
                 return NotFound();
             }
 
-            var inflow = await _context.Inflow
-                .Include(i => i.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var inflow = await _httpHelper.Get<Inflow>($"{Constants.INFLOWS_URI}/{id}");
             if (inflow == null)
             {
                 return NotFound();
@@ -50,7 +47,7 @@ namespace Famnances.Controllers
         // GET: Inflows/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address");
+            //ViewData["UserId"] = new SelectList(_context.User, "Id", "Address");
             return View();
         }
 
@@ -59,16 +56,15 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,Value,DateTimeStamp,UserId")] Inflow inflow)
+        public async Task<IActionResult> Create([Bind("Id,Description,Value,DateTimeStamp")] Inflow inflow)
         {
             if (ModelState.IsValid)
             {
                 inflow.Id = Guid.NewGuid();
-                _context.Add(inflow);
-                await _context.SaveChangesAsync();
+                inflow = await _httpHelper.Post<Inflow>($"{Constants.INFLOWS_URI}", inflow);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", inflow.UserId);
+            //ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", inflow.UserId);
             return View(inflow);
         }
 
@@ -80,12 +76,12 @@ namespace Famnances.Controllers
                 return NotFound();
             }
 
-            var inflow = await _context.Inflow.FindAsync(id);
+            var inflow = await _httpHelper.Get<Inflow>($"{Constants.INFLOWS_URI}/{id}");
             if (inflow == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", inflow.UserId);
+            //ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", inflow.UserId);
             return View(inflow);
         }
 
@@ -105,12 +101,11 @@ namespace Famnances.Controllers
             {
                 try
                 {
-                    _context.Update(inflow);
-                    await _context.SaveChangesAsync();
+                    inflow = await _httpHelper.Put<Inflow>($"{Constants.INFLOWS_URI}/{id}", inflow);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InflowExists(inflow.Id))
+                    if (await _httpHelper.Get<Inflow>($"{Constants.INFLOWS_URI}/{id}") != null)
                     {
                         return NotFound();
                     }
@@ -121,55 +116,23 @@ namespace Famnances.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", inflow.UserId);
-            return View(inflow);
-        }
-
-        // GET: Inflows/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var inflow = await _context.Inflow
-                .Include(i => i.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (inflow == null)
-            {
-                return NotFound();
-            }
-
+            //ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", inflow.UserId);
             return View(inflow);
         }
 
         // POST: Inflows/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var inflow = await _context.Inflow.FindAsync(id);
+            var inflow = await _httpHelper.Get<Inflow>($"{Constants.INFLOWS_URI}/{id}");
             if (inflow != null)
             {
-                _context.Inflow.Remove(inflow);
+                await _httpHelper.Delete($"{Constants.INFLOWS_URI}/{id}");
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool InflowExists(Guid id)
-        {
-            return _context.Inflow.Any(e => e.Id == id);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> InflowIndex()
-        {
-            var fixedIncomes = await _httpHelper.Get<List<FixedIncome>>($"{Constants.INFLOWS_URI}/GetFixedIncomes");
-            return View();
-        }
 
         #region FixedIncome
 
