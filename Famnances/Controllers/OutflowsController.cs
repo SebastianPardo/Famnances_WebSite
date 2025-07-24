@@ -26,25 +26,6 @@ namespace Famnances.WebSite.Controllers
             return View(await databaseContext.ToListAsync());
         }
 
-        // GET: Outflows/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var outflow = await _context.Outflow
-                .Include(o => o.ExpensesBudget)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (outflow == null)
-            {
-                return NotFound();
-            }
-
-            return View(outflow);
-        }
-
         // GET: Outflows/Create
         public IActionResult Create()
         {
@@ -123,29 +104,10 @@ namespace Famnances.WebSite.Controllers
             return View(outflow);
         }
 
-        // GET: Outflows/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var outflow = await _context.Outflow
-                .Include(o => o.ExpensesBudget)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (outflow == null)
-            {
-                return NotFound();
-            }
-
-            return View(outflow);
-        }
-
         // POST: Outflows/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var outflow = await _context.Outflow.FindAsync(id);
             if (outflow != null)

@@ -133,7 +133,6 @@ namespace Famnances.WebSite.Controllers
         // GET: SavingsPockets/Create
         public IActionResult CreatePockets()
         {
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address");
             return View();
         }
 
@@ -142,7 +141,7 @@ namespace Famnances.WebSite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatePockets([Bind("Id,Name,IsActive,ChallengeValue,Total,UserId")] SavingsPocket savingsPocket)
+        public async Task<IActionResult> CreatePockets([Bind("Id,Name,IsActive,ChallengeValue,Total")] SavingsPocket savingsPocket)
         {
             if (ModelState.IsValid)
             {

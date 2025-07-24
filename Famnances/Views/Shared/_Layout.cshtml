@@ -56,22 +56,22 @@
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Savings</a>
                                 <div class="dropdown-menu m-0">
                                     <a asp-controller="Savings" asp-action="Index" class="dropdown-item">Transactions</a>
-                                    <a asp-controller="Savings" asp-action="PocketsIndex" class="dropdown-item">Pockets</a>
+                                    <a asp-controller="Savings" asp-action="IndexPockets" class="dropdown-item">Pockets</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Incomes</a>
                                 <div class="dropdown-menu m-0">
                                     <a asp-controller="Inflows" asp-action="Index" class="dropdown-item">Inflow</a>
-                                    <a asp-controller="Inflows" asp-action="FixedIncomeIndex" class="dropdown-item">Fixed</a>
-                                    <a asp-controller="IncomeDiscounts" asp-action="DiscountsIndex" class="dropdown-item">Discounts</a>
+                                    <a asp-controller="Inflows" asp-action="IndexFixedIncomes" class="dropdown-item">Fixed</a>
+                                    <a asp-controller="IncomeDiscounts" asp-action="Index" class="dropdown-item">Discounts</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Expenses</a>
                                 <div class="dropdown-menu m-0">
                                     <a asp-controller="Outflows" asp-action="Index" class="dropdown-item">Outflow</a>
-                                    <a asp-controller="Outflows" asp-action="FixedExpensesIndex" class="dropdown-item">Fixed</a>
+                                    <a asp-controller="Outflows" asp-action="IndexFixedExpenses" class="dropdown-item">Fixed</a>
                                     <a asp-controller="Budgets" asp-action="Index" class="dropdown-item">Budgets</a>
                                 </div>
                             </div>

@@ -137,28 +137,28 @@ namespace Famnances.Controllers
         #region FixedIncome
 
         [HttpGet]
-        public async Task<IActionResult> FixedIncomeIndex()
+        public async Task<IActionResult> IndexFixedIncomes()
         {
             var fixedIncomes = await _httpHelper.Get<List<FixedIncome>>($"{Constants.FIXED_INCOMES_URI}");
             return View(fixedIncomes);
         }
 
         [HttpGet]
-        public async Task<IActionResult> FixedIncomeCreate()
+        public async Task<IActionResult> CreateFixedIncomes()
         {
             ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.PERIODS_URI}"), "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> FixedIncomeCreate(FixedIncome entity)
+        public async Task<IActionResult> CreateFixedIncomes(FixedIncome entity)
         {
             entity = await _httpHelper.Post<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity);
             return RedirectToAction("FixedIncomeIndex");
         }
 
         [HttpGet]
-        public async Task<IActionResult> FixedIncomeDetails(Guid id)
+        public async Task<IActionResult> EditFixedIncomes(Guid id)
         {
             var fixedIncome = await _httpHelper.Get<FixedIncome>($"{Constants.FIXED_INCOMES_URI}/{id}");
             ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.PERIODS_URI}"), "Id", "Name", fixedIncome.PayablePeriodId);
@@ -166,14 +166,14 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> FixedIncomeUpdate(FixedIncome entity)
+        public async Task<IActionResult> EditFixedIncomes(FixedIncome entity)
         {
             entity = await _httpHelper.Put<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity);
             return RedirectToAction("FixedIncomeIndex");
         }
 
         [HttpPost]
-        public async Task<IActionResult> FixedIncomeDelete(Guid id)
+        public async Task<IActionResult> DeleteFixedIncome(Guid id)
         {
             await _httpHelper.Delete<FixedIncome>($"{Constants.FIXED_INCOMES_URI}/{id}");
             return RedirectToAction("FixedIncomeIndex");
