@@ -1,35 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Famnances.DataCore.Data;
+using Famnances.DataCore.Entities;
+using Famnances.Helpers;
+using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Famnances.DataCore.Data;
-using Famnances.DataCore.Entities;
+using System.Threading.Tasks;
 
 namespace Famnances.WebSite.Controllers
 {
     public class SavingsController : Controller
     {
-        private readonly DatabaseContext _context;
+        IHttpHelper _httpHelper;
 
-        public SavingsController(DatabaseContext context)
+        public SavingsController(IHttpHelper httpHelper)
         {
-            _context = context;
+            _httpHelper = httpHelper;
         }
 
-        // GET: SavingRecords
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.SavingRecord.Include(s => s.SavingsPocket);
-            return View(await databaseContext.ToListAsync());
+
+            var savings = await _httpHelper.Get<List<SavingRecord>>($"{Constants.SAVINGS_URI}");
+            return View(savings);
         }
 
         // GET: SavingRecords/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["SavingsPocketId"] = new SelectList(_context.SavingsPocket, "Id", "Name");
+            var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name");
             return View();
         }
 
@@ -38,16 +38,16 @@ namespace Famnances.WebSite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,IsExpense,IsEmergency,TimeStamp,Value,SavingsPocketId")] SavingRecord savingRecord)
+        public async Task<IActionResult> Create([Bind("Id,Description,IsExpense,IsEmergency,Value,SavingsPocketId")] SavingRecord savingRecord)
         {
             if (ModelState.IsValid)
             {
                 savingRecord.Id = Guid.NewGuid();
-                _context.Add(savingRecord);
-                await _context.SaveChangesAsync();
+                savingRecord = await _httpHelper.Post<SavingRecord>($"{Constants.SAVINGS_URI}", savingRecord);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SavingsPocketId"] = new SelectList(_context.SavingsPocket, "Id", "Name", savingRecord.SavingsPocketId);
+            var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name", savingRecord.SavingsPocketId);
             return View(savingRecord);
         }
 
@@ -59,12 +59,13 @@ namespace Famnances.WebSite.Controllers
                 return NotFound();
             }
 
-            var savingRecord = await _context.SavingRecord.FindAsync(id);
+            var savingRecord = await _httpHelper.Get<SavingRecord>($"{Constants.SAVINGS_URI}/{id}");
             if (savingRecord == null)
             {
                 return NotFound();
             }
-            ViewData["SavingsPocketId"] = new SelectList(_context.SavingsPocket, "Id", "Name", savingRecord.SavingsPocketId);
+            var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name", savingRecord.SavingsPocketId);
             return View(savingRecord);
         }
 
@@ -73,7 +74,7 @@ namespace Famnances.WebSite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Description,IsExpense,IsEmergency,TimeStamp,Value,SavingsPocketId")] SavingRecord savingRecord)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Description,IsExpense,IsEmergency,Value,SavingsPocketId")] SavingRecord savingRecord)
         {
             if (id != savingRecord.Id)
             {
@@ -84,12 +85,11 @@ namespace Famnances.WebSite.Controllers
             {
                 try
                 {
-                    _context.Update(savingRecord);
-                    await _context.SaveChangesAsync();
+                    await _httpHelper.Put($"{Constants.SAVINGS_URI}/{id}", savingRecord);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SavingRecordExists(savingRecord.Id))
+                    if (await _httpHelper.Get<SavingRecord>($"{Constants.SAVINGS_URI}/{id}") == null)
                     {
                         return NotFound();
                     }
@@ -100,34 +100,29 @@ namespace Famnances.WebSite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SavingsPocketId"] = new SelectList(_context.SavingsPocket, "Id", "Name", savingRecord.SavingsPocketId);
+            var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name", savingRecord.SavingsPocketId);
             return View(savingRecord);
         }
 
         // POST: SavingRecords/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var savingRecord = await _context.SavingRecord.FindAsync(id);
+            var savingRecord = await _httpHelper.Get<SavingRecord>($"{Constants.SAVINGS_URI}/{id}");
             if (savingRecord != null)
             {
-                _context.SavingRecord.Remove(savingRecord);
+                await _httpHelper.Delete<SavingRecord>($"{Constants.SAVINGS_URI}/{id}");
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool SavingRecordExists(Guid id)
-        {
-            return _context.SavingRecord.Any(e => e.Id == id);
         }
 
         public async Task<IActionResult> IndexPockets()
         {
-            var databaseContext = _context.SavingsPocket.Include(s => s.User);
-            return View(await databaseContext.ToListAsync());
+            var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            return View(savingsPockets);
         }
 
         // GET: SavingsPockets/Create
@@ -146,11 +141,9 @@ namespace Famnances.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 savingsPocket.Id = Guid.NewGuid();
-                _context.Add(savingsPocket);
-                await _context.SaveChangesAsync();
+                savingsPocket = await _httpHelper.Post<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}", savingsPocket);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", savingsPocket.UserId);
             return View(savingsPocket);
         }
 
@@ -162,12 +155,11 @@ namespace Famnances.WebSite.Controllers
                 return NotFound();
             }
 
-            var savingsPocket = await _context.SavingsPocket.FindAsync(id);
+            var savingsPocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{id}");
             if (savingsPocket == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", savingsPocket.UserId);
             return View(savingsPocket);
         }
 
@@ -187,12 +179,11 @@ namespace Famnances.WebSite.Controllers
             {
                 try
                 {
-                    _context.Update(savingsPocket);
-                    await _context.SaveChangesAsync();
+                    await _httpHelper.Put($"{Constants.SAVINGS_POCKETS_URI}/{id}", savingsPocket);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SavingsPocketExists(savingsPocket.Id))
+                    if (await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{id}") == null)
                     {
                         return NotFound();
                     }
@@ -203,7 +194,6 @@ namespace Famnances.WebSite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", savingsPocket.UserId);
             return View(savingsPocket);
         }
 
@@ -213,19 +203,12 @@ namespace Famnances.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeletePockets(Guid id)
         {
-            var savingsPocket = await _context.SavingsPocket.FindAsync(id);
+            var savingsPocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{id}");
             if (savingsPocket != null)
             {
-                _context.SavingsPocket.Remove(savingsPocket);
+                await _httpHelper.Delete<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{id}");
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool SavingsPocketExists(Guid id)
-        {
-            return _context.SavingsPocket.Any(e => e.Id == id);
         }
     }
 }

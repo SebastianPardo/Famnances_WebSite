@@ -27,23 +27,6 @@ namespace Famnances.Controllers
             return View(inflow);
         }
 
-        // GET: Inflows/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var inflow = await _httpHelper.Get<Inflow>($"{Constants.INFLOWS_URI}/{id}");
-            if (inflow == null)
-            {
-                return NotFound();
-            }
-
-            return View(inflow);
-        }
-
         // GET: Inflows/Create
         public IActionResult Create()
         {
@@ -105,7 +88,7 @@ namespace Famnances.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (await _httpHelper.Get<Inflow>($"{Constants.INFLOWS_URI}/{id}") != null)
+                    if (await _httpHelper.Get<Inflow>($"{Constants.INFLOWS_URI}/{id}") == null)
                     {
                         return NotFound();
                     }
