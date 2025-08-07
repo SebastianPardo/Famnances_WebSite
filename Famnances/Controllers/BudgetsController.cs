@@ -62,9 +62,14 @@ namespace Famnances.Controllers
             return View(entity);
         }
 
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return View();
+            var budget = await _httpHelper.Get<ExpensesBudget>($"{Constants.BUDGETS_URI}/{id}");
+            if (budget != null)
+            {
+                await _httpHelper.Delete($"{Constants.BUDGETS_URI}/{id}");
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

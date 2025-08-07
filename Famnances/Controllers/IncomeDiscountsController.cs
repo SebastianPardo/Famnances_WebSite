@@ -1,5 +1,7 @@
 ﻿using Famnances.DataCore.Data;
 using Famnances.DataCore.Entities;
+using Famnances.Helpers;
+using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,41 +10,22 @@ namespace Famnances.Controllers
 {
     public class IncomeDiscountsController : Controller
     {
-        DatabaseContext _context;
-        public IncomeDiscountsController(DatabaseContext context)
+        IHttpHelper _httpHelper;
+        public IncomeDiscountsController(IHttpHelper httpHelper)
         {
-            _context = context;
+            _httpHelper = httpHelper;
         }
 
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.IncomeDiscount.Include(i => i.User);
-            return View(await databaseContext.ToListAsync());
-        }
-
-        // GET: IncomeDiscounts/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var incomeDiscount = await _context.IncomeDiscount
-                .Include(i => i.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (incomeDiscount == null)
-            {
-                return NotFound();
-            }
-
-            return View(incomeDiscount);
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var discounts = await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}");
+            return View(discounts);
         }
 
         // GET: IncomeDiscounts/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address");
             return View();
         }
 
@@ -56,11 +39,9 @@ namespace Famnances.Controllers
             if (ModelState.IsValid)
             {
                 incomeDiscount.Id = Guid.NewGuid();
-                _context.Add(incomeDiscount);
-                await _context.SaveChangesAsync();
+                incomeDiscount = await _httpHelper.Post<IncomeDiscount>($"{Constants.INCOME_DISCOUNTS_URI}", incomeDiscount);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", incomeDiscount.UserId);
             return View(incomeDiscount);
         }
 
@@ -72,12 +53,11 @@ namespace Famnances.Controllers
                 return NotFound();
             }
 
-            var incomeDiscount = await _context.IncomeDiscount.FindAsync(id);
+            var incomeDiscount = await _httpHelper.Get<IncomeDiscount>($"{Constants.INCOME_DISCOUNTS_URI}/{id}");
             if (incomeDiscount == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", incomeDiscount.UserId);
             return View(incomeDiscount);
         }
 
@@ -97,12 +77,11 @@ namespace Famnances.Controllers
             {
                 try
                 {
-                    _context.Update(incomeDiscount);
-                    await _context.SaveChangesAsync();
+                    await _httpHelper.Put<bool>($"{Constants.INCOME_DISCOUNTS_URI}", incomeDiscount);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!IncomeDiscountExists(incomeDiscount.Id))
+                    if (!await IncomeDiscountExists(incomeDiscount.Id))
                     {
                         return NotFound();
                     }
@@ -113,47 +92,26 @@ namespace Famnances.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", incomeDiscount.UserId);
             return View(incomeDiscount);
         }
 
-        // GET: IncomeDiscounts/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var incomeDiscount = await _context.IncomeDiscount
-                .Include(i => i.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (incomeDiscount == null)
-            {
-                return NotFound();
-            }
-
-            return View(incomeDiscount);
-        }
 
         // POST: IncomeDiscounts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var incomeDiscount = await _context.IncomeDiscount.FindAsync(id);
-            if (incomeDiscount != null)
+            var discount = await _httpHelper.Get<ExpensesBudget>($"{Constants.INCOME_DISCOUNTS_URI}/{id}");
+            if (discount != null)
             {
-                _context.IncomeDiscount.Remove(incomeDiscount);
+                await _httpHelper.Delete($"{Constants.INCOME_DISCOUNTS_URI}/{id}");
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool IncomeDiscountExists(Guid id)
+        private async Task<bool> IncomeDiscountExists(Guid id)
         {
-            return _context.IncomeDiscount.Any(e => e.Id == id);
+            return await _httpHelper.Get<IncomeDiscount>($"{Constants.INCOME_DISCOUNTS_URI}/{id}") != null;
         }
     }
 }
