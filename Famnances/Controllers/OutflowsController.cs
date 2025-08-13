@@ -1,35 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Famnances.DataCore.Data;
+using Famnances.DataCore.Entities;
+using Famnances.Helpers;
+using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Famnances.DataCore.Data;
-using Famnances.DataCore.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Famnances.WebSite.Controllers
 {
     public class OutflowsController : Controller
     {
-        private readonly DatabaseContext _context;
+        private readonly IHttpHelper _httpHelper;
 
-        public OutflowsController(DatabaseContext context)
+        public OutflowsController(IHttpHelper httpHelper)
         {
-            _context = context;
+            _httpHelper = httpHelper;
         }
 
         // GET: Outflows
         public async Task<IActionResult> Index()
         {
-            var databaseContext = _context.Outflow.Include(o => o.ExpensesBudget);
-            return View(await databaseContext.ToListAsync());
+            var outflow = await _httpHelper.Get<List<Outflow>>($"{Constants.OUTFLOWS_URI}");
+            return View(outflow);
         }
 
         // GET: Outflows/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["ExpenseBudgetId"] = new SelectList(_context.ExpensesBudget, "Id", "Name");
+            var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
+            ViewData["ExpenseBudgetId"] = new SelectList(budgets, "Id", "Name");
             return View();
         }
 
@@ -43,11 +46,12 @@ namespace Famnances.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 outflow.Id = Guid.NewGuid();
-                _context.Add(outflow);
-                await _context.SaveChangesAsync();
+                outflow = await _httpHelper.Post<Outflow>(Constants.OUTFLOWS_URI, outflow);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ExpenseBudgetId"] = new SelectList(_context.ExpensesBudget, "Id", "Name", outflow.ExpenseBudgetId);
+
+            var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
+            ViewData["ExpenseBudgetId"] = new SelectList(budgets, "Id", "Name", outflow.ExpenseBudgetId);
             return View(outflow);
         }
 
@@ -59,12 +63,13 @@ namespace Famnances.WebSite.Controllers
                 return NotFound();
             }
 
-            var outflow = await _context.Outflow.FindAsync(id);
+            var outflow = await _httpHelper.Get<Outflow>($"{Constants.OUTFLOWS_URI}/{id}");
             if (outflow == null)
             {
                 return NotFound();
             }
-            ViewData["ExpenseBudgetId"] = new SelectList(_context.ExpensesBudget, "Id", "Name", outflow.ExpenseBudgetId);
+            var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
+            ViewData["ExpenseBudgetId"] = new SelectList(budgets, "Id", "Name", outflow.ExpenseBudgetId);
             return View(outflow);
         }
 
@@ -84,12 +89,11 @@ namespace Famnances.WebSite.Controllers
             {
                 try
                 {
-                    _context.Update(outflow);
-                    await _context.SaveChangesAsync();
+                    await _httpHelper.Put<bool>(Constants.OUTFLOWS_URI, outflow);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OutflowExists(outflow.Id))
+                    if (!await OutflowExists(outflow.Id))
                     {
                         return NotFound();
                     }
@@ -100,7 +104,8 @@ namespace Famnances.WebSite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ExpenseBudgetId"] = new SelectList(_context.ExpensesBudget, "Id", "Name", outflow.ExpenseBudgetId);
+            var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
+            ViewData["ExpenseBudgetId"] = new SelectList(budgets, "Id", "Name", outflow.ExpenseBudgetId);
             return View(outflow);
         }
 
@@ -109,32 +114,32 @@ namespace Famnances.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var outflow = await _context.Outflow.FindAsync(id);
+            var outflow = await _httpHelper.Get<Outflow>($"{Constants.OUTFLOWS_URI}/{id}");
             if (outflow != null)
             {
-                _context.Outflow.Remove(outflow);
+                await _httpHelper.Delete($"{Constants.OUTFLOWS_URI}/{id}");
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OutflowExists(Guid id)
+        private async Task<bool> OutflowExists(Guid id)
         {
-            return _context.Outflow.Any(e => e.Id == id);
+            return await _httpHelper.Get<Outflow>($"{Constants.OUTFLOWS_URI}/{id}") != null;
         }
+
+
 
         public async Task<IActionResult> IndexFixedExpenses()
         {
-            var databaseContext = _context.FixedExpense.Include(f => f.Period).Include(f => f.User);
-            return View(await databaseContext.ToListAsync());
+            var fixedExpense = await _httpHelper.Get<List<FixedExpense>>($"{Constants.FIXED_EXPENSES_URI}");
+            return View(fixedExpense);
         }
 
         // GET: FixedExpenses/Create
-        public IActionResult CreateFixedExpenses()
+        public async Task<IActionResult> CreateFixedExpensesAsync()
         {
-            ViewData["PeriodId"] = new SelectList(_context.Period, "Id", "Code");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address");
+            var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
+            ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
             return View();
         }
 
@@ -148,12 +153,11 @@ namespace Famnances.WebSite.Controllers
             if (ModelState.IsValid)
             {
                 fixedExpense.Id = Guid.NewGuid();
-                _context.Add(fixedExpense);
-                await _context.SaveChangesAsync();
+                fixedExpense = await _httpHelper.Post<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}", fixedExpense);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PeriodId"] = new SelectList(_context.Period, "Id", "Code", fixedExpense.PeriodId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", fixedExpense.UserId);
+            var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
+            ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
             return View(fixedExpense);
         }
 
@@ -165,13 +169,13 @@ namespace Famnances.WebSite.Controllers
                 return NotFound();
             }
 
-            var fixedExpense = await _context.FixedExpense.FindAsync(id);
+            var fixedExpense = await _httpHelper.Get<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}/{id}");
             if (fixedExpense == null)
             {
                 return NotFound();
             }
-            ViewData["PeriodId"] = new SelectList(_context.Period, "Id", "Code", fixedExpense.PeriodId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", fixedExpense.UserId);
+            var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
+            ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
             return View(fixedExpense);
         }
 
@@ -191,12 +195,11 @@ namespace Famnances.WebSite.Controllers
             {
                 try
                 {
-                    _context.Update(fixedExpense);
-                    await _context.SaveChangesAsync();
+                    await _httpHelper.Put<bool>(Constants.FIXED_EXPENSES_URI, fixedExpense);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FixedExpenseExists(fixedExpense.Id))
+                    if (!await FixedExpenseExists(fixedExpense.Id))
                     {
                         return NotFound();
                     }
@@ -207,8 +210,8 @@ namespace Famnances.WebSite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PeriodId"] = new SelectList(_context.Period, "Id", "Code", fixedExpense.PeriodId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", fixedExpense.UserId);
+            var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
+            ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
             return View(fixedExpense);
         }
 
@@ -218,19 +221,17 @@ namespace Famnances.WebSite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteFixedExpenses(Guid id)
         {
-            var fixedExpense = await _context.FixedExpense.FindAsync(id);
+            var fixedExpense = await _httpHelper.Get<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}/{id}");
             if (fixedExpense != null)
             {
-                _context.FixedExpense.Remove(fixedExpense);
+                await _httpHelper.Delete($"{Constants.FIXED_EXPENSES_URI}/{id}");
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FixedExpenseExists(Guid id)
+        private async Task<bool> FixedExpenseExists(Guid id)
         {
-            return _context.FixedExpense.Any(e => e.Id == id);
+            return await _httpHelper.Get<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}/{id}") != null;
         }
     }
 }
