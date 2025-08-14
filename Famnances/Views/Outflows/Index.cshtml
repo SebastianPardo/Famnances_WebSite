@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>
@@ -49,7 +49,7 @@
                             @Html.DisplayFor(modelItem => item.ExpensesBudget.Name)
                         </td>
                         <td>
-                            <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
                         </td>
                     </tr>
                 }

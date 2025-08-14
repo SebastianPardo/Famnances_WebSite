@@ -142,7 +142,7 @@ namespace Famnances.WebSite.Controllers
             {
                 savingsPocket.Id = Guid.NewGuid();
                 savingsPocket = await _httpHelper.Post<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}", savingsPocket);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexPockets));
             }
             return View(savingsPocket);
         }
@@ -192,14 +192,14 @@ namespace Famnances.WebSite.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexPockets));
             }
             return View(savingsPocket);
         }
 
 
         // POST: SavingsPockets/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeletePockets")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeletePockets(Guid id)
         {
@@ -208,7 +208,7 @@ namespace Famnances.WebSite.Controllers
             {
                 await _httpHelper.Delete<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{id}");
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(IndexPockets));
         }
     }
 }

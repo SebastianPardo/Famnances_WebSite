@@ -6,17 +6,20 @@
 
 <div class="card">
     <div class="d-flex justify-content-between">
-        <h4 class="card-header"><strong>Fixed Income</strong></h4>
+        <h4 class="card-header"><strong>Income Discounts</strong></h4>
         <div class="m-3">
-            <a type="button" class="btn rounded-pill btn-icon btn-primary card-header" asp-controller="IncomeDisconunt" asp-action="Create" formmethod="get">
+            <a type="button" class="btn rounded-pill btn-icon btn-primary card-header" asp-controller="IncomeDiscounts" asp-action="Create" formmethod="get">
                 <span class="tf-icons bx bx-plus"></span>
             </a>
         </div>
     </div>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Active)
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Description)
                     </th>
@@ -32,12 +35,6 @@
                     <th>
                         @Html.DisplayNameFor(model => model.IsTax)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Active)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.User)
-                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -46,30 +43,53 @@
                 {
                     <tr>
                         <td>
+                            @if (item.Active)
+                            {
+                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
+                            }
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Value)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IsPercentage)
+                            @if (item.IsPercentage)
+                            {
+                                <input class="form-check-input" type="checkbox" id="IsPercentage" name="IsPercentage" value="true" checked disabled />
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" id="IsPercentage" name="IsPercentage" value="true" disabled />
+                            }
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IsPrediscount)
+                            @if (item.IsPrediscount)
+                            {
+                                <input class="form-check-input" type="checkbox" id="IsPrediscount" name="IsPrediscount" value="true" checked disabled />
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" id="IsPrediscount" name="IsPrediscount" value="true" disabled />
+                            }
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IsTax)
+                            @if (item.IsTax)
+                            {
+                                <input class="form-check-input" type="checkbox" id="IsTax" name="IsTax" value="true" checked disabled />
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" id="IsTax" name="IsTax" value="true" disabled />
+                            }
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Active)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.User.Address)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
                         </td>
                     </tr>
                 }

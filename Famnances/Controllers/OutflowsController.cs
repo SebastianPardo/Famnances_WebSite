@@ -136,7 +136,7 @@ namespace Famnances.WebSite.Controllers
         }
 
         // GET: FixedExpenses/Create
-        public async Task<IActionResult> CreateFixedExpensesAsync()
+        public async Task<IActionResult> CreateFixedExpenses()
         {
             var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
             ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
@@ -154,7 +154,7 @@ namespace Famnances.WebSite.Controllers
             {
                 fixedExpense.Id = Guid.NewGuid();
                 fixedExpense = await _httpHelper.Post<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}", fixedExpense);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexFixedExpenses));
             }
             var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
             ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
@@ -195,7 +195,7 @@ namespace Famnances.WebSite.Controllers
             {
                 try
                 {
-                    await _httpHelper.Put<bool>(Constants.FIXED_EXPENSES_URI, fixedExpense);
+                    await _httpHelper.Put<bool>($"{Constants.FIXED_EXPENSES_URI}/{id}", fixedExpense);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -208,7 +208,7 @@ namespace Famnances.WebSite.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexFixedExpenses));
             }
             var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
             ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
@@ -217,7 +217,7 @@ namespace Famnances.WebSite.Controllers
 
 
         // POST: FixedExpenses/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteFixedExpenses")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteFixedExpenses(Guid id)
         {
@@ -226,7 +226,7 @@ namespace Famnances.WebSite.Controllers
             {
                 await _httpHelper.Delete($"{Constants.FIXED_EXPENSES_URI}/{id}");
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(IndexFixedExpenses));
         }
 
         private async Task<bool> FixedExpenseExists(Guid id)

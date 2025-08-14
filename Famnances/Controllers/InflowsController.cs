@@ -137,7 +137,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> CreateFixedIncomes(FixedIncome entity)
         {
             entity = await _httpHelper.Post<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity);
-            return RedirectToAction("FixedIncomeIndex");
+            return RedirectToAction("IndexFixedIncomes");
         }
 
         [HttpGet]
@@ -152,14 +152,14 @@ namespace Famnances.Controllers
         public async Task<IActionResult> EditFixedIncomes(FixedIncome entity)
         {
             entity = await _httpHelper.Put<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity);
-            return RedirectToAction("FixedIncomeIndex");
+            return RedirectToAction("IndexFixedIncomes");
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("DeleteFixedIncome")]
         public async Task<IActionResult> DeleteFixedIncome(Guid id)
         {
             await _httpHelper.Delete<FixedIncome>($"{Constants.FIXED_INCOMES_URI}/{id}");
-            return RedirectToAction("FixedIncomeIndex");
+            return RedirectToAction("IndexFixedIncomes");
         }
 
         #endregion

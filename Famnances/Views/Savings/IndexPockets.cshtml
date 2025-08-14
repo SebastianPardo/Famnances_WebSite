@@ -14,20 +14,20 @@
         </div>
     </div>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.IsActive)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.ChallengeValue)
+                        @Html.DisplayNameFor(model => model.Name)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Total)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ChallengeValue)
                     </th>
                     <th></th>
                 </tr>
@@ -37,16 +37,16 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.IsActive)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ChallengeValue)
+                            @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Total)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ChallengeValue)
                         </td>
                         <td>
                             <a asp-action="EditPockets" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>

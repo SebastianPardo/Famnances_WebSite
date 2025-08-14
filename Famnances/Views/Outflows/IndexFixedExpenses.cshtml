@@ -6,17 +6,20 @@
 
 <div class="card">
     <div class="d-flex justify-content-between">
-        <h4 class="card-header"><strong>Fixed Income</strong></h4>
+        <h4 class="card-header"><strong>Fixed Expenses</strong></h4>
         <div class="m-3">
-            <a type="button" class="btn rounded-pill btn-icon btn-primary card-header" asp-controller="Outflow" asp-action="CreateFixedExpense" formmethod="get">
+            <a type="button" class="btn rounded-pill btn-icon btn-primary card-header" asp-controller="Outflows" asp-action="CreateFixedExpenses" formmethod="get">
                 <span class="tf-icons bx bx-plus"></span>
             </a>
         </div>
     </div>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Active)
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
@@ -30,13 +33,7 @@
                         @Html.DisplayNameFor(model => model.EndDate)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Active)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.Period)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.User)
                     </th>
                     <th></th>
                 </tr>
@@ -45,6 +42,16 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>
+                            @if (item.Active)
+                            {
+                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
+                            }
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
@@ -58,18 +65,10 @@
                             @Html.DisplayFor(modelItem => item.EndDate)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Active)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.Period.Code)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.User.Address)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-action="EditFixedExpenses" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
                         </td>
                     </tr>
                 }

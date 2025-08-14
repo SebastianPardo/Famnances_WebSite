@@ -25,7 +25,7 @@ namespace Famnances.Controllers
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
             ViewBag.Countries = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.COUNTRIES_URI}"), "Id", "Name");
             ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "Name");
-            return View(user ?? new User());
+            return View(user ?? new User { Id = Guid.Parse(accountId) });
         }
 
         [HttpPost]

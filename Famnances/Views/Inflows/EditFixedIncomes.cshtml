@@ -2,6 +2,8 @@
 <div class="card">
     <div class="card-body">
         <form asp-action="FixedIncomeUpdate" asp-controller="Inflows" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="row">
                 <div class="col col-md-3 col-sm-6">
                     <div class="form-check form-check-inline" style="margin-top: 2rem;">
@@ -43,7 +45,7 @@
                 </div>
                 <div class="col-md-2">
                     <label class="control-label">&nbsp;</label>
-                    <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("CreateAndGetLinks")" formmethod="post" />
+                    <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("DeleteFixedIncome")" formmethod="post" />
                 </div>
             </div>
         </form>

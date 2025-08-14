@@ -8,42 +8,46 @@
 
 <h4>Outflow</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Value" class="control-label"></label>
-                <input asp-for="Value" class="form-control" />
-                <span asp-validation-for="Value" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateTimeStamp" class="control-label"></label>
-                <input asp-for="DateTimeStamp" class="form-control" />
-                <span asp-validation-for="DateTimeStamp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ExpenseBudgetId" class="control-label"></label>
-                <select asp-for="ExpenseBudgetId" class="form-control" asp-items="ViewBag.ExpenseBudgetId"></select>
-                <span asp-validation-for="ExpenseBudgetId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-md-3">
+            <label asp-for="Description" class="control-label"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Value" class="control-label"></label>
+            <input asp-for="Value" class="form-control" />
+            <span asp-validation-for="Value" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="ExpenseBudgetId" class="control-label"></label>
+            <select asp-for="ExpenseBudgetId" class="form-control" asp-items="ViewBag.ExpenseBudgetId"></select>
+            <span asp-validation-for="ExpenseBudgetId" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="DateTimeStamp" class="control-label"></label>
+            <input asp-for="DateTimeStamp" class="form-control" disabled />
+            <span asp-validation-for="DateTimeStamp" class="text-danger"></span>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="row justify-content-center">
+        <div class="col-md-2">
+            <label class="control-label">&nbsp;</label>
+            <input type="submit" class="btn btn-primary form-control" value="Save" />
+        </div>
+        <div class="col-md-2">
+            <label class="control-label">&nbsp;</label>
+            <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("Delete")" formmethod="post" />
+        </div>
+    </div>
+</form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

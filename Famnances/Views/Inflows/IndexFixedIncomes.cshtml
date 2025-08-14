@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between">
         <h4 class="card-header"><strong>Fixed Income</strong></h4>
         <div class="m-3">
-            <a type="button" class="btn rounded-pill btn-icon btn-primary card-header" asp-controller="Inflows" asp-action="CreateFixedIncome" formmethod="get">
+            <a type="button" class="btn rounded-pill btn-icon btn-primary card-header" asp-controller="Inflows" asp-action="CreateFixedIncomes" formmethod="get">
                 <span class="tf-icons bx bx-plus"></span>
             </a>
         </div>
@@ -45,7 +45,7 @@
                             @Html.DisplayFor(modelItem => item.PayablePeriod.Name)
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "FixedIncomeDetails", new { id = item.Id }, new { @class = "btn btn-block btn-secondary" })
+                            <a asp-action="EditFixedIncomes" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
                         </td>
                     </tr>
                 }

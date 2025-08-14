@@ -30,7 +30,7 @@
                             $ @Html.DisplayFor(modelItem => item.Value)
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "Edit", new { id = item.Id }, new { @class = "btn btn-block btn-secondary" })
+                            <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
                         </td>
                     </tr>
                 }

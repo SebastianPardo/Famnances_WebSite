@@ -13,12 +13,9 @@
         </div>
     </div>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.IsExpense)
                     </th>
@@ -26,13 +23,16 @@
                         @Html.DisplayNameFor(model => model.IsEmergency)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.TimeStamp)
+                        @Html.DisplayNameFor(model => model.SavingsPocket)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Value)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.SavingsPocket)
+                        @Html.DisplayNameFor(model => model.TimeStamp)
                     </th>
                     <th></th>
                 </tr>
@@ -42,22 +42,22 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.IsExpense)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.IsEmergency)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TimeStamp)
+                            @Html.DisplayFor(modelItem => item.SavingsPocket.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Value)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.SavingsPocket.Name)
+                            @Html.DisplayFor(modelItem => item.TimeStamp)
                         </td>
                         <td>
                             <a asp-action="Edit" class=" btn btn-secondary" asp-route-id="@item.Id">Edit</a>
