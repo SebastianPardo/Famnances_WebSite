@@ -78,6 +78,7 @@
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profile</a>
                                 <div class="dropdown-menu m-0">
+                                    <a asp-controller="Users" asp-action="CreateHome" class="dropdown-item">Household</a>
                                     <a asp-controller="Users" asp-action="Details" class="dropdown-item">My Account</a>
                                     <a asp-controller="Login" asp-action="Logout" class="dropdown-item">Logout</a>
                                 </div>
@@ -110,6 +111,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

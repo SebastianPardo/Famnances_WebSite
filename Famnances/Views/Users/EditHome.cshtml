@@ -1,0 +1,50 @@
+﻿@model Famnances.DataCore.Entities.Home
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>SavingRecord</h4>
+<hr />
+<form asp-action="EditHome" asp-controller="Users">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="col-md-2 form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="ShareIncomes" /> @Html.DisplayNameFor(model => model.ShareIncomes)
+            </label>
+        </div>
+        <div class="col-md-2 form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="ShareExpenses" /> @Html.DisplayNameFor(model => model.ShareExpenses)
+            </label>
+        </div>
+        <div class="col-md-2 form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="ShareSavings" /> @Html.DisplayNameFor(model => model.ShareSavings)
+            </label>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-2">
+            <label class="control-label">&nbsp;</label>
+            <input type="submit" class="btn btn-primary form-control" value="Save" />
+        </div>
+        <div class="col-md-2">
+            <label class="control-label">&nbsp;</label>
+            <input type="submit" class="btn btn-secondary form-control" value="Invite" formaction="@Url.Action("Invitations")" formmethod="get" />
+        </div>
+        <div class="col-md-2">
+            <label class="control-label">&nbsp;</label>
+            <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("DeleteHome")" formmethod="post" />
+        </div>
+    </div>
+</form>

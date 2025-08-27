@@ -32,5 +32,6 @@
         public const string SOCIALMEDIA_URI = FAMNACES_SERVICES_URI + "SocialMedia";
         public const string TOTALSBYPERIOD_URI = FAMNACES_SERVICES_URI + "TotalsByPeriod";
         public const string USER_URI = FAMNACES_SERVICES_URI + "Users";
+        public const string HOME_URI = FAMNACES_SERVICES_URI + "Homes";
     }
 }
