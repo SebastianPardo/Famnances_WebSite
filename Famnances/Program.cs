@@ -1,10 +1,11 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Famnances.Helpers;
-using Google.Apis.Auth.AspNetCore3;
-using Famnances.Helpers.Interfaces;
-using Famnances.AuthMiddleware.Interfaces;
 using Famnances.AuthMiddleware;
 using Famnances.AuthMiddleware.Entities;
+using Famnances.AuthMiddleware.Interfaces;
+using Famnances.Helpers;
+using Famnances.Helpers.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,25 +15,25 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddSession();
 
-builder.Services.AddAuthentication(o =>
-{
-    o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-    o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-})
-      .AddCookie()
-      .AddGoogleOpenIdConnect(options =>
-      {
-          options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-          options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-      })
-      .AddGoogle(googleOptions =>
-      {
-          googleOptions.SaveTokens = true;
-          googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-          googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
-      });
-
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie()
+    .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.SaveTokens = true;
+        options.Scope.Add("openid");
+        options.Scope.Add("profile");
+        options.Scope.Add("email");
+        //options.ResponseType = "code";
+        //})
+        //.AddFacebook(FacebookDefaults.AuthenticationScheme, options =>
+        //{
+        //    options.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+        //    options.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+        //    options.SaveTokens = true;
+    });
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ITokenHandler, TokenHandler>();
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
 

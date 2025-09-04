@@ -1,14 +1,10 @@
-﻿using Google.Apis.Auth.OAuth2;
-using Google.Apis.Oauth2.v2;
-using Google.Apis.Services;
+﻿using Azure;
+using Famnances.Helpers;
+using Famnances.Helpers.Interfaces;
+using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Famnances.Helpers.Interfaces;
-using Famnances.Helpers;
-using Famnances.Models.ViewModels;
 
 namespace Famnances.Controllers
 {
@@ -47,24 +43,32 @@ namespace Famnances.Controllers
             return Redirect("../Home/Index");
         }
 
-        public IActionResult GoogleLogin()
+        public IActionResult ExternalLogin(string provider)
         {
-            var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
-            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+            var redirectUrl = Url.Action("ExternalLoginCallback", new { provider });
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };            
+            return Challenge(properties, provider);
         }
 
-        public async Task<IActionResult> GoogleResponse()
+        public async Task<IActionResult> ExternalLoginCallback(string provider)
         {
             var auth = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            string accessToken = auth.Properties.GetTokenValue(OpenIdConnectParameterNames.AccessToken);
-            GoogleCredential cred2 = GoogleCredential.FromAccessToken(accessToken);
-            var oauthSerivce = new Oauth2Service(new BaseClientService.Initializer { HttpClientInitializer = cred2 });
-            var userinfo = await oauthSerivce.Userinfo.Get().ExecuteAsync();
-            GoogleAuthenticateRequest googleAuthenticateRequest = new GoogleAuthenticateRequest { Param_1 = userinfo.Email, Param_2 = accessToken };
-            var account = await HttpHelper.Post<LoginResponse>($"{Constants.AUTH_URI}/GoogleAuthenticate", googleAuthenticateRequest);
-            HttpContext.Session.SetString(Constants.TOKEN, account.Token);
-            HttpContext.Session.SetString(Constants.ACCOUNT_ID, account.AccountId.ToString());
-            if (account.IsFirstLogin)
+            if (!auth.Succeeded)
+                return RedirectToAction("Logout");
+
+            string accessToken = auth.Properties.GetTokenValue("access_token");
+            string idToken = auth.Properties.GetTokenValue("id_token");
+
+            ExternalAuthenticate request = new ExternalAuthenticate { Param_1 = provider, Param_2 = accessToken, Param_3 = idToken };
+                       
+
+            var response = await HttpHelper.Post<LoginResponse>($"{Constants.AUTH_URI}/ExternalAuthenticate", request);
+            if (response == null)
+                return RedirectToAction("Logout");
+            
+            HttpContext.Session.SetString(Constants.TOKEN, response.Token);
+            HttpContext.Session.SetString(Constants.ACCOUNT_ID, response.AccountId.ToString());
+            if (response.IsFirstLogin)
                 return RedirectToAction("Details", "Users");
             return RedirectToAction("Index","Home");
         }

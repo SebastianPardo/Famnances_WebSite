@@ -5,14 +5,15 @@
         public const string TOKEN = "TOKEN";
         public const string ACCOUNT_ID = "ACCOUNT";
 
-#if DEBUG
+//#if DEBUG
 
         private const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
         private const string FAMNACES_SERVICES_URI = "https://localhost:7246/Api/";
-#else
-        public const string FAMNACES_SERVICES_URI = "";  
-#endif
-        
+//#else
+//        private const string AUTH_SERVICES_URI = "https://sp-authservices.azurewebsites.net/Api/";
+//        private const string FAMNACES_SERVICES_URI = "https://famnancesservices.azurewebsites.net/Api/";  
+//#endif
+
         public const string AUTH_URI = AUTH_SERVICES_URI + "Auth";
         public const string ACCOUNT_URI = AUTH_SERVICES_URI + "Account";
 

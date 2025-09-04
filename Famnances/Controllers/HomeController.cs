@@ -1,12 +1,13 @@
+using Famnances.AuthMiddleware;
 using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
-using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
