@@ -1,11 +1,8 @@
-﻿using Famnances.AuthMiddleware;
-using Famnances.DataCore.Data;
-using Famnances.DataCore.Entities;
+﻿using Famnances.DataCore.Entities;
 using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers

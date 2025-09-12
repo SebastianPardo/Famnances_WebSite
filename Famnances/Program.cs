@@ -1,6 +1,7 @@
-using Famnances.AuthMiddleware;
-using Famnances.AuthMiddleware.Entities;
-using Famnances.AuthMiddleware.Interfaces;
+using Famnances.Core;
+using Famnances.Core.Entities;
+using Famnances.Core.Security.Services;
+using Famnances.Core.Security.Services.Interfaces;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
