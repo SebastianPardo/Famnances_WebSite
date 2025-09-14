@@ -1,4 +1,4 @@
-using Famnances.AuthMiddleware;
+using Famnances.Core.Security.Authorization;
 using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers.Interfaces;
