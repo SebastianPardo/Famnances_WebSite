@@ -31,10 +31,10 @@
 
   <ItemGroup>
     <Reference Include="Famnances.Core">
-      <HintPath>..\..\Famnances_DataModel\Famnances.Core\bin\Debug\net8.0\Famnances.Core.dll</HintPath>
+      <HintPath>..\..\Famnances_DataModel\Famnances.Core\bin\Release\net8.0\Famnances.Core.dll</HintPath>
     </Reference>
     <Reference Include="Famnances.DataCore">
-      <HintPath>..\..\Famnances_DataModel\Famnances.Core\bin\Debug\net8.0\Famnances.DataCore.dll</HintPath>
+      <HintPath>..\..\Famnances_DataModel\Famnances.DataCore\bin\Release\net8.0\Famnances.DataCore.dll</HintPath>
     </Reference>
   </ItemGroup>
 
