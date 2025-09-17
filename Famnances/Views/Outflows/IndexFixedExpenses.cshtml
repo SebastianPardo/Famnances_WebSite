@@ -59,10 +59,10 @@
                             @Html.DisplayFor(modelItem => item.Value)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.StartDate)
+                            @Html.DisplayFor(modelItem => item.StartDate.ToString("dd - MM - yyyy"))
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.EndDate)
+                            @Html.DisplayFor(modelItem => item.EndDate.Value.ToString("dd - MM - yyyy"))
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Period.Code)

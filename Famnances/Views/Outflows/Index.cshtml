@@ -24,10 +24,10 @@
                         @Html.DisplayNameFor(model => model.Value)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.DateTimeStamp)
+                        @Html.DisplayNameFor(model => model.TransactionDate)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.ExpensesBudget)
+                        Budget
                     </th>
                     <th></th>
                 </tr>
@@ -43,7 +43,7 @@
                             @Html.DisplayFor(modelItem => item.Value)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DateTimeStamp)
+                            @item.TransactionDate.ToString("dd MMM yyyy")
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ExpensesBudget.Name)

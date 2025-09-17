@@ -38,7 +38,7 @@ namespace Famnances.WebSite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,IsExpense,IsEmergency,Value,SavingsPocketId")] SavingRecord savingRecord)
+        public async Task<IActionResult> Create([Bind("Id,Description,IsExpense,IsEmergency,Value,SavingsPocketId,TransactionDate")] SavingRecord savingRecord)
         {
             if (ModelState.IsValid)
             {

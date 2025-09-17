@@ -36,7 +36,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,Value,DateTimeStamp")] Inflow inflow)
+        public async Task<IActionResult> Create([Bind("Id,Description,Value,TransactionDate")] Inflow inflow)
         {
             if (ModelState.IsValid)
             {

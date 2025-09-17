@@ -13,6 +13,11 @@
     <input type="hidden" asp-for="Id" />
     <div class="row">
         <div class="col-md-3">
+            <label asp-for="ExpenseBudgetId" class="control-label"></label>
+            <select asp-for="ExpenseBudgetId" class="form-control" asp-items="ViewBag.ExpenseBudgetId"></select>
+            <span asp-validation-for="ExpenseBudgetId" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
             <label asp-for="Description" class="control-label"></label>
             <input asp-for="Description" class="form-control" />
             <span asp-validation-for="Description" class="text-danger"></span>
@@ -23,14 +28,9 @@
             <span asp-validation-for="Value" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="ExpenseBudgetId" class="control-label"></label>
-            <select asp-for="ExpenseBudgetId" class="form-control" asp-items="ViewBag.ExpenseBudgetId"></select>
-            <span asp-validation-for="ExpenseBudgetId" class="text-danger"></span>
-        </div>
-        <div class="col-md-3">
-            <label asp-for="DateTimeStamp" class="control-label"></label>
-            <input asp-for="DateTimeStamp" class="form-control" disabled />
-            <span asp-validation-for="DateTimeStamp" class="text-danger"></span>
+            <label asp-for="TransactionDate" class="control-label"></label>
+            <input asp-for="TransactionDate" class="form-control" type="date"/>
+            <span asp-validation-for="TransactionDate" class="text-danger"></span>
         </div>
     </div>
 

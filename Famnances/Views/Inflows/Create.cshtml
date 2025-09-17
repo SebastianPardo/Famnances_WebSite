@@ -18,8 +18,13 @@
         </div>
         <div class="col-md-4">
             <label asp-for="Value" class="control-label"></label>
-            <input asp-for="Value" class="form-control" />
+            <input asp-for="Value" class="form-control" type="number"/>
             <span asp-validation-for="Value" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="TransactionDate" class="control-label"></label>
+            <input asp-for="TransactionDate" class="form-control" type="date" />
+            <span asp-validation-for="TransactionDate" class="text-danger"></span>
         </div>
         <div class="col-md-4">
             <input type="submit" value="Create" class="btn btn-primary" />
