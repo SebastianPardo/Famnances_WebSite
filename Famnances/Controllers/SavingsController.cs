@@ -2,6 +2,7 @@
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
+using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,11 @@ namespace Famnances.WebSite.Controllers
         {
             var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name");
+            ViewData["SavingsSources"] = new SelectList(
+                new[] {
+                    new { Id = "CASH", Name = "Cash" },
+                    new { Id = "CHE", Name = "Chequing" }
+                }, "Id", "Name");
             return View();
         }
 
@@ -38,14 +44,30 @@ namespace Famnances.WebSite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,IsExpense,IsEmergency,Value,SavingsPocketId,TransactionDate")] SavingRecord savingRecord)
+        public async Task<IActionResult> Create(SavingTransactionView model)
         {
+            SavingRecord savingRecord = model.SavingTransaction;
+
             if (ModelState.IsValid)
             {
+                if (model.SavingSource != "CASH" && !savingRecord.IsExpense)
+                {
+                    var pocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{savingRecord.SavingsPocketId}");
+                    Outflow outflow = new Outflow
+                    {
+                        Id = Guid.NewGuid(),
+                        Description = $"{savingRecord.Description} {pocket.Name}",
+                        ExpenseBudgetId = Guid.Parse("432029F1-61F8-410B-9786-EEC239ACF0B0"),
+                        TransactionDate = savingRecord.TransactionDate,
+                        Value = savingRecord.Value
+                    };
+                    outflow = await _httpHelper.Post<Outflow>($"{Constants.OUTFLOWS_URI}", outflow);
+                }
                 savingRecord.Id = Guid.NewGuid();
                 savingRecord = await _httpHelper.Post<SavingRecord>($"{Constants.SAVINGS_URI}", savingRecord);
                 return RedirectToAction(nameof(Index));
             }
+
             var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name", savingRecord.SavingsPocketId);
             return View(savingRecord);
