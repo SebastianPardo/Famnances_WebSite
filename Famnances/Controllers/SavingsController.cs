@@ -53,11 +53,12 @@ namespace Famnances.WebSite.Controllers
                 if (model.SavingSource != "CASH" && !savingRecord.IsExpense)
                 {
                     var pocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{savingRecord.SavingsPocketId}");
+                    var budget = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}/GetByType/SAV");
                     Outflow outflow = new Outflow
                     {
                         Id = Guid.NewGuid(),
                         Description = $"{savingRecord.Description} {pocket.Name}",
-                        ExpenseBudgetId = Guid.Parse("432029F1-61F8-410B-9786-EEC239ACF0B0"),
+                        ExpenseBudgetId = budget.First().Id,
                         TransactionDate = savingRecord.TransactionDate,
                         Value = savingRecord.Value
                     };
