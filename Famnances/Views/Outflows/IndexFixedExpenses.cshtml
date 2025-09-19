@@ -60,16 +60,17 @@
                     @Html.DisplayFor(modelItem => item.Value)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StartDate.ToString("dd - MM - yyyy"))
+                    @item.StartDate.ToString("dd MMM yyyy")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EndDate.Value.ToString("dd - MM - yyyy"))
+                    @item.EndDate.Value.ToString("dd MMM yyyy")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Period.Code)
                 </td>
                 <td>
                     <a asp-action="EditFixedExpenses" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="PayFixedExpenses" class="btn btn-indigo" asp-route-id="@item.Id">Pay</a>
                 </td>
             </tr>
         }

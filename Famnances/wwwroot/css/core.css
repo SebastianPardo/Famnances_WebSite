@@ -2862,6 +2862,11 @@ textarea.form-control-lg {
         color: #fff;
     }
 
+    .btn.btn-indigo {
+        background: var(--bs-indigo);
+        color: #fff;
+    }
+
     .btn:hover {
         top: -2px;
         -webkit-box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
