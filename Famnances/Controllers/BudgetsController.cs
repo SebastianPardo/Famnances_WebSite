@@ -30,11 +30,13 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ExpensesBudget entity)
+        public async Task<IActionResult> Create([Bind("Name,Value")]ExpensesBudget entity)
         {
             if (ModelState.IsValid)
             {
+                var budgetType = await _httpHelper.Get<ExpensesBudgetType>($"{Constants.BUDGET_TYPES_URI}/GetByCode/PER");
                 entity.Id = Guid.NewGuid();
+                entity.BudgetTypeId = budgetType.Id;
                 var budget = await _httpHelper.Post<ExpensesBudget>($"{Constants.BUDGETS_URI}", entity);
                 return RedirectToAction(nameof(Index));
             }
@@ -49,7 +51,7 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ExpensesBudget entity)
+        public async Task<IActionResult> Edit([Bind("Name,Value")] ExpensesBudget entity)
         {
             if (ModelState.IsValid)
             {

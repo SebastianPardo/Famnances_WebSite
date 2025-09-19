@@ -18,6 +18,7 @@
 
         public const string ACCOUNTING_URI = FAMNACES_SERVICES_URI + "Accounting";
         public const string BUDGETS_URI = FAMNACES_SERVICES_URI + "Budgets";
+        public const string BUDGET_TYPES_URI = FAMNACES_SERVICES_URI + "BudgetTypes";
         public const string CITIES_URI = FAMNACES_SERVICES_URI + "Cities";
         public const string COUNTRIES_URI = FAMNACES_SERVICES_URI + "Countries";
         public const string FIXED_EXPENSES_URI = FAMNACES_SERVICES_URI + "FixedExpenses";
