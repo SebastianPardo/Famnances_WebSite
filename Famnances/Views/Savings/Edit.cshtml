@@ -4,9 +4,12 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>SavingRecord</h4>
+<div class="d-flex justify-content-end">
+    <div class="col-md-1 me-5 text-body-primary text-end">
+        <h2 class="card-title"><strong>Edit</strong></h2>
+        <h5 class="card-subtitle">Saving Transaction</h5>
+    </div>
+</div>
 <hr />
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -14,12 +17,12 @@
     <div class="row">
         <div class="col-md-2 form-check">
             <label class="form-check-label">
-                <input class="form-check-input" asp-for="IsExpense" disabled/> @Html.DisplayNameFor(model => model.IsExpense)
+                <input class="form-check-input" asp-for="IsExpense" disabled /> @Html.DisplayNameFor(model => model.IsExpense)
             </label>
         </div>
         <div class="col-md-2 form-check">
             <label class="form-check-label">
-                <input class="form-check-input" asp-for="IsEmergency" disabled/> @Html.DisplayNameFor(model => model.IsEmergency)
+                <input class="form-check-input" asp-for="IsEmergency" disabled /> @Html.DisplayNameFor(model => model.IsEmergency)
             </label>
         </div>
     </div>
@@ -56,10 +59,6 @@
         </div>
     </div>
 </form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{

@@ -3,12 +3,13 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>SavingRecord</h4>
+<div class="d-flex justify-content-end">
+    <div class="col-md-1 me-5 text-body-primary text-end">
+        <h2 class="card-title"><strong>Create</strong></h2>
+        <h5 class="card-subtitle">Saving Transaction</h5>
+    </div>
+</div>
 <hr />
-
 <div class="row">
     <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -103,10 +104,6 @@
             </form>
         </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

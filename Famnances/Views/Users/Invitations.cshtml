@@ -1,54 +1,56 @@
 ﻿@model Famnances.Models.ViewModels.SearchUser
 
-
-<div class="card">
-    <form asp-action="Invitations">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                @Html.HiddenFor(m => m.HomeId)
-                @Html.HiddenFor(m => m.Guest.UserId)
-                <label asp-for="Guest.Name" class="control-label" style="margin:1rem 0.5rem 0.5rem 1rem">Search</label>
-                <input asp-for="Guest.Name" class="form-control autocomplete" placeholder="Begin typing name or email" />
-                @Html.ValidationMessageFor(m => m.Guest.Name, "", new { @class = "text-danger", @id = "GuestValidationMessage" })
-                @Html.ValidationMessage("GuestValidation", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-2">
-                <label class="control-label">&nbsp;</label>
-                <input type="submit" class="btn btn-primary form-control" value="Invite" />
-            </div>
-        </div>
-    </form>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Guests)
-                {
-                    <tr>
-                        <th>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </th>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            <a asp-action="AceptInvitation" class="btn btn-secondary" asp-route-invitationId="@item.InvitationId">Acept</a>
-                            <a asp-action="DeleteInvitation" class="btn btn-danger" asp-route-id="@item.InvitationId">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<div class="d-flex justify-content-end">
+    <div class="col-md-1 me-5 text-body-primary text-end">
+        <h2 class="card-title"><strong>Household</strong></h2>
+        @* <h5 class="card-subtitle">Income Discount</h5> *@
     </div>
 </div>
+<hr />
+<form asp-action="Invitations">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @Html.HiddenFor(m => m.HomeId)
+            @Html.HiddenFor(m => m.Guest.UserId)
+            <label asp-for="Guest.Name" class="control-label" style="margin:1rem 0.5rem 0.5rem 1rem">Search</label>
+            <input asp-for="Guest.Name" class="form-control autocomplete" placeholder="Begin typing name or email" />
+            @Html.ValidationMessageFor(m => m.Guest.Name, "", new { @class = "text-danger", @id = "GuestValidationMessage" })
+            @Html.ValidationMessage("GuestValidation", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-2">
+            <label class="control-label">&nbsp;</label>
+            <input type="submit" class="btn btn-primary form-control" value="Invite" />
+        </div>
+    </div>
+</form>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Guests)
+        {
+            <tr>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a asp-action="AceptInvitation" class="btn btn-secondary" asp-route-invitationId="@item.InvitationId">Acept</a>
+                    <a asp-action="DeleteInvitation" class="btn btn-danger" asp-route-id="@item.InvitationId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 @section Scripts {
     <script src="~/js/Users/Invitations.js"></script>
 }

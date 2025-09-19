@@ -4,75 +4,74 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="card">
-    <div class="d-flex justify-content-between">
-        <h4 class="card-header"><strong>Fixed Expenses</strong></h4>
-        <div class="m-3">
-            <a type="button" class="btn rounded-pill btn-icon btn-primary card-header" asp-controller="Outflows" asp-action="CreateFixedExpenses" formmethod="get">
-                <span class="tf-icons bx bx-plus"></span>
-            </a>
-        </div>
+<div class="d-flex justify-content-between">
+    <div class="ms-3 mb-3 mt-1">
+        <a type="button" class="btn btn-lg rounded-pill btn-icon btn-primary card-header" asp-controller="Outflows" asp-action="CreateFixedExpenses" formmethod="get">
+            <span class="tf-icons bx bx-plus"></span>
+        </a>
     </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Active)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Value)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.StartDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.EndDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Period)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @if (item.Active)
-                            {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
-                            }
-                            else
-                            {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Value)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartDate.ToString("dd - MM - yyyy"))
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EndDate.Value.ToString("dd - MM - yyyy"))
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Period.Code)
-                        </td>
-                        <td>
-                            <a asp-action="EditFixedExpenses" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="col-md-1 me-5 text-body-primary text-end">
+        <h2 class="card-title"><strong>Index</strong></h2>
+        <h5 class="card-subtitle">Fixed Expenses</h5>
     </div>
 </div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Period)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.Active)
+                    {
+                        <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate.ToString("dd - MM - yyyy"))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate.Value.ToString("dd - MM - yyyy"))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Period.Code)
+                </td>
+                <td>
+                    <a asp-action="EditFixedExpenses" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

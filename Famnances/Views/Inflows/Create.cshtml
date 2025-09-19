@@ -4,9 +4,12 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Inflow</h4>
+<div class="d-flex justify-content-end">
+    <div class="col-md-1 me-5 text-body-primary text-end">
+        <h2 class="card-title"><strong>Create</strong></h2>
+        <h5 class="card-subtitle">Inflow</h5>
+    </div>
+</div>
 <hr />
 <form asp-action="Create">
     <div class="row">
@@ -18,16 +21,19 @@
         </div>
         <div class="col-md-4">
             <label asp-for="Value" class="control-label"></label>
-            <input asp-for="Value" class="form-control" type="number"/>
+            <input asp-for="Value" class="form-control" type="number" />
             <span asp-validation-for="Value" class="text-danger"></span>
         </div>
         <div class="col-md-3">
             <label asp-for="TransactionDate" class="control-label"></label>
             <input asp-for="TransactionDate" class="form-control" type="date" />
             <span asp-validation-for="TransactionDate" class="text-danger"></span>
-        </div>
-        <div class="col-md-4">
-            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>        
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-2">
+            <label class="control-label">&nbsp;</label>
+            <input type="submit" class="btn btn-primary form-control" value="Save" />
         </div>
     </div>
 </form>

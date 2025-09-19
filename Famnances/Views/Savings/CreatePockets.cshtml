@@ -4,9 +4,12 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>SavingsPocket</h4>
+<div class="d-flex justify-content-end">
+    <div class="col-md-1 me-5 text-body-primary text-end">
+        <h2 class="card-title"><strong>Create</strong></h2>
+        <h5 class="card-subtitle">Saving Pocket</h5>
+    </div>
+</div>
 <hr />
 <form asp-action="CreatePockets">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>

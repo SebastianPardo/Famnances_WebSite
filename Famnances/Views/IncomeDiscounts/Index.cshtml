@@ -4,96 +4,95 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="card">
-    <div class="d-flex justify-content-between">
-        <h4 class="card-header"><strong>Income Discounts</strong></h4>
-        <div class="m-3">
-            <a type="button" class="btn rounded-pill btn-icon btn-primary card-header" asp-controller="IncomeDiscounts" asp-action="Create" formmethod="get">
-                <span class="tf-icons bx bx-plus"></span>
-            </a>
-        </div>
+<div class="d-flex justify-content-between">
+    <div class="ms-3 mb-3 mt-1">
+        <a type="button" class="btn btn-lg rounded-pill btn-icon btn-primary card-header" asp-controller="IncomeDiscounts" asp-action="Create" formmethod="get">
+            <span class="tf-icons bx bx-plus"></span>
+        </a>
     </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Active)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Value)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsPercentage)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsPrediscount)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsTax)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @if (item.Active)
-                            {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
-                            }
-                            else
-                            {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Value)
-                        </td>
-                        <td>
-                            @if (item.IsPercentage)
-                            {
-                                <input class="form-check-input" type="checkbox" id="IsPercentage" name="IsPercentage" value="true" checked disabled />
-                            }
-                            else
-                            {
-                                <input class="form-check-input" type="checkbox" id="IsPercentage" name="IsPercentage" value="true" disabled />
-                            }
-                        </td>
-                        <td>
-                            @if (item.IsPrediscount)
-                            {
-                                <input class="form-check-input" type="checkbox" id="IsPrediscount" name="IsPrediscount" value="true" checked disabled />
-                            }
-                            else
-                            {
-                                <input class="form-check-input" type="checkbox" id="IsPrediscount" name="IsPrediscount" value="true" disabled />
-                            }
-                        </td>
-                        <td>
-                            @if (item.IsTax)
-                            {
-                                <input class="form-check-input" type="checkbox" id="IsTax" name="IsTax" value="true" checked disabled />
-                            }
-                            else
-                            {
-                                <input class="form-check-input" type="checkbox" id="IsTax" name="IsTax" value="true" disabled />
-                            }
-                        </td>
-                        <td>
-                            <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="col-md-1 me-5 text-body-primary text-end">
+        <h2 class="card-title"><strong>Index</strong></h2>
+        <h5 class="card-subtitle">Income Discounts</h5>
     </div>
 </div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPrediscount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsTax)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.Active)
+                    {
+                        <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    @if (item.IsPercentage)
+                    {
+                        <input class="form-check-input" type="checkbox" id="IsPercentage" name="IsPercentage" value="true" checked disabled />
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" id="IsPercentage" name="IsPercentage" value="true" disabled />
+                    }
+                </td>
+                <td>
+                    @if (item.IsPrediscount)
+                    {
+                        <input class="form-check-input" type="checkbox" id="IsPrediscount" name="IsPrediscount" value="true" checked disabled />
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" id="IsPrediscount" name="IsPrediscount" value="true" disabled />
+                    }
+                </td>
+                <td>
+                    @if (item.IsTax)
+                    {
+                        <input class="form-check-input" type="checkbox" id="IsTax" name="IsTax" value="true" checked disabled />
+                    }
+                    else
+                    {
+                        <input class="form-check-input" type="checkbox" id="IsTax" name="IsTax" value="true" disabled />
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

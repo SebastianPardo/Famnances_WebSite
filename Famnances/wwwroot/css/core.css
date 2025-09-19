@@ -10783,9 +10783,24 @@ button.list-group-item-gray {
     color: #697a8d !important;
 }
 
+.text-body-primary {
+    --bs-text-opacity: 1;
+    color: var(--bs-primary) !important;
+}
+
+.text-body-secondary {
+    --bs-text-opacity: 1;
+    color: var(--bs-secondary) !important;
+}
+
+.text-body-danger {
+    --bs-text-opacity: 1;
+    color: var(--bs-danger) !important;
+}
+
 .text-muted {
     --bs-text-opacity: 1;
-    color: #a1acb8 !important;
+    color: var(--bs-danger) !important;
 }
 
 .text-black-50 {
