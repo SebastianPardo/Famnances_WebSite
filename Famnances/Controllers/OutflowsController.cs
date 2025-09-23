@@ -229,5 +229,13 @@ namespace Famnances.WebSite.Controllers
         {
             return await _httpHelper.Get<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}/{id}") != null;
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PayFixedExpenses(Guid id)
+        {
+            await _httpHelper.Post($"{Constants.FIXED_EXPENSES_URI}/Pay?id={id}",null);
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

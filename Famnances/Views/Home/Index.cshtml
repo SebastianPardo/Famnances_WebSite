@@ -281,7 +281,11 @@
                                 <div class="col-md text-start  text-primary fw-semibold"><h5 class="mb-0">$@fixedExpense.Value</h5></div>
                                 @if (fixedExpense.Id != Guid.Empty)
                                 {
-                                    <div class="col-md-auto text-end"><a asp-action="PayFixedExpenses" class="btn btn-sm btn-indigo" asp-route-id="@fixedExpense.Id">Pay</a></div>
+                                    <div class="col-md-auto text-end">
+                                        <form asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
+                                            <button type="submit" class="btn btn-sm btn-indigo">Pay</button>
+                                        </form>
+                                    </div>
                                 }
                                 else
                                 {
@@ -313,7 +317,7 @@
                     }
                 </ul>
             </div>
-        </div>        
+        </div>
     </div>
 
     <div class="col-sm-12 col-md-6">
