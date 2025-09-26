@@ -272,29 +272,34 @@
                 <div class="card-body">
                     <h4 class="card-title">Fixed Expenses</h4>
                 </div>
-                <ul class="list-group list-group-flush">
-                    @foreach (var fixedExpense in Model.SummaryFixedExpenses)
-                    {
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-md-2 text-primary fw-semibold"><h5 class="mb-0">@fixedExpense.Name</h5></div>
-                                <div class="col-md text-start  text-primary fw-semibold"><h5 class="mb-0">$@fixedExpense.Value</h5></div>
-                                @if (fixedExpense.Id != Guid.Empty)
-                                {
-                                    <div class="col-md-auto text-end">
-                                        <form asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
-                                            <button type="submit" class="btn btn-sm btn-indigo">Pay</button>
-                                        </form>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-auto text-end"><h5 class="text-success mb-0">Payed</h5></div>
-                                }
-                            </div>
-                        </li>
-                    }
-                </ul>
+                @foreach (var roommate in Model.Roommates)
+                {
+                    <h3>@roommate.Name</h3>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var fixedExpense in roommate.SummaryFixedExpenses)
+                        {
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-2 text-primary fw-semibold"><h5 class="mb-0">@fixedExpense.Name</h5></div>
+                                    <div class="col-md text-start  text-primary fw-semibold"><h5 class="mb-0">$@fixedExpense.Value</h5></div>
+                                    @if (fixedExpense.Id != Guid.Empty)
+                                    {
+                                        <div class="col-md-auto text-end">
+                                            <form asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
+                                                <button type="submit" class="btn btn-sm btn-indigo">Pay</button>
+                                            </form>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-auto text-end"><h5 class="text-success mb-0">Payed</h5></div>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+
             </div>
         </div>
         <div class="row mt-2">
@@ -302,20 +307,25 @@
                 <div class="card-body">
                     <h4 class="card-title">Budgets</h4>
                 </div>
-                <ul class="list-group list-group-flush">
-                    @foreach (var budget in Model.SummaryBudgets)
-                    {
-                        var balance = budget.Value - budget.Spent;
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-md-2 text-primary fw-semibold"><h5 class="mb-0">@budget.Name</h5></div>
-                                <div class="col-md text-start text-primary fw-semibold"><h5 class="mb-0">$@budget.Value</h5></div>
-                                <div class="col-md-auto text-end"><small class="text-danger fw-semibold mb-0"><i class="bx bx-down-arrow-alt"></i>$@budget.Spent</small></div>
-                                <div class="col-md-auto text-end"><h5 class="text-success mb-0">$@balance</h5></div>
-                            </div>
-                        </li>
-                    }
-                </ul>
+                @foreach (var roommate in Model.Roommates)
+                {
+                    <h3>@roommate.Name</h3>
+                    <ul class="list-group list-group-flush">
+                        @foreach (var budget in roommate.SummaryBudgets)
+                        {
+                            var balance = budget.Value - budget.Spent;
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-2 text-primary fw-semibold"><h5 class="mb-0">@budget.Name</h5></div>
+                                    <div class="col-md text-start text-primary fw-semibold"><h5 class="mb-0">$@budget.Value</h5></div>
+                                    <div class="col-md-auto text-end"><small class="text-danger fw-semibold mb-0"><i class="bx bx-down-arrow-alt"></i>$@budget.Spent</small></div>
+                                    <div class="col-md-auto text-end"><h5 class="text-success mb-0">$@balance</h5></div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+
+                }
             </div>
         </div>
     </div>
@@ -325,18 +335,22 @@
             <div class="card-body">
                 <h4 class="card-title">Saving Pockets</h4>
             </div>
-            <ul class="list-group list-group-flush">
-                @foreach (var pocket in Model.SummaryPockets)
-                {
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-md text-primary fw-semibold"><h5 class="mb-0">@pocket.Name</h5></div>
-                            <div class="col-md-auto text-end"><small class="text-danger fw-semibold mb-0"><i class="bx bx-down-arrow-alt mb-0"></i>$@pocket.Spent</small></div>
-                            <div class="col-md-auto text-end"><h5 class="text-success mb-0">$@pocket.Value</h5></div>
-                        </div>
-                    </li>
-                }
-            </ul>
+            @foreach (var roommate in Model.Roommates)
+            {
+                <h3>@roommate.Name</h3>
+                <ul class="list-group list-group-flush">
+                    @foreach (var pocket in roommate.SummaryPockets)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md text-primary fw-semibold"><h5 class="mb-0">@pocket.Name</h5></div>
+                                <div class="col-md-auto text-end"><small class="text-danger fw-semibold mb-0"><i class="bx bx-down-arrow-alt mb-0"></i>$@pocket.Spent</small></div>
+                                <div class="col-md-auto text-end"><h5 class="text-success mb-0">$@pocket.Value</h5></div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
         </div>
     </div>
 </div>
