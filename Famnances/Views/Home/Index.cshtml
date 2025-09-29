@@ -35,7 +35,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Budget</span>
+                        <span class="fw-semibold d-block mb-1 fs-4">Money by Period</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -55,23 +55,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4 me-2">Current balance</span>
-                    </div>
-                    <div class="col-1 align-items-end">
-                        <div class="dropdown">
-                            <button class="btn p-0"
-                                    type="button"
-                                    id="cardOpt3"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
-                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                            </div>
-                        </div>
+                        <span class="fw-semibold d-block mb-1 fs-5 me-2">Balance This Period</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -84,6 +68,7 @@
     <div class="col-lg-3 col-md-6 col-12 mb-4">
         <div class="card">
             <div class="card-body">
+                <a class="stretched-link" asp-controller="Outflows" asp-action="Index"></a>
                 <div class="card-title d-flex">
                     <div class="col-11 d-flex align-items-start">
                         <div class="avatar flex-shrink-0 me-2">
@@ -92,22 +77,6 @@
                                  class="rounded" />
                         </div>
                         <span class="fw-semibold d-block mb-1 fs-4">Expenses</span>
-                    </div>
-                    <div class="col-1 align-items-end">
-                        <div class="dropdown">
-                            <button class="btn p-0"
-                                    type="button"
-                                    id="cardOpt3"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
-                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -118,7 +87,6 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-lg-3 col-md-6 col-12 mb-4">
         <div class="card">
@@ -132,22 +100,6 @@
                         </div>
                         <span class="fw-semibold d-block mb-1 fs-4 me-2">Home Savings</span>
                     </div>
-                    <div class="col-1 align-items-end">
-                        <div class="dropdown">
-                            <button class="btn p-0"
-                                    type="button"
-                                    id="cardOpt3"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
-                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="col text-end">
                     <h3 class="card-title mb-2 text-primary">$@Model.HomeSavings</h3>
@@ -159,6 +111,7 @@
     <div class="col-lg-3 col-md-6 col-12 mb-4">
         <div class="card">
             <div class="card-body">
+                <a class="stretched-link" asp-controller="Inflows" asp-action="Index"></a>
                 <div class="card-title d-flex">
                     <div class="col-11 d-flex align-items-start">
                         <div class="avatar flex-shrink-0 me-2">
@@ -166,24 +119,8 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Chequing</span>
-                    </div>
-                    <div class="col-1 align-items-end">
-                        <div class="dropdown">
-                            <button class="btn p-0"
-                                    type="button"
-                                    id="cardOpt3"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
-                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                            </div>
-                        </div>
-                    </div>
+                        <span class="fw-semibold d-block mb-1 fs-4">Chequing Account</span>
+                    </div>                    
                 </div>
                 <div class="col text-end">
                     <h3 class="card-title mb-2 text-secondary">$@Model.Chequing</h3>
@@ -195,6 +132,7 @@
     <div class="col-lg-3 col-md-6 col-12 mb-4">
         <div class="card">
             <div class="card-body">
+                <a class="stretched-link" asp-controller="Savings" asp-action="Index"></a>
                 <div class="card-title d-flex">
                     <div class="col-11 d-flex align-items-start">
                         <div class="avatar flex-shrink-0 me-2">
@@ -202,23 +140,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Savings</span>
-                    </div>
-                    <div class="col-1 align-items-end">
-                        <div class="dropdown">
-                            <button class="btn p-0"
-                                    type="button"
-                                    id="cardOpt3"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
-                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                            </div>
-                        </div>
+                        <span class="fw-semibold d-block mb-1 fs-4">Savings Account</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -231,6 +153,7 @@
     <div class="col-lg-3 col-md-6 col-12 mb-4">
         <div class="card">
             <div class="card-body">
+                <a class="stretched-link" asp-controller="Savings" asp-action="Index"></a>
                 <div class="card-title d-flex">
                     <div class="col-11 d-flex align-items-start">
                         <div class="avatar flex-shrink-0 me-2">
@@ -238,23 +161,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Saving expenses</span>
-                    </div>
-                    <div class="col-1 align-items-end">
-                        <div class="dropdown">
-                            <button class="btn p-0"
-                                    type="button"
-                                    id="cardOpt3"
-                                    data-bs-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                @* <a class="dropdown-item" href="javascript:void(0);">View More</a> *@
-                                <a class="dropdown-item" href="javascript:void(0);">Details</a>
-                            </div>
-                        </div>
+                        <span class="fw-semibold d-block mb-1 fs-4">Saving Expenses</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -265,92 +172,162 @@
         </div>
     </div>
 </div>
+
 <div class="row">
-    <div class="col-sm-12 col-md-6">
-        <div class="row">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Fixed Expenses</h4>
+    <div class="col-sm-12 col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex">
+                    <span class="fw-semibold d-block mb-1 fs-4">Fixed Expenses</span>
                 </div>
-                @foreach (var roommate in Model.Roommates)
-                {
-                    <h3>@roommate.Name</h3>
-                    <ul class="list-group list-group-flush">
-                        @foreach (var fixedExpense in roommate.SummaryFixedExpenses)
-                        {
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-md-2 text-primary fw-semibold"><h5 class="mb-0">@fixedExpense.Name</h5></div>
-                                    <div class="col-md text-start  text-primary fw-semibold"><h5 class="mb-0">$@fixedExpense.Value</h5></div>
-                                    @if (fixedExpense.Id != Guid.Empty)
-                                    {
-                                        <div class="col-md-auto text-end">
-                                            <form asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
-                                                <button type="submit" class="btn btn-sm btn-indigo">Pay</button>
-                                            </form>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="col-md-auto text-end"><h5 class="text-success mb-0">Payed</h5></div>
-                                    }
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                }
+                <div class="col-md">
+                    <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
 
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Budgets</h4>
+                        @{
+                            int i = 1;
+                        }
+                        @foreach (var roommate in Model.Roommates)
+                        {
+                            <div class="accordion-item card">
+                                <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
+                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-@i" aria-controls="accordionIcon-@i">
+                                        @roommate.Name
+                                    </button>
+                                </h2>
+
+                                <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                                    <div class="accordion-body">
+                                        <ul class="list-group">
+                                            @foreach (var fixedExpense in roommate.SummaryFixedExpenses)
+                                            {
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6 col-md-6">
+                                                            <div class="row">
+                                                                <div class="col text-primary"><h5 class="mb-0">@fixedExpense.Name</h5></div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col text-primary"><small class="mb-0">$@fixedExpense.Value</small></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 col-md-6">
+                                                            <div class="col-md-auto text-end fw-semibold">
+                                                                @if (fixedExpense.Id != Guid.Empty)
+                                                                {
+                                                                    <form asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
+                                                                        <button type="submit" class="btn btn-indigo">Pay</button>
+                                                                    </form>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <h5 class="text-success mb-0">Payed</h5>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                        
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            i++;
+                        }
+                    </div>
                 </div>
-                @foreach (var roommate in Model.Roommates)
-                {
-                    <h3>@roommate.Name</h3>
-                    <ul class="list-group list-group-flush">
-                        @foreach (var budget in roommate.SummaryBudgets)
-                        {
-                            var balance = budget.Value - budget.Spent;
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-md-2 text-primary fw-semibold"><h5 class="mb-0">@budget.Name</h5></div>
-                                    <div class="col-md text-start text-primary fw-semibold"><h5 class="mb-0">$@budget.Value</h5></div>
-                                    <div class="col-md-auto text-end"><small class="text-danger fw-semibold mb-0"><i class="bx bx-down-arrow-alt"></i>$@budget.Spent</small></div>
-                                    <div class="col-md-auto text-end"><h5 class="text-success mb-0">$@balance</h5></div>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-
-                }
             </div>
         </div>
     </div>
-
-    <div class="col-sm-12 col-md-6">
+    <div class="col-sm-12 col-md-4">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Saving Pockets</h4>
-            </div>
-            @foreach (var roommate in Model.Roommates)
-            {
-                <h3>@roommate.Name</h3>
-                <ul class="list-group list-group-flush">
-                    @foreach (var pocket in roommate.SummaryPockets)
-                    {
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-md text-primary fw-semibold"><h5 class="mb-0">@pocket.Name</h5></div>
-                                <div class="col-md-auto text-end"><small class="text-danger fw-semibold mb-0"><i class="bx bx-down-arrow-alt mb-0"></i>$@pocket.Spent</small></div>
-                                <div class="col-md-auto text-end"><h5 class="text-success mb-0">$@pocket.Value</h5></div>
+                <div class="card-title d-flex">
+                    <span class="fw-semibold d-block mb-1 fs-4">Budgets</span>
+                </div>
+                <div class="col-md">
+                    <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
+                        @foreach (var roommate in Model.Roommates)
+                        {
+                            <div class="accordion-item card">
+                                <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
+                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-@i" aria-controls="accordionIcon-@i">
+                                        @roommate.Name
+                                    </button>
+                                </h2>
+
+                                <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                                    <div class="accordion-body">
+                                        <ul class="list-group">
+                                            @foreach (var budget in roommate.SummaryBudgets)
+                                            {
+                                                var balance = budget.Value - budget.Spent;
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6 col-md-6 text-primary"><h5 class="mb-0">@budget.Name</h5></div>
+                                                        <div class="col-6 col-md-6 text-end fw-semibold align-self-end"><h5 class="text-success mb-0">$@balance</h5></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6 col-md-6 text-start text-primary"><small class="mb-0">$@budget.Value</small></div>
+                                                        <div class="col-6 col-md-6 text-end fw-semibold"><small class="text-danger mb-0"><i class="bx bx-down-arrow-alt"></i>$@budget.Spent</small></div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                        </li>
-                    }
-                </ul>
-            }
+                            i++;
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title d-flex">
+                    <span class="fw-semibold d-block mb-1 fs-4">Savings Pockets</span>
+                </div>
+                <div class="col-md">
+                    <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
+                        @foreach (var roommate in Model.Roommates)
+                        {
+                            <div class="accordion-item card">
+                                <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
+                                    <button type="button"
+                                            class="accordion-button collapsed"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#accordionIcon-@i"
+                                            aria-controls="accordionIcon-@i">
+                                        @roommate.Name
+                                    </button>
+                                </h2>
+
+                                <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                                    <div class="accordion-body">
+                                        <ul class="list-group">
+                                            @foreach (var pocket in roommate.SummaryPockets)
+                                            {
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-6 col-md-6 text-primary"><h5 class="mb-0">@pocket.Name</h5></div>
+                                                        <div class="col-6 col-md-6 text-end fw-semibold"><h5 class="text-success mb-0">$@pocket.Value</h5></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col text-end fw-semibold"><small class="text-danger "><i class="bx bx-down-arrow-alt mb-0"></i>$@pocket.Spent</small></div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            i++;
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
