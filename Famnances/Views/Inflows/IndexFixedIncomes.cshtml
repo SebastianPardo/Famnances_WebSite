@@ -33,11 +33,11 @@
                 <td>
                     @if (item.Active)
                     {
-                        <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
+                        <input class="form-check-input" type="checkbox" id="Active" name="Active" checked disabled />
                     }
                     else
                     {
-                        <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
+                        <input class="form-check-input" type="checkbox" id="Active" name="Active" disabled />
                     }
                 </td>
                 <th>
@@ -50,8 +50,16 @@
                     @Html.DisplayFor(modelItem => item.PayablePeriod.Name)
                 </td>
                 <td>
-                    <a asp-action="EditFixedIncomes" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                    <div class="col-auto">
+                        <a asp-action="EditFixedIncomes" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                    </div>
+                    <div class="col-auto">
+                        <form asp-action="ReceiveFixedIncome" asp-route-id="@item.Id" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-indigo">Receive</button>
+                        </form>
+                    </div>
                 </td>
+
             </tr>
         }
     </tbody>

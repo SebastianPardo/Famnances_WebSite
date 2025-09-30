@@ -159,6 +159,13 @@ namespace Famnances.Controllers
             return RedirectToAction("IndexFixedIncomes");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReceiveFixedIncome(Guid id)
+        {
+            await _httpHelper.Post($"{Constants.FIXED_INCOMES_URI}/Receive?id={id}", null);
+            return RedirectToAction("Index", "Home");
+        }
         #endregion
     }
 }

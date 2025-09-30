@@ -1,4 +1,5 @@
 ﻿using Famnances.DataCore.Entities;
+using System.ComponentModel;
 
 namespace Famnances.Models.ViewModels
 {
@@ -6,5 +7,8 @@ namespace Famnances.Models.ViewModels
     {
         public SavingRecord SavingTransaction { get; set; }
         public string? SavingSource { get; set; }
+
+        [DisplayName("Transfer to checking?")]
+        public bool TranferToChequing { get; set; }
     }
 }

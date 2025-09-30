@@ -47,23 +47,35 @@ namespace Famnances.WebSite.Controllers
         public async Task<IActionResult> Create(SavingTransactionView model)
         {
             SavingRecord savingRecord = model.SavingTransaction;
+            var pocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{savingRecord.SavingsPocketId}");
 
             if (ModelState.IsValid)
             {
                 if (model.SavingSource != "CASH" && !savingRecord.IsExpense)
                 {
-                    var pocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{savingRecord.SavingsPocketId}");
                     var budget = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}/GetByType/SAV");
                     Outflow outflow = new Outflow
                     {
                         Id = Guid.NewGuid(),
-                        Description = $"{savingRecord.Description} {pocket.Name}",
+                        Description = $"Transfer to savings {savingRecord.Description} {pocket.Name}",
                         ExpenseBudgetId = budget.First().Id,
                         TransactionDate = savingRecord.TransactionDate,
                         Value = savingRecord.Value
                     };
                     outflow = await _httpHelper.Post<Outflow>($"{Constants.OUTFLOWS_URI}", outflow);
                 }
+                if(savingRecord.IsExpense && model.TranferToChequing)
+                {
+                    Inflow inflow = new Inflow
+                    {
+                        Id = Guid.NewGuid(),
+                        Description = $"Transfer from Savings {savingRecord.Description} {pocket.Name}",
+                        TransactionDate = savingRecord.TransactionDate,
+                        Value = savingRecord.Value
+                    };
+                    inflow = await _httpHelper.Post<Inflow>($"{Constants.INFLOWS_URI}", inflow);
+                }
+
                 savingRecord.Id = Guid.NewGuid();
                 savingRecord = await _httpHelper.Post<SavingRecord>($"{Constants.SAVINGS_URI}", savingRecord);
                 return RedirectToAction(nameof(Index));
