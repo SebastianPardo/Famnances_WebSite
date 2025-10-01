@@ -15,7 +15,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> Index()
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
-            var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
+            var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}/GetEditables");
             return View(budgets);
         }
 
