@@ -10,11 +10,18 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                <div class="row text-center">
-                    <h4>Login</h4>
-                    <hr />
+                <div class="row">
+                    <div class="col-lg-12 text-center mb-lg-0">
+                        <a asp-controller="Home" asp-action="Index" class="logo d-flex flex-wrap">
+                            <img src="~/images/logos/logo.png" class="rounded mx-auto d-block" style="max-width:100%" />
+                        </a>
+                    </div>
                 </div>
-                <form asp-action="Login">
+                <hr />
+                <div class="row text-center">
+                    <h4>SIGN IN or SIGN UP</h4>
+                </div>
+                @* <form asp-action="Login">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -35,9 +42,9 @@
                             <input type="submit" value="Sign in" class="btn btn-primary" />
                         </div>
                     </div>
-                </form>
+                </form> *@
 
-                <div class="row text-center">
+                <div class="row text-center mt-4">
                     <form asp-action="ExternalLogin" method="post">
                         <input type="hidden" name="provider" value="@GoogleDefaults.AuthenticationScheme" />
                         <button type="submit" alt="Submit" class="btn btn-outline-danger">
@@ -47,12 +54,12 @@
                             Sign in with Google
                         </button>
                     </form>
-                    <form asp-action="ExternalLogin" method="post">
+                    @* <form asp-action="ExternalLogin" method="post">
                         <input type="hidden" name="provider" value="@FacebookDefaults.AuthenticationScheme" />
                         <button type="submit" class="btn btn-outline-primary">
                             <i class="bi bi-facebook"></i> Sign in with Facebook
                         </button>
-                    </form>
+                    </form> *@
                 </div>
             </div>
         </div>
