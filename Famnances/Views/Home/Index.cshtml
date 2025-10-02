@@ -216,7 +216,7 @@
                                                                 {
                                                                     @if (fixedExpense.Owner)
                                                                     {
-                                                                        <form asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
+                                                                        <form asp-controller="Outflows" asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
                                                                             <button type="submit" class="btn btn-indigo">Pay</button>
                                                                         </form>
                                                                     }
