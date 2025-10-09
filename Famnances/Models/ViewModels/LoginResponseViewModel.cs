@@ -1,6 +1,6 @@
 ﻿namespace Famnances.Models.ViewModels
 {
-    public class LoginResponse
+    public class LoginResponseViewModel
     {
         public Guid AccountId { get; set; }
         public string FirstName { get; set; }

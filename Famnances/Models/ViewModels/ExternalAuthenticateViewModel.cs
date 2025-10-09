@@ -2,7 +2,7 @@ namespace Famnances.Models.ViewModels;
 
 using System.ComponentModel.DataAnnotations;
 
-public class ExternalAuthenticate
+public class ExternalAuthenticateViewModel
 {
     [Required]
     public string Param_1 { get; set; }

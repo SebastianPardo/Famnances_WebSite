@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Famnances.Models.ViewModels
 {
-    public class SavingTransactionView
+    public class SavingTransactionViewModel
     {
         public SavingRecord SavingTransaction { get; set; }
         public string? SavingSource { get; set; }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Famnances.Models.ViewModels
 {
-    public class Login
+    public class LoginViewModel
     {
         [Required]
         [DisplayName("User")]

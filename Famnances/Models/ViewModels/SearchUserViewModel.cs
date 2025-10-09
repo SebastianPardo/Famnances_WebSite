@@ -1,17 +1,16 @@
 ﻿using Famnances.DataCore.Entities;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Famnances.Models.ViewModels
 {
-    public class SearchUser
+    public class SearchUserViewModel
     {
-        public SearchUser(Guid? homeId, HomeInvitation invitation)
+        public SearchUserViewModel(Guid? homeId, HomeInvitation invitation)
         {
             HomeId = homeId ?? Guid.Empty;
             Guests = new List<Guest> { new Guest(invitation) };
         }
 
-        public SearchUser(Guid? homeId, List<HomeInvitation> invitations)
+        public SearchUserViewModel(Guid? homeId, List<HomeInvitation> invitations)
         {
             HomeId = homeId ?? Guid.Empty;
             Guests = invitations.Select(e => new Guest(e)).ToList();
