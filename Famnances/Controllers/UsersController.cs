@@ -66,12 +66,12 @@ namespace Famnances.Controllers
             if (user.HomeAdministrator)
             {
                 var invitations = await _httpHelper.Get<List<HomeInvitation>>($"{Constants.HOME_URI}/GetGuestRequests/{user.HomeId}");
-                return View(new SearchUser(user.HomeId, invitations));
+                return View(new SearchUserViewModel(user.HomeId, invitations));
             }
             else
             {
                 var invitation = await _httpHelper.Get<List<HomeInvitation>>($"{Constants.HOME_URI}/GetInvitations");
-                return View(new SearchUser(user.HomeId, invitation));
+                return View(new SearchUserViewModel(user.HomeId, invitation));
             }
         }
 
@@ -97,7 +97,7 @@ namespace Famnances.Controllers
             }
 
             var invitations = await _httpHelper.Post<List<HomeInvitation>>($"{Constants.HOME_URI}/Invite", homeInvitation);
-            return View(new SearchUser(user.HomeId, invitations ?? new List<HomeInvitation>()));
+            return View(new SearchUserViewModel(user.HomeId, invitations ?? new List<HomeInvitation>()));
         }
 
         [HttpGet]

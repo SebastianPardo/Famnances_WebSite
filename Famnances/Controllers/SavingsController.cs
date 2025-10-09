@@ -44,7 +44,7 @@ namespace Famnances.WebSite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SavingTransactionView model)
+        public async Task<IActionResult> Create(SavingTransactionViewModel model)
         {
             SavingRecord savingRecord = model.SavingTransaction;
             var pocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{savingRecord.SavingsPocketId}");

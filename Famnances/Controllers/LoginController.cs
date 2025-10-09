@@ -17,7 +17,7 @@ namespace Famnances.Controllers
             HttpHelper = httpHelper;
         }
 
-        // GET: Login
+        // GET: LoginViewModel
         [HttpGet]
         public ActionResult Index()
         {
@@ -35,9 +35,9 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Login(Login login)
+        public async Task<ActionResult> Login(LoginViewModel login)
         {
-            LoginResponse user = await HttpHelper.Post<LoginResponse>($"{Constants.AUTH_URI}/Authenticate", login);
+            LoginResponseViewModel user = await HttpHelper.Post<LoginResponseViewModel>($"{Constants.AUTH_URI}/Authenticate", login);
             HttpContext.Session.SetString(Constants.TOKEN, user.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, user.AccountId.ToString());
             return Redirect("../Home/Index");
@@ -59,10 +59,10 @@ namespace Famnances.Controllers
             string accessToken = auth.Properties.GetTokenValue("access_token");
             string idToken = auth.Properties.GetTokenValue("id_token");
 
-            ExternalAuthenticate request = new ExternalAuthenticate { Param_1 = provider, Param_2 = accessToken, Param_3 = idToken };
+            ExternalAuthenticateViewModel request = new ExternalAuthenticateViewModel { Param_1 = provider, Param_2 = accessToken, Param_3 = idToken };
                        
 
-            var response = await HttpHelper.Post<LoginResponse>($"{Constants.AUTH_URI}/ExternalAuthenticate", request);
+            var response = await HttpHelper.Post<LoginResponseViewModel>($"{Constants.AUTH_URI}/ExternalAuthenticate", request);
             if (response == null)
                 return RedirectToAction("Logout");
             
