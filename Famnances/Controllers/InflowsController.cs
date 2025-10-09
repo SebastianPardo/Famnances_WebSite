@@ -1,8 +1,11 @@
 ﻿using Famnances.DataCore.Entities;
+using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers.Interfaces;
+using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
@@ -25,9 +28,10 @@ namespace Famnances.Controllers
         }
 
         // GET: Inflows/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            //ViewData["UserId"] = new SelectList(_context.User, "Id", "Address");
+            var discounts = await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}");
+            ViewData["Discounts"] = new SelectList(discounts, "Id", "Description");
             return View();
         }
 
@@ -36,15 +40,16 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,Value,TransactionDate")] Inflow inflow)
+        public async Task<IActionResult> Create(IncomeTransactionModel inflow)
         {
             if (ModelState.IsValid)
             {
-                inflow.Id = Guid.NewGuid();
-                inflow = await _httpHelper.Post<Inflow>($"{Constants.INFLOWS_URI}", inflow);
+                inflow.Income.Id = Guid.NewGuid();
+                inflow = await _httpHelper.Post<IncomeTransactionModel>($"{Constants.INFLOWS_URI}", inflow);
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", inflow.UserId);
+            var discounts = await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}");
+            ViewData["Discounts"] = new SelectList(discounts, "Id", "Address");
             return View(inflow);
         }
 
@@ -70,9 +75,9 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Description,Value,DateTimeStamp,UserId")] Inflow inflow)
+        public async Task<IActionResult> Edit(Guid id, IncomeTransactionModel inflow)
         {
-            if (id != inflow.Id)
+            if (id != inflow.Income.Id)
             {
                 return NotFound();
             }
@@ -81,7 +86,7 @@ namespace Famnances.Controllers
             {
                 try
                 {
-                    inflow = await _httpHelper.Put<Inflow>($"{Constants.INFLOWS_URI}/{id}", inflow);
+                    inflow.Income = await _httpHelper.Put<Inflow>($"{Constants.INFLOWS_URI}/{id}", inflow.Income);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,14 +131,16 @@ namespace Famnances.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateFixedIncomes()
         {
+            ViewBag.Discounts = new SelectList(await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}"), "Id", "Description");
             ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.PERIODS_URI}"), "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateFixedIncomes(FixedIncome entity)
+        public async Task<IActionResult> CreateFixedIncomes(FixedIncomeViewModel entity)
         {
-            entity = await _httpHelper.Post<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity);
+            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e=> new FixedIncomeByDiscount { FixedIncomeId = e}).ToList();
+            entity.FixedIncome = await _httpHelper.Post<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity.FixedIncome);
             return RedirectToAction("IndexFixedIncomes");
         }
 
@@ -146,9 +153,10 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditFixedIncomes(FixedIncome entity)
+        public async Task<IActionResult> EditFixedIncomes(FixedIncomeViewModel entity)
         {
-            entity = await _httpHelper.Put<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity);
+            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e => new FixedIncomeByDiscount { FixedIncomeId = e }).ToList();
+            entity.FixedIncome = await _httpHelper.Put<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity.FixedIncome);
             return RedirectToAction("IndexFixedIncomes");
         }
 

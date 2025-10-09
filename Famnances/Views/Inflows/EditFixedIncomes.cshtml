@@ -1,4 +1,4 @@
-﻿@model Famnances.DataCore.Entities.FixedIncome
+﻿@model Famnances.Models.ViewModels.FixedIncomeViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,7 +14,7 @@
 
 <form asp-action="FixedIncomeUpdate" asp-controller="Inflows" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="FixedIncome.Id" />
     <div class="row">
         <div class="col col-md-3 col-sm-6">
             <div class="form-check form-check-inline" style="margin-top: 2rem;">
@@ -27,26 +27,32 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <label asp-for="Description" class="control-label text-start"></label>
-            <input asp-for="Description" class="form-control" />
-            <span asp-validation-for="Description" class="text-danger"></span>
+            <label asp-for="FixedIncome.Description" class="control-label text-start"></label>
+            <input asp-for="FixedIncome.Description" class="form-control" />
+            <span asp-validation-for="FixedIncome.Description" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="Value" class="control-label text-start"></label>
-            <input asp-for="Value" class="form-control" type="number" step="0.01" />
-            <span asp-validation-for="Value" class="text-danger"></span>
+            <label asp-for="FixedIncome.Value" class="control-label text-start"></label>
+            <input asp-for="FixedIncome.Value" class="form-control" type="number" step="0.01" />
+            <span asp-validation-for="FixedIncome.Value" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="FirstPayDate" class="control-label text-start"></label>
-            <input asp-for="FirstPayDate" class="form-control" type="date" />
-            <span asp-validation-for="FirstPayDate" class="text-danger"></span>
+            <label asp-for="FixedIncome.FirstPayDate" class="control-label text-start"></label>
+            <input asp-for="FixedIncome.FirstPayDate" class="form-control" type="date" />
+            <span asp-validation-for="FixedIncome.FirstPayDate" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="PayablePeriodId" class="control-label text-start"></label>
-            <select asp-for="PayablePeriodId" class="form-select" asp-items="@ViewBag.Periods" data_live_search="true">
-                <option disabled selected> Select </option>
+            <label asp-for="FixedIncome.PayablePeriodId" class="control-label text-start"></label>
+            <select asp-for="FixedIncome.PayablePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                <option selected disabled hidden>Select</option>
             </select>
-            <span asp-validation-for="PayablePeriod" class="text-danger"></span>
+            <span asp-validation-for="FixedIncome.PayablePeriod" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label class="control-label text-start">Discount</label>
+            <select asp-for="SelectedIncomeDiscountIds" class="select2 form-control" asp-items=@ViewBag.Discounts multiple placeholder="Select"></select>
         </div>
     </div>
     <div class="row justify-content-center">
