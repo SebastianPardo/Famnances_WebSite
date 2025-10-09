@@ -28,20 +28,20 @@
     <div class="row">
         <div class="col-md-3">
             <label class="control-label text-start">Country</label>
-            <select id="Country" class="form-select" asp-items="@ViewBag.Countries" data-live-search="true">
-                <option disabled selected> Select </option>
+            <select id="Country" class="form-control select2" asp-items="@ViewBag.Countries" data-live-search="true">
+                <option selected disabled hidden>Select</option>
             </select>
         </div>
         <div class="col-md-3">
             <label class="control-label text-start">Province</label>
-            <select id="Province" class="form-select" data-live-search="true" disabled>
-                <option disabled selected> Select </option>
+            <select id="Province" class="form-control select2" data-live-search="true">
+                <option selected disabled hidden>Select</option>
             </select>
         </div>
         <div class="col-md-3">
             <label asp-for="CityId" class="control-label text-start"></label>
-            <select asp-for="CityId" class="form-select" data_live_search="true" disabled>
-                <option disabled selected> Select </option>
+            <select asp-for="CityId" class="form-control select2" data-live-search="true">
+                <option selected disabled hidden>Select</option>
             </select>
             <span asp-validation-for="City" class="text-danger"></span>
         </div>
@@ -86,8 +86,8 @@
         </div>
         <div class="col-md-3">
             <label asp-for="PeriodId" class="control-label text-start"></label>
-            <select asp-for="PeriodId" asp-items="@ViewBag.Periods" class="form-select no-search">
-                <option disabled selected> Select </option>
+            <select asp-for="PeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                <option selected disabled hidden>Select</option>
             </select>
             <span asp-validation-for="Period" class="text-danger"></span>
         </div>

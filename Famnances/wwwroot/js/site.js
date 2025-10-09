@@ -25,11 +25,49 @@ $(document).ready(function () {
             $('#logo-img').attr("src", '/images/logos/Logo_2_white.png');
         }
     });
-    $('select').select2({ theme: 'bootstrap-5' });
-    $("select.no-search").select2({ theme: 'bootstrap-5', minimumResultsForSearch: Infinity })
+
+    $('.select2').each(function () {
+        const $select = $(this);
+
+        const ph = $select.attr('placeholder') || $select.data('placeholder');
+        const options = {
+            theme: 'bootstrap-5',
+            width: '100%',
+            placeholder: ph,
+        };
+
+        if ($select.prop('multiple')) {
+            options.closeOnSelect = false;
+            options.minimumResultsForSearch = Infinity;
+        }
+
+        $select.select2(options);
+
+        const instance = $select.data('select2');
+        const $rendered = instance.$container.find('.select2-selection__rendered');
+
+        $rendered.attr('data-placeholder', ph);
+        function updatePlaceholderState() {
+            const val = $select.val();
+            const isEmpty = !val || (Array.isArray(val) && val.length === 0);
+            $rendered.toggleClass('empty', isEmpty);
+        }
+
+        updatePlaceholderState();
+        $select.on('change.select2', updatePlaceholderState);
+
+        // ✅ Mantener abierto el dropdown solo para múltiple
+        if ($select.prop('multiple')) {
+            $select.on('select2:select select2:unselect', function () {
+                const el = $(this);
+                setTimeout(() => el.select2('open'), 0);
+            });
+        }
+    });
+
     $("table").DataTable({
-        autowidth:true,
-        responsive:true,
+        autowidth: true,
+        responsive: true,
         ordering: false,
         lengthChange: false,
         searching: false,

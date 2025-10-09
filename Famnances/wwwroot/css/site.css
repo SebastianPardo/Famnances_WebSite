@@ -90,3 +90,20 @@
         transform: rotate(360deg);
     }
 }
+
+.select2-container--bootstrap-5 .select2-search--inline {
+    display: none !important;
+}
+
+/* Muestra placeholder falso cuando el select múltiple está vacío */
+.select2-container--bootstrap-5 .select2-selection__rendered.empty::before {
+    content: attr(data-placeholder);
+    color: #6c757d;
+    padding-left: 8px;
+    line-height: 38px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}

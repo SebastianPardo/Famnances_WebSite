@@ -29,7 +29,9 @@
     <div class="row">
         <div class="col-md-3">
             <label asp-for="SavingsPocketId" class="control-label"></label>
-            <select asp-for="SavingsPocketId" class="form-control" asp-items="ViewBag.SavingsPocketId"></select>
+            <select asp-for="SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
+                <option selected disabled hidden>Select</option>
+            </select>
             <span asp-validation-for="SavingsPocketId" class="text-danger"></span>
         </div>
         <div class="col-md-3">

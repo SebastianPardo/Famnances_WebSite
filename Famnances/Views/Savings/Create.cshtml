@@ -1,4 +1,4 @@
-﻿@model Famnances.Models.ViewModels.SavingTransactionView
+﻿@model Famnances.Models.ViewModels.SavingTransactionViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -40,7 +40,9 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label asp-for="SavingTransaction.SavingsPocketId" class="control-label"></label>
-                        <select asp-for="SavingTransaction.SavingsPocketId" class="form-control" asp-items="ViewBag.SavingsPocketId"></select>
+                        <select asp-for="SavingTransaction.SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
+                            <option selected disabled hidden>Select</option>
+                        </select>
                     </div>
                     <div class="col-md-3">
                         <label asp-for="SavingTransaction.Description" class="control-label"></label>
@@ -74,14 +76,18 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label asp-for="SavingSource" class="control-label"></label>
-                        <select asp-for="SavingSource" class="form-control" asp-items="ViewBag.SavingsSources"></select>
+                        <select asp-for="SavingSource" class="form-control select2" asp-items="@ViewBag.SavingsSources" data-live-search="true">
+                            <option selected disabled hidden>Select</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-3">
                         <label asp-for="SavingTransaction.SavingsPocketId" class="control-label"></label>
-                        <select asp-for="SavingTransaction.SavingsPocketId" class="form-control" asp-items="ViewBag.SavingsPocketId"></select>
+                        <select asp-for="SavingTransaction.SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
+                            <option selected disabled hidden>Select</option>
+                        </select>
                     </div>
                     <div class="col-md-3">
                         <label asp-for="SavingTransaction.Description" class="control-label"></label>
@@ -111,8 +117,8 @@
     </div>
 </div>
 
-@section Scripts {
+@* @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+} *@

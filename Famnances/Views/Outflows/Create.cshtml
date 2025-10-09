@@ -17,7 +17,9 @@
     <div class="row">
         <div class="col-md-3">
             <label asp-for="ExpenseBudgetId" class="control-label"></label>
-            <select asp-for="ExpenseBudgetId" class="form-control" asp-items="ViewBag.ExpenseBudgetId"></select>
+            <select asp-for="ExpenseBudgetId" class="form-control select2" asp-items="@ViewBag.ExpenseBudgetId" data-live-search="true">
+                <option selected disabled hidden>Select</option>
+            </select>
         </div>
         <div class="col-md-3">
             <label asp-for="Description" class="control-label"></label>

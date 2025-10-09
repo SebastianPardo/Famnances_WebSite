@@ -44,7 +44,9 @@
     <div class="row">
         <div class="col-md-3">
             <label asp-for="PeriodId" class="control-label"></label>
-            <select asp-for="PeriodId" class="form-control" asp-items="ViewBag.PeriodId"></select>
+            <select asp-for="PeriodId" class="form-control select2" asp-items="@ViewBag.PeriodId" data-live-search="true">
+                <option selected disabled hidden>Select</option>
+            </select>
         </div>
     </div>
     <div class="row justify-content-center">
