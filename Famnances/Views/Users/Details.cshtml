@@ -69,19 +69,19 @@
         </div>
         <div class="col-md-3">
             <label asp-for="TotalBudget" class="control-label text-start"></label>
-            <input asp-for="TotalBudget" class="form-control" />
+            <input asp-for="TotalBudget" class="form-control" type="number" step="0.01" placeholder="00.00" />
             <span asp-validation-for="TotalBudget" class="text-danger"></span>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3">
             <label asp-for="TotalSavings" class="control-label text-start"></label>
-            <input asp-for="TotalSavings" class="form-control" />
+            <input asp-for="TotalSavings" class="form-control" type="number" step="0.01" placeholder="00.00" />
             <span asp-validation-for="TotalSavings" class="text-danger"></span>
         </div>
         <div class="col-md-3">
             <label asp-for="BudgetByPeriod" class="control-label text-start"></label>
-            <input asp-for="BudgetByPeriod" class="form-control" />
+            <input asp-for="BudgetByPeriod" class="form-control" type="number" step="0.01" />
             <span asp-validation-for="BudgetByPeriod" class="text-danger"></span>
         </div>
         <div class="col-md-3">

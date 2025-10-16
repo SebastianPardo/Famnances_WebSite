@@ -4,6 +4,7 @@ if (preloader) {
     window.addEventListener('submit', () => { preloader.show(); })
 }
 
+
 /////////////////////////////////////////////////////////////////////////
 
 
@@ -56,7 +57,6 @@ $(document).ready(function () {
         updatePlaceholderState();
         $select.on('change.select2', updatePlaceholderState);
 
-        // ✅ Mantener abierto el dropdown solo para múltiple
         if ($select.prop('multiple')) {
             $select.on('select2:select select2:unselect', function () {
                 const el = $(this);
@@ -71,7 +71,7 @@ $(document).ready(function () {
         ordering: false,
         lengthChange: false,
         searching: false,
-    });
+    });    
 });
 
 function enableFields(...fields) {
