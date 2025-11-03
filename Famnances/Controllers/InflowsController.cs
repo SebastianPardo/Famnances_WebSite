@@ -139,7 +139,7 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateFixedIncomes(FixedIncomeViewModel entity)
         {
-            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e=> new FixedIncomeByDiscount { FixedIncomeId = e}).ToList();
+            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e=> new FixedIncomeByDiscount { IncomeDiscountId = e}).ToList();
             entity.FixedIncome = await _httpHelper.Post<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity.FixedIncome);
             return RedirectToAction("IndexFixedIncomes");
         }
@@ -148,19 +148,27 @@ namespace Famnances.Controllers
         public async Task<IActionResult> EditFixedIncomes(Guid id)
         {
             var fixedIncome = await _httpHelper.Get<FixedIncome>($"{Constants.FIXED_INCOMES_URI}/{id}");
-            ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.PERIODS_URI}"), "Id", "Name", fixedIncome.PayablePeriodId);
-            return View(fixedIncome);
+            FixedIncomeViewModel fixedIncomeVM = new FixedIncomeViewModel
+            {
+                FixedIncome = fixedIncome,
+                SelectedIncomeDiscountIds = fixedIncome.FixedIncomeByDiscount.Select(e => e.IncomeDiscountId).ToList()
+            };
+
+            ViewBag.Discounts = new SelectList(await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}"), "Id", "Description");
+            ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.PERIODS_URI}"), "Id", "Name");
+            return View(fixedIncomeVM);
         }
 
         [HttpPost]
         public async Task<IActionResult> EditFixedIncomes(FixedIncomeViewModel entity)
         {
-            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e => new FixedIncomeByDiscount { FixedIncomeId = e }).ToList();
-            entity.FixedIncome = await _httpHelper.Put<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity.FixedIncome);
+            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e => new FixedIncomeByDiscount { IncomeDiscountId = e }).ToList();
+            entity.FixedIncome = await _httpHelper.Put<FixedIncome>($"{Constants.FIXED_INCOMES_URI}/{entity.FixedIncome.Id}", entity.FixedIncome);
             return RedirectToAction("IndexFixedIncomes");
         }
 
         [HttpPost, ActionName("DeleteFixedIncome")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteFixedIncome(Guid id)
         {
             await _httpHelper.Delete<FixedIncome>($"{Constants.FIXED_INCOMES_URI}/{id}");

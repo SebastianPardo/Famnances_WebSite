@@ -12,16 +12,13 @@
 </div>
 <hr />
 
-<form asp-action="FixedIncomeUpdate" asp-controller="Inflows" method="post">
+<form asp-action="EditFixedIncomes" asp-controller="Inflows" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="FixedIncome.Id" />
     <div class="row">
         <div class="col col-md-3 col-sm-6">
             <div class="form-check form-check-inline" style="margin-top: 2rem;">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Active
-                </label>
-                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked />
+                <input class="form-check-input" asp-for="FixedIncome.Active" /> @Html.DisplayNameFor(model => model.FixedIncome.Active)
             </div>
         </div>
     </div>
@@ -62,7 +59,7 @@
         </div>
         <div class="col-md-2">
             <label class="control-label">&nbsp;</label>
-            <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("DeleteFixedIncome")" formmethod="post" />
+            <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("DeleteFixedIncome", new { id = Model.FixedIncome.Id })" formmethod="post" />
         </div>
     </div>
 </form>
