@@ -62,12 +62,21 @@ namespace Famnances.Controllers
             }
 
             var inflow = await _httpHelper.Get<Inflow>($"{Constants.INFLOWS_URI}/{id}");
+
             if (inflow == null)
             {
                 return NotFound();
             }
-            //ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", inflow.UserId);
-            return View(inflow);
+
+            IncomeTransactionModel incomeTransactionModel = new IncomeTransactionModel
+            {
+                Income = inflow,
+                SelectedIncomeDiscountIds = inflow.InflowByDiscount?.Select(e => e.IncomeDiscountId).ToList() ?? new List<Guid>()
+            };
+
+            ViewBag.Discounts = new SelectList(await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}"), "Id", "Description");
+            ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.PERIODS_URI}"), "Id", "Name");
+            return View(incomeTransactionModel);
         }
 
         // POST: Inflows/Edit/5
@@ -86,7 +95,9 @@ namespace Famnances.Controllers
             {
                 try
                 {
+                    inflow.Income.InflowByDiscount = inflow.SelectedIncomeDiscountIds.Select(e => new InflowByDiscount { IncomeDiscountId = e }).ToList();
                     inflow.Income = await _httpHelper.Put<Inflow>($"{Constants.INFLOWS_URI}/{id}", inflow.Income);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -172,7 +183,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> DeleteFixedIncome(Guid id)
         {
             await _httpHelper.Delete<FixedIncome>($"{Constants.FIXED_INCOMES_URI}/{id}");
-            return RedirectToAction("IndexFixedIncomes");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

@@ -1,5 +1,6 @@
 ﻿using Famnances.DataCore.Data;
 using Famnances.DataCore.Entities;
+using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
@@ -73,7 +74,7 @@ namespace Famnances.WebSite.Controllers
                         TransactionDate = savingRecord.TransactionDate,
                         Value = savingRecord.Value
                     };
-                    inflow = await _httpHelper.Post<Inflow>($"{Constants.INFLOWS_URI}", inflow);
+                    inflow = await _httpHelper.Post<Inflow>($"{Constants.INFLOWS_URI}", new IncomeTransactionModel { Income = inflow });
                 }
 
                 savingRecord.Id = Guid.NewGuid();
