@@ -1,4 +1,5 @@
 ﻿using Azure;
+using Famnances.Core.Utils.Helpers;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
@@ -40,13 +41,13 @@ namespace Famnances.Controllers
             LoginResponseViewModel user = await HttpHelper.Post<LoginResponseViewModel>($"{Constants.AUTH_URI}/Authenticate", login);
             HttpContext.Session.SetString(Constants.TOKEN, user.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, user.AccountId.ToString());
-            return Redirect("../Home/Index");
+            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now });
         }
 
         public IActionResult ExternalLogin(string provider)
         {
             var redirectUrl = Url.Action("ExternalLoginCallback", new { provider });
-            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };            
+            var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             return Challenge(properties, provider);
         }
 
@@ -60,17 +61,17 @@ namespace Famnances.Controllers
             string idToken = auth.Properties.GetTokenValue("id_token");
 
             ExternalAuthenticateViewModel request = new ExternalAuthenticateViewModel { Param_1 = provider, Param_2 = accessToken, Param_3 = idToken };
-                       
+
 
             var response = await HttpHelper.Post<LoginResponseViewModel>($"{Constants.AUTH_URI}/ExternalAuthenticate", request);
             if (response == null)
                 return RedirectToAction("Logout");
-            
+
             HttpContext.Session.SetString(Constants.TOKEN, response.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, response.AccountId.ToString());
             if (response.IsFirstLogin)
                 return RedirectToAction("Details", "Users");
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now });
         }
     }
 }

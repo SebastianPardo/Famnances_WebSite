@@ -1,4 +1,5 @@
-﻿@model Famnances.DataCore.ServicesModels.SummaryModel
+﻿@using Famnances.Core.Utils.Helpers
+@model Famnances.DataCore.ServicesModels.SummaryModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -9,13 +10,28 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex justify-content-between mb-4">
-                    <div class="col-11 d-flex align-items-start">
+                    <div class="col-7 d-flex align-items-start">
                         <div class="avatar flex-shrink-0 me-2">
                             <img src="~/images/icons/calendar.png"
                                  alt="chart success"
                                  class="rounded" />
                         </div>
                         <span class="fw-semibold d-block mb-1 fs-4 me-2">Period</span>
+                    </div>
+                    <div class="col-5 align-items-end">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="btn btn-sm btn-secondary" asp-action="PreviousPeriod" asp-route-date="@Model.PeriodStartDate.ToString("yyyy-MM-dd")" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item"><a class="btn btn-sm btn-secondary" asp-action="Index" asp-route-date="@DateTimeEast.Now.ToString("yyyy-MM-dd")">Current</a></li>
+                            <li class="page-item">
+                                <a class="btn btn-sm btn-secondary" asp-action="NextPeriod" asp-route-date="@Model.PeriodEndDate.ToString("yyyy-MM-dd")" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="col text-end">
