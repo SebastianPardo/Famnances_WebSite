@@ -228,7 +228,7 @@
                                                         </div>
                                                         <div class="col-6 col-md-6">
                                                             <div class="col-md-auto text-end fw-semibold">
-                                                                @if (fixedExpense.Id != Guid.Empty)
+                                                                @if (fixedExpense.FixedExpensePaymentRecord == null)
                                                                 {
                                                                     @if (fixedExpense.Owner)
                                                                     {

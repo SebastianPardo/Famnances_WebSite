@@ -77,7 +77,7 @@
                             <a asp-action="EditFixedExpenses" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
                         </div>
                         <div class="col-auto">
-                            @if (item.LastAutomaticDateStamp == null)
+                            @if (item.FixedExpensesPaymentsRecord == null || item.FixedExpensesPaymentsRecord.Count == 0)
                             {
                                 <form asp-action="PayFixedExpenses" asp-route-id="@item.Id" method="post" style="display:inline;">
                                     <button type="submit" class="btn btn-indigo">Pay</button>
