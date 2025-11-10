@@ -1,4 +1,5 @@
-﻿using Famnances.DataCore.Data;
+﻿using Famnances.Core.Utils.Helpers;
+using Famnances.DataCore.Data;
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
@@ -235,7 +236,7 @@ namespace Famnances.WebSite.Controllers
         public async Task<IActionResult> PayFixedExpenses(Guid id)
         {
             await _httpHelper.Post($"{Constants.FIXED_EXPENSES_URI}/Pay?id={id}",null);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
         }
     }
 }

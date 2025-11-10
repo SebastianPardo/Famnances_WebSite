@@ -1,4 +1,5 @@
 ﻿using AspNetCoreGeneratedDocument;
+using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
@@ -40,7 +41,7 @@ namespace Famnances.Controllers
         {
             entity.Id = Guid.Parse(HttpContext.Session.GetString(Constants.ACCOUNT_ID));
             User user = await _httpHelper.Post<User>($"{Constants.USER_URI}", entity);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
         }
 
         [HttpGet]
@@ -112,7 +113,7 @@ namespace Famnances.Controllers
         {
             var invitations = await _httpHelper.Get<List<HomeInvitation>>($"{Constants.HOME_URI}/AcceptInvitation/{invitationId}");
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
         }
 
 
@@ -147,7 +148,7 @@ namespace Famnances.Controllers
                 user.HomeAdministrator = true;
                 await _httpHelper.Put<User>($"{Constants.USER_URI}/{accountId}", user);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
             }
             return View(home);
         }
@@ -193,7 +194,7 @@ namespace Famnances.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
             }
             return View(home);
         }
@@ -208,7 +209,7 @@ namespace Famnances.Controllers
                 await _httpHelper.Delete<Home>($"{Constants.HOME_URI}/{id}");
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
         }
 
         #endregion

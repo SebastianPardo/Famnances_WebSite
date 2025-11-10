@@ -1,4 +1,5 @@
-﻿using Famnances.DataCore.Entities;
+﻿using Famnances.Core.Utils.Helpers;
+using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
@@ -191,7 +192,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> ReceiveFixedIncome(Guid id)
         {
             await _httpHelper.Post($"{Constants.FIXED_INCOMES_URI}/Receive?id={id}", null);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
         }
         #endregion
     }
