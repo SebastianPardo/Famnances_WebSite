@@ -1,4 +1,4 @@
-using Famnances.Helpers.Interfaces;
+﻿using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Components;
 using System.Net;
 using System.Net.Http.Headers;
@@ -9,12 +9,18 @@ namespace Famnances.Helpers
 {
     public class HttpHelper : IHttpHelper
     {
-        private NavigationManager NavigationManager;
-        private string Token;
-        public HttpHelper( NavigationManager navigationManager, IHttpContextAccessor httpContext  )
+        private readonly NavigationManager _navigationManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public HttpHelper(
+            NavigationManager navigationManager,
+            IHttpContextAccessor httpContextAccessor,
+            IHttpClientFactory httpClientFactory)
         {
-            NavigationManager = navigationManager;
-            Token = httpContext.HttpContext.Session.GetString("TOKEN");
+            _navigationManager = navigationManager;
+            _httpContextAccessor = httpContextAccessor;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<T> Get<T>(string uri)
@@ -60,30 +66,46 @@ namespace Famnances.Helpers
         }
 
         // helper methods
+        private HttpClient GetClientForUri(string fullUri)
+        {
+            if (fullUri.Contains("Auth"))
+            {
+                return _httpClientFactory.CreateClient("AuthService");
+            }
+            return _httpClientFactory.CreateClient("FamnancesService");
+        }
 
         private HttpRequestMessage createRequest(HttpMethod method, string uri, object value = null)
         {
             var request = new HttpRequestMessage(method, uri);
             if (value != null)
             {
-                var obj = JsonSerializer.Serialize(value);
-                request.Content = new StringContent(JsonSerializer.Serialize(value), Encoding.UTF8, "application/json");
+                request.Content = JsonContent.Create(value);
             }
             return request;
+        }
+
+        private async Task addJwtHeader(HttpRequestMessage request)
+        {
+            var httpContext = _httpContextAccessor.HttpContext;
+            string? token = httpContext?.Session.GetString("TOKEN");
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
         }
 
         private async Task sendRequest(HttpRequestMessage request)
         {
             await addJwtHeader(request);
 
-            // send request
-            HttpClient httpClient = new HttpClient();
+            using var httpClient = GetClientForUri(request.RequestUri.ToString());
             using var response = await httpClient.SendAsync(request);
 
-            // auto logout on 401 response
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                NavigationManager.NavigateTo("Login/logout");
+                _navigationManager.NavigateTo("Login/logout");
                 return;
             }
 
@@ -92,49 +114,39 @@ namespace Famnances.Helpers
 
         private async Task<T> sendRequest<T>(HttpRequestMessage request)
         {
-            try
+            await addJwtHeader(request);
+
+            using var httpClient = GetClientForUri(request.RequestUri.ToString());
+            using var response = await httpClient.SendAsync(request);
+
+            if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.UnsupportedMediaType)
             {
-                await addJwtHeader(request);
-
-                // send request
-                HttpClient httpClient = new HttpClient();
-                using var response = await httpClient.SendAsync(request);
-                string responseBody = await response.Content.ReadAsStringAsync();
-                // auto logout on 401 response
-                if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.UnsupportedMediaType)
-                {
-                    NavigationManager.NavigateTo("Login/logout");
-                    return default;
-                }
-
-                await handleErrors(response);
-
-                if (response.Content.Headers.ContentType != null && response.Content.Headers.ContentType.MediaType == "text/plain")
-                {
-                    return (T)(object) await response.Content.ReadAsStringAsync();
-                }
-
-                var options = new JsonSerializerOptions();
-                options.PropertyNameCaseInsensitive = true;
-                return await response.Content.ReadFromJsonAsync<T>(options);
-            }
-            catch (Exception e)
-            {
+                _navigationManager.NavigateTo("Login/logout");
                 return default;
             }
 
-        }
+            await handleErrors(response);
 
-        private async Task addJwtHeader(HttpRequestMessage request)
-        {            
-            //var isApiUrl = !request.RequestUri.IsAbsoluteUri;
-            if (Token != null/* && isApiUrl*/)
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            if (typeof(T) == typeof(string) && response.Content.Headers.ContentType != null && response.Content.Headers.ContentType.MediaType == "text/plain")
+            {
+                string rawString = await response.Content.ReadAsStringAsync();
+                return (T)(object)rawString;
+            }
+
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+            T? result = await response.Content.ReadFromJsonAsync<T>(options);
+
+            if (result == null && response.Content.Headers.ContentLength > 0)
+            {
+                throw new InvalidOperationException("La deserialización del JSON falló o devolvió nulo.");
+            }
+
+            return result;
         }
 
         private async Task handleErrors(HttpResponseMessage response)
         {
-            // throw exception on error response
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();

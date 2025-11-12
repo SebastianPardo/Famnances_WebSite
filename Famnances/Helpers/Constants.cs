@@ -6,33 +6,33 @@
         public const string ACCOUNT_ID = "ACCOUNT";
 
 #if DEBUG
-        private const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
-        private const string FAMNACES_SERVICES_URI = "https://localhost:7246/Api/";
+        public const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
+        public const string FAMNACES_SERVICES_URI = "https://localhost:7246/Api/";
 #else
-        private const string AUTH_SERVICES_URI = "https://sp-authservices.azurewebsites.net/api/";
-        private const string FAMNACES_SERVICES_URI = "https://famnancesservices.azurewebsites.net/api/";  
+        public const string AUTH_SERVICES_URI = "https://sp-authservices.azurewebsites.net/api/";
+        public const string FAMNACES_SERVICES_URI = "https://famnancesservices.azurewebsites.net/api/";  
 #endif
 
-        public const string AUTH_URI = AUTH_SERVICES_URI + "Auth";
-        public const string ACCOUNT_URI = AUTH_SERVICES_URI + "Account";
+        public const string AUTH_URI = "Auth";
+        public const string ACCOUNT_URI = "Account";
 
-        public const string ACCOUNTING_URI = FAMNACES_SERVICES_URI + "Accounting";
-        public const string BUDGETS_URI = FAMNACES_SERVICES_URI + "Budgets";
-        public const string BUDGET_TYPES_URI = FAMNACES_SERVICES_URI + "BudgetTypes";
-        public const string CITIES_URI = FAMNACES_SERVICES_URI + "Cities";
-        public const string COUNTRIES_URI = FAMNACES_SERVICES_URI + "Countries";
-        public const string FIXED_EXPENSES_URI = FAMNACES_SERVICES_URI + "FixedExpenses";
-        public const string FIXED_INCOMES_URI = FAMNACES_SERVICES_URI + "FixedIncomes";
-        public const string INCOME_DISCOUNTS_URI = FAMNACES_SERVICES_URI + "IncomeDiscounts";
-        public const string INFLOWS_URI = FAMNACES_SERVICES_URI + "Inflows";
-        public const string OUTFLOWS_URI = FAMNACES_SERVICES_URI + "Outflows";
-        public const string PERIODS_URI = FAMNACES_SERVICES_URI + "Periods";
-        public const string PROVINCES_URI = FAMNACES_SERVICES_URI + "Provinces";
-        public const string SAVINGS_URI = FAMNACES_SERVICES_URI + "Savings";
-        public const string SAVINGS_POCKETS_URI = FAMNACES_SERVICES_URI + "SavingPockets";
-        public const string SOCIALMEDIA_URI = FAMNACES_SERVICES_URI + "SocialMedia";
-        public const string TOTALSBYPERIOD_URI = FAMNACES_SERVICES_URI + "TotalsByPeriod";
-        public const string USER_URI = FAMNACES_SERVICES_URI + "Users";
-        public const string HOME_URI = FAMNACES_SERVICES_URI + "Homes";
+        public const string ACCOUNTING_URI = "Accounting";
+        public const string BUDGETS_URI = "Budgets";
+        public const string BUDGET_TYPES_URI = "BudgetTypes";
+        public const string CITIES_URI = "Cities";
+        public const string COUNTRIES_URI = "Countries";
+        public const string FIXED_EXPENSES_URI = "FixedExpenses";
+        public const string FIXED_INCOMES_URI = "FixedIncomes";
+        public const string INCOME_DISCOUNTS_URI = "IncomeDiscounts";
+        public const string INFLOWS_URI = "Inflows";
+        public const string OUTFLOWS_URI = "Outflows";
+        public const string PERIODS_URI = "Periods";
+        public const string PROVINCES_URI = "Provinces";
+        public const string SAVINGS_URI = "Savings";
+        public const string SAVINGS_POCKETS_URI = "SavingPockets";
+        public const string SOCIALMEDIA_URI = "SocialMedia";
+        public const string TOTALSBYPERIOD_URI = "TotalsByPeriod";
+        public const string USER_URI = "Users";
+        public const string HOME_URI = "Homes";
     }
 }

@@ -8,7 +8,7 @@ using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
 {
-    [Authorize]
+    [ServiceFilter(typeof(AuthorizeAttribute))]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -27,14 +27,14 @@ namespace Famnances.Controllers
             {
                 totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.ACCOUNTING_URI}/CalculatePeriod");
             }
-            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{date.ToString("yyyyy-MM-dd")}");
+            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{date.ToString("yyyy-MM-dd")}");
             return View(homeSummary);
         }
 
         public async Task<IActionResult> PreviousPeriod(DateTime date)
         {
             date = date.AddDays(-1);
-            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date.ToString("yyyyy-MM-dd")}");
+            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date.ToString("yyyy-MM-dd")}");
             if (totals == null)
                 return RedirectToAction("Index", new { date = DateTimeEast.Now });
             else
@@ -44,7 +44,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> NextPeriod(DateTime date)
         {
             date = date.AddDays(1);
-            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date.ToString("yyyyy-MM-dd")}");
+            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date.ToString("yyyy-MM-dd")}");
             if (totals == null)
                 return RedirectToAction("Index", new { date = DateTimeEast.Now });
             else

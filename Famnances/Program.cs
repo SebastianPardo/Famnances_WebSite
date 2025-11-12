@@ -1,5 +1,7 @@
 using Famnances.Core;
 using Famnances.Core.Entities;
+using Famnances.Core.Errors;
+using Famnances.Core.Security.Authorization;
 using Famnances.Core.Security.Services;
 using Famnances.Core.Security.Services.Interfaces;
 using Famnances.Helpers;
@@ -15,6 +17,18 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddSession();
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddHttpClient("AuthService", client =>
+{
+    client.BaseAddress = new Uri(Constants.AUTH_SERVICES_URI);
+});
+
+builder.Services.AddHttpClient("FamnancesService", client =>
+{
+    client.BaseAddress = new Uri(Constants.FAMNACES_SERVICES_URI);
+});
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie()
@@ -37,6 +51,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ITokenHandler, TokenHandler>();
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
+builder.Services.AddScoped<AuthorizeAttribute>();
+builder.Services.AddExceptionHandler<WebSiteErrorHandler>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -47,6 +63,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -56,6 +73,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
+
+app.UseExceptionHandler(options => { });
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");

@@ -11,7 +11,7 @@ using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
 {
-    //[Authorize]
+    //[ServiceFilter(typeof(AuthorizeAttribute))]
     public class InflowsController : Controller
     {
         IHttpHelper _httpHelper;
