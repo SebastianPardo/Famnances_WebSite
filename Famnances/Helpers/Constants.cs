@@ -34,5 +34,6 @@
         public const string TOTALSBYPERIOD_URI = "TotalsByPeriod";
         public const string USER_URI = "Users";
         public const string HOME_URI = "Homes";
+        public const string ERROR_LOG_URI = "ErrorLog";
     }
 }

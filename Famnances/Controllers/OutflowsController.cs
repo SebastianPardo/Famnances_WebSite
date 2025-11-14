@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Famnances.WebSite.Controllers
+namespace Famnances.Controllers
 {
     public class OutflowsController : Controller
     {

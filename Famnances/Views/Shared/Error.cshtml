@@ -1,0 +1,22 @@
+﻿@using Famnances.Core.Utils.Helpers
+@using Famnances.Models.ViewModels
+@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+
+<div class="container-xxl container-p-y">
+    <div class="misc-wrapper">
+
+        <div class="col-lg-12 text-center mb-lg-0">
+            <h3 class="mb-2 mx-2">Under Maintenance!</h3>
+            <h6 class="mb-2 mx-2">
+                @Model.RequestId
+            </h6>
+            <p class="mb-4 mx-2">@ViewBag.Message</p>
+            <a asp-controller="Home" asp-action="Index" asp-route-date="@DateTimeEast.Now.ToString("yyyy-MM-dd")" class="btn btn-primary">Back to home</a>
+            <img src="~/images/logos/Error.png" class="mx-auto d-block" style="max-width:40%" />
+        </div>
+    </div>
+</div>

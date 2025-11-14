@@ -1,9 +1,17 @@
+using Famnances.Core.Errors;
 using Famnances.Core.Security.Authorization;
 using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers.Interfaces;
+using Famnances.Models.ViewModels;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
@@ -56,10 +64,50 @@ namespace Famnances.Controllers
             return View();
         }
 
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public async Task<IActionResult> Error()
+        {
+            var feature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+            if (feature?.Error == null)
+                return View(new ErrorViewModel { RequestId = HttpContext.TraceIdentifier });
+
+            Exception ex = feature.Error;
+
+            // Determine final status code
+            int status = ex switch
+            {
+                AppException => 3312,
+                UnauthorizedAccessException => 401,
+                KeyNotFoundException => 404,
+                ArgumentException => 400,
+                _ => 500
+            };
+
+            ViewBag.Message = ex is AppException appEx
+                ? appEx.Message
+                : "Unexpected error occurred.";
+
+            var log = new ErrorLog
+            {
+                StatusCode = status,
+                Timestamp = DateTimeEast.Now,
+                Message = ex.Message,
+                StackTrace = ex.StackTrace,
+                Path = feature.Path,
+                HttpMethod = HttpContext.Request.Method,
+                QueryString = HttpContext.Request.QueryString.ToString()
+            };
+
+            var saved = await _httpHelper.Post<ErrorLog?>(Constants.ERROR_LOG_URI, log);
+
+            return View(new ErrorViewModel
+            {
+                RequestId = saved?.Id.ToString() ??
+                            Activity.Current?.Id ??
+                            HttpContext.TraceIdentifier
+            });
+        }
+
     }
 }

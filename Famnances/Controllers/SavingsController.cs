@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace Famnances.WebSite.Controllers
+namespace Famnances.Controllers
 {
     public class SavingsController : Controller
     {
