@@ -77,7 +77,7 @@ namespace Famnances.Controllers
             {
                 try
                 {
-                    await _httpHelper.Put<bool>($"{Constants.INCOME_DISCOUNTS_URI}", incomeDiscount);
+                    await _httpHelper.Put($"{Constants.INCOME_DISCOUNTS_URI}/{id}", incomeDiscount);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

@@ -97,7 +97,7 @@ namespace Famnances.Controllers
                 try
                 {
                     inflow.Income.InflowByDiscount = inflow.SelectedIncomeDiscountIds.Select(e => new InflowByDiscount { IncomeDiscountId = e }).ToList();
-                    inflow.Income = await _httpHelper.Put<Inflow>($"{Constants.INFLOWS_URI}/{id}", inflow.Income);
+                    await _httpHelper.Put($"{Constants.INFLOWS_URI}/{id}", inflow.Income);
 
                 }
                 catch (DbUpdateConcurrencyException)
@@ -175,7 +175,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> EditFixedIncomes(FixedIncomeViewModel entity)
         {
             entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e => new FixedIncomeByDiscount { IncomeDiscountId = e }).ToList();
-            entity.FixedIncome = await _httpHelper.Put<FixedIncome>($"{Constants.FIXED_INCOMES_URI}/{entity.FixedIncome.Id}", entity.FixedIncome);
+            await _httpHelper.Put($"{Constants.FIXED_INCOMES_URI}/{entity.FixedIncome.Id}", entity.FixedIncome);
             return RedirectToAction("IndexFixedIncomes");
         }
 

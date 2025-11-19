@@ -146,7 +146,7 @@ namespace Famnances.Controllers
                 var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
                 user.HomeId = home.Id;
                 user.HomeAdministrator = true;
-                await _httpHelper.Put<User>($"{Constants.USER_URI}/{accountId}", user);
+                await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
 
                 return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
             }

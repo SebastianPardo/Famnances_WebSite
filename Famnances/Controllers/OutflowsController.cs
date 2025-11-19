@@ -86,7 +86,7 @@ namespace Famnances.Controllers
             {
                 try
                 {
-                    await _httpHelper.Put<bool>($"{Constants.OUTFLOWS_URI}/{id}", outflow);
+                    await _httpHelper.Put($"{Constants.OUTFLOWS_URI}/{id}", outflow);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -192,7 +192,7 @@ namespace Famnances.Controllers
             {
                 try
                 {
-                    await _httpHelper.Put<bool>($"{Constants.FIXED_EXPENSES_URI}/{id}", fixedExpense);
+                    await _httpHelper.Put($"{Constants.FIXED_EXPENSES_URI}/{id}", fixedExpense);
                 }
                 catch (DbUpdateConcurrencyException)
                 {

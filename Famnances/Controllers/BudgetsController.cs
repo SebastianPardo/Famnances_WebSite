@@ -51,11 +51,8 @@ namespace Famnances.Controllers
         {
             if (ModelState.IsValid)
             {
-                var budget = await _httpHelper.Put<bool>($"{Constants.BUDGETS_URI}", entity);
-                if (budget)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
+                await _httpHelper.Put($"{Constants.BUDGETS_URI}", entity);
+                return RedirectToAction(nameof(Index));
             }
             return View(entity);
         }
