@@ -183,6 +183,12 @@ namespace Famnances.Controllers
             return View(savingsPocket);
         }
 
+        public async Task<IActionResult> DetailsPocket(Guid id)
+        {
+            var savingsPocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{id}");
+            return View(savingsPocket);
+        }
+
         // GET: SavingsPockets/Edit/5
         public async Task<IActionResult> EditPockets(Guid? id)
         {

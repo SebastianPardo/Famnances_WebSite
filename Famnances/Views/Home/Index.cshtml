@@ -333,6 +333,10 @@
                                             @foreach (var pocket in roommate.SummaryPockets)
                                             {
                                                 <li class="list-group-item">
+                                                    @if(pocket.Id != Guid.Empty)
+                                                    {
+                                                        <a class="stretched-link" asp-controller="Savings" asp-action="DetailsPocket" asp-route-id=@pocket.Id></a>
+                                                    }                                                    
                                                     <div class="row">
                                                         <div class="col-6 col-md-6 text-primary"><h5 class="mb-0">@pocket.Name</h5></div>
                                                         <div class="col-6 col-md-6 text-end fw-semibold"><h5 class="text-success mb-0">$@pocket.Value</h5></div>

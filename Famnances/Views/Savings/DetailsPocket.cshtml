@@ -1,0 +1,98 @@
+﻿@model Famnances.DataCore.Entities.SavingsPocket
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="d-flex justify-content-end">
+    <div class="col col-md-3 me-5 text-body-primary text-end">
+        <h3 class="card-title">@Model.Name <strong>Pocket</strong></h3>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-2 form-check">
+        <label class="control-label">&nbsp;</label>
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+        </label>
+    </div>
+    <div class="col-md-2 form-check">
+        <label class="control-label">&nbsp;</label>
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="ShareOnHousehold" /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
+        </label>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="ChallengeValue" class="control-label"></label>
+        <input asp-for="ChallengeValue" class="form-control" type="number" step="0.01" placeholder="00.00" />
+        <span asp-validation-for="ChallengeValue" class="text-danger"></span>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Total" class="control-label"></label>
+        <input asp-for="Total" class="form-control" type="number" step="0.01" placeholder="00.00" />
+        <span asp-validation-for="Total" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-4 mt-4">
+    <div class="col-md-2">
+        <label class="control-label">&nbsp;</label>
+        <a asp-action="EditPockets" class="btn btn-secondary" asp-route-id="@Model.Id">Edit</a>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SavingsRecords.First().IsExpense)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SavingsRecords.First().IsEmergency)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SavingsRecords.First().Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SavingsRecords.First().Value)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SavingsRecords.First().TransactionDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SavingsRecords)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsExpense)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsEmergency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    <td>
+                        @item.TransactionDate.ToString("dd MMM yyyy")
+                    </td>
+                    <td>
+                        <a asp-action="Edit" class=" btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
