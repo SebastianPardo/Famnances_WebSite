@@ -172,7 +172,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatePockets([Bind("Id,Name,IsActive,ChallengeValue,Total")] SavingsPocket savingsPocket)
+        public async Task<IActionResult> CreatePockets([Bind("Id,Name,IsActive,ChallengeValue,Total,ShareOnHousehold")] SavingsPocket savingsPocket)
         {
             if (ModelState.IsValid)
             {
@@ -204,7 +204,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPockets(Guid id, [Bind("Id,Name,IsActive,ChallengeValue,Total,UserId")] SavingsPocket savingsPocket)
+        public async Task<IActionResult> EditPockets(Guid id, [Bind("Id,Name,IsActive,ChallengeValue,Total,ShareOnHousehold")] SavingsPocket savingsPocket)
         {
             if (id != savingsPocket.Id)
             {

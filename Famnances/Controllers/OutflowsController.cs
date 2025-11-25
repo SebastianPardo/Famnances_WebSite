@@ -145,7 +145,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateFixedExpenses([Bind("Id,Name,Value,StartDate,EndDate,Active,PeriodId,UserId")] FixedExpense fixedExpense)
+        public async Task<IActionResult> CreateFixedExpenses([Bind("Id,Name,Value,StartDate,EndDate,Active,PeriodId,ShareOnHousehold")] FixedExpense fixedExpense)
         {
             if (ModelState.IsValid)
             {
@@ -181,7 +181,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditFixedExpenses(Guid id, [Bind("Id,Name,Value,StartDate,EndDate,Active,PeriodId,UserId")] FixedExpense fixedExpense)
+        public async Task<IActionResult> EditFixedExpenses(Guid id, [Bind("Id,Name,Value,StartDate,EndDate,Active,PeriodId,ShareOnHousehold")] FixedExpense fixedExpense)
         {
             if (id != fixedExpense.Id)
             {

@@ -20,6 +20,11 @@
             <div class="form-check form-check-inline" style="margin-top: 2rem;">
                 <input class="form-check-input" asp-for="FixedIncome.Active" /> @Html.DisplayNameFor(model => model.FixedIncome.Active)
             </div>
+            <div class="col-md-2 form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="FixedIncome.ShareOnHousehold" /> @Html.DisplayNameFor(model => model.FixedIncome.ShareOnHousehold)
+                </label>
+            </div>
         </div>
     </div>
     <div class="row">

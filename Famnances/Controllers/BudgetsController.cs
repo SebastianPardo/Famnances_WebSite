@@ -26,7 +26,7 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Name,Value")]ExpensesBudget entity)
+        public async Task<IActionResult> Create([Bind("Name,Value,ShareOnHousehold")]ExpensesBudget entity)
         {
             if (ModelState.IsValid)
             {
@@ -47,7 +47,7 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Name,Value")] ExpensesBudget entity)
+        public async Task<IActionResult> Edit([Bind("Name,Value,ShareOnHousehold")] ExpensesBudget entity)
         {
             if (ModelState.IsValid)
             {

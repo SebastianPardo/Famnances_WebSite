@@ -21,6 +21,11 @@
                 <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked />
             </div>
         </div>
+        <div class="col-md-2 form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="FixedIncome.ShareOnHousehold" /> @Html.DisplayNameFor(model => model.FixedIncome.ShareOnHousehold)
+            </label>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-3">
