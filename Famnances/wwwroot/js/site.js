@@ -68,7 +68,7 @@ $(document).ready(function () {
     $("table").DataTable({
         autowidth: true,
         responsive: true,
-        ordering: false,
+        ordering: true,
         lengthChange: false,
         searching: false,
     });    

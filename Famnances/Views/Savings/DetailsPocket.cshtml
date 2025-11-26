@@ -1,7 +1,7 @@
 ﻿@model Famnances.DataCore.Entities.SavingsPocket
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Details - Pocket";
 }
 
 <div class="d-flex justify-content-end">
@@ -14,23 +14,23 @@
     <div class="col-md-2 form-check">
         <label class="control-label">&nbsp;</label>
         <label class="form-check-label">
-            <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+            <input class="form-check-input" asp-for="IsActive" disabled/> @Html.DisplayNameFor(model => model.IsActive)
         </label>
     </div>
     <div class="col-md-2 form-check">
         <label class="control-label">&nbsp;</label>
         <label class="form-check-label">
-            <input class="form-check-input" asp-for="ShareOnHousehold" /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
+            <input class="form-check-input" asp-for="ShareOnHousehold" disabled /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
         </label>
     </div>
     <div class="col-md-3">
         <label asp-for="ChallengeValue" class="control-label"></label>
-        <input asp-for="ChallengeValue" class="form-control" type="number" step="0.01" placeholder="00.00" />
+        <input asp-for="ChallengeValue" class="form-control" type="number" step="0.01" placeholder="00.00" readonly />
         <span asp-validation-for="ChallengeValue" class="text-danger"></span>
     </div>
     <div class="col-md-3">
         <label asp-for="Total" class="control-label"></label>
-        <input asp-for="Total" class="form-control" type="number" step="0.01" placeholder="00.00" />
+        <input asp-for="Total" class="form-control" type="number" step="0.01" placeholder="00.00" readonly />
         <span asp-validation-for="Total" class="text-danger"></span>
     </div>
 </div>
@@ -47,12 +47,6 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.SavingsRecords.First().IsExpense)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SavingsRecords.First().IsEmergency)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.SavingsRecords.First().Description)
                 </th>
                 <th>
@@ -60,6 +54,12 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.SavingsRecords.First().TransactionDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SavingsRecords.First().IsExpense)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SavingsRecords.First().IsEmergency)
                 </th>
                 <th></th>
             </tr>
@@ -69,12 +69,6 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IsExpense)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsEmergency)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
@@ -83,6 +77,12 @@
                     <td>
                         @item.TransactionDate.ToString("dd MMM yyyy")
                     </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsExpense)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsEmergency)
+                    </td>                   
                     <td>
                         <a asp-action="Edit" class=" btn btn-secondary" asp-route-id="@item.Id">Edit</a>
                     </td>

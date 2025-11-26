@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Famnances.DataCore.Entities.Outflow>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index - Outflow";
 }
 
 <div class="d-flex justify-content-between">
@@ -10,9 +10,8 @@
             <span class="tf-icons bx bx-plus"></span>
         </a>
     </div>
-    <div class="col-md-1 me-5 text-body-primary text-end">
-        <h2 class="card-title"><strong>Index</strong></h2>
-        <h5 class="card-subtitle">Outflows</h5>
+    <div class="col col-md-3 me-5 text-body-primary text-end">
+        <h3 class="card-title"><strong>Outflows</strong></h3>
     </div>
 </div>
 <table class="table table-bordered">
@@ -26,6 +25,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TransactionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTimeStamp)
             </th>
             <th>
                 Budget
@@ -45,6 +47,9 @@
                 </td>
                 <td>
                     @item.TransactionDate.ToString("dd MMM yyyy")
+                </td>
+                <td>
+                    @item.DateTimeStamp.ToString("dd MMM yyyy")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ExpensesBudget.Name)
