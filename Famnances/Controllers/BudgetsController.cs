@@ -19,6 +19,12 @@ namespace Famnances.Controllers
             return View(budgets);
         }
 
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var budget = await _httpHelper.Get<ExpensesBudget>($"{Constants.BUDGETS_URI}/{id}");
+            return View(budget);
+        }
+
         [HttpGet]
         public IActionResult Create()
         {

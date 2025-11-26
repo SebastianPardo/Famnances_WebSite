@@ -285,6 +285,10 @@
                                             {
                                                 var balance = budget.Value - budget.Spent;
                                                 <li class="list-group-item">
+                                                    @if (budget.Id != Guid.Empty)
+                                                    {
+                                                        <a class="stretched-link" asp-controller="Budgets" asp-action="Details" asp-route-id=@budget.Id></a>
+                                                    }
                                                     <div class="row">
                                                         <div class="col-6 col-md-6 text-primary"><h5 class="mb-0">@budget.Name</h5></div>
                                                         <div class="col-6 col-md-6 text-end fw-semibold align-self-end"><h5 class="text-success mb-0">$@balance</h5></div>
