@@ -132,6 +132,12 @@ namespace Famnances.Controllers
             return View(fixedExpense);
         }
 
+        public async Task<IActionResult> DetailsFixedExpenses(Guid? id)
+        {
+            var fixedExpense = await _httpHelper.Get<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}/{id}");
+            return View(fixedExpense);
+        }
+
         // GET: FixedExpenses/Create
         public async Task<IActionResult> CreateFixedExpenses()
         {

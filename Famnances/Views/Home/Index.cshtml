@@ -217,6 +217,10 @@
                                             @foreach (var fixedExpense in roommate.SummaryFixedExpenses)
                                             {
                                                 <li class="list-group-item">
+                                                    @if (fixedExpense.Id != Guid.Empty)
+                                                    {
+                                                        <a class="stretched-link" asp-controller="Outflows" asp-action="DetailsFixedExpenses" asp-route-id=@fixedExpense.Id></a>
+                                                    }
                                                     <div class="row">
                                                         <div class="col-6 col-md-6">
                                                             <div class="row">

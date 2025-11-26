@@ -74,7 +74,7 @@
                 <td>
                     <div class="row">
                         <div class="col-auto">
-                            <a asp-action="EditFixedExpenses" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="DetailsFixedExpenses" class="btn btn-secondary" asp-route-id="@item.Id">Details</a>
                         </div>
                         <div class="col-auto">
                             @if (item.FixedExpensesPaymentsRecord == null || item.FixedExpensesPaymentsRecord.Count == 0)
