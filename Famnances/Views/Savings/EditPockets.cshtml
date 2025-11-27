@@ -14,12 +14,12 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
     <div class="row">
-        <div class="col-md-2 form-check">
+        <div class="col-md-2">
             <label class="form-check-label">
                 <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
             </label>
         </div>
-        <div class="col-md-2 form-check">
+        <div class="col-md-3">
             <label class="form-check-label">
                 <input class="form-check-input" asp-for="ShareOnHousehold" /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
             </label>
@@ -44,13 +44,11 @@
 
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-2">
-            <label class="control-label">&nbsp;</label>
+    <div class="row justify-content-center mt-3">
+        <div class="col-8 col-md-2">
             <input type="submit" class="btn btn-primary form-control" value="Save" />
         </div>
-        <div class="col-md-2">
-            <label class="control-label">&nbsp;</label>
+        <div class="col-4 col-md-2">
             <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("DeletePockets")" formmethod="post" />
         </div>
     </div>

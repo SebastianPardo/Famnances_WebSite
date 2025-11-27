@@ -23,8 +23,9 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> Index()
         {
-
-            var inflow = await _httpHelper.Get<List<Inflow>>($"{Constants.INFLOWS_URI}");
+            var from = HttpContext.Session.GetString(Constants.DATE_FROM);
+            var to = HttpContext.Session.GetString(Constants.DATE_TO);
+            var inflow = await _httpHelper.Get<List<Inflow>>($"{Constants.INFLOWS_URI}/{from}/{to}");
             return View(inflow);
         }
 

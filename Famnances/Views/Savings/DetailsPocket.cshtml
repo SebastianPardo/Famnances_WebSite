@@ -11,17 +11,17 @@
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-2 form-check">
-        <label class="control-label">&nbsp;</label>
-        <label class="form-check-label">
-            <input class="form-check-input" asp-for="IsActive" disabled/> @Html.DisplayNameFor(model => model.IsActive)
-        </label>
-    </div>
-    <div class="col-md-2 form-check">
-        <label class="control-label">&nbsp;</label>
-        <label class="form-check-label">
-            <input class="form-check-input" asp-for="ShareOnHousehold" disabled /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
-        </label>
+    <div class="col-md-3">
+        <div class="row">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="IsActive" disabled /> @Html.DisplayNameFor(model => model.IsActive)
+            </label>
+        </div>
+        <div class="row">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="ShareOnHousehold" disabled /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
+            </label>
+        </div>
     </div>
     <div class="col-md-3">
         <label asp-for="ChallengeValue" class="control-label"></label>
@@ -33,11 +33,10 @@
         <input asp-for="Total" class="form-control" type="number" step="0.01" placeholder="00.00" readonly />
         <span asp-validation-for="Total" class="text-danger"></span>
     </div>
-</div>
-
-<div class="row justify-content-center mb-4 mt-4">
     <div class="col-md-2">
-        <label class="control-label">&nbsp;</label>
+        <div class="row">
+            <label class="control-label">&nbsp;</label>
+        </div>
         <a asp-action="EditPockets" class="btn btn-secondary" asp-route-id="@Model.Id">Edit</a>
     </div>
 </div>
@@ -82,7 +81,7 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.IsEmergency)
-                    </td>                   
+                    </td>
                     <td>
                         <a asp-action="Edit" class=" btn btn-secondary" asp-route-id="@item.Id">Edit</a>
                     </td>

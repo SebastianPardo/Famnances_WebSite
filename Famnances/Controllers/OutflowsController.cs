@@ -21,7 +21,9 @@ namespace Famnances.Controllers
         // GET: Outflows
         public async Task<IActionResult> Index()
         {
-            var outflow = await _httpHelper.Get<List<Outflow>>($"{Constants.OUTFLOWS_URI}");
+            var from = HttpContext.Session.GetString(Constants.DATE_FROM);
+            var to = HttpContext.Session.GetString(Constants.DATE_TO);
+            var outflow = await _httpHelper.Get<List<Outflow>>($"{Constants.OUTFLOWS_URI}/{from}/{to}");
             return View(outflow);
         }
 
@@ -134,7 +136,9 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> DetailsFixedExpenses(Guid? id)
         {
-            var fixedExpense = await _httpHelper.Get<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}/{id}");
+            var from = HttpContext.Session.GetString(Constants.DATE_FROM);
+            var to = HttpContext.Session.GetString(Constants.DATE_TO);
+            var fixedExpense = await _httpHelper.Get<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}/{id}/{from}/{to}");
             return View(fixedExpense);
         }
 

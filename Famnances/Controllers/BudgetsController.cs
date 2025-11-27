@@ -21,7 +21,9 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var budget = await _httpHelper.Get<ExpensesBudget>($"{Constants.BUDGETS_URI}/{id}");
+            var from = HttpContext.Session.GetString(Constants.DATE_FROM);
+            var to = HttpContext.Session.GetString(Constants.DATE_TO);
+            var budget = await _httpHelper.Get<ExpensesBudget>($"{Constants.BUDGETS_URI}/{id}/{from}/{to}");
             return View(budget);
         }
 

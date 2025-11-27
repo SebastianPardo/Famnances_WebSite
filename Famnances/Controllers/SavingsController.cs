@@ -22,8 +22,9 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> Index()
         {
-
-            var savings = await _httpHelper.Get<List<SavingRecord>>($"{Constants.SAVINGS_URI}");
+            var from = HttpContext.Session.GetString(Constants.DATE_FROM);
+            var to = HttpContext.Session.GetString(Constants.DATE_TO);
+            var savings = await _httpHelper.Get<List<SavingRecord>>($"{Constants.SAVINGS_URI}/{from}/{to}");
             return View(savings);
         }
 
@@ -185,7 +186,9 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> DetailsPocket(Guid id)
         {
-            var savingsPocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{id}");
+            var from = HttpContext.Session.GetString(Constants.DATE_FROM);
+            var to = HttpContext.Session.GetString(Constants.DATE_TO);
+            var savingsPocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{id}/{from}/{to}");
             return View(savingsPocket);
         }
 

@@ -69,6 +69,7 @@ $(document).ready(function () {
         autowidth: true,
         responsive: true,
         ordering: true,
+        order: [],
         lengthChange: false,
         searching: false,
     });    
