@@ -17,22 +17,7 @@
                                  class="rounded" />
                         </div>
                         <span class="fw-semibold d-block mb-1 fs-4 me-2">Period</span>
-                    </div>
-                    <div class="col-5 align-items-end">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="btn btn-sm btn-secondary" asp-action="PreviousPeriod" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="btn btn-sm btn-secondary" asp-action="CurrentPeriod">Current</a></li>
-                            <li class="page-item">
-                                <a class="btn btn-sm btn-secondary" asp-action="NextPeriod" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    </div>                    
                 </div>
                 <div class="col text-end">
                     <h5 class="card-title mb-2 text-primary">@Model.PeriodStartDate.ToString("MMM dd, yyyy")  -  @Model.PeriodEndDate.ToString("MMM dd, yyyy")</h5>

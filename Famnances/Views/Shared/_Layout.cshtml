@@ -95,8 +95,26 @@
     <!-- Navbar & Hero End -->
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="PreviousPeriod" aria-label="Previous">
+                                <span aria-hidden="true">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="btn btn-outline-secondary" asp-controller="Home" asp-action="CurrentPeriod">Period</a></li>
+                        <li class="page-item">
+                            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="NextPeriod" aria-label="Next">
+                                <span aria-hidden="true">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body pb-3">
+                    
                     @* <main role="main" class="pb-3"> *@
                     @RenderBody()
                     @* </main> *@

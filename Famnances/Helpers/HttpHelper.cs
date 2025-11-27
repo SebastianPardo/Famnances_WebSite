@@ -135,7 +135,11 @@ namespace Famnances.Helpers
                 return (T)(object)rawString;
             }
 
+            if (response.StatusCode == HttpStatusCode.NoContent)
+                return default;
+
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            
 
             T? result = await response.Content.ReadFromJsonAsync<T>(options);
 

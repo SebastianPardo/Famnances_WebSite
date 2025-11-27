@@ -71,7 +71,7 @@ $(document).ready(function () {
         ordering: true,
         order: [],
         lengthChange: false,
-        searching: false,
+        searching: true,
     });    
 });
 
