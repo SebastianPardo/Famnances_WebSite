@@ -41,7 +41,7 @@ namespace Famnances.Controllers
             LoginResponseViewModel user = await HttpHelper.Post<LoginResponseViewModel>($"{Constants.AUTH_URI}/Authenticate", login);
             HttpContext.Session.SetString(Constants.TOKEN, user.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, user.AccountId.ToString());
-            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now });
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult ExternalLogin(string provider)
@@ -71,7 +71,7 @@ namespace Famnances.Controllers
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, response.AccountId.ToString());
             if (response.IsFirstLogin)
                 return RedirectToAction("Details", "Users");
-            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now });
+            return RedirectToAction("Index", "Home");
         }
     }
 }

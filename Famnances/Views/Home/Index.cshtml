@@ -21,13 +21,13 @@
                     <div class="col-5 align-items-end">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a class="btn btn-sm btn-secondary" asp-action="PreviousPeriod" asp-route-date="@Model.PeriodStartDate.ToString("yyyy-MM-dd")" aria-label="Previous">
+                                <a class="btn btn-sm btn-secondary" asp-action="PreviousPeriod" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item"><a class="btn btn-sm btn-secondary" asp-action="Index" asp-route-date="@DateTimeEast.Now.ToString("yyyy-MM-dd")">Current</a></li>
+                            <li class="page-item"><a class="btn btn-sm btn-secondary" asp-action="CurrentPeriod">Current</a></li>
                             <li class="page-item">
-                                <a class="btn btn-sm btn-secondary" asp-action="NextPeriod" asp-route-date="@Model.PeriodEndDate.ToString("yyyy-MM-dd")" aria-label="Next">
+                                <a class="btn btn-sm btn-secondary" asp-action="NextPeriod" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>

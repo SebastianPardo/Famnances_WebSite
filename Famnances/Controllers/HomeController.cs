@@ -8,10 +8,6 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
@@ -28,35 +24,64 @@ namespace Famnances.Controllers
             _httpHelper = httpHelper;
         }
 
-        public async Task<IActionResult> Index(DateTime date)
+        public async Task<IActionResult> Index()
         {
-            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetCurrentPeriod");
+            TotalsByPeriod? totals;
+
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(Constants.DATE_FROM)))
+                totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetCurrentPeriod");
+            else
+                totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{HttpContext.Session.GetString(Constants.DATE_FROM)}");
+
             if (totals == null)
-            {
                 totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.ACCOUNTING_URI}/CalculatePeriod");
-            }
-            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{date.ToString("yyyy-MM-dd")}");
+
+            HttpContext.Session.SetString(Constants.DATE_FROM, totals.PeriodDateStart.ToString("yyyy-MM-dd"));
+            HttpContext.Session.SetString(Constants.DATE_TO, totals.PeriodDateEnd.ToString("yyyy-MM-dd"));
+            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{totals.PeriodDateStart.AddDays(1)}");
             return View(homeSummary);
         }
 
-        public async Task<IActionResult> PreviousPeriod(DateTime date)
+        public async Task<IActionResult> PreviousPeriod()
         {
-            date = date.AddDays(-1);
-            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date.ToString("yyyy-MM-dd")}");
-            if (totals == null)
-                return RedirectToAction("Index", new { date = DateTimeEast.Now });
+            var date = DateTime.Parse(HttpContext.Session.GetString(Constants.DATE_FROM)).AddDays(-1).ToString("yyyy-MM-dd");
+
+            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date}");
+            if (totals != null)
+            {
+                HttpContext.Session.SetString(Constants.DATE_FROM, totals.PeriodDateStart.ToString("yyyy-MM-dd"));
+                HttpContext.Session.SetString(Constants.DATE_TO, totals.PeriodDateEnd.ToString("yyyy-MM-dd"));
+            }
             else
-                return RedirectToAction("Index", new { date = date });
+            {
+                HttpContext.Session.Remove(Constants.DATE_FROM);
+                HttpContext.Session.Remove(Constants.DATE_TO);
+            }
+            return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> NextPeriod(DateTime date)
+        public async Task<IActionResult> CurrentPeriod()
         {
-            date = date.AddDays(1);
-            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date.ToString("yyyy-MM-dd")}");
-            if (totals == null)
-                return RedirectToAction("Index", new { date = DateTimeEast.Now });
+            HttpContext.Session.Remove(Constants.DATE_FROM);
+            HttpContext.Session.Remove(Constants.DATE_TO);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> NextPeriod()
+        {
+            var date = DateTime.Parse(HttpContext.Session.GetString(Constants.DATE_TO)).AddDays(1).ToString("yyyy-MM-dd");
+            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date}");
+            if (totals != null)
+            {
+                HttpContext.Session.SetString(Constants.DATE_FROM, totals.PeriodDateStart.ToString("yyyy-MM-dd"));
+                HttpContext.Session.SetString(Constants.DATE_TO, totals.PeriodDateEnd.ToString("yyyy-MM-dd"));
+            }
             else
-                return RedirectToAction("Index", new { date = date });
+            {
+                HttpContext.Session.Remove(Constants.DATE_FROM);
+                HttpContext.Session.Remove(Constants.DATE_TO);
+            }
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

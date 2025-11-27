@@ -4,6 +4,8 @@
     {
         public const string TOKEN = "TOKEN";
         public const string ACCOUNT_ID = "ACCOUNT";
+        public const string DATE_FROM = "FROM";
+        public const string DATE_TO = "TO";
 
 #if DEBUG
         public const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
