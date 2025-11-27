@@ -49,13 +49,15 @@
                     }
                 </td>
                 <td>
-                    <div class="col-auto">
-                        <a asp-action="EditFixedIncomes" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
-                    </div>
-                    <div class="col-auto">
-                        <form asp-action="ReceiveFixedIncome" asp-route-id="@item.Id" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-indigo">Deposit</button>
-                        </form>
+                    <div class="row">
+                        <div class="col-auto">
+                            <a asp-action="EditFixedIncomes" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                        </div>
+                        <div class="col-auto">
+                            <form asp-action="ReceiveFixedIncome" asp-route-id="@item.Id" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-indigo">Deposit</button>
+                            </form>
+                        </div>
                     </div>
                 </td>
 

@@ -11,17 +11,18 @@
 </div>
 <hr />
 <div class="row">
-    <div class="col-md-2 form-check">
-        <label class="control-label">&nbsp;</label>
-        <label class="form-check-label">
-            <input class="form-check-input" asp-for="Active" disabled/> @Html.DisplayNameFor(model => model.Active)
-        </label>
-    </div>
-    <div class="col-md-2 form-check">
-        <label class="control-label">&nbsp;</label>
-        <label class="form-check-label">
-            <input class="form-check-input" asp-for="ShareOnHousehold" disabled /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
-        </label>
+    <div class="col-md-3">
+        <div class="row">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="Active" disabled />  @Html.DisplayNameFor(model => model.Active)
+            </label>
+        </div>
+        <div class="row">
+
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="ShareOnHousehold" disabled />  @Html.DisplayNameFor(model => model.ShareOnHousehold)
+            </label>
+        </div>
     </div>
     <div class="col-md-3">
         <label asp-for="Value" class="control-label"></label>
@@ -30,27 +31,27 @@
     </div>
     <div class="col-md-3">
         <label asp-for="PeriodId" class="control-label"></label>
-        <select asp-for="PeriodId" class="form-control select2" asp-items="@ViewBag.PeriodId" data-live-search="true" readonly>
+        <select asp-for="PeriodId" class="form-control select2" asp-items="@ViewBag.PeriodId" data-live-search="true" disabled>
             <option selected disabled hidden>Select</option>
         </select>
         <span asp-validation-for="PeriodId" class="text-danger"></span>
     </div>
-</div>
-<div class="row">
     <div class="col-md-3">
         <label asp-for="StartDate" class="control-label"></label>
         <input asp-for="StartDate" class="form-control" type="date" readonly />
         <span asp-validation-for="StartDate" class="text-danger"></span>
     </div>
+</div>
+<div class="row">
     <div class="col-md-3">
         <label asp-for="EndDate" class="control-label"></label>
         <input asp-for="EndDate" class="form-control" type="date" readonly />
         <span asp-validation-for="EndDate" class="text-danger"></span>
     </div>
-</div>
-<div class="row justify-content-center">
     <div class="col-md-2">
-        <label class="control-label">&nbsp;</label>
+        <div class="row">
+            <label class="control-label">&nbsp;</label>
+        </div>
         <a asp-action="EditFixedExpenses" class="btn btn-secondary" asp-route-id="@Model.Id">Edit</a>
     </div>
 </div>

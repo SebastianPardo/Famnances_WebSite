@@ -34,13 +34,11 @@
             <select asp-for="SelectedIncomeDiscountIds" class="select2 form-control" asp-items=@ViewBag.Discounts multiple placeholder="Select"></select>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-2">
-            <label class="control-label">&nbsp;</label>
+    <div class="row justify-content-center mt-3">
+        <div class="col-8 col-md-2">
             <input type="submit" class="btn btn-primary form-control" value="Save" />
         </div>
-        <div class="col-md-2">
-            <label class="control-label">&nbsp;</label>
+        <div class="col-4 col-md-2">
             <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("Delete", new { id = Model.Income.Id })" formmethod="post" />
         </div>
     </div>

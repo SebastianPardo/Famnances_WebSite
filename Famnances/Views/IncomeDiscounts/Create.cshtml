@@ -13,7 +13,7 @@
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
-        <div class="col-md-2 form-check">
+        <div class="col-md-3">
             <label class="form-check-label">
                 <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
             </label>
@@ -46,9 +46,8 @@
             <span asp-validation-for="Value" class="text-danger"></span>
         </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-3">
         <div class="col-md-2">
-            <label class="control-label">&nbsp;</label>
             <input type="submit" class="btn btn-primary form-control" value="Save" />
         </div>
     </div>
