@@ -35,7 +35,7 @@ namespace Famnances.Controllers
             ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name");
             ViewData["SavingsSources"] = new SelectList(
                 new[] {
-                    new { Id = "CASH", Name = "Cash" },
+                    new { Id = "CASH", Name = "Other" },
                     new { Id = "CHE", Name = "Chequing" }
                 }, "Id", "Name");
             return View();
