@@ -38,7 +38,7 @@ namespace Famnances.Controllers
 
             HttpContext.Session.SetString(Constants.DATE_FROM, totals.PeriodDateStart.ToString("yyyy-MM-dd"));
             HttpContext.Session.SetString(Constants.DATE_TO, totals.PeriodDateEnd.ToString("yyyy-MM-dd"));
-            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{totals.PeriodDateStart.AddDays(1)}");
+            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{totals.PeriodDateStart.AddDays(1).ToString("yyyy-MM-dd")}");
             return View(homeSummary);
         }
 
