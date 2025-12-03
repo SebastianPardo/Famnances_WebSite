@@ -152,7 +152,7 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateFixedIncomes(FixedIncomeViewModel entity)
         {
-            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e=> new FixedIncomeByDiscount { IncomeDiscountId = e}).ToList();
+            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e => new FixedIncomeByDiscount { IncomeDiscountId = e }).ToList();
             entity.FixedIncome = await _httpHelper.Post<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity.FixedIncome);
             return RedirectToAction("IndexFixedIncomes");
         }
@@ -175,7 +175,8 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<IActionResult> EditFixedIncomes(FixedIncomeViewModel entity)
         {
-            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e => new FixedIncomeByDiscount { IncomeDiscountId = e }).ToList();
+            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds != null ? 
+                entity.SelectedIncomeDiscountIds.Select(e => new FixedIncomeByDiscount { IncomeDiscountId = e }).ToList() : new List<FixedIncomeByDiscount>();
             await _httpHelper.Put($"{Constants.FIXED_INCOMES_URI}/{entity.FixedIncome.Id}", entity.FixedIncome);
             return RedirectToAction("IndexFixedIncomes");
         }
@@ -193,7 +194,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> ReceiveFixedIncome(Guid id)
         {
             await _httpHelper.Post($"{Constants.FIXED_INCOMES_URI}/Receive?id={id}", null);
-            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
+            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now.ToString("yyyy-MM-dd") });
         }
         #endregion
     }

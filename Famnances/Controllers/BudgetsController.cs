@@ -34,7 +34,7 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Name,Value,ShareOnHousehold")]ExpensesBudget entity)
+        public async Task<IActionResult> Create([Bind("Id,Name,Value,ShareOnHousehold,BudgetTypeId")]ExpensesBudget entity)
         {
             if (ModelState.IsValid)
             {
@@ -55,11 +55,11 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Name,Value,ShareOnHousehold")] ExpensesBudget entity)
+        public async Task<IActionResult> Edit([Bind("Id,Name,Value,ShareOnHousehold,BudgetTypeId")] ExpensesBudget entity)
         {
             if (ModelState.IsValid)
             {
-                await _httpHelper.Put($"{Constants.BUDGETS_URI}", entity);
+                await _httpHelper.Put($"{Constants.BUDGETS_URI}/{entity.Id}", entity);
                 return RedirectToAction(nameof(Index));
             }
             return View(entity);
