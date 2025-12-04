@@ -8,6 +8,7 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
@@ -39,6 +40,7 @@ namespace Famnances.Controllers
             HttpContext.Session.SetString(Constants.DATE_FROM, totals.PeriodDateStart.ToString("yyyy-MM-dd"));
             HttpContext.Session.SetString(Constants.DATE_TO, totals.PeriodDateEnd.ToString("yyyy-MM-dd"));
             var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{totals.PeriodDateStart.AddDays(1).ToString("yyyy-MM-dd")}");
+            await GetHeaderSummary(totals.PeriodDateStart.AddDays(1).ToString("yyyy-MM-dd"));
             return View(homeSummary);
         }
 
@@ -46,42 +48,70 @@ namespace Famnances.Controllers
         {
             var date = DateTime.Parse(HttpContext.Session.GetString(Constants.DATE_FROM)).AddDays(-1).ToString("yyyy-MM-dd");
 
-            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date}");
-            if (totals != null)
+            var summaryModel = await GetHeaderSummary(date);
+            if (summaryModel != null)
             {
-                HttpContext.Session.SetString(Constants.DATE_FROM, totals.PeriodDateStart.ToString("yyyy-MM-dd"));
-                HttpContext.Session.SetString(Constants.DATE_TO, totals.PeriodDateEnd.ToString("yyyy-MM-dd"));
+                HttpContext.Session.SetString(Constants.DATE_FROM, summaryModel.PeriodFrom.ToString("yyyy-MM-dd"));
+                HttpContext.Session.SetString(Constants.DATE_TO, summaryModel.PeriodTo.ToString("yyyy-MM-dd"));
             }
             else
             {
                 HttpContext.Session.Remove(Constants.DATE_FROM);
                 HttpContext.Session.Remove(Constants.DATE_TO);
             }
-            return RedirectToAction("Index");
+
+            var currentUrl = Request.Headers["Referer"].ToString();
+            if (string.IsNullOrWhiteSpace(currentUrl))
+                return RedirectToAction("Index");
+
+            return Redirect(currentUrl);
         }
 
         public async Task<IActionResult> CurrentPeriod()
         {
             HttpContext.Session.Remove(Constants.DATE_FROM);
             HttpContext.Session.Remove(Constants.DATE_TO);
-            return RedirectToAction("Index");
+
+            var currentUrl = Request.Headers["Referer"].ToString();
+            if (string.IsNullOrWhiteSpace(currentUrl))
+                return RedirectToAction("Index");
+
+            return Redirect(currentUrl);
         }
 
         public async Task<IActionResult> NextPeriod()
         {
             var date = DateTime.Parse(HttpContext.Session.GetString(Constants.DATE_TO)).AddDays(1).ToString("yyyy-MM-dd");
-            var totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{date}");
-            if (totals != null)
+            var summaryModel = await GetHeaderSummary(date);
+            if (summaryModel != null)
             {
-                HttpContext.Session.SetString(Constants.DATE_FROM, totals.PeriodDateStart.ToString("yyyy-MM-dd"));
-                HttpContext.Session.SetString(Constants.DATE_TO, totals.PeriodDateEnd.ToString("yyyy-MM-dd"));
+                HttpContext.Session.SetString(Constants.DATE_FROM, summaryModel.PeriodFrom.ToString("yyyy-MM-dd"));
+                HttpContext.Session.SetString(Constants.DATE_TO, summaryModel.PeriodTo.ToString("yyyy-MM-dd"));
             }
             else
             {
                 HttpContext.Session.Remove(Constants.DATE_FROM);
                 HttpContext.Session.Remove(Constants.DATE_TO);
             }
-            return RedirectToAction("Index");
+
+            var currentUrl = Request.Headers["Referer"].ToString();
+            if (string.IsNullOrWhiteSpace(currentUrl))
+                return RedirectToAction("Index");
+
+            return Redirect(currentUrl);
+        }
+
+        private async Task<MiniSummaryModel?> GetHeaderSummary(string date)
+        {
+            var summaryModel = await _httpHelper.Get<MiniSummaryModel?>($"{Constants.ACCOUNTING_URI}/GetHeaderSummary/{date}");
+            if (summaryModel != null)
+            {
+                TempData["DateFrom"] = summaryModel.PeriodFrom.ToString("MMM dd, yyyy");
+                TempData["DateTo"] = summaryModel.PeriodTo.ToString("MMM dd, yyyy");
+                TempData["Chaquing"] = summaryModel.Chequing;
+                TempData["Savings"] = summaryModel.Savings;
+            }
+            return summaryModel;
         }
 
         public IActionResult Privacy()

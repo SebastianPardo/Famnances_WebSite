@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card border-primary">
+    <div class="card-body p-1 pt-2">
+        <div class="row justify-content-center">
+            <div class="col-4 text-center text-secondary">
+                <h5> Chequing Account </h5>
+            </div>
+            <div class="col-4 text-center text-secondary">
+                <h5>@TempData["DateFrom"]  - @TempData["DateTo"]</h5>
+            </div>
+            <div class="col-4 text-center text-secondary">
+                <h5> Savings Account</h5>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-4 text-center">
+                <h3 class="card-title mb-2 text-success">$@TempData["Chaquing"]</h3>
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+                <ul class="pagination mb-0">
+                    <li class="page-item">
+                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="PreviousPeriod" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="btn btn-outline-secondary" asp-controller="Home" asp-action="CurrentPeriod">Current</a></li>
+                    <li class="page-item">
+                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="NextPeriod" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-4 text-center">
+                <h3 class="card-title mb-2 text-success">$@TempData["Savings"]</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    @RenderBody()
+</div>
