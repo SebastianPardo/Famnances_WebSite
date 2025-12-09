@@ -6,6 +6,8 @@
         public const string ACCOUNT_ID = "ACCOUNT";
         public const string DATE_FROM = "FROM";
         public const string DATE_TO = "TO";
+        public const string SAVINGS = "SAVINGS";
+        public const string CHEQUING = "CHEQUING";
 
 #if DEBUG
         public const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";

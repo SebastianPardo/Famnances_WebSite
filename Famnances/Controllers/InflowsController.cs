@@ -1,6 +1,7 @@
 ﻿using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
+using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace Famnances.Controllers
             _httpHelper = httpHelper;
         }
 
+        [ServiceFilter(typeof(HeaderSummaryFilter))]
         public async Task<IActionResult> Index()
         {
             var from = HttpContext.Session.GetString(Constants.DATE_FROM);
@@ -135,6 +137,7 @@ namespace Famnances.Controllers
         #region FixedIncome
 
         [HttpGet]
+        [ServiceFilter(typeof(HeaderSummaryFilter))]
         public async Task<IActionResult> IndexFixedIncomes()
         {
             var fixedIncomes = await _httpHelper.Get<List<FixedIncome>>($"{Constants.FIXED_INCOMES_URI}");
@@ -175,7 +178,7 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<IActionResult> EditFixedIncomes(FixedIncomeViewModel entity)
         {
-            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds != null ? 
+            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds != null ?
                 entity.SelectedIncomeDiscountIds.Select(e => new FixedIncomeByDiscount { IncomeDiscountId = e }).ToList() : new List<FixedIncomeByDiscount>();
             await _httpHelper.Put($"{Constants.FIXED_INCOMES_URI}/{entity.FixedIncome.Id}", entity.FixedIncome);
             return RedirectToAction("IndexFixedIncomes");

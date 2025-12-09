@@ -27,38 +27,26 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> Index()
         {
-            TotalsByPeriod? totals;
+            var dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM);
+            MiniSummaryModel? miniSummaryModel = new MiniSummaryModel();
 
             if (string.IsNullOrEmpty(HttpContext.Session.GetString(Constants.DATE_FROM)))
-                totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetCurrentPeriod");
+                miniSummaryModel = await GetHeaderSummary(DateTimeEast.Now.ToString("yyyy-MM-dd"));
             else
-                totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{HttpContext.Session.GetString(Constants.DATE_FROM)}");
+                miniSummaryModel = await GetHeaderSummary(dateFrom);
 
-            if (totals == null)
-                totals = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.ACCOUNTING_URI}/CalculatePeriod");
+            if (miniSummaryModel == null)
+                await _httpHelper.Get<TotalsByPeriod?>($"{Constants.ACCOUNTING_URI}/CalculatePeriod");
 
-            HttpContext.Session.SetString(Constants.DATE_FROM, totals.PeriodDateStart.ToString("yyyy-MM-dd"));
-            HttpContext.Session.SetString(Constants.DATE_TO, totals.PeriodDateEnd.ToString("yyyy-MM-dd"));
-            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{totals.PeriodDateStart.AddDays(1).ToString("yyyy-MM-dd")}");
-            await GetHeaderSummary(totals.PeriodDateStart.AddDays(1).ToString("yyyy-MM-dd"));
+            dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM);
+            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
             return View(homeSummary);
         }
 
         public async Task<IActionResult> PreviousPeriod()
         {
             var date = DateTime.Parse(HttpContext.Session.GetString(Constants.DATE_FROM)).AddDays(-1).ToString("yyyy-MM-dd");
-
             var summaryModel = await GetHeaderSummary(date);
-            if (summaryModel != null)
-            {
-                HttpContext.Session.SetString(Constants.DATE_FROM, summaryModel.PeriodFrom.ToString("yyyy-MM-dd"));
-                HttpContext.Session.SetString(Constants.DATE_TO, summaryModel.PeriodTo.ToString("yyyy-MM-dd"));
-            }
-            else
-            {
-                HttpContext.Session.Remove(Constants.DATE_FROM);
-                HttpContext.Session.Remove(Constants.DATE_TO);
-            }
 
             var currentUrl = Request.Headers["Referer"].ToString();
             if (string.IsNullOrWhiteSpace(currentUrl))
@@ -69,9 +57,7 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> CurrentPeriod()
         {
-            HttpContext.Session.Remove(Constants.DATE_FROM);
-            HttpContext.Session.Remove(Constants.DATE_TO);
-
+            await GetHeaderSummary(DateTimeEast.Now.ToString("yyyy-MM-dd"));
             var currentUrl = Request.Headers["Referer"].ToString();
             if (string.IsNullOrWhiteSpace(currentUrl))
                 return RedirectToAction("Index");
@@ -83,16 +69,6 @@ namespace Famnances.Controllers
         {
             var date = DateTime.Parse(HttpContext.Session.GetString(Constants.DATE_TO)).AddDays(1).ToString("yyyy-MM-dd");
             var summaryModel = await GetHeaderSummary(date);
-            if (summaryModel != null)
-            {
-                HttpContext.Session.SetString(Constants.DATE_FROM, summaryModel.PeriodFrom.ToString("yyyy-MM-dd"));
-                HttpContext.Session.SetString(Constants.DATE_TO, summaryModel.PeriodTo.ToString("yyyy-MM-dd"));
-            }
-            else
-            {
-                HttpContext.Session.Remove(Constants.DATE_FROM);
-                HttpContext.Session.Remove(Constants.DATE_TO);
-            }
 
             var currentUrl = Request.Headers["Referer"].ToString();
             if (string.IsNullOrWhiteSpace(currentUrl))
@@ -106,10 +82,17 @@ namespace Famnances.Controllers
             var summaryModel = await _httpHelper.Get<MiniSummaryModel?>($"{Constants.ACCOUNTING_URI}/GetHeaderSummary/{date}");
             if (summaryModel != null)
             {
-                TempData["DateFrom"] = summaryModel.PeriodFrom.ToString("MMM dd, yyyy");
-                TempData["DateTo"] = summaryModel.PeriodTo.ToString("MMM dd, yyyy");
-                TempData["Chaquing"] = summaryModel.Chequing;
-                TempData["Savings"] = summaryModel.Savings;
+                HttpContext.Session.SetString(Constants.DATE_FROM, summaryModel.PeriodFrom.ToString("MMM dd, yyyy"));
+                HttpContext.Session.SetString(Constants.DATE_TO, summaryModel.PeriodTo.ToString("MMM dd, yyyy"));
+                HttpContext.Session.SetString(Constants.CHEQUING, summaryModel.Chequing.ToString());
+                HttpContext.Session.SetString(Constants.SAVINGS, summaryModel.Savings.ToString());
+            }
+            else
+            {
+                HttpContext.Session.Remove(Constants.DATE_FROM);
+                HttpContext.Session.Remove(Constants.DATE_TO);
+                HttpContext.Session.Remove(Constants.CHEQUING);
+                HttpContext.Session.Remove(Constants.SAVINGS);
             }
             return summaryModel;
         }

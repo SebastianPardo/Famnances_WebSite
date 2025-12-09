@@ -19,6 +19,8 @@ namespace Famnances.Controllers
         }
 
         // GET: Outflows
+
+        [ServiceFilter(typeof(HeaderSummaryFilter))]
         public async Task<IActionResult> Index()
         {
             var from = HttpContext.Session.GetString(Constants.DATE_FROM);
@@ -27,7 +29,7 @@ namespace Famnances.Controllers
             return View(outflow);
         }
 
-        // GET: Outflows/Create
+        // GET: Outflows/Create        
         public async Task<IActionResult> Create()
         {
             var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
@@ -126,8 +128,7 @@ namespace Famnances.Controllers
             return await _httpHelper.Get<Outflow>($"{Constants.OUTFLOWS_URI}/{id}") != null;
         }
 
-
-
+        [ServiceFilter(typeof(HeaderSummaryFilter))]
         public async Task<IActionResult> IndexFixedExpenses()
         {
             var fixedExpense = await _httpHelper.Get<List<FixedExpense>>($"{Constants.FIXED_EXPENSES_URI}");

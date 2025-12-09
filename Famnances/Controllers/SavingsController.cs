@@ -20,6 +20,8 @@ namespace Famnances.Controllers
             _httpHelper = httpHelper;
         }
 
+
+        [ServiceFilter(typeof(HeaderSummaryFilter))]
         public async Task<IActionResult> Index()
         {
             var from = HttpContext.Session.GetString(Constants.DATE_FROM);

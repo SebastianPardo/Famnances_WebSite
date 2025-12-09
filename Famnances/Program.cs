@@ -51,6 +51,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ITokenHandler, TokenHandler>();
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
+builder.Services.AddScoped<HeaderSummaryFilter>();
 builder.Services.AddScoped<AuthorizeAttribute>();
 
 var app = builder.Build();
