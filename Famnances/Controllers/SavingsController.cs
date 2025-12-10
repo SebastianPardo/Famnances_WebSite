@@ -257,5 +257,115 @@ namespace Famnances.Controllers
             }
             return RedirectToAction(nameof(IndexPockets));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> IndexFixed()
+        {
+            var savingsPockets = await _httpHelper.Get<List<FixedSaving>>($"{Constants.FIXED_SAVINGS_URI}");
+            return View(savingsPockets);
+        }
+
+        [HttpGet]
+        // GET: SavingsPockets/Create
+        public async Task<IActionResult> CreateFixed()
+        {
+            var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
+            ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name");
+            var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name");
+            return View();
+        }
+
+        // POST: SavingsPockets/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateFixed([Bind("Value,IsActive,EndDate,PeriodicityId,SavingsPocketId")] FixedSaving fixedSaving)
+        {
+            if (ModelState.IsValid)
+            {
+                fixedSaving.Id = Guid.NewGuid();
+                fixedSaving = await _httpHelper.Post<FixedSaving>($"{Constants.FIXED_SAVINGS_URI}", fixedSaving);
+                return RedirectToAction(nameof(IndexFixed));
+            }
+            var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
+            ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name");
+            var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name");
+            return View(fixedSaving);
+        }
+
+        // GET: SavingsPockets/Edit/5
+        public async Task<IActionResult> EditFixed(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var fixedSaving = await _httpHelper.Get<FixedSaving>($"{Constants.FIXED_SAVINGS_URI}/{id}");
+            if (fixedSaving == null)
+            {
+                return NotFound();
+            }
+            var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
+            ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name", fixedSaving.PeriodicityId);
+            var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
+            return View(fixedSaving);
+        }
+
+        // POST: SavingsPockets/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPockets(Guid id, [Bind("Id,Value,IsActive,EndDate,PeriodicityId,SavingsPocketId")] FixedSaving fixedSaving)
+        {
+            if (id != fixedSaving.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _httpHelper.Put($"{Constants.FIXED_SAVINGS_URI}/{id}", fixedSaving);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (await _httpHelper.Get<FixedSaving>($"{Constants.FIXED_SAVINGS_URI}/{id}") == null)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(IndexFixed));
+            }
+            var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
+            ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name", fixedSaving.PeriodicityId);
+            var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
+            return View(fixedSaving);
+        }
+
+
+        // POST: SavingsPockets/Delete/5
+        [HttpPost, ActionName("DeletePockets")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteFixed(Guid id)
+        {
+            var fixedSaving = await _httpHelper.Get<FixedSaving>($"{Constants.FIXED_SAVINGS_URI}/{id}");
+            if (fixedSaving != null)
+            {
+                await _httpHelper.Delete<FixedSaving>($"{Constants.FIXED_SAVINGS_URI}/{id}");
+            }
+            return RedirectToAction(nameof(IndexFixed));
+        }
     }
 }

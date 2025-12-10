@@ -33,6 +33,7 @@
         public const string PERIODS_URI = "Periods";
         public const string PROVINCES_URI = "Provinces";
         public const string SAVINGS_URI = "Savings";
+        public const string FIXED_SAVINGS_URI = "FixedSavings";
         public const string SAVINGS_POCKETS_URI = "SavingPockets";
         public const string SOCIALMEDIA_URI = "SocialMedia";
         public const string TOTALSBYPERIOD_URI = "TotalsByPeriod";
