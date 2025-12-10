@@ -32,6 +32,7 @@
         public const string OUTFLOWS_URI = "Outflows";
         public const string PERIODS_URI = "Periods";
         public const string PROVINCES_URI = "Provinces";
+        public const string SAVING_SOURCES_URI = "SavingSources";
         public const string SAVINGS_URI = "Savings";
         public const string FIXED_SAVINGS_URI = "FixedSavings";
         public const string SAVINGS_POCKETS_URI = "SavingPockets";

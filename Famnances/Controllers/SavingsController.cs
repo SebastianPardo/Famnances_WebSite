@@ -269,6 +269,8 @@ namespace Famnances.Controllers
         // GET: SavingsPockets/Create
         public async Task<IActionResult> CreateFixed()
         {
+            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
+            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name");
             var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
             ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name");
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
@@ -281,7 +283,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateFixed([Bind("Value,IsActive,EndDate,PeriodicityId,SavingsPocketId")] FixedSaving fixedSaving)
+        public async Task<IActionResult> CreateFixed([Bind("Value,IsActive,EndDate,PeriodicityId,SavingsPocketId,SavingSourceId")] FixedSaving fixedSaving)
         {
             if (ModelState.IsValid)
             {
@@ -289,6 +291,8 @@ namespace Famnances.Controllers
                 fixedSaving = await _httpHelper.Post<FixedSaving>($"{Constants.FIXED_SAVINGS_URI}", fixedSaving);
                 return RedirectToAction(nameof(IndexFixed));
             }
+            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
+            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name");
             var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
             ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name");
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
@@ -309,6 +313,8 @@ namespace Famnances.Controllers
             {
                 return NotFound();
             }
+            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
+            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId);
             var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
             ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name", fixedSaving.PeriodicityId);
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
@@ -321,7 +327,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPockets(Guid id, [Bind("Id,Value,IsActive,EndDate,PeriodicityId,SavingsPocketId")] FixedSaving fixedSaving)
+        public async Task<IActionResult> EditPockets(Guid id, [Bind("Id,Value,IsActive,EndDate,PeriodicityId,SavingsPocketId,SavingSourceId")] FixedSaving fixedSaving)
         {
             if (id != fixedSaving.Id)
             {
@@ -347,6 +353,8 @@ namespace Famnances.Controllers
                 }
                 return RedirectToAction(nameof(IndexFixed));
             }
+            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
+            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId);
             var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
             ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name", fixedSaving.PeriodicityId);
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
