@@ -10,5 +10,7 @@ namespace Famnances.Models.ViewModels
 
         [DisplayName("Transfer to checking?")]
         public bool TranferToChequing { get; set; }
+
+        public List<FixedSaving> FixedSavings { get; set; }
     }
 }

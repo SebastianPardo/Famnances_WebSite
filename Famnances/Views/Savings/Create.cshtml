@@ -17,6 +17,9 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-tab-pane" type="button" role="tab" aria-controls="add-tab-pane" aria-selected="false">Add</button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="fixed-tab" data-bs-toggle="tab" data-bs-target="#fixed-tab-pane" type="button" role="tab" aria-controls="fixed-tab-pane" aria-selected="false">Fixed</button>
+        </li>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="expense-tab-pane" role="tabpanel" aria-labelledby="expense-tab" tabindex="0">
@@ -68,7 +71,7 @@
                 </div>
             </form>
         </div>
-        <div class="tab-pane fade" id="add-tab-pane" role="tabpanel" aria-labelledby="add-tab" tabindex="0">
+        <div class="tab-pane fade" id="add-tab-pane" role="tabpanel" aria-labelledby="add-tab" tabindex="1">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="SavingTransaction.IsExpense" value="False" />
@@ -111,6 +114,49 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="tab-pane fade" id="fixed-tab-pane" role="tabpanel" aria-labelledby="fixed-tab" tabindex="2">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            From
+                        </th>
+                        <th>
+                            Value
+                        </th>
+                        <th>
+                            To
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.FixedSavings)
+                    {
+                        <tr>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.SavingSource.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Value)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SavingsPocket.Name)
+                            </td>
+                            <td>
+                                <a asp-action="EditFixed" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                                <div class="col-auto">
+                                    <form asp-action="TransferFixed" asp-route-id="@item.Id" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-indigo">Transfer</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

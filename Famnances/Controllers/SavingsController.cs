@@ -1,4 +1,5 @@
-﻿using Famnances.DataCore.Data;
+﻿using Famnances.Core.Utils.Helpers;
+using Famnances.DataCore.Data;
 using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers;
@@ -7,6 +8,7 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace Famnances.Controllers
@@ -33,14 +35,15 @@ namespace Famnances.Controllers
         // GET: SavingRecords/Create
         public async Task<IActionResult> Create()
         {
+            SavingTransactionViewModel model = new SavingTransactionViewModel
+            {
+                FixedSavings = await _httpHelper.Get<List<FixedSaving>>($"{Constants.FIXED_SAVINGS_URI}")
+            };
             var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name");
-            ViewData["SavingsSources"] = new SelectList(
-                new[] {
-                    new { Id = "CASH", Name = "Other" },
-                    new { Id = "CHE", Name = "Chequing" }
-                }, "Id", "Name");
-            return View();
+            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
+            ViewData["SavingsSources"] = new SelectList(savingSources, "Code", "Name");
+            return View(model);
         }
 
         // POST: SavingRecords/Create
@@ -55,7 +58,7 @@ namespace Famnances.Controllers
 
             if (ModelState.IsValid)
             {
-                if (model.SavingSource != "CASH" && !savingRecord.IsExpense)
+                if (model.SavingSource != "OTHER" && !savingRecord.IsExpense)
                 {
                     var budget = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}/GetByType/SAV");
                     Outflow outflow = new Outflow
@@ -87,6 +90,10 @@ namespace Famnances.Controllers
 
             var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name", savingRecord.SavingsPocketId);
+
+            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
+            ViewData["SavingsSources"] = new SelectList(savingSources, "Code", "Name", model.SavingSource);
+
             return View(savingRecord);
         }
 
@@ -261,8 +268,8 @@ namespace Famnances.Controllers
         [HttpGet]
         public async Task<IActionResult> IndexFixed()
         {
-            var savingsPockets = await _httpHelper.Get<List<FixedSaving>>($"{Constants.FIXED_SAVINGS_URI}");
-            return View(savingsPockets);
+            var fixedSaving = await _httpHelper.Get<List<FixedSaving>>($"{Constants.FIXED_SAVINGS_URI}");
+            return View(fixedSaving);
         }
 
         [HttpGet]
@@ -327,7 +334,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditPockets(Guid id, [Bind("Id,Value,IsActive,EndDate,PeriodicityId,SavingsPocketId,SavingSourceId")] FixedSaving fixedSaving)
+        public async Task<IActionResult> EditFixed(Guid id, [Bind("Id,Value,IsActive,EndDate,PeriodicityId,SavingsPocketId,SavingSourceId")] FixedSaving fixedSaving)
         {
             if (id != fixedSaving.Id)
             {
@@ -364,7 +371,7 @@ namespace Famnances.Controllers
 
 
         // POST: SavingsPockets/Delete/5
-        [HttpPost, ActionName("DeletePockets")]
+        [HttpPost, ActionName("DeleteFixed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteFixed(Guid id)
         {
@@ -374,6 +381,42 @@ namespace Famnances.Controllers
                 await _httpHelper.Delete<FixedSaving>($"{Constants.FIXED_SAVINGS_URI}/{id}");
             }
             return RedirectToAction(nameof(IndexFixed));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> TransferFixed(Guid id)
+        {
+            var fixedSaving = await _httpHelper.Get<FixedSaving>($"{Constants.FIXED_SAVINGS_URI}/{id}");
+
+            if (fixedSaving.SavingSource.Code != "OTHER")
+            {
+                var budget = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}/GetByType/SAV");
+                Outflow outflow = new Outflow
+                {
+                    Id = Guid.NewGuid(),
+                    Description = $"Scheduled transfered - to {fixedSaving.SavingsPocket.Name} saving pocket",
+                    ExpenseBudgetId = budget.First().Id,
+                    TransactionDate = DateTimeEast.Now,
+                    Value = fixedSaving.Value
+                };
+                outflow = await _httpHelper.Post<Outflow>($"{Constants.OUTFLOWS_URI}", outflow);
+            }
+
+            SavingRecord savingRecord = new SavingRecord
+            {
+                Id = Guid.NewGuid(),
+                Description = $"Scheduled transfered - From {fixedSaving.SavingSource.Name} to {fixedSaving.SavingsPocket.Name}",
+                IsExpense = false ,
+                TransactionDate = DateTimeEast.Now,
+                SavingsPocketId = fixedSaving.SavingsPocketId,
+                IsEmergency = false ,
+                Value = fixedSaving.Value                
+            };
+            await _httpHelper.Post<SavingRecord>($"{Constants.SAVINGS_URI}", savingRecord);
+
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }

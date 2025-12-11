@@ -63,6 +63,11 @@
                 </td>
                 <td>
                     <a asp-action="EditFixed" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                    <div class="col-auto">
+                        <form asp-action="TransferFixed" asp-route-id="@item.Id" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-indigo">Transfer</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         }
