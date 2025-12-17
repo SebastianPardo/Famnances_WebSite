@@ -1,5 +1,4 @@
 ﻿using Famnances.Core.Utils.Helpers;
-using Famnances.DataCore.Data;
 using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers;
@@ -8,8 +7,6 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Net.Sockets;
-using System.Threading.Tasks;
 
 namespace Famnances.Controllers
 {
@@ -159,7 +156,7 @@ namespace Famnances.Controllers
             var savingRecord = await _httpHelper.Get<SavingRecord>($"{Constants.SAVINGS_URI}/{id}");
             if (savingRecord != null)
             {
-                await _httpHelper.Delete<SavingRecord>($"{Constants.SAVINGS_URI}/{id}");
+                await _httpHelper.Delete($"{Constants.SAVINGS_URI}/{id}");
             }
 
             return RedirectToAction(nameof(Index));
