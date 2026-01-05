@@ -30,15 +30,18 @@ namespace Famnances.Controllers
             var dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM);
             MiniSummaryModel? miniSummaryModel = new MiniSummaryModel();
 
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString(Constants.DATE_FROM)))
+            if (string.IsNullOrEmpty(dateFrom))
                 miniSummaryModel = await GetHeaderSummary(DateTimeEast.Now.ToString("yyyy-MM-dd"));
             else
                 miniSummaryModel = await GetHeaderSummary(dateFrom);
 
             if (miniSummaryModel == null)
-                await _httpHelper.Get<TotalsByPeriod?>($"{Constants.ACCOUNTING_URI}/CalculatePeriod");
+            {
+                TotalsByPeriod? totalsByPeriod = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.ACCOUNTING_URI}/CalculatePeriod");
+                dateFrom = totalsByPeriod.PeriodDateStart.ToString("yyyy-MM-dd");
+                miniSummaryModel = await GetHeaderSummary(dateFrom);
+            }
 
-            dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM);
             var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
             return View(homeSummary);
         }
