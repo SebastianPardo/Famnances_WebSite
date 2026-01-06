@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h1 class="h3 text-center mb-2">¿Cómo quieres ver tu dinero?</h1>
+        <p class="text-center mt-3">
+            Este período define cómo se interpretan tus números.
+        </p>
+
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-5">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-6 mt-3">
+                        <div class="card period-card active text-center p-3">
+                            <h5 class="mb-1">Monthly</h5>
+                            <small class="text-muted">El más común y fácil</small>
+                        </div>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="card period-card text-center p-3">
+                            <h5 class="mb-1">Semi-Monthly</h5>
+                            <small class="text-muted">Dos veces al mes</small>
+                        </div>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="card period-card text-center p-3">
+                            <h5 class="mb-1">Biweekly</h5>
+                            <small class="text-muted">Cada 14 días</small>
+                        </div>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="card period-card text-center p-3">
+                            <h5 class="mb-1">Weekly</h5>
+                            <small class="text-muted">Seguimiento cercano<</small>
+                        </div>
+                    </div>
+                    <div class="col-6 mt-3">
+                        <div class="card period-card text-center p-3">
+                            <h5 class="mb-1">Daily</h5>
+                            <small class="text-muted">Si vives del dia a dia</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center mt-3">
+            <div class="col-12 col-md-3 text-center">
+                <button class="btn btn-primary w-100">Continuar</button>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 col-md-3 text-center">
+                <button class="btn btn-outline-primary w-100">Saltar por ahora</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="hint">
+                * Puedes cambiar esto cuando quieras.
+            </div>
+        </div>
+    </div>
+</div>

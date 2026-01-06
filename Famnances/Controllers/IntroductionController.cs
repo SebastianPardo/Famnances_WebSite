@@ -10,6 +10,11 @@ namespace Famnances.Controllers
             return View();
         }
 
+        public ActionResult PeriodSelector()
+        {
+            return View();
+        }
+
         // GET: IntroductionController/Create
         public ActionResult Create()
         {
