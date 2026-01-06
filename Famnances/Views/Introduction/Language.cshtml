@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Introduction";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h1 class="h3 text-center mb-2">Escoge un idioma</h1>
+        <h1 class="h3 text-center mb-2">Choose a language</h1>
+        <h1 class="h3 text-center mb-2">Choisissez une langue</h1>
+        <form asp-controller="Languages" asp-action="ChangeLanguage" method="get">
+            <div class="row justify-content-center align-items-center mt-3">
+                <div class="col-12 col-md-3">
+                    <select id="culture" name="culture" class="form-control select2">
+                        <option selected disabled hidden>Select</option>
+                        <option value="EN">English</option>
+                        <option value="ES">Español</option>
+                        <option value="FR">Français</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center mt-3">
+                <div class="col-12 col-md-3 text-center">
+                    <input type="submit" class="btn btn-primary w-100" value="Next / Continuar / Continuer" />
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="hint">
+                * Puedes cambiar esto cuando quieras.
+            </div>
+            <div class="hint">
+                * You can change this whenever you want.
+            </div>
+            <div class="hint">
+                * Vous pouvez modifier ça quand vous le souhaitez..
+            </div>
+        </div>
+
+    </div>
+</div>

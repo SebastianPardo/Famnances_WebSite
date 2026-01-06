@@ -5,12 +5,20 @@ namespace Famnances.Controllers
 {
     public class IntroductionController : Controller
     {
+        public ActionResult Language()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             return View();
         }
 
         public ActionResult PeriodSelector()
+        {
+            return View();
+        }
+        public ActionResult Incomes()
         {
             return View();
         }

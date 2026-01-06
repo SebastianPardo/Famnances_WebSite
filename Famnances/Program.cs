@@ -9,6 +9,8 @@ using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,8 @@ builder.Services.AddHttpClient("FamnancesService", client =>
 {
     client.BaseAddress = new Uri(Constants.FAMNACES_SERVICES_URI);
 });
+
+
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie()
@@ -60,6 +64,23 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
 }
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en-CA"),
+    SupportedCultures = new[]
+    {
+        new CultureInfo("en-CA"),
+        new CultureInfo("es-CO"),
+        new CultureInfo("fr-CA")
+    },
+    SupportedUICultures = new[]
+    {
+        new CultureInfo("en-CA"),
+        new CultureInfo("es-CO"),
+        new CultureInfo("fr-CA")
+    }
+});
 
 app.UseRouting();
 
