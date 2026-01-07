@@ -23,7 +23,6 @@ namespace Famnances.Controllers
                 default:
                     languageCulture = "en-CA";
                     break;
-
             }
 
             Response.Cookies.Append(

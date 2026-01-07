@@ -8,7 +8,6 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
@@ -40,6 +39,10 @@ namespace Famnances.Controllers
                 TotalsByPeriod? totalsByPeriod = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.ACCOUNTING_URI}/CalculatePeriod");
                 dateFrom = totalsByPeriod.PeriodDateStart.ToString("yyyy-MM-dd");
                 miniSummaryModel = await GetHeaderSummary(dateFrom);
+            }
+            else
+            {
+                dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM);
             }
 
             var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
@@ -85,8 +88,8 @@ namespace Famnances.Controllers
             var summaryModel = await _httpHelper.Get<MiniSummaryModel?>($"{Constants.ACCOUNTING_URI}/GetHeaderSummary/{date}");
             if (summaryModel != null)
             {
-                HttpContext.Session.SetString(Constants.DATE_FROM, summaryModel.PeriodFrom.ToString("MMM dd, yyyy"));
-                HttpContext.Session.SetString(Constants.DATE_TO, summaryModel.PeriodTo.ToString("MMM dd, yyyy"));
+                HttpContext.Session.SetString(Constants.DATE_FROM, summaryModel.PeriodFrom.ToString("yyyy-MM-dd"));
+                HttpContext.Session.SetString(Constants.DATE_TO, summaryModel.PeriodTo.ToString("yyyy-MM-dd"));
                 HttpContext.Session.SetString(Constants.CHEQUING, summaryModel.Chequing.ToString());
                 HttpContext.Session.SetString(Constants.SAVINGS, summaryModel.Savings.ToString());
             }

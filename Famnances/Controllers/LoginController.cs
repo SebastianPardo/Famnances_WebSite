@@ -6,6 +6,7 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace Famnances.Controllers
 {
@@ -69,9 +70,11 @@ namespace Famnances.Controllers
 
             HttpContext.Session.SetString(Constants.TOKEN, response.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, response.AccountId.ToString());
+
             if (response.IsFirstLogin)
-                return RedirectToAction("Details", "Users");
-            return RedirectToAction("Index", "Home");
+                return RedirectToAction("Language", "Introduction");
+
+            return RedirectToAction("ChangeLanguage", "Languages", new { culture = response.Language });
         }
     }
 }

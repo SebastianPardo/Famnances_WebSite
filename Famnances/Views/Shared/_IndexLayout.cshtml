@@ -9,9 +9,9 @@
             <div class="col-12 col-md-4 order-1 order-md-2 text-secondary mb-2 mb-md-0">
                 <div class="row mb-1">
                     <h5>
-                        @Context.Session.GetString(Constants.DATE_FROM)
+                        @DateTime.Parse(Context.Session.GetString(Constants.DATE_FROM)).ToString("MMM dd, yyyy")
                         -
-                        @Context.Session.GetString(Constants.DATE_TO)
+                        @DateTime.Parse(Context.Session.GetString(Constants.DATE_TO)).ToString("MMM dd, yyyy")
                     </h5>
                 </div>
                 <div class="row justify-content-center">
