@@ -1,0 +1,64 @@
+﻿@model Famnances.DataCore.Entities.FixedIncome
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = "Introduction";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="h3 text-center mb-2">@Localizer["Tittle"] </h1>
+                <p class="text-center mt-3">
+                    @Localizer["Subtittle"]
+                </p>
+                <div class="row mb-5 justify-content-center align-items-center">
+                    <div class="col-12">
+                        <label asp-for="Description" class="control-label text-start"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="Value" class="control-label text-start"></label>
+                        <input asp-for="Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+                        <span asp-validation-for="Value" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="FirstPayDate" class="control-label text-start"></label>
+                        <input asp-for="FirstPayDate" class="form-control" type="date" />
+                        <span asp-validation-for="FirstPayDate" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="PayablePeriodId" class="control-label text-start"></label>
+                        <select asp-for="PayablePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                            <option selected disabled hidden>Select</option>
+                        </select>
+                        <span asp-validation-for="PayablePeriod" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <p>Total mensual: <strong class="text-primary">$0</strong></p>
+                </div>
+                <div class="row justify-content-center align-items-center mt-3">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary w-100" asp-action="Incomes">@Localizer["Next"]</button>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-outline-primary w-100">@Localizer["Skip"]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h3 class="h3 text-center mb-2">@Localizer["Tittle"] </h3>
+            </div>
+        </div>
+    </div>
+</div>
