@@ -1,4 +1,5 @@
 ﻿using AspNetCoreGeneratedDocument;
+using Athentication.DataCore.Models;
 using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
@@ -7,10 +8,7 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Identity.Client;
-using System.Runtime.ConstrainedExecution;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace Famnances.Controllers
 {
@@ -21,9 +19,39 @@ namespace Famnances.Controllers
         {
             _httpHelper = httpHelper;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> NewUser()
         {
-            return View();
+            var json = TempData["UserInfo"] as string;
+            var userInfo = JsonSerializer.Deserialize<UserInfo>(json);
+
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+
+            if (user == null)
+            {
+                user = new User
+                {
+                    Id = Guid.Parse(accountId),
+                    FirstName = userInfo.GivenName,
+                    LastName = userInfo.FamilyName,
+                    LegalName = $"{userInfo.GivenName} {userInfo.FamilyName}",
+                    Address = "NO ADDRESS",
+                    PostalCode = "A0B1C2",
+                    PhoneNumber = "0000000000",
+                    TotalSavings = 0,
+                    TotalBudget = 0,
+                    BudgetByPeriod = 0,
+                    PeriodStartsMonthsDay = 0,
+                    HomeAdministrator = false,
+                    Language = "EN",
+                    PeriodId = (await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/MON")).Id,
+                    CityId = (await _httpHelper.Get<Period>($"{Constants.CITIES_URI}/GetByCode/NONE")).Id
+                };
+                user = await _httpHelper.Post<User>($"{Constants.USER_URI}", user);
+            }
+
+            return RedirectToAction("Language", "Introduction");
         }
 
         [HttpGet]
@@ -41,7 +69,7 @@ namespace Famnances.Controllers
         {
             entity.Id = Guid.Parse(HttpContext.Session.GetString(Constants.ACCOUNT_ID));
             User user = await _httpHelper.Post<User>($"{Constants.USER_URI}", entity);
-            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
+            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now.ToString("yyyy-MM-dd") });
         }
 
         [HttpGet]
@@ -113,7 +141,7 @@ namespace Famnances.Controllers
         {
             var invitations = await _httpHelper.Get<List<HomeInvitation>>($"{Constants.HOME_URI}/AcceptInvitation/{invitationId}");
 
-            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
+            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now.ToString("yyyy-MM-dd") });
         }
 
 
@@ -126,7 +154,7 @@ namespace Famnances.Controllers
             {
                 return RedirectToAction(nameof(EditHome), new { id = user.HomeId });
             }
-            if(invitation != null && invitation.Count> 0)
+            if (invitation != null && invitation.Count > 0)
             {
                 return RedirectToAction(nameof(Invitations));
             }
@@ -148,7 +176,7 @@ namespace Famnances.Controllers
                 user.HomeAdministrator = true;
                 await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
 
-                return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
+                return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now.ToString("yyyy-MM-dd") });
             }
             return View(home);
         }
@@ -194,7 +222,7 @@ namespace Famnances.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
+                return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now.ToString("yyyy-MM-dd") });
             }
             return View(home);
         }
@@ -209,7 +237,7 @@ namespace Famnances.Controllers
                 await _httpHelper.Delete<Home>($"{Constants.HOME_URI}/{id}");
             }
 
-            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
+            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now.ToString("yyyy-MM-dd") });
         }
 
         #endregion

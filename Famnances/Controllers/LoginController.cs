@@ -1,12 +1,13 @@
-﻿using Azure;
-using Famnances.Core.Utils.Helpers;
+﻿using Athentication.DataCore.ApiModels;
+using Athentication.DataCore.Models;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
+using Google.Apis.Oauth2.v2.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.RegularExpressions;
+using System.Text.Json;
 
 namespace Famnances.Controllers
 {
@@ -39,7 +40,7 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<ActionResult> Login(LoginViewModel login)
         {
-            LoginResponseViewModel user = await HttpHelper.Post<LoginResponseViewModel>($"{Constants.AUTH_URI}/Authenticate", login);
+            AuthResponse user = await HttpHelper.Post<AuthResponse>($"{Constants.AUTH_URI}/Authenticate", login);
             HttpContext.Session.SetString(Constants.TOKEN, user.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, user.AccountId.ToString());
             return RedirectToAction("Index", "Home");
@@ -61,10 +62,10 @@ namespace Famnances.Controllers
             string accessToken = auth.Properties.GetTokenValue("access_token");
             string idToken = auth.Properties.GetTokenValue("id_token");
 
-            ExternalAuthenticateViewModel request = new ExternalAuthenticateViewModel { Param_1 = provider, Param_2 = accessToken, Param_3 = idToken };
+            AuthRequest request = new AuthRequest { Param_1 = provider, Param_2 = accessToken, Param_3 = idToken };
 
 
-            var response = await HttpHelper.Post<LoginResponseViewModel>($"{Constants.AUTH_URI}/ExternalAuthenticate", request);
+            var response = await HttpHelper.Post<AuthResponse>($"{Constants.AUTH_URI}/ExternalAuthenticate", request);
             if (response == null)
                 return RedirectToAction("Logout");
 
@@ -72,7 +73,10 @@ namespace Famnances.Controllers
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, response.AccountId.ToString());
 
             if (response.IsFirstLogin)
-                return RedirectToAction("Language", "Introduction");
+            {
+                TempData["UserInfo"] = JsonSerializer.Serialize(response.UserInfo);
+                return RedirectToAction("NewUser", "Users");
+            }
 
             return RedirectToAction("ChangeLanguage", "Languages", new { culture = response.Language });
         }

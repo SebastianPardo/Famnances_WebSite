@@ -110,6 +110,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.68.0.1869" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.0" />
@@ -129,6 +130,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="Athentication.DataCore">
+      <HintPath>..\..\MyApiServices\Athentication.DataCore\bin\Release\net10.0\Athentication.DataCore.dll</HintPath>
+    </Reference>
     <Reference Include="Famnances.Core">
       <HintPath>..\..\Famnances_DataModel\Famnances.Core\bin\Release\net10.0\Famnances.Core.dll</HintPath>
     </Reference>
@@ -143,6 +147,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Index.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Views\Introduction\Incomes.Designer.cs">
+      <DependentUpon>Incomes.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Introduction\PeriodSelector.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -154,6 +163,10 @@
     <EmbeddedResource Update="Resources\Views\Introduction\Index.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Introduction\Incomes.resx">
+      <LastGenOutput>Incomes.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Introduction\PeriodSelector.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
