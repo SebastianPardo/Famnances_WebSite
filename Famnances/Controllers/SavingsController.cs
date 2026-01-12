@@ -4,6 +4,7 @@ using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
+using Google.Apis.Util;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace Famnances.Controllers
     public class SavingsController : Controller
     {
         IHttpHelper _httpHelper;
+        IUtilities _utilities;
 
-        public SavingsController(IHttpHelper httpHelper)
+        public SavingsController(IHttpHelper httpHelper, IUtilities utilities)
         {
             _httpHelper = httpHelper;
+            _utilities = utilities;
         }
 
 
@@ -275,8 +278,7 @@ namespace Famnances.Controllers
         {
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
             ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name");
-            var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
-            ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name");
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name");
             return View();
@@ -297,8 +299,8 @@ namespace Famnances.Controllers
             }
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
             ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name");
-            var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
-            ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name");
+
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name");
             return View(fixedSaving);
@@ -318,9 +320,9 @@ namespace Famnances.Controllers
                 return NotFound();
             }
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
-            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId);
-            var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
-            ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name", fixedSaving.PeriodicityId);
+            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId); 
+            
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
             return View(fixedSaving);
@@ -359,8 +361,8 @@ namespace Famnances.Controllers
             }
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
             ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId);
-            var periods = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
-            ViewBag.PeriodicityId = new SelectList(periods, "Id", "Name", fixedSaving.PeriodicityId);
+            
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
             return View(fixedSaving);

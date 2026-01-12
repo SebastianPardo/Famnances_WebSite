@@ -1,4 +1,5 @@
-﻿using Famnances.Core.Utils.Helpers;
+﻿using Famnances.Core.Security.Authorization;
+using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers;
@@ -12,14 +13,16 @@ using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
 {
-    //[ServiceFilter(typeof(AuthorizeAttribute))]
+    [ServiceFilter(typeof(AuthorizeAttribute))]
     public class InflowsController : Controller
     {
         IHttpHelper _httpHelper;
+        IUtilities _utilities;
 
-        public InflowsController(IHttpHelper httpHelper)
+        public InflowsController(IHttpHelper httpHelper, IUtilities utilities)
         {
             _httpHelper = httpHelper;
+            _utilities = utilities;
         }
 
         [ServiceFilter(typeof(HeaderSummaryFilter))]
@@ -79,7 +82,7 @@ namespace Famnances.Controllers
             };
 
             ViewBag.Discounts = new SelectList(await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}"), "Id", "Description");
-            ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.PERIODS_URI}"), "Id", "Name");
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(incomeTransactionModel);
         }
 
@@ -148,7 +151,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> CreateFixedIncomes()
         {
             ViewBag.Discounts = new SelectList(await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}"), "Id", "Description");
-            ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "Name");
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View();
         }
 
@@ -171,7 +174,7 @@ namespace Famnances.Controllers
             };
 
             ViewBag.Discounts = new SelectList(await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}"), "Id", "Description");
-            ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "Name");
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(fixedIncomeVM);
         }
 

@@ -54,8 +54,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         //    options.SaveTokens = true;
     });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<ITokenHandler, TokenHandler>();
+builder.Services.AddTransient<ITokenHandler, TokenHandler>();
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
+builder.Services.AddScoped<IUtilities, Utilities>();
 builder.Services.AddScoped<HeaderSummaryFilter>();
 builder.Services.AddScoped<AuthorizeAttribute>();
 

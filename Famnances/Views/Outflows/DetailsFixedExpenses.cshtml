@@ -31,7 +31,7 @@
     </div>
     <div class="col-md-3">
         <label asp-for="PeriodId" class="control-label"></label>
-        <select asp-for="PeriodId" class="form-control select2" asp-items="@ViewBag.PeriodId" data-live-search="true" disabled>
+        <select asp-for="PeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true" disabled>
             <option selected disabled hidden>Select</option>
         </select>
         <span asp-validation-for="PeriodId" class="text-danger"></span>

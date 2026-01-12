@@ -9,9 +9,11 @@ namespace Famnances.Controllers
     public class IntroductionController : Controller
     {
         IHttpHelper _httpHelper;
-        public IntroductionController(IHttpHelper httpHelper)
+        IUtilities _utilities;
+        public IntroductionController(IHttpHelper httpHelper, IUtilities utilities)
         {
             _httpHelper = httpHelper;
+            _utilities = utilities;
         }
         public async Task<ActionResult> Language()
         {
@@ -55,23 +57,7 @@ namespace Famnances.Controllers
             user.PeriodId = (await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{periodId}")).Id;
             await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
 
-            List<Period> periods = await _httpHelper.Get<List<Period>>(Constants.PERIODS_URI);
-
-            switch (user.Language)
-            {
-                case "ES":
-                    ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameES");
-                    break;
-                case "EN":
-                    ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameEN");
-                    break;
-                case "FR":
-                    ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameFR");
-                    break;
-                default:
-                    ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameEN");
-                    break;
-            }
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(user.Language);
 
             return View();
         }

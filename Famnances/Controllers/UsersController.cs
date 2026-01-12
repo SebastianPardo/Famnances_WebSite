@@ -5,6 +5,7 @@ using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
+using Google.Apis.Util;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,11 @@ namespace Famnances.Controllers
     public class UsersController : Controller
     {
         IHttpHelper _httpHelper;
-        public UsersController(IHttpHelper httpHelper)
+        IUtilities _utilities;
+        public UsersController(IHttpHelper httpHelper, IUtilities utilities)
         {
             _httpHelper = httpHelper;
+            _utilities = utilities;
         }
 
         public async Task<IActionResult> NewUser()
@@ -60,7 +63,7 @@ namespace Famnances.Controllers
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
             ViewBag.Countries = new SelectList(await _httpHelper.Get<List<Country>>($"{Constants.COUNTRIES_URI}"), "Id", "Name");
-            ViewBag.Periods = new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "Name");
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(user ?? new User { Id = Guid.Parse(accountId) });
         }
 

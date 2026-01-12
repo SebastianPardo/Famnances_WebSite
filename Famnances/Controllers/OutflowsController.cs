@@ -3,6 +3,7 @@ using Famnances.DataCore.Data;
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
+using Google.Apis.Util;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,13 @@ namespace Famnances.Controllers
 {
     public class OutflowsController : Controller
     {
-        private readonly IHttpHelper _httpHelper;
+        IHttpHelper _httpHelper;
+        IUtilities _utilities;
 
-        public OutflowsController(IHttpHelper httpHelper)
+        public OutflowsController(IHttpHelper httpHelper, IUtilities utilities)
         {
             _httpHelper = httpHelper;
+            _utilities = utilities;
         }
 
         // GET: Outflows
@@ -146,8 +149,7 @@ namespace Famnances.Controllers
         // GET: FixedExpenses/Create
         public async Task<IActionResult> CreateFixedExpenses()
         {
-            var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
-            ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View();
         }
 
@@ -164,8 +166,8 @@ namespace Famnances.Controllers
                 fixedExpense = await _httpHelper.Post<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}", fixedExpense);
                 return RedirectToAction(nameof(IndexFixedExpenses));
             }
-            var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
-            ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
+
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(fixedExpense);
         }
 
@@ -182,8 +184,8 @@ namespace Famnances.Controllers
             {
                 return NotFound();
             }
-            var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
-            ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
+
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(fixedExpense);
         }
 
@@ -218,8 +220,8 @@ namespace Famnances.Controllers
                 }
                 return RedirectToAction(nameof(IndexFixedExpenses));
             }
-            var period = await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}");
-            ViewData["PeriodId"] = new SelectList(period, "Id", "Name");
+
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(fixedExpense);
         }
 
