@@ -1,16 +1,19 @@
-﻿using Famnances.DataCore.Entities;
+﻿using Famnances.Core.Security.Authorization;
+using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
+using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using static Famnances.Models.ViewModels.IntroductionIncomeViewModel;
 
 namespace Famnances.Controllers
 {
+    [ServiceFilter(typeof(AuthorizeAttribute))]
     public class IntroductionController : Controller
     {
         IHttpHelper _httpHelper;
-        IUtilities _utilities;
-        public IntroductionController(IHttpHelper httpHelper, IUtilities utilities)
+        ILanguageHelper _utilities;
+        public IntroductionController(IHttpHelper httpHelper, ILanguageHelper utilities)
         {
             _httpHelper = httpHelper;
             _utilities = utilities;
@@ -19,8 +22,13 @@ namespace Famnances.Controllers
         {
             return View();
         }
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+
+            ViewBag.UserName = user.LegalName;
+            ViewBag.Photo = "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAyL3BmLWljb240LWppcjIwNjQtcG9yLTAzLWxjb3B5LnBuZw.png";
             return View();
         }
 
@@ -50,16 +58,40 @@ namespace Famnances.Controllers
             return View(periods);
         }
 
-        public async Task<ActionResult> Incomes(string periodId)
+        public async Task<ActionResult> Incomes(Guid periodId)
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
-            user.PeriodId = (await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{periodId}")).Id;
+            user.Period = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{periodId}");
+            user.PeriodId = user.Period.Id;
             await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(user.Language);
+            IntroductionIncomeViewModel model = new IntroductionIncomeViewModel
+            {
+                Incomes = new List<Income>(),
+                Total = 0,
+                PeriodId = periodId,
+                Period = await _utilities.GetPeriodName(user.Language, user.Period)
+            };
 
-            return View();
+            return View(model);
+        }
+
+        public async Task<ActionResult> AddIncome(IntroductionIncomeViewModel model)
+        {
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+            var periodFrom = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.NewIncome.PeriodId}");
+            var periodTo = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
+
+            model.NewIncome.Period = await _utilities.GetPeriodName(culture, periodFrom);
+            model.Incomes = model.Incomes ?? new List<Income>();
+            model.Incomes.Add(model.NewIncome);
+
+            model.Total += _utilities.GetValueByPeriod(model.NewIncome.Value, periodFrom.Code, periodTo.Code);
+
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
+            return View("Incomes", model);
         }
 
         // GET: IntroductionController/Create

@@ -1,10 +1,12 @@
-﻿using Famnances.DataCore.Entities;
+﻿using Famnances.Core.Security.Authorization;
+using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 namespace Famnances.Controllers
 {
+    [ServiceFilter(typeof(AuthorizeAttribute))]
     public class BudgetsController : Controller
     {
         IHttpHelper _httpHelper;

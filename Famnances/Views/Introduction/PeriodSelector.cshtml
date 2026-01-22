@@ -23,7 +23,7 @@
                             @foreach (var period in Model)
                             {
                                 <div class="col-6 mt-3">
-                                    <div id="@period.Code" class="card period-card text-center p-3">
+                                    <div id="@period.Id" class="card period-card text-center p-3">
                                         @switch (CultureInfo.CurrentCulture.Name)
                                         {
                                             case "es-CO":
@@ -34,7 +34,7 @@
                                                 <h5 class="mb-1">@period.NameEN</h5>
                                                 <small class="text-muted">@period.CaptionEN</small>
                                                 break;
-                                            case "en-FR":
+                                            case "fr-CA":
                                                 <h5 class="mb-1">@period.NameFR</h5>
                                                 <small class="text-muted">@period.CaptionFR</small>
                                                 break;

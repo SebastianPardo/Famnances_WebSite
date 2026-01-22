@@ -1,11 +1,10 @@
-﻿using AspNetCoreGeneratedDocument;
-using Athentication.DataCore.Models;
+﻿using Athentication.DataCore.Models;
+using Famnances.Core.Security.Authorization;
 using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
-using Google.Apis.Util;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +12,12 @@ using System.Text.Json;
 
 namespace Famnances.Controllers
 {
+    [ServiceFilter(typeof(AuthorizeAttribute))]
     public class UsersController : Controller
     {
         IHttpHelper _httpHelper;
-        IUtilities _utilities;
-        public UsersController(IHttpHelper httpHelper, IUtilities utilities)
+        ILanguageHelper _utilities;
+        public UsersController(IHttpHelper httpHelper, ILanguageHelper utilities)
         {
             _httpHelper = httpHelper;
             _utilities = utilities;
@@ -45,10 +45,10 @@ namespace Famnances.Controllers
                     TotalSavings = 0,
                     TotalBudget = 0,
                     BudgetByPeriod = 0,
-                    PeriodStartsMonthsDay = 0,
+                    PeriodStartsMonthsDay = 1,
                     HomeAdministrator = false,
                     Language = "EN",
-                    PeriodId = (await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/MON")).Id,
+                    PeriodId = (await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/GetByCode/MON")).Id,
                     CityId = (await _httpHelper.Get<Period>($"{Constants.CITIES_URI}/GetByCode/NONE")).Id
                 };
                 user = await _httpHelper.Post<User>($"{Constants.USER_URI}", user);

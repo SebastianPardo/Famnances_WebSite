@@ -56,7 +56,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<ITokenHandler, TokenHandler>();
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
-builder.Services.AddScoped<IUtilities, Utilities>();
+builder.Services.AddScoped<ILanguageHelper, LanguageHelper>();
 builder.Services.AddScoped<HeaderSummaryFilter>();
 builder.Services.AddScoped<AuthorizeAttribute>();
 

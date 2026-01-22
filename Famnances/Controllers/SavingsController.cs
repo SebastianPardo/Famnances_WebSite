@@ -1,22 +1,23 @@
-﻿using Famnances.Core.Utils.Helpers;
+﻿using Famnances.Core.Security.Authorization;
+using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
-using Google.Apis.Util;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Famnances.Controllers
 {
+    [ServiceFilter(typeof(AuthorizeAttribute))]
     public class SavingsController : Controller
     {
         IHttpHelper _httpHelper;
-        IUtilities _utilities;
+        ILanguageHelper _utilities;
 
-        public SavingsController(IHttpHelper httpHelper, IUtilities utilities)
+        public SavingsController(IHttpHelper httpHelper, ILanguageHelper utilities)
         {
             _httpHelper = httpHelper;
             _utilities = utilities;

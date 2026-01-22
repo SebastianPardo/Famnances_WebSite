@@ -1,21 +1,21 @@
-﻿using Famnances.Core.Utils.Helpers;
-using Famnances.DataCore.Data;
+﻿using Famnances.Core.Security.Authorization;
+using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
-using Google.Apis.Util;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace Famnances.Controllers
 {
+    [ServiceFilter(typeof(AuthorizeAttribute))]
     public class OutflowsController : Controller
     {
         IHttpHelper _httpHelper;
-        IUtilities _utilities;
+        ILanguageHelper _utilities;
 
-        public OutflowsController(IHttpHelper httpHelper, IUtilities utilities)
+        public OutflowsController(IHttpHelper httpHelper, ILanguageHelper utilities)
         {
             _httpHelper = httpHelper;
             _utilities = utilities;

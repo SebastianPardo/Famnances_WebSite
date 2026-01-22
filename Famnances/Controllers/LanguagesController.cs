@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Localization;
+﻿using Famnances.Core.Security.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Famnances.Controllers
 {
+    [ServiceFilter(typeof(AuthorizeAttribute))]
     public class LanguagesController : Controller
     {
         [HttpGet]

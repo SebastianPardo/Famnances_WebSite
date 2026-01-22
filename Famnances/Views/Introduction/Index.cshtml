@@ -17,11 +17,12 @@
                 <div class="row">
                     <div class="col-lg-12 text-center mb-lg-0">
                         <div class="user-avatar">
+                            <img class="user-avatar" src="@ViewBag.Photo" />
                         </div>
                     </div>
                 </div>
                 <div class="row text-center">
-                    <h1 class="text-black">@Localizer["Welcome"] Pepito</h1>
+                    <h1 class="text-black">@Localizer["Welcome"] @ViewBag.UserName</h1>
                     <p class="mt-5">@Localizer["WelcomeMessage"]</p>
                 </div>
                 <div class="row justify-content-center align-items-center">

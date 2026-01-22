@@ -61,6 +61,33 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Incomes.
+        /// </summary>
+        public static string _Incomes {
+            get {
+                return ResourceManager.GetString("_Incomes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fixed Incomes.
+        /// </summary>
+        public static string FIXED {
+            get {
+                return ResourceManager.GetString("FIXED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to * You can add more whenever you want..
         /// </summary>
         public static string Footnote {
@@ -102,6 +129,15 @@ namespace Famnances.Resources.Views.Introduction {
         public static string Tittle {
             get {
                 return ResourceManager.GetString("Tittle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Variable Incomes.
+        /// </summary>
+        public static string VARIABLE {
+            get {
+                return ResourceManager.GetString("VARIABLE", resourceCulture);
             }
         }
     }

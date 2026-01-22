@@ -132,4 +132,16 @@
   <data name="Tittle" xml:space="preserve">
     <value>Tell us about your income</value>
   </data>
+  <data name="Variable" xml:space="preserve">
+    <value>Variable Incomes</value>
+  </data>
+  <data name="Fixed" xml:space="preserve">
+    <value>Fixed Incomes</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="_Incomes" xml:space="preserve">
+    <value>Incomes</value>
+  </data>
 </root>

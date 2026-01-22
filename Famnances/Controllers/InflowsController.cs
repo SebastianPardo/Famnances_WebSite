@@ -17,9 +17,9 @@ namespace Famnances.Controllers
     public class InflowsController : Controller
     {
         IHttpHelper _httpHelper;
-        IUtilities _utilities;
+        ILanguageHelper _utilities;
 
-        public InflowsController(IHttpHelper httpHelper, IUtilities utilities)
+        public InflowsController(IHttpHelper httpHelper, ILanguageHelper utilities)
         {
             _httpHelper = httpHelper;
             _utilities = utilities;
