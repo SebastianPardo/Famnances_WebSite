@@ -4,6 +4,7 @@ using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 using static Famnances.Models.ViewModels.IntroductionIncomeViewModel;
 
 namespace Famnances.Controllers
@@ -93,6 +94,64 @@ namespace Famnances.Controllers
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
             return View("Incomes", model);
         }
+
+        public async Task<ActionResult> SaveIncomes(IntroductionIncomeViewModel model)
+        {
+            foreach (var income in model.Incomes)
+            {
+                if (income.Type == "FIXED")
+                {
+                    FixedIncome fixedIncome = new FixedIncome
+                    {
+                        Active = true,
+                        Description = income.Description,
+                        FirstPayDate = income.FirstPayDate,
+                        PayablePeriodId = income.PeriodId,
+                        ShareOnHousehold = false,
+                        Value = income.Value
+                    };
+                    await _httpHelper.Post<FixedIncome>(Constants.FIXED_INCOMES_URI, fixedIncome);
+                }
+            }
+
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            user.BudgetByPeriod = model.Total;
+            await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
+
+            return RedirectToAction("FixedExpenses", 
+                new IntroductionFixedExpenseViewModel { 
+                    Total = model.Total, 
+                    PeriodId = model.PeriodId, 
+                    Period = model.Period
+                });
+        }
+
+        public async Task<ActionResult> FixedExpenses(IntroductionFixedExpenseViewModel model)
+        {
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
+            model.Expenses = new List<FixedExpense>();
+            model.Expense = new FixedExpense();
+            return View(model);
+        }
+
+        public async Task<ActionResult> AddFixedExpense(IntroductionFixedExpenseViewModel model)
+        {
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+            var periodFrom = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.Expense.PeriodId}");
+            var periodTo = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
+
+            model.Period = await _utilities.GetPeriodName(culture, periodFrom);
+            model.Expenses = model.Expenses ?? new List<FixedExpense>();
+            model.Expenses.Add(model.Expense);
+
+            model.Total -= _utilities.GetValueByPeriod(model.Expense.Value, periodFrom.Code, periodTo.Code);
+
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
+            return View("FixedExpenses", model);
+        }
+
 
         // GET: IntroductionController/Create
         public ActionResult Create()

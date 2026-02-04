@@ -1,0 +1,100 @@
+﻿@model Famnances.Models.ViewModels.IntroductionFixedExpenseViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = "Introduction";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4">
+        <form asp-action="AddFixedExpense">
+            <div class="row mb-5 justify-content-center align-items-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h3 text-center mb-2">@Localizer["Tittle"] </h1>
+                        <p class="text-center mt-3">
+                            @Localizer["Subtittle"]
+                        </p>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Expense.Name" class="control-label"></label>
+                                <input asp-for="Expense.Name" class="form-control" />
+                                <span asp-validation-for="Expense.Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="Expense.Value" class="control-label"></label>
+                                <input asp-for="Expense.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+                                <span asp-validation-for="Expense.Value" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="Expense.StartDate" class="control-label"></label>
+                                <input asp-for="Expense.StartDate" class="form-control" type="date" />
+                                <span asp-validation-for="Expense.StartDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="Expense.EndDate" class="control-label"></label>
+                                <input asp-for="Expense.EndDate" class="form-control" type="date" />
+                                <span asp-validation-for="Expense.EndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Expense.PeriodId" class="control-label"></label>
+                                <select asp-for="Expense.PeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                                    <option selected disabled hidden>Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button class="btn btn-primary w-100" asp-action="AddFixedExpense">@Localizer["Add"]</button>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <input type="hidden" asp-for="PeriodId" />
+                        <input type="hidden" asp-for="Period" />
+                        <input type="hidden" asp-for="Total" value="@Model.Total" />
+                        <p>@Localizer["Budget"] @Model.Period: <strong class="text-primary">$ @Model.Total</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="h3 text-center mb-2">@Localizer["_FixedExpenses"] </h3>
+                    <ul class="list-group">
+                        @for (var i = 0; i < Model.Expenses.Count(); i++)
+                        {
+                            <li class="list-group-item">
+                                <input type="hidden" asp-for="@Model.Expenses[i].Name" />
+                                <input type="hidden" asp-for="@Model.Expenses[i].Period" />
+                                <input type="hidden" asp-for="@Model.Expenses[i].PeriodId" />
+                                <input type="hidden" asp-for="@Model.Expenses[i].StartDate" />
+                                <input type="hidden" asp-for="@Model.Expenses[i].EndDate" />
+                                <input type="hidden" asp-for="@Model.Expenses[i].Value" />
+
+                                <div class="row">
+                                    <div class="col-4 col-md-4 fw-semibold text-primary"><h5 class="mb-0">@Model.Expenses[i].Name</h5></div>
+                                    <div class="col-4 col-md-4 text-end fw-semibold"><h5 class="mb-0">@Model.Expenses[i].Period</h5></div>
+                                    <div class="col-4 col-md-4 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.Expenses[i].Value</h3></div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center mt-3">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary w-100" asp-action="SaveFixedExpenses">@Localizer["Next"]</button>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 text-center">
+                    <button class="btn btn-outline-primary w-100">@Localizer["Skip"]</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -135,7 +135,7 @@ namespace Famnances.Helpers
                 return (T)(object)rawString;
             }
 
-            if (response.StatusCode == HttpStatusCode.NoContent)
+            if (response.StatusCode == HttpStatusCode.NoContent || response.Content.Headers.ContentLength == 0)
                 return default;
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
