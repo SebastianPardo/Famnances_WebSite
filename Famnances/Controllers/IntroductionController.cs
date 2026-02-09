@@ -152,6 +152,21 @@ namespace Famnances.Controllers
             return View("FixedExpenses", model);
         }
 
+        public async Task<ActionResult> SaveFixedExpenses (IntroductionFixedExpenseViewModel model)
+        {
+            foreach(var expense in model.Expenses)
+            {
+                expense.Active = true;
+                expense.ShareOnHousehold = false;
+                await _httpHelper.Post<FixedExpense>(Constants.FIXED_EXPENSES_URI, expense);
+            }
+            return RedirectToAction("Savings");
+        }
+
+        public async Task<ActionResult> Savings ()
+        {
+            return View();
+        }
 
         // GET: IntroductionController/Create
         public ActionResult Create()
