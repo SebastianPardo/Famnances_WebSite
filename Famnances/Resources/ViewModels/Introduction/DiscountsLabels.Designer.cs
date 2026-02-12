@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Famnances.Resources.Views.Introduction {
+namespace Famnances.Resources.ViewModels.Introduction {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Famnances.Resources.Views.Introduction {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Incomes {
+    public class DiscountsLabels {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Incomes() {
+        internal DiscountsLabels() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.Views.Introduction {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Introduction.Incomes", typeof(Incomes).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.ViewModels.Introduction.DiscountsLabels", typeof(DiscountsLabels).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,92 +61,65 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incomes.
+        ///   Looks up a localized string similar to Payable Period.
         /// </summary>
-        public static string _Incomes {
+        public static string ByPayablePeriod {
             get {
-                return ResourceManager.GetString("_Incomes", resourceCulture);
+                return ResourceManager.GetString("ByPayablePeriod", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
+        ///   Looks up a localized string similar to Description.
         /// </summary>
-        public static string Add {
+        public static string Description {
             get {
-                return ResourceManager.GetString("Add", resourceCulture);
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Fixed Incomes.
         /// </summary>
-        public static string Fixed {
+        public static string FixedIncomes {
             get {
-                return ResourceManager.GetString("Fixed", resourceCulture);
+                return ResourceManager.GetString("FixedIncomes", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to * You can add more whenever you want..
+        ///   Looks up a localized string similar to Percentage.
         /// </summary>
-        public static string Footnote {
+        public static string IsPercentage {
             get {
-                return ResourceManager.GetString("Footnote", resourceCulture);
+                return ResourceManager.GetString("IsPercentage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
+        ///   Looks up a localized string similar to Prediscount.
         /// </summary>
-        public static string Next {
+        public static string IsPrediscount {
             get {
-                return ResourceManager.GetString("Next", resourceCulture);
+                return ResourceManager.GetString("IsPrediscount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select.
+        ///   Looks up a localized string similar to Tax.
         /// </summary>
-        public static string Select {
+        public static string IsTax {
             get {
-                return ResourceManager.GetString("Select", resourceCulture);
+                return ResourceManager.GetString("IsTax", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip.
+        ///   Looks up a localized string similar to Value.
         /// </summary>
-        public static string Skip {
+        public static string Value {
             get {
-                return ResourceManager.GetString("Skip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This will define the money you have available in each period..
-        /// </summary>
-        public static string Subtittle {
-            get {
-                return ResourceManager.GetString("Subtittle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tell us about your income.
-        /// </summary>
-        public static string Tittle {
-            get {
-                return ResourceManager.GetString("Tittle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Variable Incomes.
-        /// </summary>
-        public static string Variable {
-            get {
-                return ResourceManager.GetString("Variable", resourceCulture);
+                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
     }

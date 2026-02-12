@@ -1,4 +1,4 @@
-﻿@model Famnances.Models.ViewModels.IntroductionIncomeViewModel
+﻿@model Famnances.Models.ViewModels.Introduction.IncomeViewModel
 
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
@@ -12,45 +12,52 @@
 <div class="row justify-content-center align-items-center">
     <div class="col-md-4">
         <form asp-action="AddIncome">
-            <div class="row mb-5 justify-content-center align-items-center">
+            <div class="row mb-3 justify-content-center align-items-center">
                 <div class="card">
                     <div class="card-body">
                         <h1 class="h3 text-center mb-2">@Localizer["Tittle"] </h1>
                         <p class="text-center mt-3">
                             @Localizer["Subtittle"]
                         </p>
-                        <div class="col-12">
+                        <div class="col-12 mt-2">
                             <label asp-for="NewIncome.Type" class="control-label text-start"></label>
                             <select asp-for="NewIncome.Type" class="form-control select2" data-live-search="true">
-                                <option selected disabled hidden>Select</option>
-                                <option value="FIXED">@Localizer["FIXED"]</option>
-                                <option value="VARIABLE">@Localizer["VARIABLE"]</option>
+                                <option selected disabled hidden>@Localizer["Select"]</option>
+                                <option value="FIXED">@Localizer["Fixed"]</option>
+                                <option value="VARIABLE">@Localizer["Variable"]</option>
                             </select>
                             <span asp-validation-for="NewIncome.Type" class="text-danger"></span>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 mt-2">
                             <label asp-for="NewIncome.Description" class="control-label text-start"></label>
                             <input asp-for="NewIncome.Description" class="form-control" />
                             <span asp-validation-for="NewIncome.Description" class="text-danger"></span>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 mt-2">
                             <label asp-for="NewIncome.Value" class="control-label text-start"></label>
                             <input asp-for="NewIncome.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
                             <span asp-validation-for="NewIncome.Value" class="text-danger"></span>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12 mt-2">
+                            <label asp-for="NewIncome.ValuePeriodId" class="control-label text-start"></label>
+                            <select asp-for="NewIncome.ValuePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                                <option selected disabled hidden>Select</option>
+                            </select>
+                            <span asp-validation-for="NewIncome.ValuePeriodId" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <label asp-for="NewIncome.PayablePeriodId" class="control-label text-start"></label>
+                            <select asp-for="NewIncome.PayablePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                                <option selected disabled hidden>Select</option>
+                            </select>
+                            <span asp-validation-for="NewIncome.PayablePeriodId" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 mt-2">
                             <label asp-for="NewIncome.FirstPayDate" class="control-label text-start"></label>
                             <input asp-for="NewIncome.FirstPayDate" class="form-control" type="date" />
                             <span asp-validation-for="NewIncome.FirstPayDate" class="text-danger"></span>
                         </div>
-                        <div class="col-12">
-                            <label asp-for="NewIncome.PeriodId" class="control-label text-start"></label>
-                            <select asp-for="NewIncome.PeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
-                                <option selected disabled hidden>Select</option>
-                            </select>
-                            <span asp-validation-for="NewIncome.PeriodId" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 text-center">
+                        <div class="col-12 text-center mt-3">
                             <button class="btn btn-primary w-100" asp-action="AddIncome">@Localizer["Add"]</button>
                         </div>
                     </div>
@@ -58,7 +65,7 @@
                         <input type="hidden" asp-for="PeriodId" />
                         <input type="hidden" asp-for="Period" />
                         <input type="hidden" asp-for="Total" value="@Model.Total" />
-                        <p>Total @Model.Period: <strong class="text-primary">$ @Model.Total</strong></p>                        
+                        <p class="fs-4">Total @Model.Period: <strong class="text-primary">$ @Model.Total</strong></p>                        
                     </div>
                 </div>
             </div>
@@ -71,7 +78,8 @@
                             <li class="list-group-item">
                                 <input type="hidden" asp-for="@Model.Incomes[i].Description" />
                                 <input type="hidden" asp-for="@Model.Incomes[i].Period" />
-                                <input type="hidden" asp-for="@Model.Incomes[i].PeriodId" />
+                                <input type="hidden" asp-for="@Model.Incomes[i].PayablePeriodId" />
+                                <input type="hidden" asp-for="@Model.Incomes[i].ValuePeriodId" />
                                 <input type="hidden" asp-for="@Model.Incomes[i].FirstPayDate" />
                                 <input type="hidden" asp-for="@Model.Incomes[i].Type" />
                                 <input type="hidden" asp-for="@Model.Incomes[i].Value" />

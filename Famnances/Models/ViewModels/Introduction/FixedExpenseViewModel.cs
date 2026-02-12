@@ -1,8 +1,8 @@
 ﻿using Famnances.DataCore.Entities;
 
-namespace Famnances.Models.ViewModels
+namespace Famnances.Models.ViewModels.Introduction
 {
-    public class IntroductionFixedExpenseViewModel
+    public class FixedExpenseViewModel
     {
         public Guid PeriodId { get; set; }
         public string Period { get; set; }

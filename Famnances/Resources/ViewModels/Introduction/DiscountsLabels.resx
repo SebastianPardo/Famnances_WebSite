@@ -117,34 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Footnote" xml:space="preserve">
-    <value>*Puedes agregar más cuando quieras.</value>
+  <data name="ByPayablePeriod" xml:space="preserve">
+    <value>Payable Period</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>Continuar</value>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="Skip" xml:space="preserve">
-    <value>Saltar este paso</value>
+  <data name="FixedIncomes" xml:space="preserve">
+    <value>Fixed Incomes</value>
   </data>
-  <data name="Subtittle" xml:space="preserve">
-    <value>Esto definirá el dinero con el que cuentas en cada período.</value>
+  <data name="IsPercentage" xml:space="preserve">
+    <value>Percentage</value>
   </data>
-  <data name="Tittle" xml:space="preserve">
-    <value>Cuéntanos de tus ingresos</value>
+  <data name="IsPrediscount" xml:space="preserve">
+    <value>Prediscount</value>
   </data>
-  <data name="Variable" xml:space="preserve">
-    <value>Ingresos Variables</value>
+  <data name="IsTax" xml:space="preserve">
+    <value>Tax</value>
   </data>
-  <data name="Fixed" xml:space="preserve">
-    <value>Ingresos fijos</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>Agregar</value>
-  </data>
-  <data name="_Incomes" xml:space="preserve">
-    <value>Ingresos</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Seleccionar . . .</value>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
   </data>
 </root>

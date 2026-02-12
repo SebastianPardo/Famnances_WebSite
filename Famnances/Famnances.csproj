@@ -142,6 +142,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\ViewModels\Introduction\DiscountsLabels.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DiscountsLabels.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ViewModels\Introduction\IncomeLabels.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IncomeLabels.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Introduction\FixedExpenses.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FixedExpenses.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Views\Introduction\Index.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -160,6 +175,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\ViewModels\Introduction\DiscountsLabels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DiscountsLabels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\Introduction\IncomeLabels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IncomeLabels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Introduction\FixedExpenses.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FixedExpenses.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Introduction\Index.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Index.Designer.cs</LastGenOutput>

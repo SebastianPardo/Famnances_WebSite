@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Famnances.Resources.Views.Introduction {
+namespace Famnances.Resources.ViewModels.Introduction {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Famnances.Resources.Views.Introduction {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Incomes {
+    public class IncomeLabels {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Incomes() {
+        internal IncomeLabels() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.Views.Introduction {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Introduction.Incomes", typeof(Incomes).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.ViewModels.Introduction.IncomeLabels", typeof(IncomeLabels).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,92 +61,83 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incomes.
+        ///   Looks up a localized string similar to Active?.
         /// </summary>
-        public static string _Incomes {
+        public static string Active {
             get {
-                return ResourceManager.GetString("_Incomes", resourceCulture);
+                return ResourceManager.GetString("Active", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
+        ///   Looks up a localized string similar to Description.
         /// </summary>
-        public static string Add {
+        public static string Description {
             get {
-                return ResourceManager.GetString("Add", resourceCulture);
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fixed Incomes.
+        ///   Looks up a localized string similar to First Pay Date.
         /// </summary>
-        public static string Fixed {
+        public static string FirstPayDate {
             get {
-                return ResourceManager.GetString("Fixed", resourceCulture);
+                return ResourceManager.GetString("FirstPayDate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to * You can add more whenever you want..
+        ///   Looks up a localized string similar to It will be pay . . ..
         /// </summary>
-        public static string Footnote {
+        public static string PayablePeriod {
             get {
-                return ResourceManager.GetString("Footnote", resourceCulture);
+                return ResourceManager.GetString("PayablePeriod", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
+        ///   Looks up a localized string similar to Period.
         /// </summary>
-        public static string Next {
+        public static string Period {
             get {
-                return ResourceManager.GetString("Next", resourceCulture);
+                return ResourceManager.GetString("Period", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select.
+        ///   Looks up a localized string similar to Required.
         /// </summary>
-        public static string Select {
+        public static string RequiredField {
             get {
-                return ResourceManager.GetString("Select", resourceCulture);
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip.
+        ///   Looks up a localized string similar to Type.
         /// </summary>
-        public static string Skip {
+        public static string Type {
             get {
-                return ResourceManager.GetString("Skip", resourceCulture);
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This will define the money you have available in each period..
+        ///   Looks up a localized string similar to Value.
         /// </summary>
-        public static string Subtittle {
+        public static string Value {
             get {
-                return ResourceManager.GetString("Subtittle", resourceCulture);
+                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us about your income.
+        ///   Looks up a localized string similar to By.
         /// </summary>
-        public static string Tittle {
+        public static string ValuePeriod {
             get {
-                return ResourceManager.GetString("Tittle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Variable Incomes.
-        /// </summary>
-        public static string Variable {
-            get {
-                return ResourceManager.GetString("Variable", resourceCulture);
+                return ResourceManager.GetString("ValuePeriod", resourceCulture);
             }
         }
     }

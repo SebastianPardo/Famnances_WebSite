@@ -22,14 +22,14 @@ namespace Famnances.Resources.Views.Introduction {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Incomes {
+    public class FixedExpenses {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Incomes() {
+        internal FixedExpenses() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.Views.Introduction {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Introduction.Incomes", typeof(Incomes).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Introduction.FixedExpenses", typeof(FixedExpenses).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,11 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Incomes.
+        ///   Looks up a localized string similar to Fixed Expenses.
         /// </summary>
-        public static string _Incomes {
+        public static string _FixedExpenses {
             get {
-                return ResourceManager.GetString("_Incomes", resourceCulture);
+                return ResourceManager.GetString("_FixedExpenses", resourceCulture);
             }
         }
         
@@ -79,20 +79,11 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fixed Incomes.
+        ///   Looks up a localized string similar to Budget.
         /// </summary>
-        public static string Fixed {
+        public static string Budget {
             get {
-                return ResourceManager.GetString("Fixed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to * You can add more whenever you want..
-        /// </summary>
-        public static string Footnote {
-            get {
-                return ResourceManager.GetString("Footnote", resourceCulture);
+                return ResourceManager.GetString("Budget", resourceCulture);
             }
         }
         
@@ -106,15 +97,6 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select.
-        /// </summary>
-        public static string Select {
-            get {
-                return ResourceManager.GetString("Select", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Skip.
         /// </summary>
         public static string Skip {
@@ -124,7 +106,7 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This will define the money you have available in each period..
+        ///   Looks up a localized string similar to Only the expenses that you have fixed periodically such as rent, utilities, internet, car or housing payment, etc..
         /// </summary>
         public static string Subtittle {
             get {
@@ -133,20 +115,11 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us about your income.
+        ///   Looks up a localized string similar to Tell us about your fixed expenses.
         /// </summary>
         public static string Tittle {
             get {
                 return ResourceManager.GetString("Tittle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Variable Incomes.
-        /// </summary>
-        public static string Variable {
-            get {
-                return ResourceManager.GetString("Variable", resourceCulture);
             }
         }
     }
