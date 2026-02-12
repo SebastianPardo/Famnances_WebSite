@@ -1,0 +1,119 @@
+﻿@model Famnances.Models.ViewModels.Introduction.DiscountViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = "Introduction";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4">
+        <form asp-action="AddFixedExpense">
+            <div class="row mb-5 justify-content-center align-items-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h3 text-center mb-2">@Localizer["Tittle"] </h1>
+                        <p class="text-center mt-3">
+                            @Localizer["Subtittle"]
+                        </p>
+                        <div class="row">
+                            <div class="col-12">
+                                <label asp-for="IncomeDiscount.Description" class="control-label"></label>
+                                <input asp-for="IncomeDiscount.Description" class="form-control" />
+                                <span asp-validation-for="IncomeDiscount.Description" class="text-danger"></span>
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="IncomeDiscount.Value" class="control-label"></label>
+                                <input asp-for="IncomeDiscount.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+                                <span asp-validation-for="IncomeDiscount.Value" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="IncomeDiscount.IsPercentage" /> @Html.DisplayNameFor(model => model.IncomeDiscount.IsPercentage)
+                                </label>
+                            </div>
+                            <div class="col-12 form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="IncomeDiscount.ByPayablePeriod" /> @Html.DisplayNameFor(model => model.IncomeDiscount.IsTax)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 form-check">
+                                <label class="form-check-label">
+                                    @Html.DisplayNameFor(model => model.IncomeDiscount.IsPrediscount)
+                                </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+                                    <label class="form-check-label" for="radioDefault1">
+                                        SI
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                                    <label class="form-check-label" for="radioDefault2">
+                                        NO
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12 form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="IncomeDiscount.IsTax" /> @Html.DisplayNameFor(model => model.IncomeDiscount.IsTax)
+                                </label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="control-label text-start">Fixed Income</label>
+                                    <select asp-for="IncomeDiscount.IncomeIds" class="select2 form-control" asp-items=@ViewBag.Incomes multiple placeholder="Select"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <input type="hidden" asp-for="PeriodId" />
+                        <input type="hidden" asp-for="Period" />
+                        <input type="hidden" asp-for="Total" value="@Model.Total" />
+                        <p>@Localizer["Budget"] @Model.Period: <strong class="text-primary">$ @Model.Total</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="h3 text-center mb-2">@Localizer["_FixedExpenses"] </h3>
+                    <ul class="list-group">
+                        @for (var i = 0; i < Model.IncomeDiscounts.Count(); i++)
+                        {
+                            <li class="list-group-item">
+                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Description" />
+                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Value" />
+                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IncomeIds" />
+                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].ByPayablePeriod" />
+                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPercentage" />
+                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPrediscount" />
+                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsTax" />
+
+                                <div class="row">
+                                    <div class="col-4 col-md-4 fw-semibold text-primary"><h5 class="mb-0">@Model.IncomeDiscounts[i].Description</h5></div>
+                                    <div class="col-4 col-md-4 text-end fw-semibold"><h5 class="mb-0">@Model.IncomeDiscounts[i].Period</h5></div>
+                                    <div class="col-4 col-md-4 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.IncomeDiscounts[i].Value</h3></div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center mt-3">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary w-100" asp-action="SaveFixedExpenses">@Localizer["Next"]</button>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 text-center">
+                    <button class="btn btn-outline-primary w-100">@Localizer["Skip"]</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

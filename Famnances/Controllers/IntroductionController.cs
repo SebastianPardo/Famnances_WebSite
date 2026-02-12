@@ -2,10 +2,12 @@
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
-using Famnances.Models.ViewModels;
+using Famnances.Models.ViewModels.Introduction;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.RegularExpressions;
-using static Famnances.Models.ViewModels.IntroductionIncomeViewModel;
+using static Famnances.Models.ViewModels.Introduction.DiscountViewModel;
+using static Famnances.Models.ViewModels.Introduction.IncomeViewModel;
 
 namespace Famnances.Controllers
 {
@@ -68,7 +70,7 @@ namespace Famnances.Controllers
             await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(user.Language);
-            IntroductionIncomeViewModel model = new IntroductionIncomeViewModel
+            IncomeViewModel model = new IncomeViewModel
             {
                 Incomes = new List<Income>(),
                 Total = 0,
@@ -79,10 +81,10 @@ namespace Famnances.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> AddIncome(IntroductionIncomeViewModel model)
+        public async Task<ActionResult> AddIncome(IncomeViewModel model)
         {
             var culture = Thread.CurrentThread.CurrentUICulture.ToString();
-            var periodFrom = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.NewIncome.PeriodId}");
+            var periodFrom = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.NewIncome.ValuePeriodId}");
             var periodTo = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
 
             model.NewIncome.Period = await _utilities.GetPeriodName(culture, periodFrom);
@@ -95,7 +97,7 @@ namespace Famnances.Controllers
             return View("Incomes", model);
         }
 
-        public async Task<ActionResult> SaveIncomes(IntroductionIncomeViewModel model)
+        public async Task<ActionResult> SaveIncomes(IncomeViewModel model)
         {
             foreach (var income in model.Incomes)
             {
@@ -106,7 +108,8 @@ namespace Famnances.Controllers
                         Active = true,
                         Description = income.Description,
                         FirstPayDate = income.FirstPayDate,
-                        PayablePeriodId = income.PeriodId,
+                        PayablePeriodId = income.PayablePeriodId,
+                        ValuePeriodId = income.ValuePeriodId,
                         ShareOnHousehold = false,
                         Value = income.Value
                     };
@@ -119,15 +122,24 @@ namespace Famnances.Controllers
             user.BudgetByPeriod = model.Total;
             await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
 
-            return RedirectToAction("FixedExpenses", 
-                new IntroductionFixedExpenseViewModel { 
+            return RedirectToAction("Discounts", 
+                new DiscountViewModel
+                { 
                     Total = model.Total, 
                     PeriodId = model.PeriodId, 
                     Period = model.Period
                 });
         }
 
-        public async Task<ActionResult> FixedExpenses(IntroductionFixedExpenseViewModel model)
+        public async Task<ActionResult> Discounts (DiscountViewModel model)
+        {
+            var incomes = await _httpHelper.Get<List<FixedIncome>> (Constants.FIXED_INCOMES_URI);
+            ViewBag.Incomes = new SelectList(incomes, "Id", "Description");
+            model.IncomeDiscounts = new List<Discount>();
+            return View(model);
+        }
+
+        public async Task<ActionResult> FixedExpenses(FixedExpenseViewModel model)
         {
             var culture = Thread.CurrentThread.CurrentUICulture.ToString();
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
@@ -136,7 +148,7 @@ namespace Famnances.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> AddFixedExpense(IntroductionFixedExpenseViewModel model)
+        public async Task<ActionResult> AddFixedExpense(FixedExpenseViewModel model)
         {
             var culture = Thread.CurrentThread.CurrentUICulture.ToString();
             var periodFrom = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.Expense.PeriodId}");
@@ -152,7 +164,7 @@ namespace Famnances.Controllers
             return View("FixedExpenses", model);
         }
 
-        public async Task<ActionResult> SaveFixedExpenses (IntroductionFixedExpenseViewModel model)
+        public async Task<ActionResult> SaveFixedExpenses (FixedExpenseViewModel model)
         {
             foreach(var expense in model.Expenses)
             {
