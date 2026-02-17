@@ -1,4 +1,9 @@
 ﻿@using Famnances.Core.Utils.Helpers
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer Localizer
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,37 +59,37 @@
                     </a>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div id="menu" class="navbar-nav py-0">
-                            <a class="nav-item nav-link active" asp-area="" asp-controller="Home" asp-action="Index" asp-route-date="@DateTimeEast.Now.ToString("yyyy-MM-dd")">Home</a>
+                            <a class="nav-item nav-link active" asp-area="" asp-controller="Home" asp-action="Index" asp-route-date="@DateTimeEast.Now.ToString("yyyy-MM-dd")">@Localizer["Home"]</a>
                             <div class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Savings</a>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">@Localizer["Savings"]</a>
                                 <div class="dropdown-menu m-0">
-                                    <a asp-controller="Savings" asp-action="Index" class="dropdown-item">Transactions</a>
-                                    <a asp-controller="Savings" asp-action="IndexPockets" class="dropdown-item">Pockets</a>
-                                    <a asp-controller="Savings" asp-action="IndexFixed" class="dropdown-item">Fixed Savings</a>
+                                    <a asp-controller="Savings" asp-action="Index" class="dropdown-item">@Localizer["Transactions"]</a>
+                                    <a asp-controller="Savings" asp-action="IndexPockets" class="dropdown-item">@Localizer["Pockets"]</a>
+                                    <a asp-controller="Savings" asp-action="IndexFixed" class="dropdown-item">@Localizer["FixedSavings"]</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Incomes</a>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">@Localizer["Incomes"]</a>
                                 <div class="dropdown-menu m-0">
-                                    <a asp-controller="Inflows" asp-action="Index" class="dropdown-item">Inflow</a>
-                                    <a asp-controller="Inflows" asp-action="IndexFixedIncomes" class="dropdown-item">Fixed</a>
-                                    <a asp-controller="IncomeDiscounts" asp-action="Index" class="dropdown-item">Discounts</a>
+                                    <a asp-controller="Inflows" asp-action="Index" class="dropdown-item">@Localizer["Inflow"]</a>
+                                    <a asp-controller="Inflows" asp-action="IndexFixedIncomes" class="dropdown-item">@Localizer["Fixed"]</a>
+                                    <a asp-controller="IncomeDiscounts" asp-action="Index" class="dropdown-item">@Localizer["Discounts"]</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Expenses</a>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">@Localizer["Expenses"]</a>
                                 <div class="dropdown-menu m-0">
-                                    <a asp-controller="Outflows" asp-action="Index" class="dropdown-item">Outflow</a>
-                                    <a asp-controller="Outflows" asp-action="IndexFixedExpenses" class="dropdown-item">Fixed</a>
-                                    <a asp-controller="Budgets" asp-action="Index" class="dropdown-item">Budgets</a>
+                                    <a asp-controller="Outflows" asp-action="Index" class="dropdown-item">@Localizer["Outflow"]</a>
+                                    <a asp-controller="Outflows" asp-action="IndexFixedExpenses" class="dropdown-item">@Localizer["Fixed"]</a>
+                                    <a asp-controller="Budgets" asp-action="Index" class="dropdown-item">@Localizer["Budgets"]</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Profile</a>
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">@Localizer["Profile"]</a>
                                 <div class="dropdown-menu m-0">
-                                    <a asp-controller="Users" asp-action="CreateHome" class="dropdown-item">Household</a>
-                                    <a asp-controller="Users" asp-action="Details" class="dropdown-item">My Account</a>
-                                    <a asp-controller="Login" asp-action="Logout" class="dropdown-item">Logout</a>
+                                    <a asp-controller="Users" asp-action="CreateHome" class="dropdown-item">@Localizer["Household"]</a>
+                                    <a asp-controller="Users" asp-action="Details" class="dropdown-item">@Localizer["Account"]</a>
+                                    <a asp-controller="Login" asp-action="Logout" class="dropdown-item">@Localizer["Logout"]</a>
                                 </div>
                             </div>
                         </div>

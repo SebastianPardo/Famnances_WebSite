@@ -152,6 +152,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IncomeLabels.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Views\Home\Index.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Index.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Views\Introduction\FixedExpenses.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -172,6 +177,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PeriodSelector.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Views\Shared\_IndexLayout.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>_IndexLayout.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Shared\_Layout.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>_Layout.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -182,6 +197,10 @@
     <EmbeddedResource Update="Resources\ViewModels\Introduction\IncomeLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IncomeLabels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\Index.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Index.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Introduction\FixedExpenses.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -198,6 +217,14 @@
     <EmbeddedResource Update="Resources\Views\Introduction\PeriodSelector.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PeriodSelector.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\_IndexLayout.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>_IndexLayout.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Shared\_Layout.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>_Layout.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

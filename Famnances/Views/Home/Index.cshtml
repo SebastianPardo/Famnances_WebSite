@@ -1,6 +1,10 @@
 ﻿@using Famnances.Core.Utils.Helpers
 @model Famnances.DataCore.ServicesModels.SummaryModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -16,7 +20,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4 me-2">Period</span>
+                        <span class="fw-semibold d-block mb-1 fs-4 me-2">@Localizer["Period"]</span>
                     </div>
                     <div class="col-5 align-items-end">
                         <ul class="pagination">
@@ -25,7 +29,7 @@
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item"><a class="btn btn-sm btn-secondary" asp-action="CurrentPeriod">Current</a></li>
+                            <li class="page-item"><a class="btn btn-sm btn-secondary" asp-action="CurrentPeriod">@Localizer["Current"]</a></li>
                             <li class="page-item">
                                 <a class="btn btn-sm btn-secondary" asp-action="NextPeriod" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
@@ -51,7 +55,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Money by Period</span>
+                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["MoneyPeriod"]</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -71,7 +75,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-5 me-2">Balance This Period</span>
+                        <span class="fw-semibold d-block mb-1 fs-5 me-2">@Localizer["BalancePeriod"]</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -92,7 +96,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Expenses</span>
+                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["Expenses"]</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -114,7 +118,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4 me-2">Home Savings</span>
+                        <span class="fw-semibold d-block mb-1 fs-4 me-2">@Localizer["HomeSavings"]</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -135,7 +139,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Chequing Account</span>
+                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["ChequingAccount"]</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -156,7 +160,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Savings Account</span>
+                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["SavingsAccount"]</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -177,7 +181,7 @@
                                  alt="chart success"
                                  class="rounded" />
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">Saving Expenses</span>
+                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["SavingsExpenses"]</span>
                     </div>
                 </div>
                 <div class="col text-end">
@@ -194,7 +198,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex">
-                    <span class="fw-semibold d-block mb-1 fs-4">Fixed Expenses</span>
+                    <span class="fw-semibold d-block mb-1 fs-4">@Localizer["FixedExpenses"]</span>
                 </div>
                 <div class="col-md">
                     <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
@@ -237,17 +241,17 @@
                                                                     @if (fixedExpense.Owner)
                                                                     {
                                                                         <form asp-controller="Outflows" asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
-                                                                            <button type="submit" class="btn btn-indigo">Pay</button>
+                                                                            <button type="submit" class="btn btn-indigo">@Localizer["Pay"]</button>
                                                                         </form>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <h5 class="text-danger mb-0">Unpaid</h5>
+                                                                        <h5 class="text-danger mb-0">@Localizer["Unpaid"]</h5>
                                                                     }
                                                                 }
                                                                 else
                                                                 {
-                                                                    <h5 class="text-success mb-0">Paid</h5>
+                                                                    <h5 class="text-success mb-0">@Localizer["Paid"]</h5>
                                                                 }
                                                             </div>
                                                         </div>
@@ -269,7 +273,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex">
-                    <span class="fw-semibold d-block mb-1 fs-4">Budgets</span>
+                    <span class="fw-semibold d-block mb-1 fs-4">@Localizer["Budgets"]</span>
                 </div>
                 <div class="col-md">
                     <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
@@ -318,7 +322,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title d-flex">
-                    <span class="fw-semibold d-block mb-1 fs-4">Savings Pockets</span>
+                    <span class="fw-semibold d-block mb-1 fs-4">@Localizer["SavingPockets"]</span>
                 </div>
                 <div class="col-md">
                     <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
