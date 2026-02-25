@@ -236,9 +236,9 @@
                                                         </div>
                                                         <div class="col-6 col-md-6">
                                                             <div class="col-md-auto text-end fw-semibold">
-                                                                @if (fixedExpense.FixedExpensePaymentRecord == null)
+                                                                @if (!fixedExpense.WasPaid)
                                                                 {
-                                                                    @if (fixedExpense.Owner)
+                                                                    @if (roommate.IsCurrentUser)
                                                                     {
                                                                         <form asp-controller="Outflows" asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
                                                                             <button type="submit" class="btn btn-indigo">@Localizer["Pay"]</button>
@@ -291,7 +291,7 @@
                                         <ul class="list-group">
                                             @foreach (var budget in roommate.SummaryBudgets)
                                             {
-                                                var balance = budget.Value - budget.Spent;
+                                                var balance = budget.Budget - budget.Spent;
                                                 <li class="list-group-item">
                                                     @if (budget.Id != Guid.Empty)
                                                     {
@@ -302,7 +302,7 @@
                                                         <div class="col-6 col-md-6 text-end fw-semibold align-self-end"><h5 class="text-success mb-0">$@balance</h5></div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-6 col-md-6 text-start text-primary"><small class="mb-0">$@budget.Value</small></div>
+                                                        <div class="col-6 col-md-6 text-start text-primary"><small class="mb-0">$@budget.Budget</small></div>
                                                         <div class="col-6 col-md-6 text-end fw-semibold"><small class="text-danger mb-0"><i class="bx bx-down-arrow-alt"></i>$@budget.Spent</small></div>
                                                     </div>
                                                 </li>
