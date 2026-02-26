@@ -7,8 +7,10 @@ using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using Constants = Famnances.Helpers.Constants;
+using SummaryBudget = Famnances.DataCore.ServicesModels.SummaryBudgetModel;
 
 namespace Famnances.Controllers
 {
@@ -36,17 +38,45 @@ namespace Famnances.Controllers
 
             if (miniSummaryModel == null)
             {
-                TotalsByPeriod? totalsByPeriod = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.ACCOUNTING_URI}/CalculatePeriod");
-                dateFrom = totalsByPeriod.PeriodDateStart.ToString("yyyy-MM-dd");
-                miniSummaryModel = await GetHeaderSummary(dateFrom);
+                return Redirect(nameof(ClosePeriod));
             }
             else
             {
                 dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM);
             }
 
-            var homeSummary = await _httpHelper.Get<SummaryModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
+            var homeSummary = await _httpHelper.Get<HomeViewModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
             return View(homeSummary);
+        }
+
+        public async Task<IActionResult> ClosePeriod()
+        {
+            var summary = await _httpHelper.Get<List<SummaryBudget>>($"{Constants.BUDGETS_URI}/GetSummary");
+            List<RemainderBalance> remainderBalance = summary.Select(e =>
+                new RemainderBalance
+                {
+                    BudgetBalanceId = e.BudgetBalanceId,
+                    BudgetId = e.Id,
+                    BudgetName = e.Name,
+                    Remainder = e.Budget - e.Spent
+                }).Where(e => e.Remainder > 0).ToList();
+
+            var savingPockets = await _httpHelper.Get<List<SavingsPocket>>(Constants.SAVINGS_POCKETS_URI);
+            ViewBag.MoveTo = new SelectList(savingPockets, "Id", "Name");
+
+            if(remainderBalance == null || remainderBalance.Count == 0)
+            {
+                return Redirect(nameof(Index));
+            }
+
+            return View(remainderBalance);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ClosePeriod(List<RemainderBalance> remainderBalance)
+        {
+            await _httpHelper.Post<Guid>($"{Constants.ACCOUNTING_URI}/ClosePeriod", remainderBalance);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> PreviousPeriod()

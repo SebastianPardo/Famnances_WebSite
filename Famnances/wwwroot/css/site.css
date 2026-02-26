@@ -51,6 +51,8 @@
     --bs-body-color: #212529;
     --bs-body-bg: #fff;
     --bs-border-color: #005555;
+    --bs-btn-active-border-color: #005555;
+    --bs-btn-active-bg: #005555;
 }
 
 

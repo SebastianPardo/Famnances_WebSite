@@ -152,6 +152,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>IncomeLabels.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Views\Home\ClosePeriod.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ClosePeriod.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Views\Home\Index.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -197,6 +202,10 @@
     <EmbeddedResource Update="Resources\ViewModels\Introduction\IncomeLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IncomeLabels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\ClosePeriod.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClosePeriod.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Home\Index.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

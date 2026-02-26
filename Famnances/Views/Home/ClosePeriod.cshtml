@@ -1,0 +1,60 @@
+﻿@model List<Famnances.DataCore.ServicesModels.RemainderBalance>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = "Close Period";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-end mb-3">
+    <div class="col col-md-3 me-5 text-body-primary text-end">
+        <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
+    </div>
+</div>
+<div class="d-flex justify-content-end">
+    <div class="col text-body-primary text-end">
+        <h5 class="text-start">@Localizer["Subtitle"]</h5>
+    </div>
+</div>
+<hr />
+
+<form asp-action="ClosePeriod">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <input type="hidden" asp-for="@Model[i].BudgetBalanceId" />
+        <div class="row justify-content-center mb-2 remainder-row">
+            <div class="col-12 col-md-auto">
+                <label class="form-check-label">
+                    @Localizer["Article"] <strong>@Model[i].BudgetName</strong> @Localizer["Remainder"]
+                    <strong>$@Model[i].Remainder</strong>
+                </label>
+            </div>
+            <div class="col-12 col-md-auto">
+                <span>@Localizer["MoveTo"]</span>
+            </div>
+            <div class="col-12 col-md-auto">
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check move-option" asp-for="@Model[i].IsSavingPocket" value="false" id="sameBudget_@i" autocomplete="off" checked />
+                    <label class="btn btn-outline-primary" for="sameBudget_@i"> al siguiente período al mismo presupuesto </label>
+
+                    <input type="radio" class="btn-check move-option" asp-for="@Model[i].IsSavingPocket" value="true" id="savingPocket_@i" autocomplete="off" />
+                    <label class="btn btn-outline-primary" for="savingPocket_@i"> a un bolsillo de ahorros</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 saving-select @(Model[i].IsSavingPocket ? "" : "d-none")">
+                <select asp-for="@Model[i].MoveToId" asp-items="ViewBag.MoveTo" class="form-control select2">
+                    <option selected disabled hidden> @Localizer["Select"] </option>
+                </select>
+            </div>
+        </div>
+    }
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-2">
+            <input type="submit" class="btn btn-primary form-control" value="@Localizer["ClosePeriodBtn"]" />
+        </div>
+    </div>
+</form>
+<script src="~/js/Home/ClosePeriod.js"></script>

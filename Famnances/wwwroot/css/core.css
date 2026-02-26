@@ -2559,6 +2559,8 @@ textarea.form-control-lg {
 }
 
 .btn-check {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
     position: absolute;
     clip: rect(0, 0, 0, 0);
     pointer-events: none;
