@@ -38,7 +38,9 @@ namespace Famnances.Controllers
 
             if (miniSummaryModel == null)
             {
-                return Redirect(nameof(ClosePeriod));
+                TotalsByPeriod totalsByPeriod = await _httpHelper.Get<TotalsByPeriod>($"{Constants.TOTALSBYPERIOD_URI}/GetLastPeriod");
+                await GetHeaderSummary(totalsByPeriod.PeriodDateStart.ToString("yyyy-MM-dd"));
+                return RedirectToAction(nameof(ClosePeriod));
             }
             else
             {
@@ -66,7 +68,7 @@ namespace Famnances.Controllers
 
             if(remainderBalance == null || remainderBalance.Count == 0)
             {
-                return Redirect(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
 
             return View(remainderBalance);

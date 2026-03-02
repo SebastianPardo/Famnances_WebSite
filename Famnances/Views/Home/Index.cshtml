@@ -9,6 +9,14 @@
     ViewData["Title"] = "Home Page";
 }
 
+@if (Model.PeriodEndDate < DateTimeEast.Now)
+{
+    <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-6 col-12 mb-4 text-center">
+            <a asp-action="ClosePeriod" class="btn btn-danger">Close Period</a>
+        </div>
+    </div>
+}
 <div class="row">
     <div class="col-lg-3 col-md-6 col-12 mb-4">
         <div class="card">
@@ -220,14 +228,14 @@
                                         <ul class="list-group">
                                             @foreach (var fixedExpense in roommate.SummaryFixedExpenses)
                                             {
-                                                <li class="list-group-item">                                                    
+                                                <li class="list-group-item">
                                                     <div class="row">
-                                                        <div class="col-6 col-md-6 position-relative">    
+                                                        <div class="col-6 col-md-6 position-relative">
                                                             @if (fixedExpense.Id != Guid.Empty)
                                                             {
                                                                 <a class="stretched-link" asp-controller="Outflows" asp-action="DetailsFixedExpenses" asp-route-id=@fixedExpense.Id></a>
                                                             }
-                                                            <div class="row">                                                                
+                                                            <div class="row">
                                                                 <div class="col text-primary"><h5 class="mb-0">@fixedExpense.Name</h5></div>
                                                             </div>
                                                             <div class="row">
@@ -345,10 +353,10 @@
                                             @foreach (var pocket in roommate.SummaryPockets)
                                             {
                                                 <li class="list-group-item">
-                                                    @if(pocket.Id != Guid.Empty)
+                                                    @if (pocket.Id != Guid.Empty)
                                                     {
                                                         <a class="stretched-link" asp-controller="Savings" asp-action="DetailsPocket" asp-route-id=@pocket.Id></a>
-                                                    }                                                    
+                                                    }
                                                     <div class="row">
                                                         <div class="col-6 col-md-6 text-primary"><h5 class="mb-0">@pocket.Name</h5></div>
                                                         <div class="col-6 col-md-6 text-end fw-semibold"><h5 class="text-success mb-0">$@pocket.Value</h5></div>
