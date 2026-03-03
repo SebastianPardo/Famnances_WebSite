@@ -21,7 +21,7 @@ namespace Famnances.Controllers
             _utilities = utilities;
         }
 
-        // GET: Outflows
+        #region Outflow
 
         [ServiceFilter(typeof(HeaderSummaryFilter))]
         public async Task<IActionResult> Index()
@@ -130,6 +130,22 @@ namespace Famnances.Controllers
         {
             return await _httpHelper.Get<Outflow>($"{Constants.OUTFLOWS_URI}/{id}") != null;
         }
+        #endregion
+
+        #region OverSpent
+        public async Task<IActionResult> OverSpent(Guid budgetId)
+        {
+            var purchaseValue = TempData["PurchaseValue"];
+            ExpenseBudgetByPeriod budget = await _httpHelper.Get<ExpenseBudgetByPeriod>($"{Constants.BUDGETS_URI}/GetByIdCurrentPeriod/{budgetId}");
+
+            ViewBag.SavingPockets = await _httpHelper.Get<List<SavingsPocket>>(Constants.SAVINGS_POCKETS_URI);
+            ViewBag.ExpensesBudgets = await _httpHelper.Get<List<ExpensesBudget>>(Constants.BUDGETS_URI);
+
+            return View();
+        }
+        #endregion
+
+        #region FixedExpenses
 
         [ServiceFilter(typeof(HeaderSummaryFilter))]
         public async Task<IActionResult> IndexFixedExpenses()
@@ -248,8 +264,9 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> PayFixedExpenses(Guid id)
         {
-            await _httpHelper.Post($"{Constants.FIXED_EXPENSES_URI}/Pay?id={id}",null);
-            return RedirectToAction("Index", "Home", new {date=DateTimeEast.Now.ToString("yyyy-MM-dd")});
+            await _httpHelper.Post($"{Constants.FIXED_EXPENSES_URI}/Pay?id={id}", null);
+            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now.ToString("yyyy-MM-dd") });
         }
+        #endregion
     }
 }
