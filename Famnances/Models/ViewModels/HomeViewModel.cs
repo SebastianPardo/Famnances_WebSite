@@ -2,6 +2,7 @@
 {
     public class HomeViewModel
     {
+        public bool ToBeClosed { get; set; }
         public DateTime PeriodStartDate { get; set; } = DateTime.Now;
         public DateTime PeriodEndDate { get; set; } = DateTime.Now;
         public decimal PeriodBudget { get; set; } = 0;
@@ -27,6 +28,7 @@
 
     public class SummaryBudgetModel
     {
+        public Guid BudgetBalanceId { get; set; }
         public Guid Id { get; set; }
         public string Name { get; set; }
         public decimal Budget { get; set; }

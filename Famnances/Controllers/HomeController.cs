@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using Constants = Famnances.Helpers.Constants;
-using SummaryBudget = Famnances.DataCore.ServicesModels.SummaryBudgetModel;
 
 namespace Famnances.Controllers
 {
@@ -53,7 +52,7 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> ClosePeriod()
         {
-            var summary = await _httpHelper.Get<List<SummaryBudget>>($"{Constants.BUDGETS_URI}/GetSummary");
+            var summary = await _httpHelper.Get<List<SummaryBudgetModel>>($"{Constants.BUDGETS_URI}/GetSummary");
             List<RemainderBalance> remainderBalance = summary.Select(e =>
                 new RemainderBalance
                 {
