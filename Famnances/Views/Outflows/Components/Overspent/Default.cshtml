@@ -1,0 +1,45 @@
+﻿@model Famnances.Models.ViewModels.OutflowViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<div class="row mt-3">
+    <div class="d-flex justify-content-end">
+        <div class="col text-body-primary text-end">
+            <h5 class="text-start text-danger">@Localizer["Subtitle"] @Model.OverSpent.OverSpentValue tenemos que decidir que hacer con este gasto: </h5>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mb-2">
+    <div class="col-12 col-md-5 text-center">
+        <div class="btn-group mb-2" role="group">
+            <input type="radio" asp-for="OverSpent.IsSaving" class="btn-check move-option" value="false" id="budgetOption" autocomplete="off" />
+            <label class="btn btn-outline-primary" for="budgetOption">Tomar de otro presupuesto</label>
+
+            <input type="radio" asp-for="OverSpent.IsSaving" class="btn-check move-option" value="true" id="savingOption" autocomplete="off" checked />
+            <label class="btn btn-outline-primary" for="savingOption">Tomar de un bolsillo de ahorros</label>
+        </div>
+    </div>
+    <div class="col-12 col-md-4 text-center">
+        <div class="btn-group mb-3" role="group">
+            <input type="radio" asp-for="OverSpent.IsFull" class="btn-check" value="false" id="fullOption" autocomplete="off" checked />
+            <label class="btn btn-outline-primary" for="fullOption">Gasto completo @Model.OverSpent.FullValue</label>
+
+            <input type="radio" asp-for="OverSpent.IsFull" class="btn-check" value="true" id="overOption" autocomplete="off" />
+            <label class="btn btn-outline-primary" for="overOption">El valor excedido @Model.OverSpent.OverSpentValue</label>
+        </div>
+    </div>
+    <div class="col-12 col-md-3 budgets d-none">
+        <select asp-for="OverSpent.IdSelected" asp-items="ViewBag.ExpensesBudgets" class="form-control select2">
+            <option selected disabled hidden>@Localizer["Select"]</option>
+        </select>
+    </div>
+
+    <div class="col-12 col-md-3 pockets">
+        <select asp-for="OverSpent.IdSelected" asp-items="ViewBag.SavingPockets" class="form-control select2">
+            <option selected disabled hidden>@Localizer["Select"]</option>
+        </select>
+    </div>
+</div>
+<script src="~/js/Outflows/Overspent.js"></script>

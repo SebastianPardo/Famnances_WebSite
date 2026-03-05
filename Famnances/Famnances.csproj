@@ -182,6 +182,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PeriodSelector.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Views\Outflow\OverSpent.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Overspent.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Views\Shared\_IndexLayout.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -226,6 +231,10 @@
     <EmbeddedResource Update="Resources\Views\Introduction\PeriodSelector.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PeriodSelector.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Outflow\Overspent.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OverSpent.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Shared\_IndexLayout.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

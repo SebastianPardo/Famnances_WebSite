@@ -3,6 +3,7 @@ using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
+using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ namespace Famnances.Controllers
         {
             var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
             ViewData["ExpenseBudgetId"] = new SelectList(budgets, "Id", "Name");
-            return View();
+            return View(new OutflowViewModel());
         }
 
         // POST: Outflows/Create
@@ -45,18 +46,70 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,Value,TransactionDate,ExpenseBudgetId")] Outflow outflow)
+        public async Task<IActionResult> Create(OutflowViewModel outflowViewModel)
         {
+            var outflow = outflowViewModel.Outflow;
+
             if (ModelState.IsValid)
             {
-                outflow.Id = Guid.NewGuid();
-                outflow = await _httpHelper.Post<Outflow>(Constants.OUTFLOWS_URI, outflow);
-                return RedirectToAction(nameof(Index));
+                var overspent = await ValidateOverSpent(outflow.ExpenseBudgetId, outflow.TransactionDate, outflow.Value);
+
+                if (overspent == null)
+                {
+                    outflow.Id = Guid.NewGuid();
+                    outflow = await _httpHelper.Post<Outflow>(Constants.OUTFLOWS_URI, outflow);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    outflowViewModel.OverSpent = overspent;
+                    return View(outflowViewModel);
+                }
             }
 
             var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
             ViewData["ExpenseBudgetId"] = new SelectList(budgets, "Id", "Name", outflow.ExpenseBudgetId);
-            return View(outflow);
+            return View(outflowViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Overspent(OutflowViewModel outflowViewModel)
+        {
+            var outflow = outflowViewModel.Outflow;
+            var overSpent = outflowViewModel.OverSpent;
+            var budget = await _httpHelper.Get<ExpensesBudget>($"{Constants.BUDGETS_URI}/{outflow.ExpenseBudgetId}");
+
+            if (!overSpent.IsFull)
+            {
+                outflow.Value = outflow.Value - overSpent.OverSpentValue;
+                await _httpHelper.Post<Outflow>(Constants.OUTFLOWS_URI, outflow);
+            }
+
+            if (overSpent.IsSaving)
+            {
+                SavingRecord savingRecord = new SavingRecord
+                {
+                    IsEmergency = false,
+                    IsExpense = true,
+                    Description = $"Overspent from {budget.Name} - {outflow.Description}",
+                    SavingsPocketId = overSpent.IdSelected,
+                    Value = overSpent.IsFull? outflow.Value : overSpent.OverSpentValue,
+                    TransactionDate = outflow.TransactionDate
+                };
+                await _httpHelper.Post<SavingRecord>(Constants.SAVINGS_URI, savingRecord);
+            }
+            else
+            {
+                Outflow outflowOverSpent = new Outflow
+                {
+                    Description = $"Overspent from {budget.Name} - {outflow.Description}",
+                    ExpenseBudgetId = overSpent.IdSelected,
+                    Value = overSpent.IsFull ? outflow.Value : overSpent.OverSpentValue,
+                    TransactionDate = outflow.TransactionDate
+                };
+                await _httpHelper.Post<Outflow>(Constants.OUTFLOWS_URI, outflowOverSpent);
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Outflows/Edit/5
@@ -82,31 +135,43 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Description,Value,TransactionDate,ExpenseBudgetId")] Outflow outflow)
+        public async Task<IActionResult> Edit(Guid id, OutflowViewModel outflowViewModel)
         {
+            var outflow = outflowViewModel.Outflow;
             if (id != outflow.Id)
             {
                 return NotFound();
             }
 
+            var oldOutflow = await _httpHelper.Get<Outflow>($"{Constants.OUTFLOWS_URI}/{id}");
+
+            var overSpent = await ValidateOverSpent(outflow.ExpenseBudgetId, outflow.TransactionDate, outflow.Value - oldOutflow.Value);
             if (ModelState.IsValid)
             {
-                try
+                if (overSpent == null)
                 {
-                    await _httpHelper.Put($"{Constants.OUTFLOWS_URI}/{id}", outflow);
+                    try
+                    {
+                        await _httpHelper.Put($"{Constants.OUTFLOWS_URI}/{id}", outflow);
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (oldOutflow == null)
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!await OutflowExists(outflow.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    outflowViewModel.OverSpent = overSpent;
+                    return View(outflowViewModel);
                 }
-                return RedirectToAction(nameof(Index));
             }
             var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
             ViewData["ExpenseBudgetId"] = new SelectList(budgets, "Id", "Name", outflow.ExpenseBudgetId);
@@ -126,23 +191,24 @@ namespace Famnances.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> OutflowExists(Guid id)
+        private async Task<OverspentViewModel?> ValidateOverSpent(Guid budgetId, DateTime date, decimal value)
         {
-            return await _httpHelper.Get<Outflow>($"{Constants.OUTFLOWS_URI}/{id}") != null;
+            var budgetStatus = await _httpHelper
+                .Get<ExpenseBudgetByPeriod>($"{Constants.BUDGETS_URI}/GetBalanceByIdDate/{budgetId}/{date.ToString("yyyy-MM-dd")}");
+            var balace = budgetStatus.Budget - budgetStatus.Expense;
+
+            if (balace < value && value > 0)
+            {
+                OverspentViewModel overspent = new OverspentViewModel
+                {
+                    FullValue = value,
+                    OverSpentValue = -1 * (balace - value)
+                };
+                return overspent;
+            }
+            return null;
         }
-        #endregion
 
-        #region OverSpent
-        public async Task<IActionResult> OverSpent(Guid budgetId)
-        {
-            var purchaseValue = TempData["PurchaseValue"];
-            ExpenseBudgetByPeriod budget = await _httpHelper.Get<ExpenseBudgetByPeriod>($"{Constants.BUDGETS_URI}/GetByIdCurrentPeriod/{budgetId}");
-
-            ViewBag.SavingPockets = await _httpHelper.Get<List<SavingsPocket>>(Constants.SAVINGS_POCKETS_URI);
-            ViewBag.ExpensesBudgets = await _httpHelper.Get<List<ExpensesBudget>>(Constants.BUDGETS_URI);
-
-            return View();
-        }
         #endregion
 
         #region FixedExpenses

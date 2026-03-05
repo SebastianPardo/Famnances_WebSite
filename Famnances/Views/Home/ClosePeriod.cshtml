@@ -14,12 +14,12 @@
         <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
     </div>
 </div>
+<hr />
 <div class="d-flex justify-content-end">
     <div class="col text-body-primary text-end">
         <h5 class="text-start">@Localizer["Subtitle"]</h5>
     </div>
 </div>
-<hr />
 
 <form asp-action="ClosePeriod">
     @for (int i = 0; i < Model.Count; i++)
