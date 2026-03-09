@@ -117,7 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Subtitle" xml:space="preserve">
+  <data name="How1" xml:space="preserve">
+    <value>Gasto completo</value>
+  </data>
+  <data name="How2" xml:space="preserve">
+    <value>El valor excedido</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Seleccionar</value>
+  </data>
+  <data name="Statement1" xml:space="preserve">
     <value>¡Ups! Te estás pasando del presupuesto por </value>
+  </data>
+  <data name="Statement2" xml:space="preserve">
+    <value>tenemos que decidir que hacer con este gasto : </value>
+  </data>
+  <data name="Where1" xml:space="preserve">
+    <value>Tomar de otro presupuesto</value>
+  </data>
+  <data name="Where2" xml:space="preserve">
+    <value>Tomar de un bolsillo de ahorros</value>
   </data>
 </root>

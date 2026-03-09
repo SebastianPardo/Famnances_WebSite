@@ -61,11 +61,65 @@ namespace Famnances.Resources.Views.Outflow {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full expense.
+        /// </summary>
+        public static string How1 {
+            get {
+                return ResourceManager.GetString("How1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The excess value.
+        /// </summary>
+        public static string How2 {
+            get {
+                return ResourceManager.GetString("How2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ups! You are going over your budget  by .
         /// </summary>
-        public static string Subtitle {
+        public static string Statement1 {
             get {
-                return ResourceManager.GetString("Subtitle", resourceCulture);
+                return ResourceManager.GetString("Statement1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to we need to decide what to do with this expense:.
+        /// </summary>
+        public static string Statement2 {
+            get {
+                return ResourceManager.GetString("Statement2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take from another budget.
+        /// </summary>
+        public static string Where1 {
+            get {
+                return ResourceManager.GetString("Where1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take from a savings pocket.
+        /// </summary>
+        public static string Where2 {
+            get {
+                return ResourceManager.GetString("Where2", resourceCulture);
             }
         }
     }
