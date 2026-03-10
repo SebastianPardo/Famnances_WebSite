@@ -1,4 +1,5 @@
-﻿@model Famnances.Models.ViewModels.OutflowViewModel
+﻿@using Famnances.Helpers
+@model Famnances.Models.ViewModels.OutflowViewModel
 
 @{
     ViewData["Title"] = "Create - Outflow";
@@ -11,6 +12,22 @@
     </div>
 </div>
 <hr />
+
+@if (TempData[Constants.ERROR] != null)
+{
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">
+            <div class="avatar flex-shrink-0 me-2">
+                <img src="~/images/icons/alert.png"
+                     alt="chart success"
+                     class="rounded" />
+            </div>
+            <div>@TempData[Constants.ERROR]</div>            
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
+
 <form asp-action="@(Model.OverSpent == null ? "Create" : "Overspent")" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @if (Model.OverSpent != null)

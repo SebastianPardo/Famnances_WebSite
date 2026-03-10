@@ -2,6 +2,7 @@
 {
     public class Constants
     {
+        public const string ERROR = "ERROR";
         public const string TOKEN = "TOKEN";
         public const string ACCOUNT_ID = "ACCOUNT";
         public const string DATE_FROM = "FROM";

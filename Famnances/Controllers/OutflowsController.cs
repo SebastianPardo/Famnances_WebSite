@@ -7,6 +7,7 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Famnances.Controllers
 {
@@ -15,11 +16,13 @@ namespace Famnances.Controllers
     {
         IHttpHelper _httpHelper;
         ILanguageHelper _utilities;
+        IStringLocalizer<PrettyError> _localizer;
 
-        public OutflowsController(IHttpHelper httpHelper, ILanguageHelper utilities)
+        public OutflowsController(IHttpHelper httpHelper, ILanguageHelper utilities, IStringLocalizer<PrettyError> localizer)
         {
             _httpHelper = httpHelper;
             _utilities = utilities;
+            _localizer = localizer;
         }
 
         #region Outflow
@@ -49,6 +52,14 @@ namespace Famnances.Controllers
         public async Task<IActionResult> Create(OutflowViewModel outflowViewModel)
         {
             var outflow = outflowViewModel.Outflow;
+
+            TotalsByPeriod? totalsByPeriod = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{outflow.TransactionDate.ToString("yyyy-MM-dd")}");
+            if(totalsByPeriod == null)
+            {
+                var a = _localizer[PrettyError.OUT_DATE];
+                TempData[Constants.ERROR] = a;
+                return View(outflowViewModel);
+            }
 
             if (ModelState.IsValid)
             {
