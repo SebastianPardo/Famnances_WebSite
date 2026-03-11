@@ -38,14 +38,14 @@
     </div>
     <div class="col-md-3">
         <label asp-for="StartDate" class="control-label"></label>
-        <input asp-for="StartDate" class="form-control" type="date" readonly />
+        <input asp-for="StartDate" class="form-control" type="date" readonly value="@DateTime.Today.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="StartDate" class="text-danger"></span>
     </div>
 </div>
 <div class="row">
     <div class="col-md-3">
         <label asp-for="EndDate" class="control-label"></label>
-        <input asp-for="EndDate" class="form-control" type="date" readonly />
+        <input asp-for="EndDate" class="form-control" type="date" readonly value="@DateTime.Today.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="EndDate" class="text-danger"></span>
     </div>
     <div class="col-md-2">

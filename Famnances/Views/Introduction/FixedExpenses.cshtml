@@ -32,12 +32,12 @@
                             </div>
                             <div class="col-md-3">
                                 <label asp-for="Expense.StartDate" class="control-label"></label>
-                                <input asp-for="Expense.StartDate" class="form-control" type="date" />
+                                <input asp-for="Expense.StartDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                                 <span asp-validation-for="Expense.StartDate" class="text-danger"></span>
                             </div>
                             <div class="col-md-3">
                                 <label asp-for="Expense.EndDate" class="control-label"></label>
-                                <input asp-for="Expense.EndDate" class="form-control" type="date" />
+                                <input asp-for="Expense.EndDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                                 <span asp-validation-for="Expense.EndDate" class="text-danger"></span>
                             </div>
                         </div>

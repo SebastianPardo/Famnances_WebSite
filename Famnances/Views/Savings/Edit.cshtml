@@ -45,7 +45,7 @@
         </div>
         <div class="col-md-3">
             <label asp-for="TransactionDate" class="control-label"></label>
-            <input asp-for="TransactionDate" class="form-control" type="date" />
+            <input asp-for="TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
             <span asp-validation-for="TransactionDate" class="text-danger"></span>
         </div>
     </div>

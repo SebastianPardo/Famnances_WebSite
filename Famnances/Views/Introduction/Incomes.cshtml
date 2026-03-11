@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-12 mt-2">
                             <label asp-for="NewIncome.FirstPayDate" class="control-label text-start"></label>
-                            <input asp-for="NewIncome.FirstPayDate" class="form-control" type="date" />
+                            <input asp-for="NewIncome.FirstPayDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                             <span asp-validation-for="NewIncome.FirstPayDate" class="text-danger"></span>
                         </div>
                         <div class="col-12 text-center mt-3">

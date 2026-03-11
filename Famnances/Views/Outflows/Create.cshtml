@@ -58,7 +58,7 @@
         </div>
         <div class="col-md-3">
             <label asp-for="Outflow.TransactionDate" class="control-label"></label>
-            <input asp-for="Outflow.TransactionDate" class="form-control" type="date" disabled="@(Model.OverSpent != null)" />
+            <input asp-for="Outflow.TransactionDate" class="form-control" type="date" disabled="@(Model.OverSpent != null)" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
             <span asp-validation-for="Outflow.TransactionDate" class="text-danger"></span>
         </div>
     </div>
