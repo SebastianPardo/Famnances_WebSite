@@ -120,4 +120,7 @@
   <data name="OUT_DATE" xml:space="preserve">
     <value>No hay periodo para la fecha escogida</value>
   </data>
+  <data name="S_OVERSPENT" xml:space="preserve">
+    <value>No hay suficiente dinero para esta transacción</value>
+  </data>
 </root>

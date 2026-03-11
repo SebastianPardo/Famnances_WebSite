@@ -8,6 +8,7 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Famnances.Controllers
 {
@@ -16,14 +17,16 @@ namespace Famnances.Controllers
     {
         IHttpHelper _httpHelper;
         ILanguageHelper _utilities;
+        IStringLocalizer<PrettyError> _localizer;
 
-        public SavingsController(IHttpHelper httpHelper, ILanguageHelper utilities)
+        public SavingsController(IHttpHelper httpHelper, ILanguageHelper utilities, IStringLocalizer<PrettyError> localizer)
         {
             _httpHelper = httpHelper;
             _utilities = utilities;
+            _localizer = localizer;
         }
 
-
+        #region Savings Records
         [ServiceFilter(typeof(HeaderSummaryFilter))]
         public async Task<IActionResult> Index()
         {
@@ -33,7 +36,6 @@ namespace Famnances.Controllers
             return View(savings);
         }
 
-        // GET: SavingRecords/Create
         public async Task<IActionResult> Create()
         {
             SavingTransactionViewModel model = new SavingTransactionViewModel
@@ -47,9 +49,6 @@ namespace Famnances.Controllers
             return View(model);
         }
 
-        // POST: SavingRecords/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SavingTransactionViewModel model)
@@ -59,6 +58,18 @@ namespace Famnances.Controllers
 
             if (ModelState.IsValid)
             {
+                TotalsByPeriod? totalsByPeriod = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{savingRecord.TransactionDate.ToString("yyyy-MM-dd")}");
+                if (totalsByPeriod == null)
+                {
+                    TempData[Constants.ERROR] = _localizer[PrettyError.OUT_DATE];
+                    return View(model);
+                }
+                if (await ValidateOverspent(savingRecord.SavingsPocketId, savingRecord.Value))
+                {
+                    TempData[Constants.ERROR] = _localizer[PrettyError.SAVING_OVERSPENT];
+                    return View(model);
+                }
+
                 if (model.SavingSource != "OTHER" && !savingRecord.IsExpense)
                 {
                     var budget = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}/GetByType/SAV");
@@ -72,7 +83,7 @@ namespace Famnances.Controllers
                     };
                     outflow = await _httpHelper.Post<Outflow>($"{Constants.OUTFLOWS_URI}", outflow);
                 }
-                if(savingRecord.IsExpense && model.TranferToChequing)
+                if (savingRecord.IsExpense && model.TranferToChequing)
                 {
                     Inflow inflow = new Inflow
                     {
@@ -98,7 +109,6 @@ namespace Famnances.Controllers
             return View(savingRecord);
         }
 
-        // GET: SavingRecords/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -116,9 +126,6 @@ namespace Famnances.Controllers
             return View(savingRecord);
         }
 
-        // POST: SavingRecords/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Description,IsExpense,IsEmergency,Value,TransactionDate,SavingsPocketId")] SavingRecord savingRecord)
@@ -152,7 +159,6 @@ namespace Famnances.Controllers
             return View(savingRecord);
         }
 
-        // POST: SavingRecords/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
@@ -166,21 +172,26 @@ namespace Famnances.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        private async Task<bool> ValidateOverspent(Guid pocketId, decimal value)
+        {
+            var pockets = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{pocketId}");
+            var balance = pockets.Total - value;
+            return balance < 0;
+        }
+        #endregion
+
+        #region Saving pockets
         public async Task<IActionResult> IndexPockets()
         {
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             return View(savingsPockets);
         }
 
-        // GET: SavingsPockets/Create
         public IActionResult CreatePockets()
         {
             return View();
         }
 
-        // POST: SavingsPockets/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreatePockets([Bind("Id,Name,IsActive,ChallengeValue,Total,ShareOnHousehold")] SavingsPocket savingsPocket)
@@ -202,7 +213,6 @@ namespace Famnances.Controllers
             return View(savingsPocket);
         }
 
-        // GET: SavingsPockets/Edit/5
         public async Task<IActionResult> EditPockets(Guid? id)
         {
             if (id == null)
@@ -218,9 +228,6 @@ namespace Famnances.Controllers
             return View(savingsPocket);
         }
 
-        // POST: SavingsPockets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPockets(Guid id, [Bind("Id,Name,IsActive,ChallengeValue,Total,ShareOnHousehold")] SavingsPocket savingsPocket)
@@ -253,7 +260,6 @@ namespace Famnances.Controllers
         }
 
 
-        // POST: SavingsPockets/Delete/5
         [HttpPost, ActionName("DeletePockets")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeletePockets(Guid id)
@@ -265,7 +271,9 @@ namespace Famnances.Controllers
             }
             return RedirectToAction(nameof(IndexPockets));
         }
+        #endregion
 
+        #region Fixed savings
         [HttpGet]
         public async Task<IActionResult> IndexFixed()
         {
@@ -274,7 +282,6 @@ namespace Famnances.Controllers
         }
 
         [HttpGet]
-        // GET: SavingsPockets/Create
         public async Task<IActionResult> CreateFixed()
         {
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
@@ -285,9 +292,6 @@ namespace Famnances.Controllers
             return View();
         }
 
-        // POST: SavingsPockets/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateFixed([Bind("Value,IsActive,EndDate,PeriodicityId,SavingsPocketId,SavingSourceId")] FixedSaving fixedSaving)
@@ -307,7 +311,6 @@ namespace Famnances.Controllers
             return View(fixedSaving);
         }
 
-        // GET: SavingsPockets/Edit/5
         public async Task<IActionResult> EditFixed(Guid? id)
         {
             if (id == null)
@@ -321,17 +324,14 @@ namespace Famnances.Controllers
                 return NotFound();
             }
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
-            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId); 
-            
+            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId);
+
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
             return View(fixedSaving);
         }
 
-        // POST: SavingsPockets/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditFixed(Guid id, [Bind("Id,Value,IsActive,EndDate,PeriodicityId,SavingsPocketId,SavingSourceId")] FixedSaving fixedSaving)
@@ -362,15 +362,13 @@ namespace Famnances.Controllers
             }
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
             ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId);
-            
+
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
             return View(fixedSaving);
         }
 
-
-        // POST: SavingsPockets/Delete/5
         [HttpPost, ActionName("DeleteFixed")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteFixed(Guid id)
@@ -407,16 +405,17 @@ namespace Famnances.Controllers
             {
                 Id = Guid.NewGuid(),
                 Description = $"Scheduled transfered - From {fixedSaving.SavingSource.Name} to {fixedSaving.SavingsPocket.Name}",
-                IsExpense = false ,
+                IsExpense = false,
                 TransactionDate = DateTimeEast.Now,
                 SavingsPocketId = fixedSaving.SavingsPocketId,
-                IsEmergency = false ,
-                Value = fixedSaving.Value                
+                IsEmergency = false,
+                Value = fixedSaving.Value
             };
             await _httpHelper.Post<SavingRecord>($"{Constants.SAVINGS_URI}", savingRecord);
 
             return RedirectToAction(nameof(Index));
 
         }
+        #endregion
     }
 }

@@ -68,5 +68,14 @@ namespace Famnances.Resources.Helpers {
                 return ResourceManager.GetString("OUT_DATE", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is not enough money for this transaction.
+        /// </summary>
+        public static string S_OVERSPENT {
+            get {
+                return ResourceManager.GetString("S_OVERSPENT", resourceCulture);
+            }
+        }
     }
 }

@@ -56,8 +56,7 @@ namespace Famnances.Controllers
             TotalsByPeriod? totalsByPeriod = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{outflow.TransactionDate.ToString("yyyy-MM-dd")}");
             if(totalsByPeriod == null)
             {
-                var a = _localizer[PrettyError.OUT_DATE];
-                TempData[Constants.ERROR] = a;
+                TempData[Constants.ERROR] = _localizer[PrettyError.OUT_DATE];
                 return View(outflowViewModel);
             }
 

@@ -1,4 +1,5 @@
-﻿@model Famnances.Models.ViewModels.SavingTransactionViewModel
+﻿@using Famnances.Helpers
+@model Famnances.Models.ViewModels.SavingTransactionViewModel
 
 @{
     ViewData["Title"] = "Create - Saving";
@@ -9,6 +10,20 @@
     </div>
 </div>
 <hr />
+@if (TempData[Constants.ERROR] != null)
+{
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">
+            <div class="avatar flex-shrink-0 me-2">
+                <img src="~/images/icons/alert.png"
+                     alt="chart success"
+                     class="rounded" />
+            </div>
+            <div>@TempData[Constants.ERROR]</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
 <div class="row">
     <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
