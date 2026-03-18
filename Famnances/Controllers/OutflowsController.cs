@@ -54,7 +54,7 @@ namespace Famnances.Controllers
             var outflow = outflowViewModel.Outflow;
 
             TotalsByPeriod? totalsByPeriod = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{outflow.TransactionDate.ToString("yyyy-MM-dd")}");
-            if(totalsByPeriod == null)
+            if (totalsByPeriod == null)
             {
                 TempData[Constants.ERROR] = _localizer[PrettyError.OUT_DATE];
                 return View(outflowViewModel);
@@ -103,7 +103,7 @@ namespace Famnances.Controllers
                     IsExpense = true,
                     Description = $"Overspent from {budget.Name} - {outflow.Description}",
                     SavingsPocketId = overSpent.IdSelected,
-                    Value = overSpent.IsFull? outflow.Value : overSpent.OverSpentValue,
+                    Value = overSpent.IsFull ? outflow.Value : overSpent.OverSpentValue,
                     TransactionDate = outflow.TransactionDate
                 };
                 await _httpHelper.Post<SavingRecord>(Constants.SAVINGS_URI, savingRecord);
@@ -137,7 +137,7 @@ namespace Famnances.Controllers
             }
             var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
             ViewData["ExpenseBudgetId"] = new SelectList(budgets, "Id", "Name", outflow.ExpenseBudgetId);
-            return View(outflow);
+            return View(new OutflowViewModel { Outflow = outflow });
         }
 
         // POST: Outflows/Edit/5
@@ -185,7 +185,7 @@ namespace Famnances.Controllers
             }
             var budgets = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}");
             ViewData["ExpenseBudgetId"] = new SelectList(budgets, "Id", "Name", outflow.ExpenseBudgetId);
-            return View(outflow);
+            return View(outflowViewModel);
         }
 
         // POST: Outflows/Delete/5

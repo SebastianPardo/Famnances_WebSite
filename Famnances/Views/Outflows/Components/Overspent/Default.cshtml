@@ -11,6 +11,9 @@
     </div>
 </div>
 
+<input type="hidden" asp-for="OverSpent.FullValue" />
+<input type="hidden" asp-for="OverSpent.OverSpentValue" />
+
 <div class="row justify-content-center mb-2">
     <div class="col-12 col-md-5 text-center">
         <div class="btn-group mb-2" role="group">
@@ -23,10 +26,10 @@
     </div>
     <div class="col-12 col-md-4 text-center">
         <div class="btn-group mb-3" role="group">
-            <input type="radio" asp-for="OverSpent.IsFull" class="btn-check" value="false" id="fullOption" autocomplete="off" checked />
+            <input type="radio" asp-for="OverSpent.IsFull" class="btn-check" value="true" id="fullOption" autocomplete="off" checked />
             <label class="btn btn-outline-primary" for="fullOption">@Localizer["How1"] (@Model.OverSpent.FullValue)</label>
 
-            <input type="radio" asp-for="OverSpent.IsFull" class="btn-check" value="true" id="overOption" autocomplete="off" />
+            <input type="radio" asp-for="OverSpent.IsFull" class="btn-check" value="false" id="overOption" autocomplete="off" />
             <label class="btn btn-outline-primary" for="overOption">@Localizer["How2"] (@Model.OverSpent.OverSpentValue)</label>
         </div>
     </div>
@@ -42,4 +45,3 @@
         </select>
     </div>
 </div>
-<script src="~/js/Outflows/Overspent.js"></script>

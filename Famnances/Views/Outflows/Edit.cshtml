@@ -1,4 +1,5 @@
-﻿@model Famnances.DataCore.Entities.Outflow
+﻿@using Famnances.Helpers
+@model Famnances.Models.ViewModels.OutflowViewModel
 
 @{
     ViewData["Title"] = "Edit - Outflow";
@@ -6,38 +7,41 @@
 
 <div class="d-flex justify-content-end">
     <div class="col col-md-3 me-5 text-body-primary text-end">
-        <h3 class="card-title">Edit @Model.Description <strong>Outflow</strong></h3>
+        <h3 class="card-title">Edit @Model.Outflow.Description <strong>Outflow</strong></h3>
     </div>
 </div>
 <hr />
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="Outflow.Id" />
     <div class="row">
         <div class="col-md-3">
-            <label asp-for="ExpenseBudgetId" class="control-label"></label>
-            <select asp-for="ExpenseBudgetId" class="form-control select2" asp-items="@ViewBag.ExpenseBudgetId" data-live-search="true">
+            <label asp-for="Outflow.ExpenseBudgetId" class="control-label"></label>
+            <select asp-for="Outflow.ExpenseBudgetId" class="form-control select2" asp-items="@ViewBag.ExpenseBudgetId" data-live-search="true">
                 <option selected disabled hidden>Select</option>
             </select>
-            <span asp-validation-for="ExpenseBudgetId" class="text-danger"></span>
+            <span asp-validation-for="Outflow.ExpenseBudgetId" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="Description" class="control-label"></label>
-            <input asp-for="Description" class="form-control" />
-            <span asp-validation-for="Description" class="text-danger"></span>
+            <label asp-for="Outflow.Description" class="control-label"></label>
+            <input asp-for="Outflow.Description" class="form-control" />
+            <span asp-validation-for="Outflow.Description" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="Value" class="control-label"></label>
-            <input asp-for="Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
-            <span asp-validation-for="Value" class="text-danger"></span>
+            <label asp-for="Outflow.Value" class="control-label"></label>
+            <input asp-for="Outflow.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+            <span asp-validation-for="Outflow.Value" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="TransactionDate" class="control-label"></label>
-            <input asp-for="TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-            <span asp-validation-for="TransactionDate" class="text-danger"></span>
+            <label asp-for="Outflow.TransactionDate" class="control-label"></label>
+            <input asp-for="Outflow.TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="Outflow.TransactionDate" class="text-danger"></span>
         </div>
     </div>
-
+    @if (Model.OverSpent != null)
+    {
+        @await Component.InvokeAsync("Overspent", new { model = Model.OverSpent })
+    }
     <div class="row justify-content-center mt-3">
         <div class="col-8 col-md-2">
             <input type="submit" class="btn btn-primary form-control" value="Save" />
@@ -49,7 +53,5 @@
 </form>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <script src="~/js/Outflows/Overspent.js"></script>
 }
