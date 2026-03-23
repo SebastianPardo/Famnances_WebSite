@@ -1,9 +1,7 @@
 ﻿using Athentication.DataCore.ApiModels;
-using Athentication.DataCore.Models;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
-using Google.Apis.Oauth2.v2.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -79,6 +77,19 @@ namespace Famnances.Controllers
             }
 
             return RedirectToAction("ChangeLanguage", "Languages", new { culture = response.Language });
+        }
+
+        public async Task<IActionResult> Guest()
+        {
+            LoginViewModel login = new LoginViewModel
+            {
+                Param_1 = "guest@gmail.com",
+                Param_2 = "GuestUserPassword"
+            };
+            AuthResponse user = await HttpHelper.Post<AuthResponse>($"{Constants.AUTH_URI}/Authenticate", login);
+            HttpContext.Session.SetString(Constants.TOKEN, user.Token);
+            HttpContext.Session.SetString(Constants.ACCOUNT_ID, user.AccountId.ToString());
+            return RedirectToAction("Index", "Home");
         }
     }
 }

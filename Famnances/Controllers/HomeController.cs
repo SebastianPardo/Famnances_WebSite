@@ -38,6 +38,10 @@ namespace Famnances.Controllers
             if (miniSummaryModel == null)
             {
                 TotalsByPeriod totalsByPeriod = await _httpHelper.Get<TotalsByPeriod>($"{Constants.TOTALSBYPERIOD_URI}/GetLastPeriod");
+                
+                if (totalsByPeriod == null)
+                    return RedirectToAction(nameof(VeryFirstPeriod));
+
                 await GetHeaderSummary(totalsByPeriod.PeriodDateStart.ToString("yyyy-MM-dd"));
                 return RedirectToAction(nameof(ClosePeriod));
             }
@@ -48,6 +52,12 @@ namespace Famnances.Controllers
 
             var homeSummary = await _httpHelper.Get<HomeViewModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
             return View(homeSummary);
+        }
+
+        public async Task<IActionResult> VeryFirstPeriod()
+        {
+            await _httpHelper.Post<Guid>($"{Constants.ACCOUNTING_URI}/ClosePeriod", new List<RemainderBalance>());
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> ClosePeriod()

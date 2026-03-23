@@ -42,8 +42,7 @@
                             <input type="submit" value="Sign in" class="btn btn-primary" />
                         </div>
                     </div>
-                </form> *@
-
+                </form> *@                
                 <div class="row text-center mt-4">
                     <form asp-action="ExternalLogin" method="post">
                         <input type="hidden" name="provider" value="@GoogleDefaults.AuthenticationScheme" />
@@ -60,6 +59,9 @@
                             <i class="bi bi-facebook"></i> Sign in with Facebook
                         </button>
                     </form> *@
+                </div>
+                <div class="row text-center">
+                    <a asp-action="Guest" class="link-primary">Login as Guest</a>
                 </div>
             </div>
         </div>
