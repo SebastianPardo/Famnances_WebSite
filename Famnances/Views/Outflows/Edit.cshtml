@@ -47,7 +47,7 @@
             <input type="submit" class="btn btn-primary form-control" value="Save" />
         </div>
         <div class="col-4 col-md-2">
-            <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("Delete")" formmethod="post" />
+            <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("Delete", new { id = Model.Outflow.Id })" formmethod="post" />
         </div>
     </div>
 </form>
