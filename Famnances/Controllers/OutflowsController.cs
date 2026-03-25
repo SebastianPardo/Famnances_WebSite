@@ -112,7 +112,7 @@ namespace Famnances.Controllers
             {
                 Outflow outflowOverSpent = new Outflow
                 {
-                    Description = $"Overspent from {budget.Name} - {outflow.Description}",
+                    Description = $"Overspent from {budget.Name} - {outflow.Description} ({overSpent.FullValue})",
                     ExpenseBudgetId = overSpent.IdSelected,
                     Value = overSpent.IsFull ? outflow.Value : overSpent.OverSpentValue,
                     TransactionDate = outflow.TransactionDate
