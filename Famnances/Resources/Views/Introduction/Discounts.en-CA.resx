@@ -117,25 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="After" xml:space="preserve">
+    <value>After</value>
+  </data>
+  <data name="Before" xml:space="preserve">
+    <value>Before</value>
+  </data>
+  <data name="Budget" xml:space="preserve">
+    <value>Budget</value>
+  </data>
   <data name="ByPayablePeriod" xml:space="preserve">
     <value>When is the discount applied?</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="IsPercentage" xml:space="preserve">
-    <value>Is the value a percentage?</value>
-  </data>
-  <data name="IsPrediscount" xml:space="preserve">
-    <value>Is this amount deducted before or after receiving the money?</value>
-  </data>
-  <data name="IsTax" xml:space="preserve">
-    <value>Is the value a tax?</value>
-  </data>
-  <data name="Value" xml:space="preserve">
-    <value>Value</value>
-  </data>
   <data name="FixedIncomes" xml:space="preserve">
     <value>Select which income it applies to. . .</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="SameAsPay" xml:space="preserve">
+    <value>Same payment period</value>
+  </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="Subtittle" xml:space="preserve">
+    <value>Adjustments applied to an income that reduce the money available, before or after receiving it.</value>
+  </data>
+  <data name="Tittle" xml:space="preserve">
+    <value>Incomes adjustments</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="_Discounts" xml:space="preserve">
+    <value>Adjustments</value>
   </data>
 </root>

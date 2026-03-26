@@ -19,57 +19,85 @@
                         <p class="text-center mt-3">
                             @Localizer["Subtittle"]
                         </p>
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col-12">
                                 <label asp-for="IncomeDiscount.Description" class="control-label"></label>
                                 <input asp-for="IncomeDiscount.Description" class="form-control" />
                                 <span asp-validation-for="IncomeDiscount.Description" class="text-danger"></span>
                             </div>
-                            <div class="col-12">
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <div class="row">
+                                    <label class="control-label">&nbsp;</label>
+                                </div>
+                                <div class="row">
+                                    <div class="btn-group mb-3" role="group">
+                                        <input type="radio" asp-for="IncomeDiscount.IsPercentage" class="btn-check" value="true" id="percentajeOpt" autocomplete="off" checked />
+                                        <label class="btn btn-outline-primary" for="percentajeOpt">%</label>
+
+                                        <input type="radio" asp-for="IncomeDiscount.IsPercentage" class="btn-check" value="false" id="moneyOpt" autocomplete="off" />
+                                        <label class="btn btn-outline-primary" for="moneyOpt">$</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-9">
                                 <label asp-for="IncomeDiscount.Value" class="control-label"></label>
                                 <input asp-for="IncomeDiscount.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
                                 <span asp-validation-for="IncomeDiscount.Value" class="text-danger"></span>
                             </div>
-
-                            <div class="col-12 form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="IncomeDiscount.IsPercentage" /> @Html.DisplayNameFor(model => model.IncomeDiscount.IsPercentage)
-                                </label>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label asp-for="IncomeDiscount.ByPayablePeriod" class="form-check-label"></label>
                             </div>
-                            <div class="col-12 form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="IncomeDiscount.ByPayablePeriod" /> @Html.DisplayNameFor(model => model.IncomeDiscount.IsTax)
-                                </label>
+                            <div class="col-12 text-center">
+                                <div class="btn-group btn-group-sm mb-3" role="group">
+                                    <input type="radio" asp-for="IncomeDiscount.ByPayablePeriod" class="btn-check" value="true" id="yesPayableOpt" autocomplete="off" checked />
+                                    <label class="btn btn-outline-primary" for="yesPayableOpt">@Localizer["SameAsPay"]</label>
+
+                                    <input type="radio" asp-for="IncomeDiscount.ByPayablePeriod" class="btn-check" value="false" id="noPayableOpt" autocomplete="off" />
+                                    <label class="btn btn-outline-primary" for="noPayableOpt">@Model.Period</label>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 form-check">
-                                <label class="form-check-label">
-                                    @Html.DisplayNameFor(model => model.IncomeDiscount.IsPrediscount)
-                                </label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
-                                    <label class="form-check-label" for="radioDefault1">
-                                        SI
-                                    </label>
-                                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                                    <label class="form-check-label" for="radioDefault2">
-                                        NO
-                                    </label>
-                                </div>
+                            <div class="col-12">
+                                <label asp-for="IncomeDiscount.IsPrediscount" class="form-check-label"></label>
                             </div>
-                            <div class="col-12 form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="IncomeDiscount.IsTax" /> @Html.DisplayNameFor(model => model.IncomeDiscount.IsTax)
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="control-label text-start">Fixed Income</label>
-                                    <select asp-for="IncomeDiscount.IncomeIds" class="select2 form-control" asp-items=@ViewBag.Incomes multiple placeholder="Select"></select>
+                            <div class="col-12 text-center">
+                                <div class="btn-group btn-group-sm mb-3" role="group">
+                                    <input type="radio" asp-for="IncomeDiscount.IsPrediscount" class="btn-check" value="true" id="beforeOpt" autocomplete="off" checked />
+                                    <label class="btn btn-outline-primary" for="beforeOpt">@Localizer["Before"]</label>
+
+                                    <input type="radio" asp-for="IncomeDiscount.IsPrediscount" class="btn-check" value="false" id="afterOpt" autocomplete="off" />
+                                    <label class="btn btn-outline-primary" for="afterOpt">@Localizer["After"]</label>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label asp-for="IncomeDiscount.IsTax" class="form-check-label"></label>
+                            </div>
+                            <div class="col-12 text-center">
+                                <div class="btn-group btn-group-sm mb-3" role="group">
+                                    <input type="radio" asp-for="IncomeDiscount.IsTax" class="btn-check" value="true" id="yesTaxOpt" autocomplete="off" checked />
+                                    <label class="btn btn-outline-primary" for="yesTaxOpt">@Localizer["Yes"]</label>
+
+                                    <input type="radio" asp-for="IncomeDiscount.IsTax" class="btn-check" value="false" id="noTaxOpt" autocomplete="off" />
+                                    <label class="btn btn-outline-primary" for="noTaxOpt">@Localizer["No"]</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="control-label text-start">@Localizer["FixedIncomes"]</label>
+                                <select asp-for="IncomeDiscount.IncomeIds" class="select2 form-control" asp-items=@ViewBag.Incomes multiple placeholder="@Localizer["Select"]"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary w-100" asp-action="AddDiscounts">@Localizer["Add"]</button>
                     </div>
                     <div class="row text-center">
                         <input type="hidden" asp-for="PeriodId" />
@@ -81,23 +109,35 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h3 class="h3 text-center mb-2">@Localizer["_FixedExpenses"] </h3>
+                    <h3 class="h3 text-center mb-2">@Localizer["_Discounts"] </h3>
                     <ul class="list-group">
                         @for (var i = 0; i < Model.IncomeDiscounts.Count(); i++)
                         {
                             <li class="list-group-item">
                                 <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Description" />
                                 <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Value" />
-                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IncomeIds" />
                                 <input type="hidden" asp-for="@Model.IncomeDiscounts[i].ByPayablePeriod" />
                                 <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPercentage" />
                                 <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPrediscount" />
                                 <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsTax" />
+                                @for (var j = 0; j < Model.IncomeDiscounts[i].IncomeIds.Count(); j++)
+                                {
+                                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IncomeIds[j]" />
+                                }
 
                                 <div class="row">
                                     <div class="col-4 col-md-4 fw-semibold text-primary"><h5 class="mb-0">@Model.IncomeDiscounts[i].Description</h5></div>
                                     <div class="col-4 col-md-4 text-end fw-semibold"><h5 class="mb-0">@Model.IncomeDiscounts[i].Period</h5></div>
-                                    <div class="col-4 col-md-4 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.IncomeDiscounts[i].Value</h3></div>
+                                    
+                                    @if (Model.IncomeDiscounts[i].IsPercentage)
+                                    {
+                                        <div class="col-4 col-md-4 text-end fw-semibold"><h3 class="text-success mb-0">%@Model.IncomeDiscounts[i].Value</h3></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-4 col-md-4 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.IncomeDiscounts[i].Value</h3></div>
+                                    }
+
                                 </div>
                             </li>
                         }

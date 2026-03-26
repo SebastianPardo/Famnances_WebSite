@@ -7,6 +7,6 @@ namespace Famnances.Helpers.Interfaces
     {
         Task<SelectList> GetPeriodDropdown(string language);
         Task<string> GetPeriodName(string language, Period period);
-        decimal GetValueByPeriod(decimal value, string code, string period);
+        decimal GetValueByPeriod(decimal value, string fromPeriod, string toPeriod);
     }
 }

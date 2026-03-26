@@ -3,6 +3,8 @@ using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels.Introduction;
+using Famnances.Resources.Views.Introduction;
+using Microsoft.AspNetCore.JsonPatch.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text.RegularExpressions;
@@ -122,21 +124,72 @@ namespace Famnances.Controllers
             user.BudgetByPeriod = model.Total;
             await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
 
-            return RedirectToAction("Discounts", 
+            return RedirectToAction("Discounts",
                 new DiscountViewModel
-                { 
-                    Total = model.Total, 
-                    PeriodId = model.PeriodId, 
+                {
+                    Total = model.Total,
+                    PeriodId = model.PeriodId,
                     Period = model.Period
                 });
         }
 
-        public async Task<ActionResult> Discounts (DiscountViewModel model)
+        public async Task<ActionResult> Discounts(DiscountViewModel model)
         {
-            var incomes = await _httpHelper.Get<List<FixedIncome>> (Constants.FIXED_INCOMES_URI);
+            var incomes = await _httpHelper.Get<List<FixedIncome>>(Constants.FIXED_INCOMES_URI);
             ViewBag.Incomes = new SelectList(incomes, "Id", "Description");
             model.IncomeDiscounts = new List<Discount>();
+            TempData["Total"] = model.Total;
             return View(model);
+        }
+        public async Task<ActionResult> AddDiscounts(DiscountViewModel model)
+        {
+            model.Total = Convert.ToDecimal(TempData["Total"]);
+            TempData["Total"] = model.Total;
+
+            var userPeriod = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
+
+            Dictionary<Guid, decimal> incomesAfterPrevDicounts = new Dictionary<Guid, decimal>();
+
+            model.IncomeDiscounts = model.IncomeDiscounts ?? new List<Discount>();
+            if (model.IncomeDiscount.IsPrediscount)
+                model.IncomeDiscounts.Insert(0, model.IncomeDiscount);
+            else
+                model.IncomeDiscounts.Add(model.IncomeDiscount);
+
+            foreach (var discount in model.IncomeDiscounts)
+            {
+                foreach (var incomeId in discount.IncomeIds)
+                {
+                    var income = await _httpHelper.Get<Income>($"{Constants.FIXED_INCOMES_URI}/{incomeId}");
+                    var payablePeriod = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{income.PayablePeriodId}");
+                    var incomePeriod = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{income.ValuePeriodId}");
+                    if(!incomesAfterPrevDicounts.ContainsKey(incomeId))
+                        incomesAfterPrevDicounts.Add(incomeId, income.Value);
+
+                    var discounPeriodValue = discount.ByPayablePeriod ? payablePeriod.Code : userPeriod.Code;
+                    var incomeByPeriod = _utilities.GetValueByPeriod(income.Value, incomePeriod.Code, discounPeriodValue);
+
+                    decimal discountValue = 0;
+                    if (discount.IsPrediscount)
+                    {
+                        discountValue = discount.IsPercentage ? incomeByPeriod * discount.Value / 100 : discount.Value;
+                        
+                        var incomeValue = _utilities.GetValueByPeriod(discountValue, discounPeriodValue, incomePeriod.Code);
+                        incomesAfterPrevDicounts[incomeId] -= incomeValue;                        
+                    }
+                    else
+                    {
+                        incomeByPeriod = _utilities.GetValueByPeriod(incomesAfterPrevDicounts[incomeId], incomePeriod.Code, discounPeriodValue);
+                        discountValue = discount.IsPercentage ? incomeByPeriod * discount.Value / 100 : discount.Value;
+                    }
+
+                    model.Total -= _utilities.GetValueByPeriod(discountValue, discounPeriodValue, userPeriod.Code);
+                }
+            }
+            var incomes = await _httpHelper.Get<List<FixedIncome>>(Constants.FIXED_INCOMES_URI);
+            ViewBag.Incomes = new SelectList(incomes, "Id", "Description");
+            model.IncomeDiscount = new Discount();
+            return View("Discounts", model);
         }
 
         public async Task<ActionResult> FixedExpenses(FixedExpenseViewModel model)
@@ -164,9 +217,9 @@ namespace Famnances.Controllers
             return View("FixedExpenses", model);
         }
 
-        public async Task<ActionResult> SaveFixedExpenses (FixedExpenseViewModel model)
+        public async Task<ActionResult> SaveFixedExpenses(FixedExpenseViewModel model)
         {
-            foreach(var expense in model.Expenses)
+            foreach (var expense in model.Expenses)
             {
                 expense.Active = true;
                 expense.ShareOnHousehold = false;
@@ -175,7 +228,7 @@ namespace Famnances.Controllers
             return RedirectToAction("Savings");
         }
 
-        public async Task<ActionResult> Savings ()
+        public async Task<ActionResult> Savings()
         {
             return View();
         }

@@ -147,10 +147,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PrettyError.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\ViewModels\Introduction\DiscountsLabels.Designer.cs">
+    <Compile Update="Resources\Views\Introduction\Discounts.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>DiscountsLabels.resx</DependentUpon>
+      <DependentUpon>Discounts.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\ViewModels\Introduction\IncomeLabels.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -166,6 +166,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Index.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ViewModels\Introduction\DiscountsLabels.Designer.cs">
+      <DependentUpon>DiscountsLabels.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Resources\Views\Introduction\FixedExpenses.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -209,9 +214,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrettyError.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ViewModels\Introduction\DiscountsLabels.resx">
+    <EmbeddedResource Update="Resources\Views\Introduction\Discounts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>DiscountsLabels.Designer.cs</LastGenOutput>
+      <LastGenOutput>Discounts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ViewModels\Introduction\IncomeLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -224,6 +229,10 @@
     <EmbeddedResource Update="Resources\Views\Home\Index.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\Introduction\DiscountsLabels.resx">
+      <LastGenOutput>DiscountsLabels.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Introduction\FixedExpenses.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

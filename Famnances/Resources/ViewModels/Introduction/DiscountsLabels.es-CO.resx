@@ -118,13 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ByPayablePeriod" xml:space="preserve">
-    <value>¿Es descontado en el mismo periodo de pago?</value>
+    <value>¿Cuando se hace el descuento?</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Descripcion</value>
-  </data>
-  <data name="FixedIncomes" xml:space="preserve">
-    <value>Selecciona a que ingresos aplica. . .</value>
   </data>
   <data name="IsPercentage" xml:space="preserve">
     <value>¿El valor es un porcentaje?</value>
@@ -137,5 +134,8 @@
   </data>
   <data name="Value" xml:space="preserve">
     <value>Valor</value>
+  </data>
+  <data name="FixedIncomes" xml:space="preserve">
+    <value>Selecciona a que ingresos aplica. . .</value>
   </data>
 </root>
