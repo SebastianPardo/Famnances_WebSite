@@ -36,9 +36,11 @@
             <span asp-validation-for="FixedIncome.Value" class="text-danger"></span>
         </div>
         <div class="col-md-3">
-            <label asp-for="FixedIncome.FirstPayDate" class="control-label text-start"></label>
-            <input asp-for="FixedIncome.FirstPayDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-            <span asp-validation-for="FixedIncome.FirstPayDate" class="text-danger"></span>
+            <label asp-for="FixedIncome.ValuePeriodId" class="control-label text-start"></label>
+            <select asp-for="FixedIncome.ValuePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                <option selected disabled hidden>Select</option>
+            </select>
+            <span asp-validation-for="FixedIncome.PayablePeriod" class="text-danger"></span>
         </div>
         <div class="col-md-3">
             <label asp-for="FixedIncome.PayablePeriodId" class="control-label text-start"></label>
@@ -48,10 +50,15 @@
             <span asp-validation-for="FixedIncome.PayablePeriod" class="text-danger"></span>
         </div>
     </div>
-    <div class="row">
+    <div class="row">  
         <div class="col-md-6">
             <label class="control-label text-start">Discount</label>
             <select asp-for="SelectedIncomeDiscountIds" class="select2 form-control" asp-items=@ViewBag.Discounts multiple placeholder="Select"></select>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="FixedIncome.FirstPayDate" class="control-label text-start"></label>
+            <input asp-for="FixedIncome.FirstPayDate" class="form-control" type="date" />
+            <span asp-validation-for="FixedIncome.FirstPayDate" class="text-danger"></span>
         </div>
     </div>
     <div class="row justify-content-center mt-3">
