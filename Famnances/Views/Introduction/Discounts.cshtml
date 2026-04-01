@@ -114,18 +114,19 @@
                         @for (var i = 0; i < Model.IncomeDiscounts.Count(); i++)
                         {
                             <li class="list-group-item">
-                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Description" />
-                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Value" />
-                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].ByPayablePeriod" />
-                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPercentage" />
-                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPrediscount" />
-                                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsTax" />
-                                @for (var j = 0; j < Model.IncomeDiscounts[i].IncomeIds.Count(); j++)
-                                {
-                                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IncomeIds[j]" />
-                                }
+                                <div class="row">                                    
+                                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Description" />
+                                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Value" />
+                                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].ByPayablePeriod" />
+                                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPercentage" />
+                                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPrediscount" />
+                                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsTax" />
 
-                                <div class="row">
+                                    @for (var j = 0; j < Model.IncomeDiscounts[i].IncomeIds.Count(); j++)
+                                    {
+                                        <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IncomeIds[j]" />
+                                    }
+
                                     <div class="col-4 col-md-4 fw-semibold text-primary"><h5 class="mb-0">@Model.IncomeDiscounts[i].Description</h5></div>
                                     <div class="col-4 col-md-4 text-end fw-semibold"><h5 class="mb-0">@Model.IncomeDiscounts[i].Period</h5></div>
                                     
@@ -146,7 +147,7 @@
             </div>
             <div class="row justify-content-center align-items-center mt-3">
                 <div class="col-12 text-center">
-                    <button class="btn btn-primary w-100" asp-action="SaveFixedExpenses">@Localizer["Next"]</button>
+                    <button class="btn btn-primary w-100" asp-action="SaveDiscounts">@Localizer["Next"]</button>
                 </div>
             </div>
             <div class="row justify-content-center align-items-center">

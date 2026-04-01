@@ -27,6 +27,7 @@ namespace Famnances.Controllers
         {
             return View();
         }
+        #region Index PeriodSelector
         public async Task<ActionResult> Index()
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
@@ -62,7 +63,9 @@ namespace Famnances.Controllers
             List<Period> periods = await _httpHelper.Get<List<Period>>(Constants.PERIODS_URI);
             return View(periods);
         }
+        #endregion
 
+        #region Income
         public async Task<ActionResult> Incomes(Guid periodId)
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
@@ -94,11 +97,14 @@ namespace Famnances.Controllers
             model.Incomes.Add(model.NewIncome);
 
             model.Total += _utilities.GetValueByPeriod(model.NewIncome.Value, periodFrom.Code, periodTo.Code);
+            ModelState.Clear();
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
             return View("Incomes", model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveIncomes(IncomeViewModel model)
         {
             foreach (var income in model.Incomes)
@@ -132,7 +138,9 @@ namespace Famnances.Controllers
                     Period = model.Period
                 });
         }
+        #endregion
 
+        #region Discount
         public async Task<ActionResult> Discounts(DiscountViewModel model)
         {
             var incomes = await _httpHelper.Get<List<FixedIncome>>(Constants.FIXED_INCOMES_URI);
@@ -163,7 +171,7 @@ namespace Famnances.Controllers
                     var income = await _httpHelper.Get<Income>($"{Constants.FIXED_INCOMES_URI}/{incomeId}");
                     var payablePeriod = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{income.PayablePeriodId}");
                     var incomePeriod = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{income.ValuePeriodId}");
-                    if(!incomesAfterPrevDicounts.ContainsKey(incomeId))
+                    if (!incomesAfterPrevDicounts.ContainsKey(incomeId))
                         incomesAfterPrevDicounts.Add(incomeId, income.Value);
 
                     var discounPeriodValue = discount.ByPayablePeriod ? payablePeriod.Code : userPeriod.Code;
@@ -173,9 +181,9 @@ namespace Famnances.Controllers
                     if (discount.IsPrediscount)
                     {
                         discountValue = discount.IsPercentage ? incomeByPeriod * discount.Value / 100 : discount.Value;
-                        
+
                         var incomeValue = _utilities.GetValueByPeriod(discountValue, discounPeriodValue, incomePeriod.Code);
-                        incomesAfterPrevDicounts[incomeId] -= incomeValue;                        
+                        incomesAfterPrevDicounts[incomeId] -= incomeValue;
                     }
                     else
                     {
@@ -187,11 +195,53 @@ namespace Famnances.Controllers
                 }
             }
             var incomes = await _httpHelper.Get<List<FixedIncome>>(Constants.FIXED_INCOMES_URI);
-            ViewBag.Incomes = new SelectList(incomes, "Id", "Description");
             model.IncomeDiscount = new Discount();
+            ModelState.Clear();
+
+            ViewBag.Incomes = new SelectList(incomes, "Id", "Description");
             return View("Discounts", model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SaveDiscounts(DiscountViewModel model)
+        {
+            foreach (var discount in model.IncomeDiscounts)
+            {
+                IncomeDiscount incomeDiscount = new IncomeDiscount
+                {
+                    Active = true,
+                    Description = discount.Description,
+                    FixedIncomeByDiscount = discount.IncomeIds.Select(e => 
+                        new FixedIncomeByDiscount
+                        {
+                            FixedIncomeId = e,
+                            ByPayablePeriod = discount.ByPayablePeriod
+                        }).ToList(),
+                    IsPercentage = discount.IsPercentage,
+                    IsTax = discount.IsTax,
+                    IsPrediscount = discount.IsPrediscount,
+                    Value = discount.Value,
+                };
+                incomeDiscount = await _httpHelper.Post<IncomeDiscount>(Constants.INCOME_DISCOUNTS_URI, incomeDiscount);
+            }
+
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            user.BudgetByPeriod = model.Total;
+            await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
+
+            return RedirectToAction(nameof(FixedExpenses), 
+                new FixedExpenseViewModel 
+                { 
+                    Total = model.Total, 
+                    PeriodId = model.PeriodId, 
+                    Period = model.Period 
+                });
+        }
+        #endregion
+
+        #region FixedExpenses
         public async Task<ActionResult> FixedExpenses(FixedExpenseViewModel model)
         {
             var culture = Thread.CurrentThread.CurrentUICulture.ToString();
@@ -217,6 +267,8 @@ namespace Famnances.Controllers
             return View("FixedExpenses", model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveFixedExpenses(FixedExpenseViewModel model)
         {
             foreach (var expense in model.Expenses)
@@ -225,14 +277,55 @@ namespace Famnances.Controllers
                 expense.ShareOnHousehold = false;
                 await _httpHelper.Post<FixedExpense>(Constants.FIXED_EXPENSES_URI, expense);
             }
-            return RedirectToAction("Savings");
+            return RedirectToAction(nameof(Budgets),
+                new BudgetViewModel
+                {
+                    Total = model.Total,
+                    PeriodId = model.PeriodId,
+                    Period = model.Period                   
+                });
+        }
+        #endregion
+
+        #region Budgets
+        public async Task<ActionResult> Budgets(BudgetViewModel model)
+        {
+            model.Budgets = new List<ExpensesBudget>();
+            return View(model);
         }
 
+        public async Task<ActionResult> AddBudget(BudgetViewModel model)
+        {
+            model.Budgets.Add(model.Budget);
+            model.Total -= model.Budget.Value;
+            return View(model);
+        }
+
+        public async Task<ActionResult> SaveBudgets(BudgetViewModel model)
+        {
+            return View();
+        }
+        #endregion
+
+        #region Savings
         public async Task<ActionResult> Savings()
         {
             return View();
         }
+        #endregion
 
+        private decimal ValidateOverBudget(decimal total, decimal substractValue)
+        {
+            if(total - substractValue < 0)
+            {
+                TempData["Error"] = "That value es out of your general budget";
+                return total;
+            }
+            else
+            {
+                return total - substractValue;
+            }
+        }
         // GET: IntroductionController/Create
         public ActionResult Create()
         {
