@@ -62,12 +62,12 @@ namespace Famnances.Controllers
                 if (totalsByPeriod == null)
                 {
                     TempData[Constants.ERROR] = _localizer[PrettyError.OUT_DATE];
-                    return View(model);
+                    return View();
                 }
-                if (await ValidateOverspent(savingRecord.SavingsPocketId, savingRecord.Value))
+                if (await ValidateOverspent(savingRecord.SavingsPocketId, savingRecord.Value) && savingRecord.IsExpense)
                 {
                     TempData[Constants.ERROR] = _localizer[PrettyError.SAVING_OVERSPENT];
-                    return View(model);
+                    return View();
                 }
 
                 if (model.SavingSource != "OTHER" && !savingRecord.IsExpense)
