@@ -296,14 +296,21 @@ namespace Famnances.Controllers
 
         public async Task<ActionResult> AddBudget(BudgetViewModel model)
         {
+            if (model.Budgets == null)
+                model.Budgets = new List<ExpensesBudget>();
+
             model.Budgets.Add(model.Budget);
             model.Total -= model.Budget.Value;
-            return View(model);
+            return View(nameof(Budgets), model);
         }
 
         public async Task<ActionResult> SaveBudgets(BudgetViewModel model)
         {
-            return View();
+            foreach (var budget in model.Budgets)
+            {
+                await _httpHelper.Post(Constants.BUDGETS_URI, budget);
+            }
+            return RedirectToAction(nameof(Savings));
         }
         #endregion
 
