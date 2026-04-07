@@ -1,4 +1,5 @@
 ﻿using Athentication.DataCore.ApiModels;
+using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
@@ -64,8 +65,12 @@ namespace Famnances.Controllers
 
 
             var response = await HttpHelper.Post<AuthResponse>($"{Constants.AUTH_URI}/ExternalAuthenticate", request);
+
             if (response == null)
                 return RedirectToAction("Logout");
+
+            if (response.Token == "NO_DATABASE")
+                return RedirectToAction("Offline", "Home");
 
             HttpContext.Session.SetString(Constants.TOKEN, response.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, response.AccountId.ToString());

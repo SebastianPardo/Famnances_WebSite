@@ -38,7 +38,7 @@ namespace Famnances.Controllers
             if (miniSummaryModel == null)
             {
                 TotalsByPeriod totalsByPeriod = await _httpHelper.Get<TotalsByPeriod>($"{Constants.TOTALSBYPERIOD_URI}/GetLastPeriod");
-                
+
                 if (totalsByPeriod == null)
                     return RedirectToAction(nameof(VeryFirstPeriod));
 
@@ -75,7 +75,7 @@ namespace Famnances.Controllers
             var savingPockets = await _httpHelper.Get<List<SavingsPocket>>(Constants.SAVINGS_POCKETS_URI);
             ViewBag.MoveTo = new SelectList(savingPockets, "Id", "Name");
 
-            if(remainderBalance == null || remainderBalance.Count == 0)
+            if (remainderBalance == null || remainderBalance.Count == 0)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -148,6 +148,13 @@ namespace Famnances.Controllers
         {
             return View();
         }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Offline()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Error()
