@@ -14,8 +14,8 @@
         public const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
         public const string FAMNACES_SERVICES_URI = "https://localhost:7246/Api/";
 #else
-        public const string AUTH_SERVICES_URI = "https://sp-authservices.azurewebsites.net/api/";
-        public const string FAMNACES_SERVICES_URI = "https://famnancesservices.azurewebsites.net/api/";  
+        public const string AUTH_SERVICES_URI = "https://famnances-authservices.azurewebsites.net/api/";
+        public const string FAMNACES_SERVICES_URI = "https://famnances-services.azurewebsites.net/api/";  
 #endif
 
         public const string AUTH_URI = "Auth";
