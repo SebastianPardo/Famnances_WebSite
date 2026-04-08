@@ -341,7 +341,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> PayFixedExpenses(Guid id)
         {
             await _httpHelper.Post($"{Constants.FIXED_EXPENSES_URI}/Pay?id={id}", null);
-            return RedirectToAction("Index", "Home", new { date = DateTimeEast.Now.ToString("yyyy-MM-dd") });
+            return RedirectToAction(nameof(HomeController.Index), "Home", new { date = DateTimeEast.Now.ToString("yyyy-MM-dd") });
         }
         #endregion
     }

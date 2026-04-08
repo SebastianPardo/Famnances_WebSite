@@ -147,6 +147,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PrettyError.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ViewModels\Introduction\SavingsLabels.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SavingsLabels.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Introduction\Savings.Designer.cs">
+      <DependentUpon>Savings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Introduction\Discounts.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -218,6 +228,14 @@
     <EmbeddedResource Update="Resources\Helpers\PrettyError.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrettyError.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\Introduction\SavingsLabels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SavingsLabels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Introduction\Savings.resx">
+      <LastGenOutput>Savings.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Introduction\Discounts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -38,10 +38,10 @@ namespace Famnances.Controllers
 
             var currentUrl = Request.Headers["Referer"].ToString();
             if (string.IsNullOrWhiteSpace(currentUrl))
-                return RedirectToAction("Languages", "Introduction");
+                return RedirectToAction(nameof(IntroductionController.Language), "Introduction");
 
             return currentUrl.Contains("Introduction") ?
-                RedirectToAction("Index", "Introduction") : RedirectToAction("Index", "Home");
+                RedirectToAction(nameof(IntroductionController.Index), "Introduction") : RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
     }

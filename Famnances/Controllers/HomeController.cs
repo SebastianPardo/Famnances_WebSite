@@ -97,7 +97,7 @@ namespace Famnances.Controllers
 
             var currentUrl = Request.Headers["Referer"].ToString();
             if (string.IsNullOrWhiteSpace(currentUrl))
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
 
             return Redirect(currentUrl);
         }
@@ -107,7 +107,7 @@ namespace Famnances.Controllers
             await GetHeaderSummary(DateTimeEast.Now.ToString("yyyy-MM-dd"));
             var currentUrl = Request.Headers["Referer"].ToString();
             if (string.IsNullOrWhiteSpace(currentUrl))
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
 
             return Redirect(currentUrl);
         }
@@ -119,7 +119,7 @@ namespace Famnances.Controllers
 
             var currentUrl = Request.Headers["Referer"].ToString();
             if (string.IsNullOrWhiteSpace(currentUrl))
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
 
             return Redirect(currentUrl);
         }

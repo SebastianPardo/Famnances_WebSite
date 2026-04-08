@@ -1,12 +1,12 @@
 ﻿using Athentication.DataCore.ApiModels;
-using Famnances.DataCore.Entities;
-using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using CoreConstants = Famnances.Core.Security.Constants;
+using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
 {
@@ -33,7 +33,7 @@ namespace Famnances.Controllers
             }
             HttpContext.Session.Remove(Constants.TOKEN);
             HttpContext.Session.Remove(Constants.ACCOUNT_ID);
-            return Redirect("../");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -42,7 +42,7 @@ namespace Famnances.Controllers
             AuthResponse user = await HttpHelper.Post<AuthResponse>($"{Constants.AUTH_URI}/Authenticate", login);
             HttpContext.Session.SetString(Constants.TOKEN, user.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, user.AccountId.ToString());
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         public IActionResult ExternalLogin(string provider)
@@ -56,7 +56,7 @@ namespace Famnances.Controllers
         {
             var auth = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             if (!auth.Succeeded)
-                return RedirectToAction("Logout");
+                return RedirectToAction(nameof(Logout));
 
             string accessToken = auth.Properties.GetTokenValue("access_token");
             string idToken = auth.Properties.GetTokenValue("id_token");
@@ -67,10 +67,10 @@ namespace Famnances.Controllers
             var response = await HttpHelper.Post<AuthResponse>($"{Constants.AUTH_URI}/ExternalAuthenticate", request);
 
             if (response == null)
-                return RedirectToAction("Logout");
+                return RedirectToAction(nameof(Logout));
 
-            if (response.Token == "NO_DATABASE")
-                return RedirectToAction("Offline", "Home");
+            if (response.Token == CoreConstants.NO_DATABASE)
+                return RedirectToAction(nameof(HomeController.Offline), "Home");
 
             HttpContext.Session.SetString(Constants.TOKEN, response.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, response.AccountId.ToString());
@@ -78,10 +78,10 @@ namespace Famnances.Controllers
             if (response.IsFirstLogin)
             {
                 TempData["UserInfo"] = JsonSerializer.Serialize(response.UserInfo);
-                return RedirectToAction("NewUser", "Users");
+                return RedirectToAction(nameof(UsersController.NewUser), "Users");
             }
 
-            return RedirectToAction("ChangeLanguage", "Languages", new { culture = response.Language });
+            return RedirectToAction(nameof(LanguagesController.ChangeLanguage), "Languages", new { culture = response.Language });
         }
 
         public async Task<IActionResult> Guest()
@@ -94,7 +94,7 @@ namespace Famnances.Controllers
             AuthResponse user = await HttpHelper.Post<AuthResponse>($"{Constants.AUTH_URI}/Authenticate", login);
             HttpContext.Session.SetString(Constants.TOKEN, user.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, user.AccountId.ToString());
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 }

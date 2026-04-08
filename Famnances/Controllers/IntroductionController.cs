@@ -3,13 +3,11 @@ using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels.Introduction;
-using Famnances.Resources.Views.Introduction;
-using Microsoft.AspNetCore.JsonPatch.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Text.RegularExpressions;
 using static Famnances.Models.ViewModels.Introduction.DiscountViewModel;
 using static Famnances.Models.ViewModels.Introduction.IncomeViewModel;
+using static Famnances.Models.ViewModels.Introduction.SavingsViewModel;
 
 namespace Famnances.Controllers
 {
@@ -100,7 +98,7 @@ namespace Famnances.Controllers
             ModelState.Clear();
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
-            return View("Incomes", model);
+            return View(nameof(Incomes), model);
         }
 
         [HttpPost]
@@ -130,7 +128,7 @@ namespace Famnances.Controllers
             user.BudgetByPeriod = model.Total;
             await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
 
-            return RedirectToAction("Discounts",
+            return RedirectToAction(nameof(Discounts),
                 new DiscountViewModel
                 {
                     Total = model.Total,
@@ -199,7 +197,7 @@ namespace Famnances.Controllers
             ModelState.Clear();
 
             ViewBag.Incomes = new SelectList(incomes, "Id", "Description");
-            return View("Discounts", model);
+            return View(nameof(Discounts), model);
         }
 
         [HttpPost]
@@ -212,7 +210,7 @@ namespace Famnances.Controllers
                 {
                     Active = true,
                     Description = discount.Description,
-                    FixedIncomeByDiscount = discount.IncomeIds.Select(e => 
+                    FixedIncomeByDiscount = discount.IncomeIds.Select(e =>
                         new FixedIncomeByDiscount
                         {
                             FixedIncomeId = e,
@@ -231,12 +229,12 @@ namespace Famnances.Controllers
             user.BudgetByPeriod = model.Total;
             await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
 
-            return RedirectToAction(nameof(FixedExpenses), 
-                new FixedExpenseViewModel 
-                { 
-                    Total = model.Total, 
-                    PeriodId = model.PeriodId, 
-                    Period = model.Period 
+            return RedirectToAction(nameof(FixedExpenses),
+                new FixedExpenseViewModel
+                {
+                    Total = model.Total,
+                    PeriodId = model.PeriodId,
+                    Period = model.Period
                 });
         }
         #endregion
@@ -264,7 +262,7 @@ namespace Famnances.Controllers
             model.Total -= _utilities.GetValueByPeriod(model.Expense.Value, periodFrom.Code, periodTo.Code);
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
-            return View("FixedExpenses", model);
+            return View(nameof(FixedExpenses), model);
         }
 
         [HttpPost]
@@ -282,7 +280,7 @@ namespace Famnances.Controllers
                 {
                     Total = model.Total,
                     PeriodId = model.PeriodId,
-                    Period = model.Period                   
+                    Period = model.Period
                 });
         }
         #endregion
@@ -301,6 +299,7 @@ namespace Famnances.Controllers
 
             model.Budgets.Add(model.Budget);
             model.Total -= model.Budget.Value;
+            ModelState.Clear();
             return View(nameof(Budgets), model);
         }
 
@@ -308,22 +307,74 @@ namespace Famnances.Controllers
         {
             foreach (var budget in model.Budgets)
             {
+                var budgetType = await _httpHelper.Get<ExpensesBudgetType>($"{Constants.BUDGET_TYPES_URI}/GetByCode/PER");
+                budget.BudgetTypeId = budgetType.Id;
                 await _httpHelper.Post(Constants.BUDGETS_URI, budget);
             }
-            return RedirectToAction(nameof(Savings));
+            return RedirectToAction(nameof(Savings), new SavingsViewModel
+            {
+                PeriodId = model.PeriodId,
+                Period = model.Period,
+                Total = model.Total
+            });
         }
         #endregion
 
         #region Savings
-        public async Task<ActionResult> Savings()
+        public async Task<ActionResult> Savings(SavingsViewModel model)
         {
-            return View();
+            model.Pockets = new List<SavingPocket>();
+            return View(model);
+        }
+
+        public async Task<ActionResult> AddPocket(SavingsViewModel model)
+        {
+            if (model.Pockets == null)
+                model.Pockets = new List<SavingPocket> { model.Pocket };
+            else
+                model.Pockets.Add(model.Pocket);
+
+            if (model.Pocket.FrecuentDeposits)
+                model.Total -= model.Pocket.FrecuentValue.Value;
+
+            ModelState.Clear();
+            return View(nameof(Savings), model);
+        }
+
+        public async Task<ActionResult> SavePocket(SavingsViewModel model)
+        {
+            foreach (var pocket in model.Pockets)
+            {
+                var savingPocket = new SavingsPocket
+                {
+                    IsActive = true,
+                    ChallengeValue = pocket.ChallengeValue,
+                    Name = pocket.Name,
+                    ShareOnHousehold = false,
+                    Total = pocket.Total,
+                };
+                savingPocket = await _httpHelper.Post<SavingsPocket>(Constants.SAVINGS_POCKETS_URI, savingPocket);
+
+                if (model.Pocket.FrecuentDeposits)
+                {
+                    FixedSaving fixedSaving = new FixedSaving
+                    {
+                        IsActive = true,
+                        PeriodicityId = model.PeriodId,
+                        SavingSourceId = (await _httpHelper.Get<SavingSource>($"{Constants.SAVING_SOURCES_URI}/OTHER")).Id,
+                        SavingsPocketId = savingPocket.Id,
+                        Value = model.Pocket.FrecuentValue.Value
+                    };
+                    await _httpHelper.Post<FixedSaving>(Constants.FIXED_SAVINGS_URI, fixedSaving);
+                }
+            }
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
         #endregion
 
         private decimal ValidateOverBudget(decimal total, decimal substractValue)
         {
-            if(total - substractValue < 0)
+            if (total - substractValue < 0)
             {
                 TempData["Error"] = "That value es out of your general budget";
                 return total;
