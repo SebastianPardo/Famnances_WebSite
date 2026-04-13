@@ -11,11 +11,11 @@
         public const string CHEQUING = "CHEQUING";
 
 #if DEBUG
-        public const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
-        public const string FAMNACES_SERVICES_URI = "https://localhost:7246/Api/";
+        public const string AUTH_SERVICES_URI = "https://localhost:7048/auth-services/";
+        public const string FAMNACES_SERVICES_URI = "https://localhost:7048/famnances-services/";
 #else
-        public const string AUTH_SERVICES_URI = "https://famnances-authservices.azurewebsites.net/api/";
-        public const string FAMNACES_SERVICES_URI = "https://famnances-services.azurewebsites.net/api/";  
+        public const string AUTH_SERVICES_URI = "https://frustrate-affiliate-devourer.ngrok-free.dev/auth-services/";
+        public const string FAMNACES_SERVICES_URI = "https://frustrate-affiliate-devourer.ngrok-free.dev/famnances-services/";  
 #endif
 
         public const string AUTH_URI = "Auth";
