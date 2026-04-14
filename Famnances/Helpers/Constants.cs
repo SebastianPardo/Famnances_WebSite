@@ -10,6 +10,7 @@
         public const string SAVINGS = "SAVINGS";
         public const string CHEQUING = "CHEQUING";
 
+//Temporal
 #if DEBUG
         public const string AUTH_SERVICES_URI = "https://localhost:7048/auth-services/";
         public const string FAMNACES_SERVICES_URI = "https://localhost:7048/famnances-services/";
