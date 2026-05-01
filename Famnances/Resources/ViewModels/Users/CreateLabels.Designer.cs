@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Famnances.Resources.Views.Introduction {
+namespace Famnances.Resources.ViewModels.Users {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Famnances.Resources.Views.Introduction {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Index {
+    public class CreateLabels {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Index() {
+        internal CreateLabels() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.Views.Introduction {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Introduction.Index", typeof(Index).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.ViewModels.Users.CreateLabels", typeof(CreateLabels).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,56 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to * You can skip it and go back whenever you want..
+        ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
-        public static string Footnote {
+        public static string ConfirmPassword {
             get {
-                return ResourceManager.GetString("Footnote", resourceCulture);
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip it for now.
+        ///   Looks up a localized string similar to First name.
         /// </summary>
-        public static string Skip {
+        public static string FirstName {
             get {
-                return ResourceManager.GetString("Skip", resourceCulture);
+                return ResourceManager.GetString("FirstName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Let&apos;s begin.
+        ///   Looks up a localized string similar to Invalid Email.
         /// </summary>
-        public static string Start {
+        public static string InvalidEmail {
             get {
-                return ResourceManager.GetString("Start", resourceCulture);
+                return ResourceManager.GetString("InvalidEmail", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome.
+        ///   Looks up a localized string similar to Last Name.
         /// </summary>
-        public static string Welcome {
+        public static string LastName {
             get {
-                return ResourceManager.GetString("Welcome", resourceCulture);
+                return ResourceManager.GetString("LastName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Let&apos;s set up your financial profile step by step..
+        ///   Looks up a localized string similar to Password.
         /// </summary>
-        public static string WelcomeMessage {
+        public static string Password {
             get {
-                return ResourceManager.GetString("WelcomeMessage", resourceCulture);
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required.
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
     }

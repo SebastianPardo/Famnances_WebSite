@@ -21,10 +21,13 @@ namespace Famnances.Controllers
             _httpHelper = httpHelper;
             _utilities = utilities;
         }
+
+        [AllowAnonymous]
         public async Task<ActionResult> Language()
         {
             return View();
         }
+
         #region Index PeriodSelector
         public async Task<ActionResult> Index()
         {
@@ -32,7 +35,7 @@ namespace Famnances.Controllers
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
 
             ViewBag.UserName = user.LegalName;
-            ViewBag.Photo = "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAyL3BmLWljb240LWppcjIwNjQtcG9yLTAzLWxjb3B5LnBuZw.png";
+            ViewBag.Photo = user.Photo;
             return View();
         }
 

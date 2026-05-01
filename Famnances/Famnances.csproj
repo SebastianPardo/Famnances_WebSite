@@ -144,6 +144,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Controllers\UsersController.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UsersController.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Helpers\PrettyError.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -153,6 +158,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>SavingsLabels.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ViewModels\Users\CreateLabels.Designer.cs">
+      <DependentUpon>CreateLabels.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Users\Create.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Create.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\Views\Introduction\Savings.Designer.cs">
       <DependentUpon>Savings.resx</DependentUpon>
@@ -227,6 +242,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Controllers\UsersController.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsersController.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Helpers\PrettyError.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PrettyError.Designer.cs</LastGenOutput>
@@ -234,6 +253,14 @@
     <EmbeddedResource Update="Resources\ViewModels\Introduction\SavingsLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SavingsLabels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\Users\CreateLabels.resx">
+      <LastGenOutput>CreateLabels.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Users\Create.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Create.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Introduction\Savings.resx">
       <LastGenOutput>Savings.Designer.cs</LastGenOutput>

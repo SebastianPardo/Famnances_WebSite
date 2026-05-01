@@ -1,6 +1,9 @@
-﻿using Athentication.DataCore.Models;
+﻿using Athentication.DataCore.ApiModels;
+using Athentication.DataCore.Models;
+using Azure;
 using Famnances.Core.Security.Authorization;
 using Famnances.Core.Utils.Helpers;
+using Famnances.Core.Utils.Services.Interface;
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
@@ -8,6 +11,9 @@ using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Famnances.Controllers
@@ -15,12 +21,68 @@ namespace Famnances.Controllers
     [ServiceFilter(typeof(AuthorizeAttribute))]
     public class UsersController : Controller
     {
+        IPasswordService _passwordService;
         IHttpHelper _httpHelper;
         ILanguageHelper _utilities;
-        public UsersController(IHttpHelper httpHelper, ILanguageHelper utilities)
+        readonly IStringLocalizer<UsersController> _localizer;
+
+        public UsersController(IPasswordService passwordService, IHttpHelper httpHelper, ILanguageHelper utilities, IStringLocalizer<UsersController> localizer)
         {
+            _passwordService = passwordService;
             _httpHelper = httpHelper;
             _utilities = utilities;
+            _localizer = localizer;
+        }
+
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Create(string user)
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Create(NewUserViewModel model)
+        {
+            if (ModelState.IsValid && model.Password == model.ConfirmPassword)
+            {
+                var hashPassword = _passwordService.Validate(model.Password);
+                if (hashPassword == null)
+                {
+                    ModelState.AddModelError("Password", _localizer["InvalidPassword"]);
+                    return View(model);
+                }
+
+                Account account = new Account
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Password = hashPassword,
+                    LastLogin = DateTimeEast.Now
+                };
+
+                await _httpHelper.Post($"{Constants.AUTH_URI}/NewAccount", account); 
+
+                LoginViewModel login = new LoginViewModel {Param_1 = model.Email,Param_2 = model.Password}; 
+                AuthResponse? authResponse = await _httpHelper.Post<AuthResponse?>($"{Constants.AUTH_URI}/Authenticate", login);
+
+                authResponse.UserInfo.FamilyName = model.LastName;
+                authResponse.UserInfo.GivenName = model.FirstName;
+
+                HttpContext.Session.SetString(Constants.TOKEN, authResponse.Token);
+                HttpContext.Session.SetString(Constants.ACCOUNT_ID, authResponse.AccountId.ToString());
+
+                TempData["UserInfo"] = JsonSerializer.Serialize(authResponse.UserInfo);
+                return RedirectToAction(nameof(NewUser));
+            }
+            else if (model.Password != model.ConfirmPassword)
+            {
+                ModelState.AddModelError("Password", _localizer["PasswordMismatch"]);
+                return View(model);
+            }
+            return View();
         }
 
         public async Task<IActionResult> NewUser()
@@ -30,6 +92,8 @@ namespace Famnances.Controllers
 
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            var culture = CultureInfo.CurrentCulture.Name;
+
 
             if (user == null)
             {
@@ -47,11 +111,18 @@ namespace Famnances.Controllers
                     BudgetByPeriod = 0,
                     PeriodStartsMonthsDay = 1,
                     HomeAdministrator = false,
-                    Language = "EN",
+                    Language = culture.Split("-").FirstOrDefault()?.ToUpper() ?? "EN",
                     PeriodId = (await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/GetByCode/MON")).Id,
-                    CityId = (await _httpHelper.Get<Period>($"{Constants.CITIES_URI}/GetByCode/NONE")).Id
+                    CityId = (await _httpHelper.Get<Period>($"{Constants.CITIES_URI}/GetByCode/NONE")).Id,
+                    Photo = userInfo.Picture ?? "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAyL3BmLWljb240LWppcjIwNjQtcG9yLTAzLWxjb3B5LnBuZw.png"
                 };
                 user = await _httpHelper.Post<User>($"{Constants.USER_URI}", user);
+            }
+
+            var currentUrl = Request.Headers["Referer"].ToString();
+            if (currentUrl.Contains("Users"))
+            {
+                return RedirectToAction(nameof(IntroductionController.Index), "Introduction");
             }
 
             return RedirectToAction(nameof(IntroductionController.Language), "Introduction");

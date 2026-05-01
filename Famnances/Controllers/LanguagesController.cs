@@ -1,10 +1,11 @@
 ﻿using Famnances.Core.Security.Authorization;
+using Famnances.Helpers;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Famnances.Controllers
 {
-    [ServiceFilter(typeof(AuthorizeAttribute))]
+    //[ServiceFilter(typeof(AuthorizeAttribute))]
     public class LanguagesController : Controller
     {
         [HttpGet]
@@ -36,13 +37,26 @@ namespace Famnances.Controllers
                     }
             );
 
+            var token = HttpContext.Session.GetString(Constants.TOKEN);
+
+            if (token == null)
+            {
+                return RedirectToAction(nameof(UsersController.Create), "Users");
+            }
+
             var currentUrl = Request.Headers["Referer"].ToString();
-            if (string.IsNullOrWhiteSpace(currentUrl))
-                return RedirectToAction(nameof(IntroductionController.Language), "Introduction");
 
-            return currentUrl.Contains("Introduction") ?
-                RedirectToAction(nameof(IntroductionController.Index), "Introduction") : RedirectToAction(nameof(HomeController.Index), "Home");
-
+            switch (currentUrl)
+            {
+                case string url when string.IsNullOrWhiteSpace(url):
+                    return RedirectToAction(nameof(IntroductionController.Language), "Introduction");
+                case string url when url.Contains("Introduction"):
+                    return RedirectToAction(nameof(IntroductionController.Index), "Introduction");
+                case string url when url.Contains("Home"):
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                default:
+                    return RedirectToAction(nameof(UsersController.Create), "Users");
+            }
         }
     }
 }

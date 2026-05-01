@@ -8,64 +8,57 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
+
+<h1 class="h3 text-center mb-2">@Localizer["Tittle"] </h1>
+<p class="text-center mt-3">
+    @Localizer["Subtittle"]
+</p>
+
 <div class="row justify-content-center align-items-center">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h1 class="h3 text-center mb-2">@Localizer["Tittle"] </h1>
-                <p class="text-center mt-3">
-                    @Localizer["Subtittle"]
-                </p>
-
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-12">
-                        <div class="row justify-content-center align-items-center">
-                            @foreach (var period in Model)
-                            {
-                                <div class="col-6 mt-3">
-                                    <div id="@period.Id" class="card period-card text-center p-3">
-                                        @switch (CultureInfo.CurrentCulture.Name)
-                                        {
-                                            case "es-CO":
-                                                <h5 class="mb-1">@period.NameES</h5>
-                                                <small class="text-muted">@period.CaptionES</small>
-                                                break;
-                                            case "en-CA":
-                                                <h5 class="mb-1">@period.NameEN</h5>
-                                                <small class="text-muted">@period.CaptionEN</small>
-                                                break;
-                                            case "fr-CA":
-                                                <h5 class="mb-1">@period.NameFR</h5>
-                                                <small class="text-muted">@period.CaptionFR</small>
-                                                break;
-                                        }
-                                    </div>
-                                </div>
-                            }
-                        </div>
+    <div class="col-12">
+        <div class="row justify-content-center align-items-center">
+            @foreach (var period in Model)
+            {
+                <div class="col-6 mt-3">
+                    <div id="@period.Id" class="card period-card text-center p-3">
+                        @switch (CultureInfo.CurrentCulture.Name)
+                        {
+                            case "es-CO":
+                                <h5 class="mb-1">@period.NameES</h5>
+                                <small class="text-muted">@period.CaptionES</small>
+                                break;
+                            case "en-CA":
+                                <h5 class="mb-1">@period.NameEN</h5>
+                                <small class="text-muted">@period.CaptionEN</small>
+                                break;
+                            case "fr-CA":
+                                <h5 class="mb-1">@period.NameFR</h5>
+                                <small class="text-muted">@period.CaptionFR</small>
+                                break;
+                        }
                     </div>
                 </div>
-                <form asp-action="Incomes" method="get">
-                    <input type="hidden" id="periodId" name="periodId" />
-                    <div class="row justify-content-center align-items-center mt-3">
-                        <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary w-100">@Localizer["Next"]</button>
-                        </div>
-                    </div>
-                </form>
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-12 text-center">
-                        <a class="btn btn-outline-primary w-100" asp-controller="Home" asp-action="Index">@Localizer["Skip"]</a>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="hint">
-                        @Localizer["Footnote"]
-                    </div>
-                </div>
-            </div>
+            }
         </div>
+    </div>
+</div>
+<form asp-action="Incomes" method="get">
+    <input type="hidden" id="periodId" name="periodId" />
+    <div class="row justify-content-center align-items-center mt-3">
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary w-100">@Localizer["Next"]</button>
+        </div>
+    </div>
+</form>
+<div class="row justify-content-center align-items-center">
+    <div class="col-12 text-center">
+        <a class="btn btn-outline-primary w-100" asp-controller="Home" asp-action="Index">@Localizer["Skip"]</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="hint">
+        @Localizer["Footnote"]
     </div>
 </div>
 @section Scripts {

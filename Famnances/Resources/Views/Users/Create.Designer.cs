@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Famnances.Resources.Views.Introduction {
+namespace Famnances.Resources.Views.Users {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Famnances.Resources.Views.Introduction {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Index {
+    public class Create {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Index() {
+        internal Create() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.Views.Introduction {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Introduction.Index", typeof(Index).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Users.Create", typeof(Create).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,29 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to * You can skip it and go back whenever you want..
+        ///   Looks up a localized string similar to Add.
         /// </summary>
-        public static string Footnote {
+        public static string Add {
             get {
-                return ResourceManager.GetString("Footnote", resourceCulture);
+                return ResourceManager.GetString("Add", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip it for now.
+        ///   Looks up a localized string similar to Subtitle.
         /// </summary>
-        public static string Skip {
+        public static string Subtitle {
             get {
-                return ResourceManager.GetString("Skip", resourceCulture);
+                return ResourceManager.GetString("Subtitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Let&apos;s begin.
+        ///   Looks up a localized string similar to Title.
         /// </summary>
-        public static string Start {
+        public static string Title {
             get {
-                return ResourceManager.GetString("Start", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Welcome.
-        /// </summary>
-        public static string Welcome {
-            get {
-                return ResourceManager.GetString("Welcome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Let&apos;s set up your financial profile step by step..
-        /// </summary>
-        public static string WelcomeMessage {
-            get {
-                return ResourceManager.GetString("WelcomeMessage", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

@@ -5,43 +5,31 @@
     ViewBag.Title = "Introduction";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
-<div class="row justify-content-center align-items-center">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <div class="row mb-5 justify-content-center align-items-center">
-                    <div class="col-12">
-                        <img src="~/images/logos/logo.png" class="rounded mx-auto d-block" style="max-width:100%" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 text-center mb-lg-0">
-                        <div class="user-avatar">
-                            <img class="user-avatar" src="@ViewBag.Photo" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row text-center">
-                    <h1 class="text-black">@Localizer["Welcome"] @ViewBag.UserName</h1>
-                    <p class="mt-5">@Localizer["WelcomeMessage"]</p>
-                </div>
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-12 text-center">
-                        <a class="btn btn-primary w-100" asp-action="PeriodSelector">@Localizer["Start"]</a>
-                    </div>
-                </div>
-                <div class="row justify-content-center align-items-center">
-                    <div class="col-12 text-center">
-                        <button class="btn btn-outline-primary w-100">@Localizer["Skip"]</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="hint">
-                        @Localizer["Footnote"]
-                    </div>
-                </div>
-            </div>
+
+<div class="row">
+    <div class="col-lg-12 text-center mb-lg-0">
+        <div class="user-avatar">
+            <img class="user-avatar" src="@ViewBag.Photo" referrerpolicy="no-referrer" />
         </div>
+    </div>
+</div>
+<div class="row text-center">
+    <h1 class="text-black">@Localizer["Welcome"] @ViewBag.UserName</h1>
+    <p class="mt-5">@Localizer["WelcomeMessage"]</p>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-12 text-center">
+        <a class="btn btn-primary w-100" asp-action="PeriodSelector">@Localizer["Start"]</a>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center">
+    <div class="col-12 text-center">
+        <a class="btn btn-outline-primary w-100" asp-action="Index" asp-controller="Home">@Localizer["Skip"]</a>
+    </div>
+</div>
+<div class="row">
+    <div class="hint">
+        @Localizer["Footnote"]
     </div>
 </div>
 

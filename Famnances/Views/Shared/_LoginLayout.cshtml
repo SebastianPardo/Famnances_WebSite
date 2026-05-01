@@ -24,7 +24,21 @@
     </header>
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
-            @RenderBody()
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row mb-2 justify-content-center align-items-center">
+                                <div class="col-12">
+                                    <img src="~/images/logos/logo.png" class="rounded mx-auto d-block" style="max-width:100%" />
+                                </div>
+                            </div>
+                            <hr class="mb-4"/>
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

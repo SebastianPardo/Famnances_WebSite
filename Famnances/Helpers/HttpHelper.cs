@@ -80,6 +80,9 @@ namespace Famnances.Helpers
             var request = new HttpRequestMessage(method, uri);
             if (value != null)
             {
+#if DEBUG
+                var json = JsonSerializer.Serialize(value);
+#endif
                 request.Content = JsonContent.Create(value);
             }
             return request;
@@ -139,7 +142,7 @@ namespace Famnances.Helpers
                 return default;
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            
+
 
             T? result = await response.Content.ReadFromJsonAsync<T>(options);
 

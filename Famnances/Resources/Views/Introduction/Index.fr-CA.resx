@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Footnote" xml:space="preserve">
-    <value>* Vous pouvez sauter des étapes et revenir en arrière à tout moment.</value>
+    <value>* Vous pouvez sauter l'introduction et revenir en arrière à tout moment.</value>
   </data>
   <data name="Skip" xml:space="preserve">
     <value>Sautez-y pour l'instant</value>

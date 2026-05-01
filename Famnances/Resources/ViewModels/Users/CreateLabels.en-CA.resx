@@ -117,19 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Footnote" xml:space="preserve">
-    <value>* You can skip it and go back whenever you want.</value>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm password</value>
   </data>
-  <data name="Skip" xml:space="preserve">
-    <value>Skip it for now</value>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
   </data>
-  <data name="Start" xml:space="preserve">
-    <value>Let's begin</value>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Invalid</value>
   </data>
-  <data name="Welcome" xml:space="preserve">
-    <value>Welcome</value>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
   </data>
-  <data name="WelcomeMessage" xml:space="preserve">
-    <value>Let's set up your financial profile step by step.</value>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required field</value>
   </data>
 </root>

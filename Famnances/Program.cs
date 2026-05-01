@@ -4,6 +4,8 @@ using Famnances.Core.Errors;
 using Famnances.Core.Security.Authorization;
 using Famnances.Core.Security.Services;
 using Famnances.Core.Security.Services.Interfaces;
+using Famnances.Core.Utils.Services;
+using Famnances.Core.Utils.Services.Interface;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -57,6 +59,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<ITokenHandler, TokenHandler>();
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
 builder.Services.AddScoped<ILanguageHelper, LanguageHelper>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<HeaderSummaryFilter>();
 builder.Services.AddScoped<AuthorizeAttribute>();
 
