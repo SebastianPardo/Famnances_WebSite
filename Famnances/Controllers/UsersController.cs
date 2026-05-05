@@ -38,6 +38,7 @@ namespace Famnances.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Create(string user)
         {
+            TempData[Constants.EMAIL] = HttpContext.Session.GetString(Constants.EMAIL);
             return View();
         }
 
@@ -73,6 +74,7 @@ namespace Famnances.Controllers
 
                 HttpContext.Session.SetString(Constants.TOKEN, authResponse.Token);
                 HttpContext.Session.SetString(Constants.ACCOUNT_ID, authResponse.AccountId.ToString());
+                HttpContext.Session.Remove(Constants.EMAIL);
 
                 TempData["UserInfo"] = JsonSerializer.Serialize(authResponse.UserInfo);
                 return RedirectToAction(nameof(NewUser));

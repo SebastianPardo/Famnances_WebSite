@@ -3,8 +3,11 @@
     public class Constants
     {
         public const string ERROR = "ERROR";
+
+        public const string EMAIL = "EMAIL";
         public const string TOKEN = "TOKEN";
         public const string ACCOUNT_ID = "ACCOUNT";
+     
         public const string DATE_FROM = "FROM";
         public const string DATE_TO = "TO";
         public const string SAVINGS = "SAVINGS";

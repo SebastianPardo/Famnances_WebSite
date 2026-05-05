@@ -1,5 +1,6 @@
 ﻿using Athentication.DataCore.ApiModels;
 using Athentication.DataCore.Models;
+using Famnances.DataCore.Entities;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
@@ -30,12 +31,13 @@ namespace Famnances.Controllers
         [HttpPost]
         public IActionResult Index(string user) 
         {
-            TempData["email"] = user;
+            HttpContext.Session.SetString(Constants.EMAIL, user);            
             return RedirectToAction(nameof(Login)); 
         }
 
         public async Task<ActionResult> Login()
         {
+            TempData[Constants.EMAIL] = HttpContext.Session.GetString(Constants.EMAIL);
             return View();
         }
 
@@ -50,6 +52,7 @@ namespace Famnances.Controllers
             }
             HttpContext.Session.SetString(Constants.TOKEN, user.Token);
             HttpContext.Session.SetString(Constants.ACCOUNT_ID, user.AccountId.ToString());
+            HttpContext.Session.Remove(Constants.EMAIL);
 
             TempData["UserInfo"] = JsonSerializer.Serialize(user.UserInfo);
             return RedirectToAction(nameof(HomeController.Index), "Home");
