@@ -55,29 +55,38 @@ namespace Famnances.Controllers
                     return View(model);
                 }
 
-                Account account = new Account
+                bool exists = await _httpHelper.Get<bool>($"{Constants.AUTH_URI}/Any/{model.Email}");
+
+                if (!exists)
                 {
-                    Id = Guid.NewGuid(),
-                    UserName = model.Email,
-                    Email = model.Email,
-                    Password = hashPassword,
-                    LastLogin = DateTimeEast.Now
-                };
+                    Account account = new Account
+                    {
+                        Id = Guid.NewGuid(),
+                        UserName = model.Email,
+                        Email = model.Email,
+                        Password = hashPassword,
+                        LastLogin = DateTimeEast.Now
+                    };
 
-                await _httpHelper.Post($"{Constants.AUTH_URI}/NewAccount", account); 
+                    await _httpHelper.Post($"{Constants.AUTH_URI}/NewAccount", account);
 
-                LoginViewModel login = new LoginViewModel {Param_1 = model.Email,Param_2 = model.Password}; 
-                AuthResponse? authResponse = await _httpHelper.Post<AuthResponse?>($"{Constants.AUTH_URI}/Authenticate", login);
+                    LoginViewModel login = new LoginViewModel { Param_1 = model.Email, Param_2 = model.Password };
+                    AuthResponse? authResponse = await _httpHelper.Post<AuthResponse?>($"{Constants.AUTH_URI}/Authenticate", login);
 
-                authResponse.UserInfo.FamilyName = model.LastName;
-                authResponse.UserInfo.GivenName = model.FirstName;
+                    authResponse.UserInfo.FamilyName = model.LastName;
+                    authResponse.UserInfo.GivenName = model.FirstName;
 
-                HttpContext.Session.SetString(Constants.TOKEN, authResponse.Token);
-                HttpContext.Session.SetString(Constants.ACCOUNT_ID, authResponse.AccountId.ToString());
-                HttpContext.Session.Remove(Constants.EMAIL);
+                    HttpContext.Session.SetString(Constants.TOKEN, authResponse.Token);
+                    HttpContext.Session.SetString(Constants.ACCOUNT_ID, authResponse.AccountId.ToString());
+                    HttpContext.Session.Remove(Constants.EMAIL);
 
-                TempData["UserInfo"] = JsonSerializer.Serialize(authResponse.UserInfo);
-                return RedirectToAction(nameof(NewUser));
+                    TempData["UserInfo"] = JsonSerializer.Serialize(authResponse.UserInfo);
+                    return RedirectToAction(nameof(NewUser));
+                }
+                else
+                {
+                    return RedirectToAction(nameof(LoginController.Login), "Login");
+                }
             }
             else if (model.Password != model.ConfirmPassword)
             {

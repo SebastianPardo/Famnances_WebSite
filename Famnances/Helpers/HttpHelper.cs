@@ -9,16 +9,13 @@ namespace Famnances.Helpers
 {
     public class HttpHelper : IHttpHelper
     {
-        private readonly NavigationManager _navigationManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IHttpClientFactory _httpClientFactory;
 
         public HttpHelper(
-            NavigationManager navigationManager,
             IHttpContextAccessor httpContextAccessor,
             IHttpClientFactory httpClientFactory)
         {
-            _navigationManager = navigationManager;
             _httpContextAccessor = httpContextAccessor;
             _httpClientFactory = httpClientFactory;
         }
@@ -108,7 +105,6 @@ namespace Famnances.Helpers
 
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
-                _navigationManager.NavigateTo("Login/logout");
                 return;
             }
 
@@ -126,7 +122,6 @@ namespace Famnances.Helpers
 #endif
             if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.UnsupportedMediaType)
             {
-                _navigationManager.NavigateTo("Login/logout");
                 return default;
             }
 

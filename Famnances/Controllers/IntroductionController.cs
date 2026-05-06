@@ -71,16 +71,24 @@ namespace Famnances.Controllers
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
-            user.Period = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{periodId}");
-            user.PeriodId = user.Period.Id;
-            await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
+
+            if (Guid.Empty != periodId)
+            {
+                user.Period = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{periodId}");
+                user.PeriodId = user.Period.Id;
+                await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
+            }
+            else
+            {
+                user.Period = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{user.PeriodId}");
+            }
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(user.Language);
             IncomeViewModel model = new IncomeViewModel
             {
                 Incomes = new List<Income>(),
                 Total = 0,
-                PeriodId = periodId,
+                PeriodId = user.PeriodId,
                 Period = await _utilities.GetPeriodName(user.Language, user.Period)
             };
 
@@ -108,29 +116,31 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveIncomes(IncomeViewModel model)
         {
-            foreach (var income in model.Incomes)
+            if (model.Incomes != null)
             {
-                if (income.Type == "FIXED")
+                foreach (var income in model.Incomes)
                 {
-                    FixedIncome fixedIncome = new FixedIncome
+                    if (income.Type == "FIXED")
                     {
-                        Active = true,
-                        Description = income.Description,
-                        FirstPayDate = income.FirstPayDate,
-                        PayablePeriodId = income.PayablePeriodId,
-                        ValuePeriodId = income.ValuePeriodId,
-                        ShareOnHousehold = false,
-                        Value = income.Value
-                    };
-                    await _httpHelper.Post<FixedIncome>(Constants.FIXED_INCOMES_URI, fixedIncome);
+                        FixedIncome fixedIncome = new FixedIncome
+                        {
+                            Active = true,
+                            Description = income.Description,
+                            FirstPayDate = income.FirstPayDate,
+                            PayablePeriodId = income.PayablePeriodId,
+                            ValuePeriodId = income.ValuePeriodId,
+                            ShareOnHousehold = false,
+                            Value = income.Value
+                        };
+                        await _httpHelper.Post<FixedIncome>(Constants.FIXED_INCOMES_URI, fixedIncome);
+                    }
                 }
+
+                var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+                var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+                user.BudgetByPeriod = model.Total;
+                await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
             }
-
-            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
-            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
-            user.BudgetByPeriod = model.Total;
-            await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
-
             return RedirectToAction(nameof(Discounts),
                 new DiscountViewModel
                 {
@@ -207,31 +217,33 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveDiscounts(DiscountViewModel model)
         {
-            foreach (var discount in model.IncomeDiscounts)
+            if (model.IncomeDiscounts != null)
             {
-                IncomeDiscount incomeDiscount = new IncomeDiscount
+                foreach (var discount in model.IncomeDiscounts)
                 {
-                    Active = true,
-                    Description = discount.Description,
-                    FixedIncomeByDiscount = discount.IncomeIds.Select(e =>
-                        new FixedIncomeByDiscount
-                        {
-                            FixedIncomeId = e,
-                            ByPayablePeriod = discount.ByPayablePeriod
-                        }).ToList(),
-                    IsPercentage = discount.IsPercentage,
-                    IsTax = discount.IsTax,
-                    IsPrediscount = discount.IsPrediscount,
-                    Value = discount.Value,
-                };
-                incomeDiscount = await _httpHelper.Post<IncomeDiscount>(Constants.INCOME_DISCOUNTS_URI, incomeDiscount);
+                    IncomeDiscount incomeDiscount = new IncomeDiscount
+                    {
+                        Active = true,
+                        Description = discount.Description,
+                        FixedIncomeByDiscount = discount.IncomeIds.Select(e =>
+                            new FixedIncomeByDiscount
+                            {
+                                FixedIncomeId = e,
+                                ByPayablePeriod = discount.ByPayablePeriod
+                            }).ToList(),
+                        IsPercentage = discount.IsPercentage,
+                        IsTax = discount.IsTax,
+                        IsPrediscount = discount.IsPrediscount,
+                        Value = discount.Value,
+                    };
+                    incomeDiscount = await _httpHelper.Post<IncomeDiscount>(Constants.INCOME_DISCOUNTS_URI, incomeDiscount);
+                }
+
+                var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+                var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+                user.BudgetByPeriod = model.Total;
+                await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
             }
-
-            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
-            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
-            user.BudgetByPeriod = model.Total;
-            await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
-
             return RedirectToAction(nameof(FixedExpenses),
                 new FixedExpenseViewModel
                 {
@@ -272,11 +284,14 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveFixedExpenses(FixedExpenseViewModel model)
         {
-            foreach (var expense in model.Expenses)
+            if (model.Expenses != null)
             {
-                expense.Active = true;
-                expense.ShareOnHousehold = false;
-                await _httpHelper.Post<FixedExpense>(Constants.FIXED_EXPENSES_URI, expense);
+                foreach (var expense in model.Expenses)
+                {
+                    expense.Active = true;
+                    expense.ShareOnHousehold = false;
+                    await _httpHelper.Post<FixedExpense>(Constants.FIXED_EXPENSES_URI, expense);
+                }
             }
             return RedirectToAction(nameof(Budgets),
                 new BudgetViewModel
@@ -308,11 +323,14 @@ namespace Famnances.Controllers
 
         public async Task<ActionResult> SaveBudgets(BudgetViewModel model)
         {
-            foreach (var budget in model.Budgets)
+            if (model.Budgets != null)
             {
-                var budgetType = await _httpHelper.Get<ExpensesBudgetType>($"{Constants.BUDGET_TYPES_URI}/GetByCode/PER");
-                budget.BudgetTypeId = budgetType.Id;
-                await _httpHelper.Post(Constants.BUDGETS_URI, budget);
+                foreach (var budget in model.Budgets)
+                {
+                    var budgetType = await _httpHelper.Get<ExpensesBudgetType>($"{Constants.BUDGET_TYPES_URI}/GetByCode/PER");
+                    budget.BudgetTypeId = budgetType.Id;
+                    await _httpHelper.Post(Constants.BUDGETS_URI, budget);
+                }
             }
             return RedirectToAction(nameof(Savings), new SavingsViewModel
             {
@@ -346,29 +364,32 @@ namespace Famnances.Controllers
 
         public async Task<ActionResult> SavePocket(SavingsViewModel model)
         {
-            foreach (var pocket in model.Pockets)
+            if (model.Pockets != null)
             {
-                var savingPocket = new SavingsPocket
+                foreach (var pocket in model.Pockets)
                 {
-                    IsActive = true,
-                    ChallengeValue = pocket.ChallengeValue,
-                    Name = pocket.Name,
-                    ShareOnHousehold = false,
-                    Total = pocket.Total,
-                };
-                savingPocket = await _httpHelper.Post<SavingsPocket>(Constants.SAVINGS_POCKETS_URI, savingPocket);
-
-                if (model.Pocket.FrecuentDeposits)
-                {
-                    FixedSaving fixedSaving = new FixedSaving
+                    var savingPocket = new SavingsPocket
                     {
                         IsActive = true,
-                        PeriodicityId = model.PeriodId,
-                        SavingSourceId = (await _httpHelper.Get<SavingSource>($"{Constants.SAVING_SOURCES_URI}/OTHER")).Id,
-                        SavingsPocketId = savingPocket.Id,
-                        Value = model.Pocket.FrecuentValue.Value
+                        ChallengeValue = pocket.ChallengeValue,
+                        Name = pocket.Name,
+                        ShareOnHousehold = false,
+                        Total = pocket.Total,
                     };
-                    await _httpHelper.Post<FixedSaving>(Constants.FIXED_SAVINGS_URI, fixedSaving);
+                    savingPocket = await _httpHelper.Post<SavingsPocket>(Constants.SAVINGS_POCKETS_URI, savingPocket);
+
+                    if (model.Pocket.FrecuentDeposits)
+                    {
+                        FixedSaving fixedSaving = new FixedSaving
+                        {
+                            IsActive = true,
+                            PeriodicityId = model.PeriodId,
+                            SavingSourceId = (await _httpHelper.Get<SavingSource>($"{Constants.SAVING_SOURCES_URI}/OTHER")).Id,
+                            SavingsPocketId = savingPocket.Id,
+                            Value = model.Pocket.FrecuentValue.Value
+                        };
+                        await _httpHelper.Post<FixedSaving>(Constants.FIXED_SAVINGS_URI, fixedSaving);
+                    }
                 }
             }
             return RedirectToAction(nameof(HomeController.Index), "Home");

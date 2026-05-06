@@ -10,102 +10,89 @@
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-<div class="row justify-content-center align-items-center">
-    <div class="col-md-4">
-        <form asp-action="AddPocket">
-            <div class="row mb-5 justify-content-center align-items-center">
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="h3 text-center mb-2">@Localizer["Tittle"] </h1>
-                        <p class="text-center mt-3">
-                            @Localizer["Subtittle"]
-                        </p>
-                        <div class="col-md-12">
-                            <label asp-for="Pocket.Name" class="control-label"></label>
-                            <input asp-for="Pocket.Name" class="form-control" />
-                            <span asp-validation-for="Pocket.Name" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-12 mt-2">
-                            <label asp-for="Pocket.ChallengeValue" class="control-label"></label>
-                            <input asp-for="Pocket.ChallengeValue" class="form-control" type="number" step="0.01" placeholder="00.00" />
-                            <span asp-validation-for="Pocket.ChallengeValue" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 mt-2">
-                            <label asp-for="Pocket.FrecuentDeposits" class="form-check-label"></label>
-                        </div>
-                        <div class="col-12 text-center mt-1">
-                            <div class="btn-group" role="group">
-                                <input type="radio" asp-for="Pocket.FrecuentDeposits" class="btn-check" value="true" id="Yes" autocomplete="off" checked />
-                                <label class="btn btn-outline-primary" for="Yes">@Localizer["Yes"]</label>
-
-                                <input type="radio" asp-for="Pocket.FrecuentDeposits" class="btn-check" value="false" id="No" autocomplete="off" />
-                                <label class="btn btn-outline-primary" for="No">@Localizer["No"]</label>
-                            </div>
-                        </div>
-                        <div class="col-12 mt-2" id="FecuentValue">
-                            <label asp-for="Pocket.FrecuentValue" class="control-label"></label> @Model.Period?
-                            <input asp-for="Pocket.FrecuentValue" class="form-control" type="number" step="0.01" placeholder="00.00" />
-                            <span asp-validation-for="Pocket.FrecuentValue" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 mt-2">
-                            <label asp-for="Pocket.Total" class="control-label"></label>
-                            <input asp-for="Pocket.Total" class="form-control" type="number" step="0.01" placeholder="00.00" />
-                            <span asp-validation-for="Pocket.Total" class="text-danger"></span>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-12 text-center">
-                                <button class="btn btn-primary w-100" asp-action="AddPocket">@Localizer["Add"]</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row text-center">
-                        <input type="hidden" asp-for="PeriodId" />
-                        <input type="hidden" asp-for="Period" />
-                        <input type="hidden" asp-for="Total" value="@Model.Total" />
-                        <p>@Localizer["Budget"] @Model.Period: <strong class="text-primary">$ @Model.Total</strong></p>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="h3 text-center mb-2">@Localizer["_Pockets"] </h3>
-                    <ul class="list-group">
-                        @for (var i = 0; i < Model.Pockets.Count(); i++)
-                        {
-                            <li class="list-group-item">
-                                <input type="hidden" asp-for="@Model.Pockets[i].Name" />
-                                <input type="hidden" asp-for="@Model.Pockets[i].ChallengeValue" />
-                                <input type="hidden" asp-for="@Model.Pockets[i].FrecuentDeposits" />
-                                <input type="hidden" asp-for="@Model.Pockets[i].FrecuentValue" />
-                                <input type="hidden" asp-for="@Model.Pockets[i].Total" />
-
-                                <div class="row">
-                                    <div class="col-6 col-md-6 fw-semibold text-primary"><h5 class="mb-0">@Model.Pockets[i].Name</h5></div>
-                                    @if (Model.Pockets[i].FrecuentDeposits)
-                                    {
-                                        <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.Pockets[i].FrecuentValue</h3></div>
-                                    }
-                                    <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.Pockets[i].ChallengeValue</h3></div>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-            <div class="row justify-content-center align-items-center mt-3">
-                <div class="col-12 text-center">
-                    <button class="btn btn-primary w-100" asp-action="SavePocket">@Localizer["Next"]</button>
-                </div>
-            </div>
-            <div class="row justify-content-center align-items-center">
-                <div class="col-12 text-center">
-                    <button class="btn btn-outline-primary w-100">@Localizer["Skip"]</button>
-                </div>
-            </div>
-        </form>
+<form asp-action="AddPocket">
+    <h1 class="h3 text-center mb-2">@Localizer["Tittle"] </h1>
+    <p class="text-center mt-3">
+        @Localizer["Subtittle"]
+    </p>
+    <div class="col-md-12 mt-2">
+        <label asp-for="Pocket.Name" class="control-label"></label>
+        <input asp-for="Pocket.Name" class="form-control" />
+        <span asp-validation-for="Pocket.Name" class="text-danger"></span>
     </div>
-</div>
+    <div class="col-md-12 mt-2">
+        <label asp-for="Pocket.ChallengeValue" class="control-label"></label>
+        <input asp-for="Pocket.ChallengeValue" class="form-control" type="number" step="0.01" placeholder="00.00" />
+        <span asp-validation-for="Pocket.ChallengeValue" class="text-danger"></span>
+    </div>
+    <div class="col-12 mt-2">
+        <label asp-for="Pocket.FrecuentDeposits" class="form-check-label"></label>
+    </div>
+    <div class="col-12 text-center mt-2">
+        <div class="btn-group" role="group">
+            <input type="radio" asp-for="Pocket.FrecuentDeposits" class="btn-check" value="true" id="Yes" autocomplete="off" checked />
+            <label class="btn btn-outline-primary" for="Yes">@Localizer["Yes"]</label>
+
+            <input type="radio" asp-for="Pocket.FrecuentDeposits" class="btn-check" value="false" id="No" autocomplete="off" />
+            <label class="btn btn-outline-primary" for="No">@Localizer["No"]</label>
+        </div>
+    </div>
+    <div class="col-12 mt-2" id="FecuentValue">
+        <label asp-for="Pocket.FrecuentValue" class="control-label"></label> @Model.Period?
+        <input asp-for="Pocket.FrecuentValue" class="form-control" type="number" step="0.01" placeholder="00.00" />
+        <span asp-validation-for="Pocket.FrecuentValue" class="text-danger"></span>
+    </div>
+    <div class="col-12 mt-2">
+        <label asp-for="Pocket.Total" class="control-label"></label>
+        <input asp-for="Pocket.Total" class="form-control" type="number" step="0.01" placeholder="00.00" />
+        <span asp-validation-for="Pocket.Total" class="text-danger"></span>
+    </div>
+    <div class="row mt-3">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary w-100" asp-action="AddPocket">@Localizer["Add"]</button>
+        </div>
+    </div>
+    <div class="row text-center mt-4">
+        <input type="hidden" asp-for="PeriodId" />
+        <input type="hidden" asp-for="Period" />
+        <input type="hidden" asp-for="Total" value="@Model.Total" />
+        <p class="fs-4 mb-1">@Localizer["Budget"] @Model.Period: <strong class="text-primary">$ @Model.Total</strong></p>
+    </div>
+    <hr class="mt-0" />
+    <h3 class="h3 text-center mb-3">@Localizer["_Pockets"] </h3>
+    <ul class="list-group">
+        @for (var i = 0; i < Model.Pockets.Count(); i++)
+        {
+            <li class="list-group-item">
+                <input type="hidden" asp-for="@Model.Pockets[i].Name" />
+                <input type="hidden" asp-for="@Model.Pockets[i].ChallengeValue" />
+                <input type="hidden" asp-for="@Model.Pockets[i].FrecuentDeposits" />
+                <input type="hidden" asp-for="@Model.Pockets[i].FrecuentValue" />
+                <input type="hidden" asp-for="@Model.Pockets[i].Total" />
+
+                <div class="row">
+                    <div class="col-6 col-md-6 fw-semibold text-primary"><h5 class="mb-0">@Model.Pockets[i].Name</h5></div>
+                    @if (Model.Pockets[i].FrecuentDeposits)
+                    {
+                        <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.Pockets[i].FrecuentValue</h3></div>
+                    }
+                    <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.Pockets[i].ChallengeValue</h3></div>
+                </div>
+            </li>
+        }
+    </ul>
+    <div class="row justify-content-center align-items-center mt-3">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary w-100" asp-action="SavePocket">@Localizer["Next"]</button>
+        </div>
+    </div>
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12 text-center">
+            <button class="btn btn-outline-primary w-100" asp-action="SavePocket">@Localizer["Skip"]</button>
+        </div>
+    </div>
+</form>
 @section Scripts {
-    <script src="/js/Introduction/Ssvings.js"></script>
+    <script src="/js/Introduction/Savings.js"></script>
 }
 
