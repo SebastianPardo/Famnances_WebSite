@@ -112,6 +112,23 @@ namespace Famnances.Controllers
             return View(nameof(Incomes), model);
         }
 
+        public async Task<ActionResult> RemoveIncome(int index, IncomeViewModel model)
+        {
+            var income = model.Incomes[index];
+
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+            var periodFrom = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{income.ValuePeriodId}");
+            var periodTo = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
+
+            model.Incomes.Remove(income);
+           
+            model.Total -= _utilities.GetValueByPeriod(income.Value, periodFrom.Code, periodTo.Code);
+            ModelState.Clear();
+
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
+            return View(nameof(Incomes), model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveIncomes(IncomeViewModel model)
@@ -120,7 +137,7 @@ namespace Famnances.Controllers
             {
                 foreach (var income in model.Incomes)
                 {
-                    if (income.Type == "FIXED")
+                    if (income.Type == IncomeType.Fixed)
                     {
                         FixedIncome fixedIncome = new FixedIncome
                         {

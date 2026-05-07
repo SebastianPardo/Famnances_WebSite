@@ -1,4 +1,5 @@
-﻿using Famnances.Resources.ViewModels.Introduction;
+﻿using Famnances.Helpers;
+using Famnances.Resources.ViewModels.Introduction;
 using System.ComponentModel.DataAnnotations;
 
 namespace Famnances.Models.ViewModels.Introduction
@@ -33,7 +34,7 @@ namespace Famnances.Models.ViewModels.Introduction
             public DateTime FirstPayDate { get; set; }
 
             [Display(Name = nameof(IncomeLabels.Type), ResourceType = typeof(IncomeLabels))]
-            public string Type { get; set; } = string.Empty;
+            public IncomeType Type { get; set; }
 
         }
     }

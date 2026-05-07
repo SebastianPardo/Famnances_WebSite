@@ -1,5 +1,11 @@
 ﻿namespace Famnances.Helpers
 {
+    public enum IncomeType
+    {
+        Fixed,
+        Variable
+    }
+    
     public class Constants
     {
         public const string ERROR = "ERROR";

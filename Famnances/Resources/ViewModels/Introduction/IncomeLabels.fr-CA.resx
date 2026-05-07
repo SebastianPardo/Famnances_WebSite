@@ -142,6 +142,6 @@
     <value>Valeur</value>
   </data>
   <data name="ValuePeriod" xml:space="preserve">
-    <value>Par . . .</value>
+    <value>Cette valeur est . . .</value>
   </data>
 </root>
