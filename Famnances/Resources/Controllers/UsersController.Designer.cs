@@ -72,9 +72,9 @@ namespace Famnances.Resources.Controllers {
         /// <summary>
         ///   Looks up a localized string similar to Password doesn&apos;t match.
         /// </summary>
-        public static string PasswordMatch {
+        public static string PasswordMismatch {
             get {
-                return ResourceManager.GetString("PasswordMatch", resourceCulture);
+                return ResourceManager.GetString("PasswordMismatch", resourceCulture);
             }
         }
     }

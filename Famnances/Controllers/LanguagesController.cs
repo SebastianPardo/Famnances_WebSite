@@ -52,6 +52,8 @@ namespace Famnances.Controllers
                     return RedirectToAction(nameof(IntroductionController.Language), "Introduction");
                 case string url when url.Contains("Introduction"):
                     return RedirectToAction(nameof(IntroductionController.Index), "Introduction");
+                case string url when url.Contains("google"):
+                    return RedirectToAction(nameof(HomeController.Index), "Home");
                 case string url when url.Contains("Home"):
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 default:
