@@ -104,32 +104,47 @@
     <ul class="list-group">
         @for (var i = 0; i < Model.IncomeDiscounts.Count(); i++)
         {
-            <li class="list-group-item">
-                <div class="row">
-                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Description" />
-                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Value" />
-                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].ByPayablePeriod" />
-                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPercentage" />
-                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPrediscount" />
-                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsTax" />
+            <li class="list-group-item p-0">
+                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Description" />
+                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].Value" />
+                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].ByPayablePeriod" />
+                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPercentage" />
+                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsPrediscount" />
+                <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IsTax" />
+                @{
+                    var incomes = string.Empty;
+                }
+                @for (var j = 0; j < Model.IncomeDiscounts[i].IncomeIds.Count(); j++)
+                {
+                    incomes += (ViewBag.Incomes as SelectList).First(e =>
+                        e.Value == Model.IncomeDiscounts[i].IncomeIds[j].ToString()
+                    ).Text.ToString() + ",";
+                    <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IncomeIds[j]" />
+                }
 
-                    @for (var j = 0; j < Model.IncomeDiscounts[i].IncomeIds.Count(); j++)
-                    {
-                        <input type="hidden" asp-for="@Model.IncomeDiscounts[i].IncomeIds[j]" />
-                    }
-
-                    <div class="col-4 col-md-4 fw-semibold text-primary"><h5 class="mb-0">@Model.IncomeDiscounts[i].Description</h5></div>
-                    <div class="col-4 col-md-4 text-end fw-semibold"><h5 class="mb-0">@Model.IncomeDiscounts[i].Period</h5></div>
-                                    
-                    @if (Model.IncomeDiscounts[i].IsPercentage)
-                    {
-                        <div class="col-4 col-md-4 text-end fw-semibold"><h3 class="text-success mb-0">%@Model.IncomeDiscounts[i].Value</h3></div>
-                    }
-                    else
-                    {
-                        <div class="col-4 col-md-4 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.IncomeDiscounts[i].Value</h3></div>
-                    }
-
+                <div class="row justify-content-end">
+                    <button class="btn-close btn-danger" asp-route-index="@i" asp-action="RemoveDiscount"></button>
+                </div>
+                <div class="row pb-3 ps-3 pe-3">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-6 col-md-6 fw-semibold text-primary"><h3 class="mb-0">@Model.IncomeDiscounts[i].Description</h3></div>
+                            @if (Model.IncomeDiscounts[i].IsPercentage)
+                            {
+                                <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">%@Model.IncomeDiscounts[i].Value</h3></div>
+                            }
+                            else
+                            {
+                                <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.IncomeDiscounts[i].Value</h3></div>
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-md-6 text-start fw-semibold">
+                                <h6 class="mb-0">@incomes.Substring(0, incomes.Length - 1)</h6>
+                                <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="mb-0">@Model.IncomeDiscounts[i].Period</h3></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </li>
         }
