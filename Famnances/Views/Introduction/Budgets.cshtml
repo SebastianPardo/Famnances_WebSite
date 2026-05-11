@@ -26,33 +26,37 @@
             <span asp-validation-for="Budget.Value" class="text-danger"></span>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="col-12 text-center">
-            <button class="btn btn-primary w-100" asp-action="AddBudget">@Localizer["Add"]</button>
-        </div>
+    <div class="col-12 text-center mt-3">
+        <button class="btn btn-primary w-100" asp-action="AddBudget">@Localizer["Add"]</button>
     </div>
     <div class="row text-center mt-4">
         <input type="hidden" asp-for="PeriodId" />
         <input type="hidden" asp-for="Period" />
         <input type="hidden" asp-for="Total" value="@Model.Total" />
         <p class="fs-4 mb-1">@Localizer["Budget"] @Model.Period: <strong class="text-primary">$ @Model.Total</strong></p>
-    </div>    
+    </div>
     <hr class="mt-0" />
-            <h3 class="h3 text-center mb-3">@Localizer["_Budgets"] </h3>
-            <ul class="list-group">
-                @for (var i = 0; i < Model.Budgets.Count(); i++)
-                {
-                    <li class="list-group-item">
-                        <input type="hidden" asp-for="@Model.Budgets[i].Name" />
-                        <input type="hidden" asp-for="@Model.Budgets[i].Value" />
-
+    <h3 class="h3 text-center mb-3">@Localizer["_Budgets"] </h3>
+    <ul class="list-group">
+        @for (var i = 0; i < Model.Budgets.Count(); i++)
+        {
+            <li class="list-group-item p-0">
+                <input type="hidden" asp-for="@Model.Budgets[i].Name" />
+                <input type="hidden" asp-for="@Model.Budgets[i].Value" />
+                <div class="row justify-content-end">
+                    <button class="btn-close btn-danger" asp-route-index="@i" asp-action="RemoveBudget"></button>
+                </div>
+                <div class="row pb-3 ps-3 pe-3">
+                    <div class="col-12">
                         <div class="row">
-                            <div class="col-6 col-md-6 fw-semibold text-primary"><h5 class="mb-0">@Model.Budgets[i].Name</h5></div>
+                            <div class="col-6 col-md-6 fw-semibold text-primary"><h3 class="mb-0">@Model.Budgets[i].Name</h3></div>
                             <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.Budgets[i].Value</h3></div>
                         </div>
-                    </li>
-                }
-            </ul>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
     <div class="row justify-content-center align-items-center mt-3">
         <div class="col-12 text-center">
             <button class="btn btn-primary w-100" asp-action="SaveBudgets">@Localizer["Next"]</button>

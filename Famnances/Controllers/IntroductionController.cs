@@ -1,4 +1,5 @@
 ﻿using Famnances.Core.Security.Authorization;
+using Famnances.Core.Utils.Helpers;
 using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
@@ -341,6 +342,15 @@ namespace Famnances.Controllers
             return View(nameof(Budgets), model);
         }
 
+        public async Task<ActionResult> RemoveBudget(int index, BudgetViewModel model)
+        {
+            var budget = model.Budgets[index];
+            model.Budgets.Remove(budget);
+            model.Total += budget.Value;
+            ModelState.Clear();
+            return View(nameof(Budgets), model);
+        }
+
         public async Task<ActionResult> SaveBudgets(BudgetViewModel model)
         {
             if (model.Budgets != null)
@@ -382,6 +392,18 @@ namespace Famnances.Controllers
             return View(nameof(Savings), model);
         }
 
+        public async Task<ActionResult> RemovePocket(int index, SavingsViewModel model)
+        {
+            var pocket = model.Pockets[index];
+            model.Pockets.Remove(pocket);
+         
+            if (pocket.FrecuentDeposits)
+                model.Total += pocket.FrecuentValue.Value;
+            ModelState.Clear();
+            
+            return View(nameof(Savings), model);
+        }
+
         public async Task<ActionResult> SavePocket(SavingsViewModel model)
         {
             if (model.Pockets != null)
@@ -406,7 +428,8 @@ namespace Famnances.Controllers
                             PeriodicityId = model.PeriodId,
                             SavingSourceId = (await _httpHelper.Get<SavingSource>($"{Constants.SAVING_SOURCES_URI}/OTHER")).Id,
                             SavingsPocketId = savingPocket.Id,
-                            Value = model.Pocket.FrecuentValue.Value
+                            Value = model.Pocket.FrecuentValue.Value,
+                            EndDate = DateTimeEast.Now.AddYears(1)
                         };
                         await _httpHelper.Post<FixedSaving>(Constants.FIXED_SAVINGS_URI, fixedSaving);
                     }
