@@ -5,7 +5,6 @@ using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels.Introduction;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Identity.Client;
 using static Famnances.Models.ViewModels.Introduction.DiscountViewModel;
 using static Famnances.Models.ViewModels.Introduction.IncomeViewModel;
 using static Famnances.Models.ViewModels.Introduction.SavingsViewModel;
@@ -279,6 +278,23 @@ namespace Famnances.Controllers
             model.Expenses.Add(model.Expense);
 
             model.Total -= _utilities.GetValueByPeriod(model.Expense.Value, periodFrom.Code, periodTo.Code);
+
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
+            return View(nameof(FixedExpenses), model);
+        }
+
+        public async Task<ActionResult> RemoveExpense(int index, FixedExpenseViewModel model)
+        {
+            var expense = model.Expenses[index];
+
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+            var periodFrom = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{expense.PeriodId}");
+            var periodTo = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
+
+            model.Expenses.Remove(expense);
+
+            model.Total += _utilities.GetValueByPeriod(expense.Value, periodFrom.Code, periodTo.Code);
+            ModelState.Clear();
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
             return View(nameof(FixedExpenses), model);
