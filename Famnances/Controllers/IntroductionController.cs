@@ -29,7 +29,6 @@ namespace Famnances.Controllers
             return View();
         }
 
-        #region Index PeriodSelector
         public async Task<ActionResult> Index()
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
@@ -40,6 +39,8 @@ namespace Famnances.Controllers
             return View();
         }
 
+
+        #region Index PeriodSelector
         public async Task<ActionResult> PeriodSelector()
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
@@ -65,32 +66,33 @@ namespace Famnances.Controllers
             List<Period> periods = await _httpHelper.Get<List<Period>>(Constants.PERIODS_URI);
             return View(periods);
         }
-        #endregion
 
-        #region Income
-        public async Task<ActionResult> Incomes(Guid periodId)
+        [HttpPost]
+        public async Task<ActionResult> ChangePeriod(Guid periodId)
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
 
-            if (Guid.Empty != periodId)
-            {
-                user.Period = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{periodId}");
-                user.PeriodId = user.Period.Id;
-                await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
-            }
-            else
-            {
-                user.Period = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{user.PeriodId}");
-            }
+            user.PeriodId = periodId != Guid.Empty ? periodId : user.PeriodId;
+
+            await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
+            return RedirectToAction(nameof(Incomes));
+        }
+        #endregion
+
+        #region Income
+        public async Task<ActionResult> Incomes()
+        {
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(user.Language);
             IncomeViewModel model = new IncomeViewModel
             {
-                Incomes = new List<Income>(),
                 Total = 0,
                 PeriodId = user.PeriodId,
-                Period = await _utilities.GetPeriodName(user.Language, user.Period)
+                Period = await _utilities.GetPeriodName(user.Language, user.Period),
+                Incomes = new List<Income>()
             };
 
             return View(model);
@@ -159,22 +161,29 @@ namespace Famnances.Controllers
                 user.BudgetByPeriod = model.Total;
                 await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
             }
-            return RedirectToAction(nameof(Discounts),
-                new DiscountViewModel
-                {
-                    Total = model.Total,
-                    PeriodId = model.PeriodId,
-                    Period = model.Period
-                });
+
+            return RedirectToAction(nameof(Discounts));
         }
         #endregion
 
         #region Discount
-        public async Task<ActionResult> Discounts(DiscountViewModel model)
+        public async Task<ActionResult> Discounts()
         {
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+
             var incomes = await _httpHelper.Get<List<FixedIncome>>(Constants.FIXED_INCOMES_URI);
             ViewBag.Incomes = new SelectList(incomes, "Id", "Description");
-            model.IncomeDiscounts = new List<Discount>();
+
+            DiscountViewModel model = new DiscountViewModel
+            {
+                Total = user.BudgetByPeriod,
+                PeriodId = user.PeriodId,
+                Period = await _utilities.GetPeriodName(culture, user.Period),
+                IncomeDiscounts = new List<Discount>()
+            };
+                        
             return View(model);
         }
         public async Task<ActionResult> AddDiscounts(DiscountViewModel model)
@@ -204,7 +213,7 @@ namespace Famnances.Controllers
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
             var userPeriod = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
-            var discount = model.IncomeDiscounts[index];            
+            var discount = model.IncomeDiscounts[index];
 
             model.IncomeDiscounts.Remove(discount);
             model.Total = await CalculateDiscounts(user.BudgetByPeriod, userPeriod.Code, model.IncomeDiscounts);
@@ -248,23 +257,27 @@ namespace Famnances.Controllers
                 user.BudgetByPeriod = model.Total;
                 await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
             }
-            return RedirectToAction(nameof(FixedExpenses),
-                new FixedExpenseViewModel
-                {
-                    Total = model.Total,
-                    PeriodId = model.PeriodId,
-                    Period = model.Period
-                });
+            return RedirectToAction(nameof(FixedExpenses));
         }
         #endregion
 
         #region FixedExpenses
-        public async Task<ActionResult> FixedExpenses(FixedExpenseViewModel model)
+        public async Task<ActionResult> FixedExpenses()
         {
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
             var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+                        
+            FixedExpenseViewModel model = new FixedExpenseViewModel
+            {
+                Total = user.BudgetByPeriod,
+                PeriodId = user.PeriodId,
+                Period = await _utilities.GetPeriodName(culture, user.Period),
+                Expenses = new List<FixedExpense>(),
+                Expense = new FixedExpense()
+            };
+
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
-            model.Expenses = new List<FixedExpense>();
-            model.Expense = new FixedExpense();
             return View(model);
         }
 
@@ -314,20 +327,26 @@ namespace Famnances.Controllers
                     await _httpHelper.Post<FixedExpense>(Constants.FIXED_EXPENSES_URI, expense);
                 }
             }
-            return RedirectToAction(nameof(Budgets),
-                new BudgetViewModel
-                {
-                    Total = model.Total,
-                    PeriodId = model.PeriodId,
-                    Period = model.Period
-                });
+
+            TempData[Constants.TOTAL] = model.Total;
+            return RedirectToAction(nameof(Budgets));
         }
         #endregion
 
         #region Budgets
-        public async Task<ActionResult> Budgets(BudgetViewModel model)
+        public async Task<ActionResult> Budgets()
         {
-            model.Budgets = new List<ExpensesBudget>();
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+
+            BudgetViewModel model = new BudgetViewModel
+            {
+                Total = Convert.ToDecimal(TempData[Constants.TOTAL]),
+                PeriodId = user.PeriodId,
+                Period = await _utilities.GetPeriodName(culture, user.Period),
+                Budgets = new List<ExpensesBudget>()
+            };
             return View(model);
         }
 
@@ -362,19 +381,26 @@ namespace Famnances.Controllers
                     await _httpHelper.Post(Constants.BUDGETS_URI, budget);
                 }
             }
-            return RedirectToAction(nameof(Savings), new SavingsViewModel
-            {
-                PeriodId = model.PeriodId,
-                Period = model.Period,
-                Total = model.Total
-            });
+
+            TempData[Constants.TOTAL] = model.Total;
+            return RedirectToAction(nameof(Savings));
         }
         #endregion
 
         #region Savings
-        public async Task<ActionResult> Savings(SavingsViewModel model)
+        public async Task<ActionResult> Savings()
         {
-            model.Pockets = new List<SavingPocket>();
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+
+            SavingsViewModel model = new SavingsViewModel
+            {
+                Total = Convert.ToDecimal(TempData[Constants.TOTAL]),
+                PeriodId = user.PeriodId,
+                Period = await _utilities.GetPeriodName(culture, user.Period),
+                Pockets = new List<SavingPocket>()
+            };
             return View(model);
         }
 
@@ -396,11 +422,11 @@ namespace Famnances.Controllers
         {
             var pocket = model.Pockets[index];
             model.Pockets.Remove(pocket);
-         
+
             if (pocket.FrecuentDeposits)
                 model.Total += pocket.FrecuentValue.Value;
             ModelState.Clear();
-            
+
             return View(nameof(Savings), model);
         }
 
@@ -408,6 +434,7 @@ namespace Famnances.Controllers
         {
             if (model.Pockets != null)
             {
+                decimal currentSavings = 0;
                 foreach (var pocket in model.Pockets)
                 {
                     var savingPocket = new SavingsPocket
@@ -433,11 +460,51 @@ namespace Famnances.Controllers
                         };
                         await _httpHelper.Post<FixedSaving>(Constants.FIXED_SAVINGS_URI, fixedSaving);
                     }
+                    currentSavings += pocket.Total;
                 }
+                var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+                var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+                user.TotalSavings = currentSavings;
+                await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
             }
+            TempData[Constants.TOTAL] = model.Total;
+            return RedirectToAction(nameof(Summary));
+        }
+        #endregion
+
+        #region Summary
+        public async Task<ActionResult> Summary()
+        {
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+            var fixedSavings = await _httpHelper.Get<List<FixedSaving>>($"{Constants.FIXED_SAVINGS_URI}");
+
+            SummaryViewModel summary = new SummaryViewModel
+            {
+                Period = await _utilities.GetPeriodName(culture, user.Period),
+                Total = Convert.ToDecimal(TempData[Constants.TOTAL]),
+                BudgetByPeriod = user.BudgetByPeriod,
+                CurrentMoney = 0,
+                Savings = user.TotalSavings,
+                SavingsByPeriod = fixedSavings.Select(e => e.Value).Sum()
+            };
+            return View(summary);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Summary(decimal currentMoney)
+        {
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            user.TotalBudget = currentMoney;
+            await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
+
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
         #endregion
+
+        #region Helper Methods
 
         private decimal ValidateOverBudget(decimal total, decimal substractValue)
         {
@@ -454,7 +521,7 @@ namespace Famnances.Controllers
 
         private async Task<decimal> CalculateDiscounts(decimal total, string userCode, List<Discount> discounts)
         {
-            Dictionary<Guid, decimal> incomesAfterPrevDicounts = new Dictionary<Guid, decimal>();           
+            Dictionary<Guid, decimal> incomesAfterPrevDicounts = new Dictionary<Guid, decimal>();
 
             foreach (var discount in discounts)
             {
@@ -489,5 +556,6 @@ namespace Famnances.Controllers
 
             return total;
         }
+        #endregion
     }
 }

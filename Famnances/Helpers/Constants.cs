@@ -5,9 +5,11 @@
         Fixed,
         Variable
     }
-    
+
     public class Constants
     {
+        public const string TOTAL = "TOTAL";
+
         public const string ERROR = "ERROR";
 
         public const string EMAIL = "EMAIL";

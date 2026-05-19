@@ -1,0 +1,56 @@
+﻿@model Famnances.Models.ViewModels.Introduction.SummaryViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = "Introduction";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+
+<form asp-action="Summary">
+    <h1 class="h3 text-center mb-2">Tu configuración está lista</h1>
+    <p class="text-center mt-3">Este es tu punto de partida financiero</p>
+    @* <hr class="mt-0" /> *@
+    <h3 class="h3 text-center mb-4 mt-4"><strong>@Model.Period</strong></h3>
+    <div class="col-12 mt-3">
+        <p class ="text-center h4 mb-1">Presupuesto</p>
+        <p class="text-center h5">$@Model.BudgetByPeriod </p>
+    </div>
+    <div class="col-12 mt-3">
+        <p class="text-center h4 mb-1">Dinero Comprometido</p>
+        @{
+            decimal expenses = Model.BudgetByPeriod - Model.Total;
+            decimal fixedExpenses = expenses - Model.SavingsByPeriod;
+        }
+        <p class="text-center h5 mb-1">$@expenses</p>
+        <p class="text-center h6 mb-1">Gastos programados: $@fixedExpenses</p>
+        <p class="text-center h6">Ahorro programado: $@Model.SavingsByPeriod </p>
+    </div>
+    <div class="col-12 mt-3">
+        <p class="text-center h4 mb-1">Disponible al final del periodo</p>
+        <p class="text-center h5">$@Model.Total </p>
+    </div>
+    <div class="col-12 mt-3">
+        <p class="text-center h4 mb-1">Ahorro</p>
+        <p class="text-center h5 mb-1">Acumulado actual: $@Model.Savings </p>
+        <p class="text-center h6">Programado: $@Model.SavingsByPeriod </p>
+    </div>
+    <div class="col-12 mt-3">
+        <p class="text-center h4 mb-1">Dinero disponible al final del periodo</p>
+        <p class ="text-center h5"> $@Model.Total </p>
+    </div>
+    <div class="col-12 mt-3">
+        <p class="text-center h4 mb-1">¿Con cuánto dinero empiezas?</p>
+        <label asp-for="CurrentMoney" class="control-label text-center"></label>
+        <input asp-for="CurrentMoney" class="form-control" type="number" step="0.01" placeholder="00.00" />
+        <span asp-validation-for="CurrentMoney" class="text-danger"></span>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary w-100">Empezar a usar Famnances</button>
+        </div>
+    </div>
+</form>
