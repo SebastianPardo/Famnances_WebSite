@@ -88,6 +88,15 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Exceeds {
+            get {
+                return ResourceManager.GetString("Exceeds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         public static string Next {

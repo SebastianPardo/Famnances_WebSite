@@ -183,7 +183,7 @@ namespace Famnances.Controllers
                 Period = await _utilities.GetPeriodName(culture, user.Period),
                 IncomeDiscounts = new List<Discount>()
             };
-                        
+
             return View(model);
         }
         public async Task<ActionResult> AddDiscounts(DiscountViewModel model)
@@ -199,7 +199,7 @@ namespace Famnances.Controllers
             else
                 model.IncomeDiscounts.Add(model.IncomeDiscount);
 
-            
+
 
             model.Total = await CalculateDiscounts(user.BudgetByPeriod, userPeriod.Code, model.IncomeDiscounts);
 
@@ -270,7 +270,7 @@ namespace Famnances.Controllers
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
             var culture = Thread.CurrentThread.CurrentUICulture.ToString();
-                        
+
             FixedExpenseViewModel model = new FixedExpenseViewModel
             {
                 Total = user.BudgetByPeriod,
@@ -290,12 +290,20 @@ namespace Famnances.Controllers
             var periodFrom = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.Expense.PeriodId}");
             var periodTo = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
 
-            model.Period = await _utilities.GetPeriodName(culture, periodFrom);
-            model.Expense.Period = periodFrom;
-            model.Expenses = model.Expenses ?? new List<FixedExpense>();
-            model.Expenses.Add(model.Expense);
+            decimal expenseValueByPeriod = _utilities.GetValueByPeriod(model.Expense.Value, periodFrom.Code, periodTo.Code);
 
-            model.Total -= _utilities.GetValueByPeriod(model.Expense.Value, periodFrom.Code, periodTo.Code);
+            if (expenseValueByPeriod <= model.Total)
+            {
+                model.Total -= expenseValueByPeriod;
+                model.Period = await _utilities.GetPeriodName(culture, periodFrom);
+                model.Expense.Period = periodFrom;
+                model.Expenses = model.Expenses ?? new List<FixedExpense>();
+                model.Expenses.Add(model.Expense);
+            }
+            else
+            {
+                TempData[Constants.ERROR] = "Exceeded";
+            }
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
             return View(nameof(FixedExpenses), model);
@@ -358,9 +366,17 @@ namespace Famnances.Controllers
         {
             if (model.Budgets == null)
                 model.Budgets = new List<ExpensesBudget>();
+            
+            if (model.Budget.Value <= model.Total)
+            {
+                model.Budgets.Add(model.Budget);
+                model.Total -= model.Budget.Value;
+            }
+            else
+            {
+                TempData[Constants.ERROR] = "Exceeded";
+            }
 
-            model.Budgets.Add(model.Budget);
-            model.Total -= model.Budget.Value;
             ModelState.Clear();
             return View(nameof(Budgets), model);
         }
@@ -412,11 +428,20 @@ namespace Famnances.Controllers
         {
             if (model.Pockets == null)
                 model.Pockets = new List<SavingPocket> { model.Pocket };
-            else
-                model.Pockets.Add(model.Pocket);
 
-            if (model.Pocket.FrecuentDeposits)
+            if (model.Pocket.FrecuentDeposits && model.Pocket.ChallengeValue <= model.Total)
+            {
                 model.Total -= model.Pocket.FrecuentValue.Value;
+                model.Pockets.Add(model.Pocket);
+            }
+            else if(!model.Pocket.FrecuentDeposits)
+            {
+                model.Pockets.Add(model.Pocket);
+            }
+            else
+            {
+                TempData[Constants.ERROR] = "Exceeded";
+            }
 
             ModelState.Clear();
             return View(nameof(Savings), model);
@@ -509,19 +534,6 @@ namespace Famnances.Controllers
         #endregion
 
         #region Helper Methods
-
-        private decimal ValidateOverBudget(decimal total, decimal substractValue)
-        {
-            if (total - substractValue < 0)
-            {
-                TempData["Error"] = "That value es out of your general budget";
-                return total;
-            }
-            else
-            {
-                return total - substractValue;
-            }
-        }
 
         private async Task<decimal> CalculateDiscounts(decimal total, string userCode, List<Discount> discounts)
         {

@@ -123,6 +123,9 @@
   <data name="Budget" xml:space="preserve">
     <value>Presupuesto</value>
   </data>
+  <data name="Exceeds" xml:space="preserve">
+    <value>Este valor supera tu presupuesto disponible</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>Continuar</value>
   </data>

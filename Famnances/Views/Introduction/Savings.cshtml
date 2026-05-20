@@ -3,11 +3,27 @@
 @using Famnances.DataCore.Entities
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
+@using Famnances.Helpers
 @inject IViewLocalizer Localizer
 
 @{
     ViewBag.Title = "Introduction";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+@if (TempData[Constants.ERROR] != null)
+{
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">
+            <div class="avatar flex-shrink-0 me-2">
+                <img src="~/images/icons/alert.png"
+                     alt="chart success"
+                     class="rounded" />
+            </div>
+            <div>@TempData[Constants.ERROR]</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
 }
 
 <form asp-action="AddPocket">
