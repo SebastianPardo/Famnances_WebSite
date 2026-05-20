@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Famnances.Resources.ViewModels.Introduction {
+namespace Famnances.Resources.Views.Introduction {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Famnances.Resources.ViewModels.Introduction {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class IncomeLabels {
+    public class Summary {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal IncomeLabels() {
+        internal Summary() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.ViewModels.Introduction {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.ViewModels.Introduction.IncomeLabels", typeof(IncomeLabels).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Introduction.Summary", typeof(Summary).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,101 +61,110 @@ namespace Famnances.Resources.ViewModels.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Active?.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string Active {
+        public static string Acumulated {
             get {
-                return ResourceManager.GetString("Active", resourceCulture);
+                return ResourceManager.GetString("Acumulated", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string Description {
+        public static string Availability {
             get {
-                return ResourceManager.GetString("Description", resourceCulture);
+                return ResourceManager.GetString("Availability", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to First Pay Date.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string FirstPayDate {
+        public static string Budget {
             get {
-                return ResourceManager.GetString("FirstPayDate", resourceCulture);
+                return ResourceManager.GetString("Budget", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Automatic Date Stamp.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string LastAutomaticDateStamp {
+        public static string CommittedMoney {
             get {
-                return ResourceManager.GetString("LastAutomaticDateStamp", resourceCulture);
+                return ResourceManager.GetString("CommittedMoney", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to It will be pay . . ..
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string PayablePeriod {
+        public static string ExpensesScheduled {
             get {
-                return ResourceManager.GetString("PayablePeriod", resourceCulture);
+                return ResourceManager.GetString("ExpensesScheduled", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Period.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string Period {
+        public static string Finish {
             get {
-                return ResourceManager.GetString("Period", resourceCulture);
+                return ResourceManager.GetString("Finish", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Required.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string RequiredField {
+        public static string Money {
             get {
-                return ResourceManager.GetString("RequiredField", resourceCulture);
+                return ResourceManager.GetString("Money", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Share On Household?.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string ShareOnHousehold {
+        public static string Savings {
             get {
-                return ResourceManager.GetString("ShareOnHousehold", resourceCulture);
+                return ResourceManager.GetString("Savings", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Income type.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string Type {
+        public static string SavingScheduled {
             get {
-                return ResourceManager.GetString("Type", resourceCulture);
+                return ResourceManager.GetString("SavingScheduled", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string Value {
+        public static string Scheduled {
             get {
-                return ResourceManager.GetString("Value", resourceCulture);
+                return ResourceManager.GetString("Scheduled", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string ValuePeriod {
+        public static string Subtitle {
             get {
-                return ResourceManager.GetString("ValuePeriod", resourceCulture);
+                return ResourceManager.GetString("Subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

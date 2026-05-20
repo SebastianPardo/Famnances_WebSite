@@ -34,10 +34,6 @@ namespace Famnances.Models.ViewModels.Introduction
 
             [Display(Name = nameof(DiscountsLabels.IsTax), ResourceType = typeof(DiscountsLabels))]
             public bool IsTax { get; set; }
-
-            //[Display(Name = nameof(DiscountsLabels.Period), ResourceType = typeof(DiscountsLabels))]
-            public string Period { get; set; }
-
         }
     }
 }

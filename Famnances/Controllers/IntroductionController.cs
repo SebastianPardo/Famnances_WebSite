@@ -193,10 +193,13 @@ namespace Famnances.Controllers
 
             var userPeriod = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
             model.IncomeDiscounts = model.IncomeDiscounts ?? new List<Discount>();
+
             if (model.IncomeDiscount.IsPrediscount)
                 model.IncomeDiscounts.Insert(0, model.IncomeDiscount);
             else
                 model.IncomeDiscounts.Add(model.IncomeDiscount);
+
+            
 
             model.Total = await CalculateDiscounts(user.BudgetByPeriod, userPeriod.Code, model.IncomeDiscounts);
 
@@ -288,6 +291,7 @@ namespace Famnances.Controllers
             var periodTo = await _httpHelper.Get<Period>($"{Constants.PERIODS_URI}/{model.PeriodId}");
 
             model.Period = await _utilities.GetPeriodName(culture, periodFrom);
+            model.Expense.Period = periodFrom;
             model.Expenses = model.Expenses ?? new List<FixedExpense>();
             model.Expenses.Add(model.Expense);
 

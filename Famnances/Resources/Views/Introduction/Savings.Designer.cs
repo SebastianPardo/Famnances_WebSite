@@ -97,6 +97,15 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skip.
         /// </summary>
         public static string Skip {
@@ -120,6 +129,15 @@ namespace Famnances.Resources.Views.Introduction {
         public static string Tittle {
             get {
                 return ResourceManager.GetString("Tittle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

@@ -126,6 +126,9 @@
   <data name="FirstPayDate" xml:space="preserve">
     <value>First Pay Date</value>
   </data>
+  <data name="LastAutomaticDateStamp" xml:space="preserve">
+    <value>Last Automatic Date Stamp</value>
+  </data>
   <data name="PayablePeriod" xml:space="preserve">
     <value>It will be pay . . .</value>
   </data>
@@ -135,8 +138,11 @@
   <data name="RequiredField" xml:space="preserve">
     <value>Required</value>
   </data>
+  <data name="ShareOnHousehold" xml:space="preserve">
+    <value>Share On Household?</value>
+  </data>
   <data name="Type" xml:space="preserve">
-    <value>Type</value>
+    <value>Income type</value>
   </data>
   <data name="Value" xml:space="preserve">
     <value>Value</value>

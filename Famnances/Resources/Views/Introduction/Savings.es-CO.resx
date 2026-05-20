@@ -126,6 +126,9 @@
   <data name="Next" xml:space="preserve">
     <value>Continuar</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="Skip" xml:space="preserve">
     <value>Saltar este paso</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="Tittle" xml:space="preserve">
     <value>Bolsillos de ahorro</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Si</value>
   </data>
   <data name="_Pockets" xml:space="preserve">
     <value>Bolsillos</value>

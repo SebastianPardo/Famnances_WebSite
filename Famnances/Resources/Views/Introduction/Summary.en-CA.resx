@@ -117,31 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
-    <value>Ajouter</value>
+  <data name="Acumulated" xml:space="preserve">
+    <value>Current Cum</value>
+  </data>
+  <data name="Availability" xml:space="preserve">
+    <value>Available at the end of the period</value>
   </data>
   <data name="Budget" xml:space="preserve">
     <value>Budget</value>
   </data>
-  <data name="Next" xml:space="preserve">
-    <value>Continuer</value>
+  <data name="ExpensesScheduled" xml:space="preserve">
+    <value>Scheduled expenses</value>
   </data>
-  <data name="No" xml:space="preserve">
-    <value>Non</value>
+  <data name="Finish" xml:space="preserve">
+    <value>Get started using Famnances</value>
   </data>
-  <data name="Skip" xml:space="preserve">
-    <value>Passez cette étape</value>
+  <data name="Money" xml:space="preserve">
+    <value>How much money do you start with?</value>
   </data>
-  <data name="Subtittle" xml:space="preserve">
-    <value>Finalement, nous allons répartir le reste de votre argent en objectifs d'épargne, chacun ayant ses propres objectifs.</value>
+  <data name="CommittedMoney" xml:space="preserve">
+    <value>Committed Money</value>
   </data>
-  <data name="Tittle" xml:space="preserve">
-    <value>Poches d'épargne</value>
+  <data name="Savings" xml:space="preserve">
+    <value>Savings</value>
   </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Oui</value>
+  <data name="SavingScheduled" xml:space="preserve">
+    <value>Scheduled savings</value>
   </data>
-  <data name="_Pockets" xml:space="preserve">
-    <value>Poches</value>
+  <data name="Scheduled" xml:space="preserve">
+    <value>Programmed</value>
+  </data>
+  <data name="Subtitle" xml:space="preserve">
+    <value>This is your financial starting point</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Your configuration is ready</value>
   </data>
 </root>

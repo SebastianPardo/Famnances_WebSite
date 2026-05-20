@@ -124,16 +124,22 @@
     <value>Descripcion</value>
   </data>
   <data name="FirstPayDate" xml:space="preserve">
-    <value>¿Desde cuándo recibes este ingreso?</value>
+    <value>¿Cuándo fue la última vez que recibiste este ingreso?</value>
+  </data>
+  <data name="LastAutomaticDateStamp" xml:space="preserve">
+    <value>Última fecha de recepción</value>
   </data>
   <data name="PayablePeriod" xml:space="preserve">
-    <value>Y sera pagado . . .</value>
+    <value>Y te lo pagan . . .</value>
   </data>
   <data name="Period" xml:space="preserve">
     <value>Periodo</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>Requerido</value>
+  </data>
+  <data name="ShareOnHousehold" xml:space="preserve">
+    <value>¿Compartir con el hogar?</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Tipo de ingreso</value>

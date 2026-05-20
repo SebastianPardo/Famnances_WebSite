@@ -2,7 +2,10 @@
 
 @using Microsoft.AspNetCore.Mvc.Localization
 @using System.Globalization
+@using Famnances.Helpers.Interfaces
+
 @inject IViewLocalizer Localizer
+@inject ILanguageHelper languageHelper
 
 @{
     ViewBag.Title = "Introduction";
@@ -75,8 +78,9 @@
                             <div class="col-6 col-md-6 fw-semibold text-primary"><h3 class="mb-0">@Model.Expenses[i].Name</h3></div>
                             <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.Expenses[i].Value</h3></div>
                         </div>
-                        <div class="row">                            
-                            <div class="col-6 col-md-6 text-start fw-semibold"><h6 class="mb-0">@Model.Expenses[i].Period</h6></div>
+                        <div class="row">                   
+                            <div class="col-6 col-md-6 text-start fw-semibold"></div>
+                            <div class="col-6 col-md-6 text-end fw-semibold"><h6 class="mb-0">@await languageHelper.GetPeriodName(CultureInfo.CurrentCulture.Name, Model.Expenses[i].Period)</h6></div>
                         </div>
                     </div>
                 </div>

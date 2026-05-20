@@ -131,7 +131,7 @@
                             <div class="col-6 col-md-6 fw-semibold text-primary"><h3 class="mb-0">@Model.IncomeDiscounts[i].Description</h3></div>
                             @if (Model.IncomeDiscounts[i].IsPercentage)
                             {
-                                <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">%@Model.IncomeDiscounts[i].Value</h3></div>
+                                <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">@Model.IncomeDiscounts[i].Value%</h3></div>
                             }
                             else
                             {
@@ -139,10 +139,15 @@
                             }
                         </div>
                         <div class="row">
-                            <div class="col-6 col-md-6 text-start fw-semibold">
-                                <h6 class="mb-0">@incomes.Substring(0, incomes.Length - 1)</h6>
-                                <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="mb-0">@Model.IncomeDiscounts[i].Period</h3></div>
-                            </div>
+                            <div class="col-6 col-md-6 text-start fw-semibold"><h6 class="mb-0">@incomes.Substring(0, incomes.Length - 1)</h6></div>
+                            @if (Model.IncomeDiscounts[i].ByPayablePeriod)
+                            {
+                                <div class="col-6 col-md-6 text-end fw-semibold"><h6 class="mb-0">@Localizer["SameAsPay"]</h6></div>
+                            }
+                            else
+                            {
+                                <div class="col-6 col-md-6 text-end fw-semibold"><h6 class="mb-0">@Model.Period</h6></div>
+                            }
                         </div>
                     </div>
                 </div>
