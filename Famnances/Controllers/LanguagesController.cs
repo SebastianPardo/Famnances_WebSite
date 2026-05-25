@@ -1,5 +1,7 @@
 ﻿using Famnances.Core.Security.Authorization;
+using Famnances.DataCore.Entities;
 using Famnances.Helpers;
+using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,8 +10,14 @@ namespace Famnances.Controllers
     //[ServiceFilter(typeof(AuthorizeAttribute))]
     public class LanguagesController : Controller
     {
+        IHttpHelper _httpHelper;
+        public LanguagesController(IHttpHelper httpHelper)
+        {
+            _httpHelper = httpHelper;
+        }
+
         [HttpGet]
-        public IActionResult ChangeLanguage(string culture)
+        public async Task<IActionResult> ChangeLanguage(string culture)
         {
             string languageCulture = "es-CO";
             switch (culture)
@@ -46,18 +54,13 @@ namespace Famnances.Controllers
 
             var currentUrl = Request.Headers["Referer"].ToString();
 
-            switch (currentUrl)
+            if(string.IsNullOrWhiteSpace(currentUrl) || currentUrl.Contains("Introduction"))
             {
-                case string url when string.IsNullOrWhiteSpace(url):
-                    return RedirectToAction(nameof(IntroductionController.Language), "Introduction");
-                case string url when url.Contains("Introduction"):
-                    return RedirectToAction(nameof(IntroductionController.Index), "Introduction");
-                case string url when url.Contains("google"):
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
-                case string url when url.Contains("Home"):
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
-                default:
-                    return RedirectToAction(nameof(UsersController.Create), "Users");
+                return RedirectToAction(nameof(IntroductionController.Language), "Introduction");
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
     }
