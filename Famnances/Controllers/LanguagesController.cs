@@ -56,7 +56,7 @@ namespace Famnances.Controllers
 
             if(string.IsNullOrWhiteSpace(currentUrl) || currentUrl.Contains("Introduction"))
             {
-                return RedirectToAction(nameof(IntroductionController.Language), "Introduction");
+                return RedirectToAction(nameof(IntroductionController.Index), "Introduction");
             }
             else
             {
