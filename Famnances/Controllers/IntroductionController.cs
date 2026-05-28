@@ -427,9 +427,9 @@ namespace Famnances.Controllers
         public async Task<ActionResult> AddPocket(SavingsViewModel model)
         {
             if (model.Pockets == null)
-                model.Pockets = new List<SavingPocket> { model.Pocket };
+                model.Pockets = new List<SavingPocket> ();
 
-            if (model.Pocket.FrecuentDeposits && model.Pocket.ChallengeValue <= model.Total)
+            if (model.Pocket.FrecuentDeposits && model.Pocket.FrecuentValue <= model.Total)
             {
                 model.Total -= model.Pocket.FrecuentValue.Value;
                 model.Pockets.Add(model.Pocket);
