@@ -1,12 +1,13 @@
 :root {
-    --bs-primary: #005555;
-    --bs-secondary: #01377e;
-    --bs-success: #04BF55;
-    --bs-info: #05A3FF;
-    --bs-warning: #FFC94F;
-    --bs-danger: #F44538;
-    --bs-light: #f8f9fa;
-    --bs-dark: #212529;
+    --bs-primary: #2f6f57;
+    --bs-secondary: #5FA8A0;
+    --bs-tertiary: #D4A373;
+    --bs-success: #3E8E6B;
+    --bs-info: #5F8FA8;
+    --bs-warning: #D4A65A;
+    --bs-danger: #c65a5a;
+    --bs-light: #F4EDE4;
+    --bs-dark:#3E3A39;
     --bs-blue: #05A3FF;
     --bs-indigo: #6610f2;
     --bs-purple: #876FF5;
@@ -29,8 +30,8 @@
     --bs-gray-700: #495057;
     --bs-gray-800: #343a40;
     --bs-gray-900: #212529;
-    --bs-primary-rgb: 0, 85, 85;
-    --bs-secondary-rgb: 1, 55, 126;
+    --bs-primary-rgb: 47, 111, 87;
+    --bs-secondary-rgb: 95, 168, 160;
     --bs-success-rgb: 4, 191, 85;
     --bs-info-rgb: 5, 163, 255;
     --bs-warning-rgb: 255, 201, 79;
@@ -50,7 +51,7 @@
     --bs-body-line-height: 1.5;
     --bs-body-color: #212529;
     --bs-body-bg: #fff;
-    --bs-border-color: #005555;
+    --bs-border-color: #2f6f57;
 }
 
 
@@ -179,10 +180,10 @@
 }
 
 .btn:hover {
-    background-color: #2f8f6f;
+    background-color: #275C48;
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #2f8f6f;
-    --bs-btn-hover-border-color: #2f8f6f;
+    --bs-btn-hover-bg: #275C48;
+    --bs-btn-hover-border-color: #275C48;
 }
 
 .btn-outline-primary {

@@ -2860,7 +2860,7 @@ textarea.form-control-lg {
 }
 
     .btn.btn-primary {
-        background: #005555;
+        background: var(--bs-primary);
         color: #fff;
     }
 
