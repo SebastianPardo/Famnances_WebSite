@@ -42,15 +42,17 @@
     --bs-black-rgb: 0, 0, 0;
     --bs-body-color-rgb: 33, 37, 41;
     --bs-body-bg-rgb: 255, 255, 255;
-    --bs-font-sans-serif: "Work Sans", sans-serif;
-    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-font-sans-serif:  'Poppins', sans-serif;;
+    --bs-font-monospace:  'Poppins', sans-serif;;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     --bs-body-font-family: var(--bs-font-sans-serif);
     --bs-body-font-size: 1rem;
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.5;
-    --bs-body-color: #212529;
-    --bs-body-bg: #fff;
+    --bs-body-text-color: #3e3a39;
+    --bs-body-color: #3e3a39;
+    --bs-body-bg: #f4ede4;
+    --bs-minicard-bg: #FFF9F1;
     --bs-border-color: #2f6f57;
 }
 
@@ -202,4 +204,8 @@
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: var(--bs-primary);
     --bs-gradient: none;
+}
+
+.control-label {
+    color:var(--bs-body-text-color);
 }

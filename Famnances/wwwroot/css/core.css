@@ -46,7 +46,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     margin-bottom: 1rem;
     font-weight: 500;
     line-height: 1.1;
-    color: #566a7f;
+    color: var(--bs-body-text-color);
 }
 
 h1, .h1 {
@@ -4093,13 +4093,18 @@ textarea.form-control-lg {
         color: #fff;
     }
 
+.card.minicard {
+    background-color: var(--bs-minicard-bg);
+    margin-bottom: 0.5rem;
+}
+
 .card {
     position: relative;
     display: flex;
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: #fff;
+    background-color: var(--bs-body-bg);
     background-clip: border-box;
     border: 0 solid #d9dee3;
     border-radius: 0.5rem;
