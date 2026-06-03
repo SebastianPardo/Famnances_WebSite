@@ -1,4 +1,5 @@
-﻿using Famnances.Helpers;
+﻿using Famnances.DataCore.Entities;
+using Famnances.Helpers;
 using Famnances.Resources.ViewModels.Introduction;
 using System.ComponentModel.DataAnnotations;
 
@@ -16,6 +17,16 @@ namespace Famnances.Models.ViewModels.Introduction
         public List<Income> Incomes { get; set; }
         public class Income
         {
+            public Income(FixedIncome fixedIncome)
+            {
+                Description = fixedIncome.Description;
+                FirstPayDate = fixedIncome.FirstPayDate;
+                PayablePeriodId = fixedIncome.PayablePeriodId;
+                Value = fixedIncome.Value;
+                ValuePeriodId = fixedIncome.ValuePeriodId;
+                Type = IncomeType.Fixed;
+            }
+
             [Display(Name = nameof(IncomeLabels.Description), ResourceType = typeof(IncomeLabels))]
             public string Description { get; set; }
 

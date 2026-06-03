@@ -1,8 +1,6 @@
 ﻿@model Famnances.Models.ViewModels.Introduction.SavingsViewModel
 
-@using Famnances.DataCore.Entities
 @using Microsoft.AspNetCore.Mvc.Localization
-@using System.Globalization
 @using Famnances.Helpers
 @inject IViewLocalizer Localizer
 
@@ -119,12 +117,12 @@
     </ul>
     <div class="row justify-content-center align-items-center mt-3">
         <div class="col-12 text-center">
-            <button class="btn btn-primary w-100" asp-action="SavePocket">@Localizer["Next"]</button>
+            <button class="btn btn-primary w-100" asp-action="EndIntroduction">@Localizer["Next"]</button>
         </div>
     </div>
     <div class="row justify-content-center align-items-center">
         <div class="col-12 text-center">
-            <button class="btn btn-outline-primary w-100" asp-action="SavePocket">@Localizer["Skip"]</button>
+            <button class="btn btn-outline-primary w-100" asp-action="Summary">@Localizer["Skip"]</button>
         </div>
     </div>
 </form>

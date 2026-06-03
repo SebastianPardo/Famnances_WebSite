@@ -1,7 +1,6 @@
 ﻿@model Famnances.Models.ViewModels.Introduction.SummaryViewModel
 
 @using Microsoft.AspNetCore.Mvc.Localization
-@using System.Globalization
 @inject IViewLocalizer Localizer
 
 @{
@@ -10,7 +9,7 @@
 }
 
 
-<form asp-action="Summary">
+<form asp-action="EndINtroduction">
     <h1 class="h3 text-center mb-2">@Localizer["Title"]</h1>
     <p class="text-center mt-3">@Localizer["Subtitle"]</p>
     @* <hr class="mt-0" /> *@

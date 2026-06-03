@@ -1,7 +1,6 @@
 ﻿@model Famnances.Models.ViewModels.Introduction.BudgetViewModel
 
 @using Microsoft.AspNetCore.Mvc.Localization
-@using System.Globalization
 @using Famnances.Helpers
 @inject IViewLocalizer Localizer
 
@@ -80,7 +79,7 @@
     </div>
     <div class="row justify-content-center align-items-center">
         <div class="col-12 text-center">
-            <button class="btn btn-outline-primary w-100" asp-action="SaveBudgets">@Localizer["Skip"]</button>
+            <button class="btn btn-outline-primary w-100" asp-action="Savings">@Localizer["Skip"]</button>
         </div>
     </div>
 </form>

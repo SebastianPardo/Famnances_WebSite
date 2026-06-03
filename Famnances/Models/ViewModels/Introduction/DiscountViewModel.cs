@@ -1,4 +1,5 @@
-﻿using Famnances.Resources.ViewModels.Introduction;
+﻿using Famnances.DataCore.Entities;
+using Famnances.Resources.ViewModels.Introduction;
 using System.ComponentModel.DataAnnotations;
 
 namespace Famnances.Models.ViewModels.Introduction
@@ -13,6 +14,18 @@ namespace Famnances.Models.ViewModels.Introduction
 
         public class Discount
         {
+            public Discount() { }
+            public Discount(IncomeDiscount incomeDiscount)
+            {
+                Description = incomeDiscount.Description;
+                Value = incomeDiscount.Value;
+                IncomeIds = incomeDiscount.FixedIncomeByDiscount.Select(e => e.FixedIncomeId).ToList();
+                ByPayablePeriod = incomeDiscount.FixedIncomeByDiscount.First().ByPayablePeriod;
+                IsPercentage = incomeDiscount.IsPercentage;
+                IsPrediscount = incomeDiscount.IsPrediscount;
+                IsTax = incomeDiscount.IsTax;
+            }
+
             [Display(Name = nameof(DiscountsLabels.Description), ResourceType = typeof(DiscountsLabels))]
             public string Description { get; set; }
 

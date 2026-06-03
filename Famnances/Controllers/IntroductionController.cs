@@ -95,6 +95,12 @@ namespace Famnances.Controllers
                 Incomes = new List<Income>()
             };
 
+            var fixedIncomes = await _httpHelper.Get<List<FixedIncome>>(Constants.FIXED_INCOMES_URI);
+            if (fixedIncomes != null && fixedIncomes.Count > 0)
+            {
+                model.Incomes = fixedIncomes.Select(e => new Income(e)).ToList();
+            }
+
             return View(model);
         }
 
@@ -136,6 +142,12 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveIncomes(IncomeViewModel model)
         {
+            var fixedIncomes = await _httpHelper.Get<List<FixedIncome>>(Constants.FIXED_INCOMES_URI);
+            if (fixedIncomes != null && fixedIncomes.Count > 0)
+            {
+                await _httpHelper.Put($"{Constants.FIXED_INCOMES_URI}/Inactive", null);
+            }
+
             if (model.Incomes != null)
             {
                 foreach (var income in model.Incomes)
@@ -183,6 +195,12 @@ namespace Famnances.Controllers
                 Period = await _utilities.GetPeriodName(culture, user.Period),
                 IncomeDiscounts = new List<Discount>()
             };
+
+            var discounts = await _httpHelper.Get<List<IncomeDiscount>>(Constants.INCOME_DISCOUNTS_URI);
+            if (discounts != null && discounts.Count > 0)
+            {
+                model.IncomeDiscounts = discounts.Select(e => new Discount(e)).ToList();
+            }
 
             return View(model);
         }
@@ -233,6 +251,12 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveDiscounts(DiscountViewModel model)
         {
+            var discounts = await _httpHelper.Get<List<IncomeDiscount>>(Constants.INCOME_DISCOUNTS_URI);
+            if (discounts != null && discounts.Count > 0)
+            {
+                await _httpHelper.Put($"{Constants.INCOME_DISCOUNTS_URI}/Inactive", null);
+            }
+
             if (model.IncomeDiscounts != null)
             {
                 foreach (var discount in model.IncomeDiscounts)
@@ -279,6 +303,12 @@ namespace Famnances.Controllers
                 Expenses = new List<FixedExpense>(),
                 Expense = new FixedExpense()
             };
+
+            var fixedExpenses = await _httpHelper.Get<List<FixedExpense>>(Constants.FIXED_EXPENSES_URI);
+            if (fixedExpenses != null && fixedExpenses.Count > 0)
+            {
+                model.Expenses = fixedExpenses;
+            }
 
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
             return View(model);
@@ -330,6 +360,12 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveFixedExpenses(FixedExpenseViewModel model)
         {
+            var fixedExpenses = await _httpHelper.Get<List<FixedExpense>>(Constants.FIXED_EXPENSES_URI);
+            if (fixedExpenses != null && fixedExpenses.Count > 0)
+            {
+                await _httpHelper.Put($"{Constants.FIXED_EXPENSES_URI}/Inactive", null);
+            }
+
             if (model.Expenses != null)
             {
                 foreach (var expense in model.Expenses)
@@ -359,6 +395,13 @@ namespace Famnances.Controllers
                 Period = await _utilities.GetPeriodName(culture, user.Period),
                 Budgets = new List<ExpensesBudget>()
             };
+
+            var budgets = await _httpHelper.Get<List<ExpensesBudget>>(Constants.BUDGETS_URI);
+            if (budgets != null && budgets.Count > 0)
+            {
+                model.Budgets = budgets;
+            }
+
             return View(model);
         }
 
@@ -366,7 +409,7 @@ namespace Famnances.Controllers
         {
             if (model.Budgets == null)
                 model.Budgets = new List<ExpensesBudget>();
-            
+
             if (model.Budget.Value <= model.Total)
             {
                 model.Budgets.Add(model.Budget);
@@ -392,6 +435,12 @@ namespace Famnances.Controllers
 
         public async Task<ActionResult> SaveBudgets(BudgetViewModel model)
         {
+            var budgets = await _httpHelper.Get<List<ExpensesBudget>>(Constants.BUDGETS_URI);
+            if (budgets != null && budgets.Count > 0)
+            {
+                await _httpHelper.Put($"{Constants.BUDGETS_URI}/Inactive", null);
+            }
+
             if (model.Budgets != null)
             {
                 foreach (var budget in model.Budgets)
@@ -421,20 +470,27 @@ namespace Famnances.Controllers
                 Period = await _utilities.GetPeriodName(culture, user.Period),
                 Pockets = new List<SavingPocket>()
             };
+
+            var pockets = await _httpHelper.Get<List<SavingPocket>>(Constants.SAVINGS_POCKETS_URI);
+            if (pockets != null && pockets.Count > 0)
+            {
+                model.Pockets = pockets;
+            }
+
             return View(model);
         }
 
         public async Task<ActionResult> AddPocket(SavingsViewModel model)
         {
             if (model.Pockets == null)
-                model.Pockets = new List<SavingPocket> ();
+                model.Pockets = new List<SavingPocket>();
 
             if (model.Pocket.FrecuentDeposits && model.Pocket.FrecuentValue <= model.Total)
             {
                 model.Total -= model.Pocket.FrecuentValue.Value;
                 model.Pockets.Add(model.Pocket);
             }
-            else if(!model.Pocket.FrecuentDeposits)
+            else if (!model.Pocket.FrecuentDeposits)
             {
                 model.Pockets.Add(model.Pocket);
             }
@@ -461,6 +517,12 @@ namespace Famnances.Controllers
 
         public async Task<ActionResult> SavePocket(SavingsViewModel model)
         {
+            var budgets = await _httpHelper.Get<List<ExpensesBudget>>(Constants.BUDGETS_URI);
+            if (budgets != null && budgets.Count > 0)
+            {
+                await _httpHelper.Put($"{Constants.BUDGETS_URI}/Inactive", null);
+            }
+
             if (model.Pockets != null)
             {
                 decimal currentSavings = 0;
@@ -522,7 +584,7 @@ namespace Famnances.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Summary(decimal currentMoney)
+        public async Task<ActionResult> EndIntroduction(decimal currentMoney)
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");

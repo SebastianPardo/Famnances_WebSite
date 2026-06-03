@@ -1,4 +1,8 @@
-﻿@model Famnances.DataCore.Entities.User
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model Famnances.DataCore.Entities.User
 @{
     ViewData["Title"] = "Edit - User";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
@@ -12,7 +16,18 @@
             <span class="mb-0 d-block h1 fw-semibold">$@Model.BudgetByPeriod</span>
         </div>
         <div class="col d-flex">
-            <span class="mb-0 d-block h4 fw-semibold text-primary">@Model.Period.NameES</span>
+            @switch (CultureInfo.CurrentCulture.Name)
+            {
+                case "es-CO":
+                    <span class="mb-0 d-block h4 fw-semibold text-primary">@Model.Period.NameES</span>
+                    break;
+                case "en-CA":
+                    <span class="mb-0 d-block h4 fw-semibold text-primary">@Model.Period.NameEN</span>
+                    break;
+                case "fr-CA":
+                    <span class="mb-0 d-block h4 fw-semibold text-primary">@Model.Period.NameFR</span>
+                    break;
+            }
         </div>
     </div>
 </div>
@@ -99,12 +114,12 @@
             </div>
             <div class="row justify-content-center align-items-center mt-3">
                 <div class="col-12 text-center">
-                    <button class="btn btn-primary w-100" type="submit">Save</button>
+                    <button class="btn btn-primary w-100" type="submit">@Localizer["Save"]</button>
                 </div>
             </div>
             <div class="row justify-content-center align-items-center mt-2">
                 <div class="col-12 text-center">
-                    <button class="btn btn-danger w-100" asp-action="SavePocket">Re do the introduction</button>
+                    <button class="btn btn-danger w-100" asp-controller="Introduction" asp-action="PeriodSelector">@Localizer["Introduction"]</button>
                 </div>
             </div>
         </form>
