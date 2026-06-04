@@ -10,21 +10,14 @@ if (preloader) {
 
 $(document).ready(function () {
     $(window).scroll(function () {
-        if ($(window).width() > 992) {
-            if ($(this).scrollTop() > 50) {
-                $('.sticky-top .container').addClass('shadow-sm').css('max-width', '100%');
-                $('#menu').addClass('ms-auto');
-                $('#logo-img').attr("src", '/images/logos/Logo_2_white.png');
-            } else {
-                $('.sticky-top .container').removeClass('shadow-sm').css('max-width', '90%');
-                $('#menu').removeClass('ms-auto');
-                $('#logo-img').attr("src", '/images/logos/no-logo.png');
-            }
-        } else {
-            $('.sticky-top .container').addClass('shadow-sm').css('max-width', '90%');
-            $('#menu').addClass('ms-auto');
-            $('#logo-img').attr("src", '/images/logos/Logo_2_white.png');
-        }
+        const footerTop = $('footer').offset().top;
+        const scrollBottom = $(window).scrollTop() + $(window).height();
+        const footerVisible = scrollBottom >= footerTop;
+
+        $('#nav-wrapper').css(
+            'bottom',
+            footerVisible ? $('footer').outerHeight(): '0'
+        );
     });
 
     $('.select2').each(function () {

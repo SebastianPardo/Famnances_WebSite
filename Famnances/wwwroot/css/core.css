@@ -16105,6 +16105,7 @@ html:not(.layout-menu-fixed) .menu-inner-shadow {
     flex: 1 1 auto;
     flex-direction: column;
     justify-content: space-between;
+    padding-bottom:80px
 }
 
 .content-backdrop {
@@ -16302,7 +16303,7 @@ html:not(.layout-navbar-fixed) .layout-content-navbar .layout-page {
 }
 
 html:not(.layout-footer-fixed) .content-wrapper {
-    padding-bottom: 0 !important;
+    padding-bottom: 2.5rem !important;
 }
 
 @media (max-width: 1199.98px) {
