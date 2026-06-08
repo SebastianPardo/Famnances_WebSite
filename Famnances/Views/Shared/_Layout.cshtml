@@ -29,7 +29,7 @@
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3004437161279642" crossorigin="anonymous"></script>
 </head>
-<body style="background-color:var(--bs-teal);">   
+<body style="background-color:var(--bs-teal);">
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row justify-content-center align-items-center">
@@ -49,28 +49,67 @@
             </div>
         </div>
     </div>
+    <div id="panel-overlay"></div>
+    <div id="menu-wrapper">
+        <nav class="col-12 col-md-4">
+            <div id="more-panel">
+                <a class="btn btn-sm panel-btn" asp-controller="Outflows" asp-action="IndexFixedExpenses">
+                    <span>Fixed Expenses</span>
+                </a>
+                <a class="btn btn-sm panel-btn" asp-controller="Outflows" asp-action="IndexFixedExpenses">
+                    <span>Saving Pockets</span>
+                </a>
+                <a class="btn btn-sm panel-btn" asp-controller="Outflows" asp-action="IndexFixedExpenses">
+                    <span>Agregar / Retirar ahorros</span>
+                </a>
+            </div>
 
+            <div id="add-panel">
+                <a class="btn panel-btn" asp-controller="Inflows" asp-action="Create">
+                    <i class="bi bi-arrow-down-circle" style="color:var(--bs-success);"></i>
+                    <span>Agregar ingreso</span>
+                </a>
+                <a class="btn panel-btn" asp-controller="Outflows" asp-action="Create">
+                    <i class="bi bi-arrow-up-circle" style="color:var(--bs-danger)"></i>
+                    <span>Agregar gasto</span>
+                </a>
+                <a class="btn panel-btn" asp-controller="Savings" asp-action="Create">
+                    <i class="bi bi-piggy-bank" style="color:var(--bs-tertiary)"></i>
+                    <span>Agregar / Retirar ahorros</span>
+                </a>
+            </div>
+        </nav>
+    </div>
     <div id="nav-wrapper">
         <nav class="stick-bottom bg-primary col-12 col-md-4">
             <a class="nav-item active" asp-controller="Home" asp-action="Index">
                 <i class="bi bi-house-fill fs-4"></i>
+                <span>Home</span>
             </a>
             <a class="nav-item" asp-controller="Savings" asp-action="Index">
-                @* <i class="bi bi-arrow-left-right"></i> *@
+                <i class="bi bi bi-piggy-bank-fill fs-4"></i>
                 <span>Savings</span>
             </a>
+            <a class="nav-item" asp-controller="Outflows" asp-action="Index">
+                <i class="bi bi-cash-coin fs-4"></i>
+                <span>Outflow</span>
+            </a>
             <div class="nav-center-slot">
-                <button class="btn-tertiary">
+                <button id="add-btn" class="btn-tertiary">
                     <i class="bi bi-plus-lg fs-4"></i>
                 </button>
             </div>
-            <a class="nav-item" asp-controller="Outflows" asp-action="Index">
-                @* <i class="bi bi-bullseye"></i> *@
-                <span>Outflow</span>
+            <a class="nav-item" asp-controller="Inflows" asp-action="IndexFixedIncomes">
+                <i class="bi bi bi-cash-stack fs-4"></i>
+                <span>Fixed Inflow</span>
             </a>
             <a class="nav-item" asp-controller="Inflows" asp-action="Index">
-                @* <i class="bi bi-list"></i> *@
+                <i class="bi bi-bank2 fs-4"></i>
                 <span>Inflow</span>
+            </a>
+            <a id="more-btn" class="nav-item" id="more-btn">
+                <i class="bi bi bi-list fs-4" style="color:var(--bs-light)"></i>
+                <span style="color:var(--bs-light)">More</span>
             </a>
         </nav>
     </div>

@@ -185,7 +185,7 @@ a {
 }
 
     a:hover {
-        color: #5f61e6;
+        color: var(--bs-tertiary);
     }
 
     a:not([href]):not([class]), a:not([href]):not([class]):hover {

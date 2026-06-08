@@ -9,15 +9,51 @@ if (preloader) {
 
 
 $(document).ready(function () {
+    let addIsOpen = false;
+    let moreIsOpen = false;
+    const footerTop = $('footer').offset().top;
+    
+
     $(window).scroll(function () {
-        const footerTop = $('footer').offset().top;
+        const scrollBottom = $(window).scrollTop() + $(window).height();
+        const footerVisible = scrollBottom >= footerTop;
+        $('#nav-wrapper').css('bottom',footerVisible ? $('footer').outerHeight(): '0');
+    });
+
+    $('#add-btn').on('click', function () {
         const scrollBottom = $(window).scrollTop() + $(window).height();
         const footerVisible = scrollBottom >= footerTop;
 
-        $('#nav-wrapper').css(
-            'bottom',
-            footerVisible ? $('footer').outerHeight(): '0'
-        );
+        addIsOpen = !addIsOpen;
+        $('#add-panel').css('width', $('.stick-bottom').outerWidth() + 'px');
+        $('#add-panel').css('bottom', addIsOpen ? footerVisible ? $('footer').outerHeight() : '0px' : '');
+        $('#panel-overlay').css({
+            'background': addIsOpen ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0)',
+            'pointer-events': addIsOpen ? 'all' : 'none'
+        });
+        $(this).css('transform', addIsOpen ? 'rotate(45deg)' : 'rotate(0)');
+    });
+
+    $('#more-btn').on('click', function () {
+        const scrollBottom = $(window).scrollTop() + $(window).height();
+        const footerVisible = scrollBottom >= footerTop;
+
+        moreIsOpen = !moreIsOpen;
+        $('#more-panel').css('width', $('.stick-bottom').outerWidth() + 'px');
+        $('#more-panel').css('bottom', moreIsOpen ? footerVisible ? $('footer').outerHeight() : '0px' : '');
+        $('#panel-overlay').css({
+            'background': moreIsOpen ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0)',
+            'pointer-events': moreIsOpen ? 'all' : 'none'
+        });
+        $(this).css('transform', moreIsOpen ? 'rotate(45deg)' : 'rotate(0)');
+    });
+
+    $('#panel-overlay').on('click', function () {
+        isOpen = false;
+        $('#add-panel').css('bottom', '');
+        $('#more-panel').css('bottom', '');
+        $(this).css({ 'background': 'rgba(0,0,0,0)', 'pointer-events': 'none' });
+        $('#add-btn').css('transform', 'rotate(0)');
     });
 
     $('.select2').each(function () {
