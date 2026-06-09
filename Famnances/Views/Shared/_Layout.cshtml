@@ -53,15 +53,38 @@
     <div id="menu-wrapper">
         <nav class="col-12 col-md-4">
             <div id="more-panel">
-                <a class="btn btn-sm panel-btn" asp-controller="Outflows" asp-action="IndexFixedExpenses">
-                    <span>Fixed Expenses</span>
-                </a>
-                <a class="btn btn-sm panel-btn" asp-controller="Outflows" asp-action="IndexFixedExpenses">
-                    <span>Saving Pockets</span>
-                </a>
-                <a class="btn btn-sm panel-btn" asp-controller="Outflows" asp-action="IndexFixedExpenses">
-                    <span>Agregar / Retirar ahorros</span>
-                </a>
+                <div class="nav-item dropup">
+                    <a class="dropdown-toggle btn panel-btn justify-content-center" data-bs-toggle="dropdown">@Localizer["Savings"]</a>
+                    <div class="dropdown-menu m-0">
+                        <a asp-controller="Savings" asp-action="Index" class="dropdown-item">@Localizer["Transactions"]</a>
+                        <a asp-controller="Savings" asp-action="IndexPockets" class="dropdown-item">@Localizer["Pockets"]</a>
+                        <a asp-controller="Savings" asp-action="IndexFixed" class="dropdown-item">@Localizer["FixedSavings"]</a>
+                    </div>
+                </div>
+                <div class="nav-item dropup">
+                    <a class="dropdown-toggle btn panel-btn justify-content-center" data-bs-toggle="dropdown">@Localizer["Incomes"]</a>
+                    <div class="dropdown-menu m-0">
+                        <a asp-controller="Inflows" asp-action="Index" class="dropdown-item">@Localizer["Inflow"]</a>
+                        <a asp-controller="Inflows" asp-action="IndexFixedIncomes" class="dropdown-item">@Localizer["Fixed"]</a>
+                        <a asp-controller="IncomeDiscounts" asp-action="Index" class="dropdown-item">@Localizer["Discounts"]</a>
+                    </div>
+                </div>
+                <div class="nav-item dropup">
+                    <a class="dropdown-toggle btn panel-btn justify-content-center" data-bs-toggle="dropdown">@Localizer["Expenses"]</a>
+                    <div class="dropdown-menu m-0">
+                        <a asp-controller="Outflows" asp-action="Index" class="dropdown-item">@Localizer["Outflow"]</a>
+                        <a asp-controller="Outflows" asp-action="IndexFixedExpenses" class="dropdown-item">@Localizer["Fixed"]</a>
+                        <a asp-controller="Budgets" asp-action="Index" class="dropdown-item">@Localizer["Budgets"]</a>
+                    </div>
+                </div>
+                <div class="nav-item dropup">
+                    <a class="dropdown-toggle btn panel-btn justify-content-center" data-bs-toggle="dropdown">@Localizer["Profile"]</a>
+                    <div class="dropdown-menu m-0">
+                        <a asp-controller="Users" asp-action="CreateHome" class="dropdown-item">@Localizer["Household"]</a>
+                        <a asp-controller="Users" asp-action="Details" class="dropdown-item">@Localizer["Account"]</a>
+                    </div>
+                </div>
+                <a class="btn panel-btn justify-content-center" asp-controller="Login" asp-action="Logout"><span>@Localizer["Logout"]</span></a>
             </div>
 
             <div id="add-panel">

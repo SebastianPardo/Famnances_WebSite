@@ -32,6 +32,9 @@ $(document).ready(function () {
             'pointer-events': addIsOpen ? 'all' : 'none'
         });
         $(this).css('transform', addIsOpen ? 'rotate(45deg)' : 'rotate(0)');
+        moreIsOpen = false;
+        $('#more-panel').css('bottom', '');
+        $('#more-btn').css('transform', 'rotate(0)');
     });
 
     $('#more-btn').on('click', function () {
@@ -46,6 +49,9 @@ $(document).ready(function () {
             'pointer-events': moreIsOpen ? 'all' : 'none'
         });
         $(this).css('transform', moreIsOpen ? 'rotate(45deg)' : 'rotate(0)');
+        addIsOpen = false
+        $('#add-panel').css('bottom', '');
+        $('#add-btn').css('transform', 'rotate(0)');
     });
 
     $('#panel-overlay').on('click', function () {
@@ -54,6 +60,7 @@ $(document).ready(function () {
         $('#more-panel').css('bottom', '');
         $(this).css({ 'background': 'rgba(0,0,0,0)', 'pointer-events': 'none' });
         $('#add-btn').css('transform', 'rotate(0)');
+        $('#more-btn').css('transform', 'rotate(0)');
     });
 
     $('.select2').each(function () {
