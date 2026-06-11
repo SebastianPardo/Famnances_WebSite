@@ -39,26 +39,21 @@
         color: var(--bs-tertiary);
     }
 
-.btn-tertiary {
+.btn-circle {
     display: block;
     line-height: 1;
     padding: 0;
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
-    background: var(--bs-tertiary);
     border: none;
-    outline: 4px solid var(--bs-teal);
-    color: var(--bs-light);
     position: relative;
     bottom: 1rem;
 }
-
-    .btn-tertiary:hover {
-        color: #fff;
-        background-color: #788393;
-        border-color: #788393;
+    .btn-circle.btn-tertiary {
+        background: var(--bs-tertiary);
         outline: 4px solid var(--bs-teal);
+        color: var(--bs-light);
     }
 
 

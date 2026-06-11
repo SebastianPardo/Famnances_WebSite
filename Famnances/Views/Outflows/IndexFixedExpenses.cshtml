@@ -6,88 +6,90 @@
 }
 
 <div class="d-flex justify-content-between">
-    <div class="ms-3 mb-3 mt-1">
-        <a type="button" class="btn btn-lg rounded-pill btn-icon btn-primary card-header" asp-controller="Outflows" asp-action="CreateFixedExpenses" formmethod="get">
-            <span class="tf-icons bx bx-plus"></span>
+    <div class="col-2 ms-3">
+        <a class="btn btn-lg rounded-pill btn-icon btn-primary card-header" asp-controller="Outflows" asp-action="CreateFixedExpenses">
+            <i class="bi bi-plus-lg fs-4"></i>
         </a>
     </div>
-    <div class="col col-md-3 me-5 text-body-primary text-end">
+    <div class="col col-9 text-body-primary text-end p-3">
         <h3 class="card-title"><strong>Fixed Expenses</strong></h3>
     </div>
 </div>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Status</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Value)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Period)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Active)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @if (item.FixedExpensesPaymentsRecord == null || item.FixedExpensesPaymentsRecord.Count == 0)
-                    {
-                        <form asp-action="PayFixedExpenses" asp-route-id="@item.Id" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-indigo">Pay</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <h5 class="text-success mb-0">Paid</h5>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Value)
-                </td>
-                <td>
-                    @item.StartDate.ToString("dd MMM yyyy")
-                </td>
-                <td>
-                    @if (item.EndDate != null)
-                    {
-                        @item.EndDate.Value.ToString("dd MMM yyyy")
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Period.NameEN)
-                </td>
-                <td>
-                    @if (item.Active)
-                    {
-                        <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
-                    }
-                    else
-                    {
-                        <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
-                    }
-                </td>
-                <td>
-                    <a asp-action="DetailsFixedExpenses" class="btn btn-secondary" asp-route-id="@item.Id">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card minicard">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Value)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Period)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Active)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (item.FixedExpensesPaymentsRecord == null || item.FixedExpensesPaymentsRecord.Count == 0)
+                            {
+                                <a asp-action="PayFixedExpenses" asp-route-id="@item.Id" method="post" class="btn btn-tertiary btn-sm w-100">Pay</a>
+                            }
+                            else
+                            {
+                                <h5 class="text-success mb-0">Paid</h5>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Value)
+                        </td>
+                        <td>
+                            @item.StartDate.ToString("dd MMM yyyy")
+                        </td>
+                        <td>
+                            @if (item.EndDate != null)
+                            {
+                                @item.EndDate.Value.ToString("dd MMM yyyy")
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Period.NameEN)
+                        </td>
+                        <td>
+                            @if (item.Active)
+                            {
+                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="DetailsFixedExpenses" class="btn btn-secondary btn-sm w-100" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -5,11 +5,10 @@
     ViewData["Title"] = "Create - Saving";
 }
 <div class="d-flex justify-content-end">
-    <div class="col col-md-3 me-5 text-body-primary text-end">
+    <div class="col-6 col-md-12 text-body-primary text-end">
         <h3 class="card-title">Create <strong>Saving record</strong></h3>
     </div>
 </div>
-<hr />
 @if (TempData[Constants.ERROR] != null)
 {
     <div class="row">
@@ -25,153 +24,149 @@
     </div>
 }
 <div class="row">
-    <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="expense-tab" data-bs-toggle="tab" data-bs-target="#expense-tab-pane" type="button" role="tab" aria-controls="expense-tab-pane" aria-selected="true">Expense</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-tab-pane" type="button" role="tab" aria-controls="add-tab-pane" aria-selected="false">Add</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="fixed-tab" data-bs-toggle="tab" data-bs-target="#fixed-tab-pane" type="button" role="tab" aria-controls="fixed-tab-pane" aria-selected="false">Fixed</button>
-        </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="expense-tab-pane" role="tabpanel" aria-labelledby="expense-tab" tabindex="0">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="row">
-                    <input type="hidden" asp-for="SavingTransaction.IsExpense" value="True" />
-                    <div class="col-md-2 form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="SavingTransaction.IsEmergency" /> @Html.DisplayNameFor(model => model.SavingTransaction.IsEmergency)
-                        </label>
-                    </div>
-                    <div class="col-md-2 form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="TranferToChequing" /> @Html.DisplayNameFor(model => model.TranferToChequing)
-                        </label>
-                    </div>
-                </div>
+    <div class="card minicard">
+        <div class="card-body">
+            <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="expense-tab" data-bs-toggle="tab" data-bs-target="#expense-tab-pane" type="button" role="tab" aria-controls="expense-tab-pane" aria-selected="true">Expense</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-tab-pane" type="button" role="tab" aria-controls="add-tab-pane" aria-selected="false">Add</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="fixed-tab" data-bs-toggle="tab" data-bs-target="#fixed-tab-pane" type="button" role="tab" aria-controls="fixed-tab-pane" aria-selected="false">Fixed</button>
+                </li>
+            </ul>
+            <div class="tab-content p-0 pt-4" id="myTabContent">
+                <div class="tab-pane fade show active" id="expense-tab-pane" role="tabpanel" aria-labelledby="expense-tab" tabindex="0">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row mb-2">
+                            <input type="hidden" asp-for="SavingTransaction.IsExpense" value="True" />
+                            <div class="col-6 col-md-6 form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="SavingTransaction.IsEmergency" /> @Html.DisplayNameFor(model => model.SavingTransaction.IsEmergency)
+                                </label>
+                            </div>
+                            <div class="col-6 col-md-6 form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="TranferToChequing" /> @Html.DisplayNameFor(model => model.TranferToChequing)
+                                </label>
+                            </div>
+                        </div>
 
-                <div class="row">
-                    <div class="col-md-3">
-                        <label asp-for="SavingTransaction.SavingsPocketId" class="control-label"></label>
-                        <select asp-for="SavingTransaction.SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
-                            <option selected disabled hidden>Select</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label asp-for="SavingTransaction.Description" class="control-label"></label>
-                        <input asp-for="SavingTransaction.Description" class="form-control" />
-                        <span asp-validation-for="SavingTransaction.Description" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label asp-for="SavingTransaction.Value" class="control-label"></label>
-                        <input asp-for="SavingTransaction.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
-                        <span asp-validation-for="SavingTransaction.Value" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label asp-for="SavingTransaction.TransactionDate" class="control-label"></label>
-                        <input asp-for="SavingTransaction.TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                        <span asp-validation-for="SavingTransaction.TransactionDate" class="text-danger"></span>
-                    </div>
-                </div>
+                        <div class="row">
+                            <div class="col-12 col-md-12">
+                                <label asp-for="SavingTransaction.SavingsPocketId" class="control-label"></label>
+                                <select asp-for="SavingTransaction.SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
+                                    <option selected disabled hidden>Select</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label asp-for="SavingTransaction.Description" class="control-label"></label>
+                                <input asp-for="SavingTransaction.Description" class="form-control" />
+                                <span asp-validation-for="SavingTransaction.Description" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label asp-for="SavingTransaction.Value" class="control-label"></label>
+                                <input asp-for="SavingTransaction.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+                                <span asp-validation-for="SavingTransaction.Value" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label asp-for="SavingTransaction.TransactionDate" class="control-label"></label>
+                                <input asp-for="SavingTransaction.TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                <span asp-validation-for="SavingTransaction.TransactionDate" class="text-danger"></span>
+                            </div>
+                        </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-md-2">
-                        <label class="control-label">&nbsp;</label>
-                        <input type="submit" class="btn btn-primary form-control" value="Save" />
-                    </div>
+                        <div class="row justify-content-center align-items-center mt-3">
+                            <div class="col-12 text-center">
+                                <input type="submit" class="btn btn-primary w-100" value="Save" />
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-        <div class="tab-pane fade" id="add-tab-pane" role="tabpanel" aria-labelledby="add-tab" tabindex="1">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="SavingTransaction.IsExpense" value="False" />
-                <div class="row">
-                    <div class="col-md-3">
-                        <label asp-for="SavingSource" class="control-label"></label>
-                        <select asp-for="SavingSource" class="form-control select2" asp-items="@ViewBag.SavingsSources" data-live-search="true">
-                            <option selected disabled hidden>Select</option>
-                        </select>
-                    </div>
-                </div>
+                <div class="tab-pane fade" id="add-tab-pane" role="tabpanel" aria-labelledby="add-tab" tabindex="1">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="SavingTransaction.IsExpense" value="False" />
+                        <div class="row">
+                            <div class="col-12 col-md-12">
+                                <label asp-for="SavingSource" class="control-label"></label>
+                                <select asp-for="SavingSource" class="form-control select2" asp-items="@ViewBag.SavingsSources" data-live-search="true">
+                                    <option selected disabled hidden>Select</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label asp-for="SavingTransaction.SavingsPocketId" class="control-label"></label>
+                                <select asp-for="SavingTransaction.SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
+                                    <option selected disabled hidden>Select</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label asp-for="SavingTransaction.Description" class="control-label"></label>
+                                <input asp-for="SavingTransaction.Description" class="form-control" />
+                                <span asp-validation-for="SavingTransaction.Description" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label asp-for="SavingTransaction.Value" class="control-label"></label>
+                                <input asp-for="SavingTransaction.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+                                <span asp-validation-for="SavingTransaction.Value" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label asp-for="SavingTransaction.TransactionDate" class="control-label"></label>
+                                <input asp-for="SavingTransaction.TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                                <span asp-validation-for="SavingTransaction.TransactionDate" class="text-danger"></span>
+                            </div>
+                        </div>
 
-                <div class="row">
-                    <div class="col-md-3">
-                        <label asp-for="SavingTransaction.SavingsPocketId" class="control-label"></label>
-                        <select asp-for="SavingTransaction.SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
-                            <option selected disabled hidden>Select</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <label asp-for="SavingTransaction.Description" class="control-label"></label>
-                        <input asp-for="SavingTransaction.Description" class="form-control" />
-                        <span asp-validation-for="SavingTransaction.Description" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label asp-for="SavingTransaction.Value" class="control-label"></label>
-                        <input asp-for="SavingTransaction.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
-                        <span asp-validation-for="SavingTransaction.Value" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <label asp-for="SavingTransaction.TransactionDate" class="control-label"></label>
-                        <input asp-for="SavingTransaction.TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                        <span asp-validation-for="SavingTransaction.TransactionDate" class="text-danger"></span>
-                    </div>
+                        <div class="row justify-content-center align-items-center mt-3">
+                            <div class="col-12 text-center">
+                                <input type="submit" class="btn btn-primary w-100" value="Save" />
+                            </div>
+                        </div>
+                    </form>
                 </div>
+                <div class="tab-pane fade" id="fixed-tab-pane" role="tabpanel" aria-labelledby="fixed-tab" tabindex="2">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    From
+                                </th>
+                                <th>
+                                    Value
+                                </th>
+                                <th>
+                                    To
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.FixedSavings)
+                            {
+                                <tr>
+                                    <td>
 
-                <div class="row justify-content-center mt-3">
-                    <div class="col-md-2">
-                        <input type="submit" class="btn btn-primary form-control" value="Save" />
-                    </div>
+                                        @Html.DisplayFor(modelItem => item.SavingSource.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Value)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SavingsPocket.Name)
+                                    </td>
+                                    <td class="justify-content-center text-center">
+                                        <a asp-action="EditFixed" class="btn btn-sm btn-secondary w-100 mb-1" asp-route-id="@item.Id">Edit</a>
+                                        <a class="btn btn-sm btn-tertiary w-100" asp-action="TransferFixed" asp-route-id="@item.Id" method="post">Transfer</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
-            </form>
-        </div>
-        <div class="tab-pane fade" id="fixed-tab-pane" role="tabpanel" aria-labelledby="fixed-tab" tabindex="2">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>
-                            From
-                        </th>
-                        <th>
-                            Value
-                        </th>
-                        <th>
-                            To
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.FixedSavings)
-                    {
-                        <tr>
-                            <td>
-
-                                @Html.DisplayFor(modelItem => item.SavingSource.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Value)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SavingsPocket.Name)
-                            </td>
-                            <td>
-                                <a asp-action="EditFixed" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
-                                <div class="col-auto">
-                                    <form asp-action="TransferFixed" asp-route-id="@item.Id" method="post" style="display:inline;">
-                                        <button type="submit" class="btn btn-indigo">Transfer</button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            </div>
         </div>
     </div>
 </div>

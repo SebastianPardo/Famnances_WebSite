@@ -2864,6 +2864,11 @@ textarea.form-control-lg {
         color: #fff;
     }
 
+    .btn.btn-tertiary {
+        background: var(--bs-tertiary);
+        color: var(--bs-light);
+    }
+
     .btn.btn-indigo {
         background: var(--bs-indigo);
         color: #fff;
@@ -3449,7 +3454,8 @@ textarea.form-control-lg {
 }
 
 .nav-tabs {
-    border-bottom: 1px solid;
+    border-bottom: 3px solid;
+    color:var(--bs-primary);
 }
 
     .nav-tabs .nav-link {
@@ -3462,7 +3468,7 @@ textarea.form-control-lg {
 
         .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
             border-color: var(--bs-primary);
-            /*border-color: rgba(67, 89, 113, 0.1);*/
+            border-color: rgba(67, 89, 113, 0.1);
             isolation: isolate;
         }
 

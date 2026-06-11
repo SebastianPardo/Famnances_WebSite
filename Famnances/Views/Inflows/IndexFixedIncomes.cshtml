@@ -6,63 +6,66 @@
 }
 
 <div class="d-flex justify-content-between">
-    <div class="ms-3 mb-3 mt-1">
-        <a type="button" class="btn btn-lg rounded-pill btn-icon btn-primary card-header" asp-controller="Inflows" asp-action="CreateFixedIncomes" formmethod="get">
-            <span class="tf-icons bx bx-plus"></span>
+    <div class="col-2 ms-3">
+        <a class="btn btn-lg rounded-pill btn-icon btn-primary card-header" asp-controller="Inflows" asp-action="CreateFixedIncomes">
+            <i class="bi bi-plus-lg fs-4"></i>
         </a>
     </div>
-    <div class="col col-md-3 me-5 text-body-primary text-end">
+    <div class="col col-9 text-body-primary text-end p-3">
         <h2 class="card-title"><strong>Fixed Incomes</strong></h2>
     </div>
 </div>
+<div class="card minicard">
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Value</th>
+                    <th>Period</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Value)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayablePeriod.NameEN)
+                        </td>
+                        <td>
+                            @if (item.Active)
+                            {
+                                <input class="form-check-input" type="checkbox" id="Active" name="Active" checked disabled />
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" id="Active" name="Active" disabled />
+                            }
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <a asp-action="EditFixedIncomes" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                                </div>
+                                <div class="col-auto">
+                                    <form asp-action="ReceiveFixedIncome" asp-route-id="@item.Id" method="post" style="display:inline;">
+                                        <button type="submit" class="btn btn-tertiary">Deposit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Description</th>
-            <th>Value</th>
-            <th>Period</th>
-            <th>Active</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <th>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </th>
-                <td>
-                    $ @Html.DisplayFor(modelItem => item.Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PayablePeriod.NameEN)
-                </td>
-                <td>
-                    @if (item.Active)
-                    {
-                        <input class="form-check-input" type="checkbox" id="Active" name="Active" checked disabled />
-                    }
-                    else
-                    {
-                        <input class="form-check-input" type="checkbox" id="Active" name="Active" disabled />
-                    }
-                </td>
-                <td>
-                    <div class="row">
-                        <div class="col-auto">
-                            <a asp-action="EditFixedIncomes" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
-                        </div>
-                        <div class="col-auto">
-                            <form asp-action="ReceiveFixedIncome" asp-route-id="@item.Id" method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-indigo">Deposit</button>
-                            </form>
-                        </div>
-                    </div>
-                </td>
-
-            </tr>
-        }
-    </tbody>
-</table>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

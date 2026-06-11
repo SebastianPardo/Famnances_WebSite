@@ -4,65 +4,66 @@
     ViewData["Title"] = "Create - Fixed Income";
 }
 
-<div class="d-flex justify-content-end">
-    <div class="col col-md-3 me-5 text-body-primary text-end">
-        <h3 class="card-title">Create <strong>Fixed Income</strong></h3>
+<div class="row">
+    <div class="d-flex justify-content-end">
+        <div class="col col-12 text-body-primary text-end">
+            <h3 class="card-title">Create <strong>Fixed Income</strong></h3>
+        </div>
     </div>
 </div>
-<hr />
-<form asp-action="CreateFixedIncomes" asp-controller="Inflows" method="post">
-    <div class="row">
-        <div class="col col-md-3 col-sm-6">
-            <div class="form-check-label">
-                <input class="form-check-input" asp-for="FixedIncome.Active" /> @Html.DisplayNameFor(model => model.FixedIncome.Active)
+<div class="card minicard">
+    <div class="card-body">
+        <form asp-action="CreateFixedIncomes" asp-controller="Inflows" method="post">
+            <div class="row">
+                <div class="col-4 col-md-4">
+                    <div class="form-check-label">
+                        <input class="form-check-input" asp-for="FixedIncome.Active" /> @Html.DisplayNameFor(model => model.FixedIncome.Active)
+                    </div>
+                </div>
+                <div class="col-8 col-md-8">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="FixedIncome.ShareOnHousehold" /> @Html.DisplayNameFor(model => model.FixedIncome.ShareOnHousehold)
+                    </label>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <label class="form-check-label">
-                <input class="form-check-input" asp-for="FixedIncome.ShareOnHousehold" /> @Html.DisplayNameFor(model => model.FixedIncome.ShareOnHousehold)
-            </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label asp-for="FixedIncome.Description" class="control-label text-start"></label>
-            <input asp-for="FixedIncome.Description" class="form-control" />
-            <span asp-validation-for="FixedIncome.Description" class="text-danger"></span>
-        </div>
-        <div class="col-md-3">
-            <label asp-for="FixedIncome.Value" class="control-label text-start"></label>
-            <input asp-for="FixedIncome.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
-            <span asp-validation-for="FixedIncome.Value" class="text-danger"></span>
-        </div>
-        <div class="col-md-3">
-            <label asp-for="FixedIncome.ValuePeriodId" class="control-label text-start"></label>
-            <select asp-for="FixedIncome.ValuePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
-                <option selected disabled hidden>Select</option>
-            </select>
-            <span asp-validation-for="FixedIncome.PayablePeriod" class="text-danger"></span>
-            <div class="col-md-3">
-                <label asp-for="FixedIncome.PayablePeriodId" class="control-label text-start"></label>
-                <select asp-for="FixedIncome.PayablePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
-                    <option selected disabled hidden>Select</option>
-                </select>
-                <span asp-validation-for="FixedIncome.PayablePeriod" class="text-danger"></span>
+            <div class="row">
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="FixedIncome.Description" class="control-label text-start"></label>
+                    <input asp-for="FixedIncome.Description" class="form-control" />
+                    <span asp-validation-for="FixedIncome.Description" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="FixedIncome.Value" class="control-label text-start"></label>
+                    <input asp-for="FixedIncome.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+                    <span asp-validation-for="FixedIncome.Value" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="FixedIncome.ValuePeriodId" class="control-label text-start"></label>
+                    <select asp-for="FixedIncome.ValuePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                        <option selected disabled hidden>Select</option>
+                    </select>
+                    <span asp-validation-for="FixedIncome.PayablePeriod" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="FixedIncome.PayablePeriodId" class="control-label text-start"></label>
+                    <select asp-for="FixedIncome.PayablePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                        <option selected disabled hidden>Select</option>
+                    </select>
+                    <span asp-validation-for="FixedIncome.PayablePeriod" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label class="control-label text-start">Discount</label>
+                    <select asp-for="SelectedIncomeDiscountIds" class="select2 form-control" asp-items=@ViewBag.Discounts multiple placeholder="Select"></select>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="FixedIncome.FirstPayDate" class="control-label text-start"></label>
+                    <input asp-for="FixedIncome.FirstPayDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="FixedIncome.FirstPayDate" class="text-danger"></span>
+                </div>
             </div>
-        </div>
+            <div class="col-12 col-md-12 text-center mt-3">
+                <input type="submit" class="btn btn-primary w-100" value="Save" />
+            </div>
+        </form>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label class="control-label text-start">Discount</label>
-            <select asp-for="SelectedIncomeDiscountIds" class="select2 form-control" asp-items=@ViewBag.Discounts multiple placeholder="Select"></select>
-        </div>
-        <div class="col-md-3">
-            <label asp-for="FixedIncome.FirstPayDate" class="control-label text-start"></label>
-            <input asp-for="FixedIncome.FirstPayDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-            <span asp-validation-for="FixedIncome.FirstPayDate" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="row justify-content-center mt-3">
-        <div class="col-md-2">
-            <input type="submit" class="btn btn-primary form-control" value="Save" />
-        </div>
-    </div>
-</form>
+</div>
