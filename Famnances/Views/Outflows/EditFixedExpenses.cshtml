@@ -4,67 +4,68 @@
     ViewData["Title"] = "Edit - Fixed Expenses";
 }
 
-<div class="d-flex justify-content-end">
-    <div class="col col-md-3 me-5 text-body-primary text-end">
-        <h3 class="card-title">Edit @Model.Name <strong>Fixed Expense</strong></h3>
+<div class="row">
+    <div class="d-flex justify-content-end">
+        <div class="col col-12 text-body-primary text-end">
+            <h3 class="card-title">Edit @Model.Name <strong>Fixed Expense</strong></h3>
+        </div>
     </div>
 </div>
-<hr />
-<form asp-action="EditFixedExpenses">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="Id" />
-    <div class="row">
-        <div class="col-md-3">
-            <label class="form-check-label">
-                <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-            </label>
-        </div>
-        <div class="col-md-3">
-            <label class="form-check-label">
-                <input class="form-check-input" asp-for="ShareOnHousehold" /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
-            </label>
-        </div>
+<div class="card minicard">
+    <div class="card-body">
+        <form asp-action="EditFixedExpenses">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="col-4 col-md-4">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                    </label>
+                </div>
+                <div class="col-8 col-md-8">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="ShareOnHousehold" /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
+                    </label>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="Value" class="control-label"></label>
+                    <input asp-for="Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+                    <span asp-validation-for="Value" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input asp-for="StartDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="EndDate" class="control-label"></label>
+                    <input asp-for="EndDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="PeriodId" class="control-label"></label>
+                    <select asp-for="PeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
+                        <option selected disabled hidden>Select</option>
+                    </select>
+                    <span asp-validation-for="PeriodId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 mt-2">
+                <input type="submit" class="btn btn-primary form-control w-100" value="Save" />
+            </div>
+            <div class="col-12 col-md-12 mt-2">
+                <input type="submit" class="btn btn-danger form-control w-100" value="Delete" formaction="@Url.Action("DeleteFixedExpenses")" formmethod="post" />
+            </div>
+        </form>
     </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label asp-for="Name" class="control-label"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="col-md-3">
-            <label asp-for="Value" class="control-label"></label>
-            <input asp-for="Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
-            <span asp-validation-for="Value" class="text-danger"></span>
-        </div>
-        <div class="col-md-3">
-            <label asp-for="StartDate" class="control-label"></label>
-            <input asp-for="StartDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-            <span asp-validation-for="StartDate" class="text-danger"></span>
-        </div>
-        <div class="col-md-3">
-            <label asp-for="EndDate" class="control-label"></label>
-            <input asp-for="EndDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-            <span asp-validation-for="EndDate" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label asp-for="PeriodId" class="control-label"></label>
-            <select asp-for="PeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
-                <option selected disabled hidden>Select</option>
-            </select>
-            <span asp-validation-for="PeriodId" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="row justify-content-center mt-3">
-        <div class="col-8 col-md-2">
-            <input type="submit" class="btn btn-primary form-control" value="Save" />
-        </div>
-        <div class="col-4 col-md-2">
-            <input type="submit" class="btn btn-danger form-control" value="Delete" formaction="@Url.Action("DeleteFixedExpenses")" formmethod="post" />
-        </div>
-    </div>
-</form>
+</div>
 
 @section Scripts {
     @{
