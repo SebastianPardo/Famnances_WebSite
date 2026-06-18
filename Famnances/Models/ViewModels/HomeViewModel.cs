@@ -31,11 +31,11 @@
     {
         public RoommateModel()
         {
-            TotalFixedExpenses = SummaryFixedExpenses.Sum(e => e.Value);
-            PaidFixedExpenses = SummaryFixedExpenses.Where(e => e.WasPaid).Sum(e => e.Value);
+            TotalFixedExpenses = SummaryFixedExpenses == null ? 0 : SummaryFixedExpenses.Sum(e => e.Value);
+            PaidFixedExpenses = SummaryFixedExpenses == null ? 0 : SummaryFixedExpenses.Where(e => e.WasPaid).Sum(e => e.Value);
 
-            TotalBudget = SummaryBudgets.Sum(e => e.Budget);
-            BudgetSpent = SummaryBudgets.Sum(e => e.Spent);
+            TotalBudget = SummaryBudgets == null ? 0 : SummaryBudgets.Sum(e => e.Budget);
+            BudgetSpent = SummaryBudgets == null ? 0 : SummaryBudgets.Sum(e => e.Spent);
         }
 
         public string Name { get; set; }
@@ -53,7 +53,7 @@
 
         public List<SummaryPocketModel> SummaryPockets { get; set; }
     }
-    
+
     public class SummaryFixedExpensesModel
     {
         public Guid Id { get; set; }
@@ -75,7 +75,7 @@
         public decimal Budget { get; set; }
         public decimal Spent { get; set; }
         public decimal Left { get; set; }
-        public int PercentajeSpent { get; set; } 
+        public int PercentajeSpent { get; set; }
     }
 
     public class SummaryPocketModel
