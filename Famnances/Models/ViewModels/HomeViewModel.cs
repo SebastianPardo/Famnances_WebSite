@@ -5,7 +5,10 @@
         public HomeViewModel()
         {
             PeriodLeft = PeriodBudget - PeriodSpent;
+            PeriodPercentage = PeriodBudget == 0 ? 0 : (int)((PeriodSpent / PeriodBudget) * 100);
+            PeriodSavingsPercentage = Savings == 0 ? 0 : (int)((PeriodSavingsSpent / Savings) * 100);
             PeriodSavingsLeft = Savings - PeriodSavingsSpent;
+
         }
 
         public bool ToBeClosed { get; set; }
@@ -13,10 +16,12 @@
         public decimal PeriodBudget { get; set; }
         public decimal PeriodSpent { get; set; }
         public decimal PeriodLeft { get; set; }
+        public decimal PeriodPercentage { get; set; }
         public decimal Chequing { get; set; }
         public decimal Savings { get; set; }
         public decimal PeriodSavingsSpent { get; set; }
         public decimal PeriodSavingsLeft { get; set; }
+        public decimal PeriodSavingsPercentage { get; set; }
         public decimal HomeSavings { get; set; }
 
         public List<RoommateModel> Roommates { get; set; }
@@ -38,10 +43,12 @@
 
         public decimal TotalFixedExpenses { get; set; }
         public decimal PaidFixedExpenses { get; set; }
+        public decimal PercentajePaidFixedExpenses { get; set; }
         public List<SummaryFixedExpensesModel> SummaryFixedExpenses { get; set; }
 
         public decimal TotalBudget { get; set; }
         public decimal BudgetSpent { get; set; }
+        public decimal PercentajeBudgetSpent { get; set; }
         public List<SummaryBudgetModel> SummaryBudgets { get; set; }
 
         public List<SummaryPocketModel> SummaryPockets { get; set; }
