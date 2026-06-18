@@ -10747,6 +10747,11 @@ button.list-group-item-gray {
     color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
 }
 
+.text-tertiary {
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-tertiary-rgb), var(--bs-text-opacity)) !important;
+}
+
 .text-success {
     --bs-text-opacity: 1;
     color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
@@ -10832,6 +10837,11 @@ button.list-group-item-gray {
     color: inherit !important;
 }
 
+.bg-card {
+    --bs-bg-opacity: 1;
+    background-color: var(--bs-minicard-bg) !important;
+}
+
 .bg-primary {
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
@@ -10840,6 +10850,11 @@ button.list-group-item-gray {
 .bg-secondary {
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-secondary-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-tertiary {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-tertiary-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-success {

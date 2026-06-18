@@ -34,6 +34,7 @@
     --bs-gray-900: #212529;
     --bs-primary-rgb: 47, 111, 87;
     --bs-secondary-rgb: 95, 168, 160;
+    --bs-tertiary-rgb: 212, 163, 115;
     --bs-success-rgb: 4, 191, 85;
     --bs-info-rgb: 5, 163, 255;
     --bs-warning-rgb: 255, 201, 79;
@@ -182,20 +183,6 @@
         border-color: #2f8f6f;
     }
 
-.btn:hover {
-    background: var(--bs-primary-hover);
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: var(--bs-primary-hover);
-    --bs-btn-hover-border-color: var(--bs-primary-hover);
-}
-
-.btn-tertiary:hover {
-    color: var(--bs-light);
-    background-color: var(--bs-tertiary-hover);
-    border-color: var(--bs-tertiary-hover);
-    outline: 4px solid var(--bs-teal);
-}
-
 .btn-outline-primary {
     color: var(--bs-primary);
     --bs-btn-color: var(--bs-primary);
@@ -212,6 +199,27 @@
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: var(--bs-primary);
     --bs-gradient: none;
+}
+
+a.btn-primary {
+    color: var(--bs-primary);
+}
+a.btn-primary:hover {
+    color: var(--bs-secondary);
+}
+
+.btn:hover {
+    background: var(--bs-primary-hover);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--bs-primary-hover);
+    --bs-btn-hover-border-color: var(--bs-primary-hover);
+}
+
+.btn-tertiary:hover {
+    color: var(--bs-light);
+    background-color: var(--bs-tertiary-hover);
+    border-color: var(--bs-tertiary-hover);
+    outline: 4px solid var(--bs-teal);
 }
 
 .control-label {

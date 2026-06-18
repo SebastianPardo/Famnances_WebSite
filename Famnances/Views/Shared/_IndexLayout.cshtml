@@ -10,44 +10,6 @@
 <div class="card minicard border-primary">
     <div class="card-body p-1 pt-2">
         <div class="row justify-content-center text-center">
-
-            <div class="col-12 col-md-4 order-1 order-md-2 text-secondary mb-2 mb-md-0">
-                <div class="row mb-1">
-                    <h5>
-                        @DateTime.Parse(Context.Session.GetString(Constants.DATE_FROM)).ToString("MMM dd, yyyy")
-                        -
-                        @DateTime.Parse(Context.Session.GetString(Constants.DATE_TO)).ToString("MMM dd, yyyy")
-                    </h5>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 col-md-4 order-2 order-md-2 d-flex justify-content-center mb-3 mb-md-0">
-                        <ul class="pagination mb-0">
-                            <li class="page-item">
-                                <a class="btn btn-outline-secondary btn-sm"
-                                   asp-controller="Home"
-                                   asp-action="PreviousPeriod">
-                                    &laquo;
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="btn btn-outline-secondary btn-sm"
-                                   asp-controller="Home"
-                                   asp-action="CurrentPeriod">
-                                    @Localizer["Current"]
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="btn btn-outline-secondary btn-sm"
-                                   asp-controller="Home"
-                                   asp-action="NextPeriod">
-                                    &raquo;
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
             <div class="col-12 col-md-4 order-3 order-md-1 mb-2 mb-md-0">
                 <div class="text-secondary d-block d-md-none">
                     @Localizer["ChequingAccount"]

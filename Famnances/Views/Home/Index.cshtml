@@ -1,8 +1,6 @@
-﻿@using Famnances.Core.Utils.Helpers
-@model Famnances.Models.ViewModels.HomeViewModel
+﻿@model Famnances.Models.ViewModels.HomeViewModel
 
 @using Microsoft.AspNetCore.Mvc.Localization
-@using System.Globalization
 @inject IViewLocalizer Localizer
 
 @{
@@ -21,359 +19,334 @@
     <div class=" col-12 mb-1">
         <div class="card minicard">
             <div class="card-body">
-                <div class="card-title d-flex justify-content-between mb-4">
-                    <div class="col-7 d-flex align-items-start">
-                        <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/calendar.png"
-                                 alt="chart success"
-                                 class="rounded" />
+                <div class="card-title">
+                    <div class="col-12 align-items-start">
+                        <span class="d-block h3">Balance</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12 d-flex justify-content-between">
+                        <span class="fw-semibold d-flex d-block h4 mb-0">Mensualmente</span>
+                        <span class="fw-semibold d-block text-primary h4 mb-0">$@Model.PeriodBudget</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-secondary" style="width: 25%"></div>
                         </div>
-                        <span class="fw-semibold d-block mb-1 fs-4 me-2">@Localizer["Period"]</span>
-                    </div>
-                    <div class="col-5 align-items-end">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="btn btn-sm btn-secondary" asp-action="PreviousPeriod" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="btn btn-sm btn-secondary" asp-action="CurrentPeriod">@Localizer["Current"]</a></li>
-                            <li class="page-item">
-                                <a class="btn btn-sm btn-secondary" asp-action="NextPeriod" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
-                <div class="col text-end">
-                    <h5 class="card-title mb-2 text-primary">@Model.PeriodStartDate.ToString("MMM dd, yyyy")  -  @Model.PeriodEndDate.ToString("MMM dd, yyyy")</h5>
-                </div>
-                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
-            </div>
-        </div>
-    </div>
-    <div class=" col-12 mb-1">
-        <div class="card minicard">
-            <div class="card-body">
-                <div class="card-title d-flex">
-                    <div class="col-11 d-flex align-items-start">
-                        <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/wallet-dark.png"
-                                 alt="chart success"
-                                 class="rounded" />
-                        </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["MoneyPeriod"]</span>
-                    </div>
-                </div>
-                <div class="col text-end">
-                    <h3 class="card-title mb-2 text-secondary">$@Model.PeriodBudget</h3>
-                </div>
-                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
-            </div>
-        </div>
-    </div>
-    <div class=" col-12 mb-1">
-        <div class="card minicard">
-            <div class="card-body">
-                <div class="card-title d-flex justify-content-between">
-                    <div class="col-11 d-flex align-items-start">
-                        <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/bank.png"
-                                 alt="chart success"
-                                 class="rounded" />
-                        </div>
-                        <span class="fw-semibold d-block mb-1 fs-5 me-2">@Localizer["BalancePeriod"]</span>
-                    </div>
-                </div>
-                <div class="col text-end">
-                    <h3 class="card-title mb-2 text-success">$@Model.PeriodBalance</h3>
-                </div>
-                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
-            </div>
-        </div>
-    </div>
-    <div class=" col-12 mb-1">
-        <div class="card minicard">
-            <div class="card-body">
-                <a class="stretched-link" asp-controller="Outflows" asp-action="Index"></a>
-                <div class="card-title d-flex">
-                    <div class="col-11 d-flex align-items-start">
-                        <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/expense.png"
-                                 alt="chart success"
-                                 class="rounded" />
-                        </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["Expenses"]</span>
-                    </div>
-                </div>
-                <div class="col text-end">
-                    <h3 class="card-title mb-2 text-danger">$@Model.PeriodExpenses</h3>
-                </div>
-                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class=" col-12 mb-1">
-        <div class="card minicard">
-            <div class="card-body">
-                <div class="card-title d-flex justify-content-between">
-                    <div class="col-11 d-flex align-items-start">
-                        <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/home.png"
-                                 alt="chart success"
-                                 class="rounded" />
-                        </div>
-                        <span class="fw-semibold d-block mb-1 fs-4 me-2">@Localizer["HomeSavings"]</span>
-                    </div>
-                </div>
-                <div class="col text-end">
-                    <h3 class="card-title mb-2 text-primary">$@Model.HomeSavings</h3>
-                </div>
-                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
-            </div>
-        </div>
-    </div>
-    <div class=" col-12 mb-1">
-        <div class="card minicard">
-            <div class="card-body">
-                <a class="stretched-link" asp-controller="Inflows" asp-action="Index"></a>
-                <div class="card-title d-flex">
-                    <div class="col-11 d-flex align-items-start">
-                        <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/piggy-dark.png"
-                                 alt="chart success"
-                                 class="rounded" />
-                        </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["ChequingAccount"]</span>
-                    </div>
-                </div>
-                <div class="col text-end">
-                    <h3 class="card-title mb-2 text-secondary">$@Model.Chequing</h3>
-                </div>
-                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
-            </div>
-        </div>
-    </div>
-    <div class=" col-12 mb-1">
-        <div class="card minicard">
-            <div class="card-body">
-                <a class="stretched-link" asp-controller="Savings" asp-action="Index"></a>
-                <div class="card-title d-flex">
-                    <div class="col-11 d-flex align-items-start">
-                        <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/piggy.png"
-                                 alt="chart success"
-                                 class="rounded" />
-                        </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["SavingsAccount"]</span>
-                    </div>
-                </div>
-                <div class="col text-end">
-                    <h3 class="card-title mb-2 text-success">$@Model.Savings</h3>
-                </div>
-                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
-            </div>
-        </div>
-    </div>
-    <div class=" col-12 mb-1">
-        <div class="card minicard">
-            <div class="card-body">
-                <a class="stretched-link" asp-controller="Savings" asp-action="Index"></a>
-                <div class="card-title d-flex">
-                    <div class="col-11 d-flex align-items-start">
-                        <div class="avatar flex-shrink-0 me-2">
-                            <img src="~/images/icons/dollar.png"
-                                 alt="chart success"
-                                 class="rounded" />
-                        </div>
-                        <span class="fw-semibold d-block mb-1 fs-4">@Localizer["SavingsExpenses"]</span>
-                    </div>
-                </div>
-                <div class="col text-end">
-                    <h3 class="card-title mb-2 text-danger">$@Model.PeriodSavingsExpeses</h3>
-                </div>
-                @* <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> *@
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="card minicard">
-            <div class="card-body">
-                <div class="card-title d-flex">
-                    <span class="fw-semibold d-block mb-1 fs-4">@Localizer["FixedExpenses"]</span>
-                </div>
-                <div class="col-md">
-                    <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
-
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-between">
                         @{
-                            int i = 1;
+                            var spent = Model.PeriodBudget - Model.PeriodBalance;
                         }
-                        @foreach (var roommate in Model.Roommates)
-                        {
-                            <div class="accordion-item card">
-                                <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
-                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-@i" aria-controls="accordionIcon-@i">
-                                        @roommate.Name
-                                    </button>
-                                </h2>
+                        <span class="d-flex d-block h6 mb-0">@spent spent</span>
+                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodBalance left</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" col-12 mb-1">
+        <div class="card minicard">
+            <div class="card-body">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-2 text-center bg-primary rounded-circle d-flex align-items-center justify-content-center ms-2">
+                        <i class="bi bi-bank text-white fs-1"></i>
+                    </div>
+                    <div class="col-9">
+                        <span class="fw-semibold d-block h3 mb-0">@Localizer["ChequingAccount"]</span>
+                        <span class="fw-semibold d-block text-primary h3 mb-0">$@Model.Chequing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" col-12 mb-1">
+        <div class="card minicard">
+            <div class="card-body">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-2 text-center bg-tertiary rounded-circle d-flex align-items-center justify-content-center ms-2">
+                        <i class="bi bi-piggy-bank text-white fs-1"></i>
+                    </div>
+                    <div class="col-9">
+                        <span class="fw-semibold d-block h3 mb-0">@Localizer["SavingsAccount"]</span>
+                        <span class="fw-semibold d-block text-tertiary h3 mb-0">$@Model.Savings</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" col-12 mb-1">
+        <div class="card minicard">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex justify-content-between">
+                        <span class="fw-semibold d-flex d-block h4 mb-0">Savings balance</span>
+                        <span class="fw-semibold d-block text-primary h4 mb-0">$@Model.Savings</span>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar bg-secondary" style="width: 25%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-between">
+                        @{
+                            var savingsSpent = Model.Savings - Model.PeriodSavingsExpeses;
+                        }
+                        <span class="d-flex d-block h6 mb-0">$@savingsSpent spent</span>
+                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodSavingsExpeses left</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" col-12 mb-1">
+        <div class="card minicard">
+            <div class="card-body">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-2 text-center bg-secondary rounded-circle d-flex align-items-center justify-content-center ms-2">
+                        <i class="bi bi-piggy-bank-fill text-white fs-1"></i>
+                    </div>
+                    <div class="col-9">
+                        <span class="fw-semibold d-block h3 mb-0">@Localizer["HomeSavings"]</span>
+                        <span class="fw-semibold d-block text-secondary h3 mb-0">$@Model.HomeSavings</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <span class="fw-semibold d-block mb-2 mt-4 h4">@Localizer["FixedExpenses"]</span>
+        <div class="col-md">
+            <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
 
-                                <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
-                                    <div class="accordion-body">
-                                        <ul class="list-group">
-                                            @foreach (var fixedExpense in roommate.SummaryFixedExpenses)
-                                            {
-                                                <li class="list-group-item">
+                @{
+                    int i = 1;
+                }
+                @foreach (var roommate in Model.Roommates)
+                {
+                    <div class="accordion-item card mb-2 bg-card">
+                        <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
+                            <button type="button" class="accordion-button collapsed bg-card text-black pb-0" data-bs-toggle="collapse" data-bs-target="#accordionIcon-@i" aria-controls="accordionIcon-@i">
+                                @roommate.Name
+                            </button>
+                        </h2>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end mb-1">
+                                <span class="d-block text-black h6 mb-0 me-2 small">$50/$100 paid</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height:6px">
+                                    <div class="progress-bar bg-primary" style="width: 25%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                            <div class="accordion-body">
+                                <ul class="list-group">
+                                    @foreach (var fixedExpense in roommate.SummaryFixedExpenses)
+                                    {
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-6 col-md-6 position-relative">
+                                                    @if (fixedExpense.Id != Guid.Empty)
+                                                    {
+                                                        <a class="stretched-link" asp-controller="Outflows" asp-action="DetailsFixedExpenses" asp-route-id=@fixedExpense.Id></a>
+                                                    }
                                                     <div class="row">
-                                                        <div class="col-6 col-md-6 position-relative">
-                                                            @if (fixedExpense.Id != Guid.Empty)
+                                                        <div class="col text-primary"><h5 class="mb-0">@fixedExpense.Name</h5></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col text-primary"><small class="mb-0">$@fixedExpense.Value</small></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-6">
+                                                    <div class="col-md-auto text-end fw-semibold">
+                                                        @if (!fixedExpense.WasPaid)
+                                                        {
+                                                            @if (roommate.IsCurrentUser)
                                                             {
-                                                                <a class="stretched-link" asp-controller="Outflows" asp-action="DetailsFixedExpenses" asp-route-id=@fixedExpense.Id></a>
+                                                                <form asp-controller="Outflows" asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
+                                                                    <button type="submit" class="btn btn-tertiary">@Localizer["Pay"]</button>
+                                                                </form>
                                                             }
-                                                            <div class="row">
-                                                                <div class="col text-primary"><h5 class="mb-0">@fixedExpense.Name</h5></div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col text-primary"><small class="mb-0">$@fixedExpense.Value</small></div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-6 col-md-6">
-                                                            <div class="col-md-auto text-end fw-semibold">
-                                                                @if (!fixedExpense.WasPaid)
-                                                                {
-                                                                    @if (roommate.IsCurrentUser)
-                                                                    {
-                                                                        <form asp-controller="Outflows" asp-action="PayFixedExpenses" asp-route-id="@fixedExpense.Id" method="post" style="display:inline;">
-                                                                            <button type="submit" class="btn btn-indigo">@Localizer["Pay"]</button>
-                                                                        </form>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <h5 class="text-danger mb-0">@Localizer["Unpaid"]</h5>
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    <h5 class="text-success mb-0">@Localizer["Paid"]</h5>
-                                                                }
-                                                            </div>
-                                                        </div>
+                                                            else
+                                                            {
+                                                                <h5 class="text-danger mb-0">@Localizer["Unpaid"]</h5>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <h5 class="text-success mb-0">@Localizer["Paid"]</h5>
+                                                        }
                                                     </div>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
-                                </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
                             </div>
-                            i++;
-                        }
+                        </div>
                     </div>
-                </div>
+                    i++;
+                }
             </div>
         </div>
     </div>
     <div class="col-12">
-        <div class="card minicard">
-            <div class="card-body">
-                <div class="card-title d-flex">
-                    <span class="fw-semibold d-block mb-1 fs-4">@Localizer["Budgets"]</span>
-                </div>
-                <div class="col-md">
-                    <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
-                        @foreach (var roommate in Model.Roommates)
-                        {
-                            <div class="accordion-item card">
-                                <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
-                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-@i" aria-controls="accordionIcon-@i">
-                                        @roommate.Name
-                                    </button>
-                                </h2>
-
-                                <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
-                                    <div class="accordion-body">
-                                        <ul class="list-group">
-                                            @foreach (var budget in roommate.SummaryBudgets)
-                                            {
-                                                var balance = budget.Budget - budget.Spent;
-                                                <li class="list-group-item">
-                                                    @if (budget.Id != Guid.Empty)
-                                                    {
-                                                        <a class="stretched-link" asp-controller="Budgets" asp-action="Details" asp-route-id=@budget.Id></a>
-                                                    }
-                                                    <div class="row">
-                                                        <div class="col-6 col-md-6 text-primary"><h5 class="mb-0">@budget.Name</h5></div>
-                                                        <div class="col-6 col-md-6 text-end fw-semibold align-self-end"><h5 class="text-success mb-0">$@balance</h5></div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-6 col-md-6 text-start text-primary"><small class="mb-0">$@budget.Budget</small></div>
-                                                        <div class="col-6 col-md-6 text-end fw-semibold"><small class="text-danger mb-0"><i class="bx bx-down-arrow-alt"></i>$@budget.Spent</small></div>
-                                                    </div>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
+        <span class="fw-semibold d-block mt-4 mb-2 h4">@Localizer["Budgets"]</span>
+        <div class="col-md">
+            <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
+                @foreach (var roommate in Model.Roommates)
+                {
+                    <div class="accordion-item card mb-2 bg-card">
+                        <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
+                            <button type="button" class="accordion-button collapsed bg-card text-black pb-0" data-bs-toggle="collapse" data-bs-target="#accordionIcon-@i" aria-controls="accordionIcon-@i">
+                                @roommate.Name
+                            </button>
+                        </h2>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end mb-1">
+                                <span class="d-block text-black h6 mb-0 me-2 small">$50/$100 used</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height:6px">
+                                    <div class="progress-bar bg-primary" style="width: 25%"></div>
                                 </div>
                             </div>
-                            i++;
-                        }
+                        </div>
+
+                        <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                            <div class="accordion-body">
+                                <ul class="list-group">
+                                    @foreach (var budget in roommate.SummaryBudgets)
+                                    {
+                                        var balance = budget.Budget - budget.Spent;
+                                        if (budget.Id != Guid.Empty)
+                                        {
+                                            <a class="stretched-link" asp-controller="Budgets" asp-action="Details" asp-route-id=@budget.Id></a>
+                                        }
+                                        <li class="list-group-item">
+                                            <div class="row mb-2">
+                                                <div class="col-12 d-flex justify-content-between">
+                                                    <span class="fw-semibold d-flex d-block h5 mb-0">@budget.Name</span>
+                                                    <span class="fw-semibold d-block text-primary h5 mb-0">$@budget.Budget</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <div class="progress"
+                                                         role="progressbar"
+                                                         aria-label="Success example"
+                                                         aria-valuenow="25" aria-valuemin="0"
+                                                         aria-valuemax="100"
+                                                         style="height:8px">
+                                                        <div class="progress-bar bg-secondary" style="width: 25%"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 d-flex justify-content-between">
+                                                    <span class="d-flex d-block small mb-0">$@budget.Spent spent</span>
+                                                    <span class="d-block text-primary small mb-0">$@balance left</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    i++;
+                }
             </div>
         </div>
     </div>
     <div class="col-12">
-        <div class="card minicard">
-            <div class="card-body">
-                <div class="card-title d-flex">
-                    <span class="fw-semibold d-block mb-1 fs-4">@Localizer["SavingPockets"]</span>
-                </div>
-                <div class="col-md">
-                    <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
-                        @foreach (var roommate in Model.Roommates)
-                        {
-                            <div class="accordion-item card">
-                                <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
-                                    <button type="button"
-                                            class="accordion-button collapsed"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#accordionIcon-@i"
-                                            aria-controls="accordionIcon-@i">
-                                        @roommate.Name
-                                    </button>
-                                </h2>
-
-                                <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
-                                    <div class="accordion-body">
-                                        <ul class="list-group">
-                                            @foreach (var pocket in roommate.SummaryPockets)
-                                            {
-                                                <li class="list-group-item">
-                                                    @if (pocket.Id != Guid.Empty)
-                                                    {
-                                                        <a class="stretched-link" asp-controller="Savings" asp-action="DetailsPocket" asp-route-id=@pocket.Id></a>
-                                                    }
-                                                    <div class="row">
-                                                        <div class="col-6 col-md-6 text-primary"><h5 class="mb-0">@pocket.Name</h5></div>
-                                                        <div class="col-6 col-md-6 text-end fw-semibold"><h5 class="text-success mb-0">$@pocket.Value</h5></div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col text-end fw-semibold"><small class="text-danger "><i class="bx bx-down-arrow-alt mb-0"></i>$@pocket.Spent</small></div>
-                                                    </div>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
+        <span class="fw-semibold d-block mt-4 mb-2 h4">@Localizer["SavingPockets"]</span>
+        <div class="col-md">
+            <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
+                @foreach (var roommate in Model.Roommates)
+                {
+                    <div class="accordion-item card mb-2 bg-card">
+                        <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
+                            <button type="button"
+                                    class="accordion-button collapsed bg-card text-black pb-0"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#accordionIcon-@i"
+                                    aria-controls="accordionIcon-@i">
+                                @roommate.Name
+                            </button>
+                        </h2>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end mb-1">
+                                <span class="d-block text-black h6 mb-0 me-2 small text-danger">$50 spent</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height:6px">
+                                    <div class="progress-bar bg-primary" style="width: 25%"></div>
                                 </div>
                             </div>
-                            i++;
-                        }
+                        </div>
+
+                        <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                            <div class="accordion-body">
+                                <ul class="list-group">
+                                    @foreach (var pocket in roommate.SummaryPockets)
+                                    {
+                                        <li class="list-group-item">
+                                            @if (pocket.Id != Guid.Empty)
+                                            {
+                                                <a class="stretched-link" asp-controller="Savings" asp-action="DetailsPocket" asp-route-id=@pocket.Id></a>
+                                            }
+
+                                            <div class="row mb-2">
+                                                <div class="col-12 d-flex justify-content-between">
+                                                    <span class="fw-semibold d-flex d-block h5 mb-0">@pocket.Name</span>
+                                                    <span class="fw-semibold d-block text-primary h5 mb-0">$@pocket.Value</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-12">
+                                                    <div class="progress"
+                                                         role="progressbar"
+                                                         aria-label="Success example"
+                                                         aria-valuenow="25" aria-valuemin="0"
+                                                         aria-valuemax="100"
+                                                         style="height:8px">
+                                                        <div class="progress-bar bg-secondary" style="width: 25%"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 d-flex justify-content-between">
+                                                    <span class="d-flex d-block small mb-0">$@pocket.Spent spent</span>
+                                                    <span class="d-block text-primary small mb-0">$0 left</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    i++;
+                }
             </div>
         </div>
     </div>

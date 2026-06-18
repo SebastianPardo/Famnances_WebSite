@@ -1,7 +1,7 @@
-﻿@using Famnances.Core.Utils.Helpers
+﻿@using Famnances.Helpers
+
 
 @using Microsoft.AspNetCore.Mvc.Localization
-@using System.Globalization
 @inject IViewLocalizer Localizer
 
 <!DOCTYPE html>
@@ -42,6 +42,21 @@
                                 </div>
                             </div>
                             <hr class="mb-4" />
+                            <div class="row text-center justify-content-center">
+                                <div class="col-1 col-md-1">
+                                    <a class="btn-primary" asp-controller="Home" asp-action="PreviousPeriod"><i class="bi bi-chevron-left"></i></a>
+                                </div>
+                                <div class="col-10 col-md-10">
+                                    <h6 class="fw-semibold">
+                                        @DateTime.Parse(Context.Session.GetString(Constants.DATE_FROM)).ToString("MMM dd, yyyy").ToUpper()
+                                        -
+                                        @DateTime.Parse(Context.Session.GetString(Constants.DATE_TO)).ToString("MMM dd, yyyy").ToUpper()
+                                    </h6>
+                                </div>
+                                <div class="col-1 col-md-1">
+                                    <a class="btn-primary" asp-controller="Home" asp-action="NextPeriod"><i class="bi bi-chevron-right"></i></a>
+                                </div>
+                            </div>
                             @RenderBody()
                         </div>
                     </div>
