@@ -5,6 +5,7 @@ using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
+using Google.Apis.Util;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,15 +19,21 @@ namespace Famnances.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         IHttpHelper _httpHelper;
+        ILanguageHelper _languageHelper;
 
-        public HomeController(ILogger<HomeController> logger, IHttpHelper httpHelper)
+        public HomeController(ILogger<HomeController> logger, IHttpHelper httpHelper, ILanguageHelper languageHelper)
         {
             _logger = logger;
             _httpHelper = httpHelper;
+            _languageHelper = languageHelper;
         }
 
         public async Task<IActionResult> Index()
         {
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+
             var dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM);
             MiniSummaryModel? miniSummaryModel = new MiniSummaryModel();
 
@@ -51,6 +58,7 @@ namespace Famnances.Controllers
             }
 
             var homeSummary = await _httpHelper.Get<HomeViewModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
+            homeSummary.PeriodName = await _languageHelper.GetPeriodName(culture, user.Period);
             return View(homeSummary);
         }
 
@@ -66,10 +74,10 @@ namespace Famnances.Controllers
             List<RemainderBalance> remainderBalance = summary.Select(e =>
                 new RemainderBalance
                 {
-                    BudgetBalanceId = e.BudgetBalanceId,
                     BudgetId = e.Id,
                     BudgetName = e.Name,
-                    Remainder = e.Budget - e.Spent
+                    Remainder = e.Budget - e.Spent,
+                    BudgetBalanceId = e.BudgetPeriodBalanceId
                 }).Where(e => e.Remainder > 0).ToList();
 
             var savingPockets = await _httpHelper.Get<List<SavingsPocket>>(Constants.SAVINGS_POCKETS_URI);

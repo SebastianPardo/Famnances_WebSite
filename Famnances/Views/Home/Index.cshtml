@@ -39,11 +39,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
-                        @{
-                            var spent = Model.PeriodBudget - Model.PeriodBalance;
-                        }
-                        <span class="d-flex d-block h6 mb-0">@spent spent</span>
-                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodBalance left</span>
+                        <span class="d-flex d-block h6 mb-0">$@Model.PeriodSpent spent</span>
+                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodLeft left</span>
                     </div>
                 </div>
             </div>
@@ -97,11 +94,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
-                        @{
-                            var savingsSpent = Model.Savings - Model.PeriodSavingsExpeses;
-                        }
-                        <span class="d-flex d-block h6 mb-0">$@savingsSpent spent</span>
-                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodSavingsExpeses left</span>
+                        <span class="d-flex d-block h6 mb-0">$@Model.PeriodSavingsSpent spent</span>
+                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodSavingsLeft left</span>
                     </div>
                 </div>
             </div>
