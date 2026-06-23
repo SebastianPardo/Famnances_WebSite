@@ -12,9 +12,9 @@ namespace Famnances.Models.ViewModels
         public decimal PeriodPercentage => PeriodBudget == 0 ? 0 : (int)((PeriodSpent / PeriodBudget) * 100);
         public decimal Chequing { get; set; }
         public decimal Savings { get; set; }
-        public decimal PeriodSavings => Savings + PeriodSavingsSpent;
         public decimal PeriodSavingsSpent { get; set; }
-        public decimal PeriodSavingsLeft => Savings - PeriodSavingsSpent;
+        public decimal PeriodSavings => Savings + PeriodSavingsSpent;
+        public decimal PeriodSavingsLeft => PeriodSavings - PeriodSavingsSpent;
         public decimal PeriodSavingsPercentage => Savings == 0 ? 0 : (int)((PeriodSavingsSpent / Savings) * 100);
         public decimal HomeSavings { get; set; }
 

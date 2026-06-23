@@ -314,7 +314,7 @@
                                             <div class="row mb-2">
                                                 <div class="col-12 d-flex justify-content-between">
                                                     <span class="fw-semibold d-flex d-block h5 mb-0">@pocket.Name</span>
-                                                    <span class="fw-semibold d-block text-primary h5 mb-0">$@pocket.InitialValue</span>
+                                                    <span class="fw-semibold d-block text-primary h5 mb-0">$@pocket.Value</span>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -346,7 +346,7 @@
                                             <div class="row">
                                                 <div class="col-12 d-flex justify-content-between">
                                                     <span class="d-flex d-block small mb-0">$@(pocket.Goal != 0 ? $"{pocket.Value} saved" : $"{pocket.Spent} spent")</span>
-                                                    <span class="d-block text-primary small mb-0">$@(pocket.Goal != 0 ? $"{pocket.Goal} goal" : $"{pocket.Left} left")</span>
+                                                    <span class="d-block text-primary small mb-0">@(pocket.Goal != 0 ? $"${pocket.Goal} goal" : string.Empty)</span>
                                                 </div>
                                             </div>
                                         </li>
