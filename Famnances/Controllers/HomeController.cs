@@ -5,7 +5,6 @@ using Famnances.DataCore.Entities;
 using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
-using Google.Apis.Util;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -34,31 +33,17 @@ namespace Famnances.Controllers
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
             var culture = Thread.CurrentThread.CurrentUICulture.ToString();
 
-            var dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM);
-            MiniSummaryModel? miniSummaryModel = new MiniSummaryModel();
-
-            if (string.IsNullOrEmpty(dateFrom))
-                miniSummaryModel = await GetHeaderSummary(DateTimeEast.Now.ToString("yyyy-MM-dd"));
-            else
-                miniSummaryModel = await GetHeaderSummary(dateFrom);
+            var dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM) ?? DateTimeEast.Now.ToString("yyyy-MM-dd");
+            MiniSummaryModel? miniSummaryModel = await GetHeaderSummary(dateFrom);
 
             if (miniSummaryModel == null)
             {
-                TotalsByPeriod totalsByPeriod = await _httpHelper.Get<TotalsByPeriod>($"{Constants.TOTALSBYPERIOD_URI}/GetLastPeriod");
-
-                if (totalsByPeriod == null)
-                    return RedirectToAction(nameof(VeryFirstPeriod));
-
-                await GetHeaderSummary(totalsByPeriod.PeriodDateStart.ToString("yyyy-MM-dd"));
                 return RedirectToAction(nameof(ClosePeriod));
             }
-            else
-            {
-                dateFrom = HttpContext.Session.GetString(Constants.DATE_FROM);
-            }
 
-            var homeSummary = await _httpHelper.Get<HomeViewModel>($"{Constants.ACCOUNTING_URI}/CurentTotals/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
+            var homeSummary = await _httpHelper.Get<HomeViewModel>($"{Constants.ACCOUNTING_URI}/PeriodSummary/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
             homeSummary.PeriodName = await _languageHelper.GetPeriodName(culture, user.Period);
+            homeSummary.ToBeClosed = miniSummaryModel.ToBeClosed;
             return View(homeSummary);
         }
 
@@ -70,6 +55,9 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> ClosePeriod()
         {
+            var period = await _httpHelper.Get<TotalsByPeriod>($"{Constants.TOTALSBYPERIOD_URI}/GetLastPeriod");
+            GetHeaderSummary(period.PeriodDateStart.ToString("yyyy-MM-dd"));
+
             var summary = await _httpHelper.Get<List<SummaryBudgetModel>>($"{Constants.BUDGETS_URI}/GetSummary");
             List<RemainderBalance> remainderBalance = summary.Select(e =>
                 new RemainderBalance
@@ -134,20 +122,13 @@ namespace Famnances.Controllers
 
         private async Task<MiniSummaryModel?> GetHeaderSummary(string date)
         {
-            var summaryModel = await _httpHelper.Get<MiniSummaryModel?>($"{Constants.ACCOUNTING_URI}/GetHeaderSummary/{date}");
+            var summaryModel = await _httpHelper.Get<MiniSummaryModel?>($"{Constants.ACCOUNTING_URI}/PeriodMiniSummary/{date}");
             if (summaryModel != null)
             {
                 HttpContext.Session.SetString(Constants.DATE_FROM, summaryModel.PeriodFrom.ToString("yyyy-MM-dd"));
                 HttpContext.Session.SetString(Constants.DATE_TO, summaryModel.PeriodTo.ToString("yyyy-MM-dd"));
                 HttpContext.Session.SetString(Constants.CHEQUING, summaryModel.Chequing.ToString());
                 HttpContext.Session.SetString(Constants.SAVINGS, summaryModel.Savings.ToString());
-            }
-            else
-            {
-                HttpContext.Session.Remove(Constants.DATE_FROM);
-                HttpContext.Session.Remove(Constants.DATE_TO);
-                HttpContext.Session.Remove(Constants.CHEQUING);
-                HttpContext.Session.Remove(Constants.SAVINGS);
             }
             return summaryModel;
         }

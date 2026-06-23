@@ -591,7 +591,7 @@ namespace Famnances.Controllers
             user.TotalBudget = currentMoney;
             await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
 
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.VeryFirstPeriod), "Home");
         }
         #endregion
 

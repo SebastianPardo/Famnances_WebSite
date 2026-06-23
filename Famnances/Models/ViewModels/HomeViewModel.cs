@@ -1,27 +1,21 @@
-﻿namespace Famnances.Models.ViewModels
+﻿using System.Runtime.InteropServices;
+
+namespace Famnances.Models.ViewModels
 {
     public class HomeViewModel
     {
-        public HomeViewModel()
-        {
-            PeriodLeft = PeriodBudget - PeriodSpent;
-            PeriodPercentage = PeriodBudget == 0 ? 0 : (int)((PeriodSpent / PeriodBudget) * 100);
-            PeriodSavingsPercentage = Savings == 0 ? 0 : (int)((PeriodSavingsSpent / Savings) * 100);
-            PeriodSavingsLeft = Savings - PeriodSavingsSpent;
-
-        }
-
         public bool ToBeClosed { get; set; }
         public string PeriodName { get; set; }
         public decimal PeriodBudget { get; set; }
         public decimal PeriodSpent { get; set; }
-        public decimal PeriodLeft { get; set; }
-        public decimal PeriodPercentage { get; set; }
+        public decimal PeriodLeft => PeriodBudget - PeriodSpent;
+        public decimal PeriodPercentage => PeriodBudget == 0 ? 0 : (int)((PeriodSpent / PeriodBudget) * 100);
         public decimal Chequing { get; set; }
         public decimal Savings { get; set; }
+        public decimal PeriodSavings => Savings + PeriodSavingsSpent;
         public decimal PeriodSavingsSpent { get; set; }
-        public decimal PeriodSavingsLeft { get; set; }
-        public decimal PeriodSavingsPercentage { get; set; }
+        public decimal PeriodSavingsLeft => Savings - PeriodSavingsSpent;
+        public decimal PeriodSavingsPercentage => Savings == 0 ? 0 : (int)((PeriodSavingsSpent / Savings) * 100);
         public decimal HomeSavings { get; set; }
 
         public List<RoommateModel> Roommates { get; set; }
@@ -29,29 +23,24 @@
 
     public class RoommateModel
     {
-        public RoommateModel()
-        {
-            TotalFixedExpenses = SummaryFixedExpenses == null ? 0 : SummaryFixedExpenses.Sum(e => e.Value);
-            PaidFixedExpenses = SummaryFixedExpenses == null ? 0 : SummaryFixedExpenses.Where(e => e.WasPaid).Sum(e => e.Value);
-
-            TotalBudget = SummaryBudgets == null ? 0 : SummaryBudgets.Sum(e => e.Budget);
-            BudgetSpent = SummaryBudgets == null ? 0 : SummaryBudgets.Sum(e => e.Spent);
-        }
-
         public string Name { get; set; }
         public bool IsCurrentUser { get; set; }
 
-        public decimal TotalFixedExpenses { get; set; }
-        public decimal PaidFixedExpenses { get; set; }
-        public decimal PercentajePaidFixedExpenses { get; set; }
         public List<SummaryFixedExpensesModel> SummaryFixedExpenses { get; set; }
+        public decimal TotalFixedExpenses => SummaryFixedExpenses == null ? 0 : SummaryFixedExpenses.Sum(e => e.Value);
+        public decimal PaidFixedExpenses => SummaryFixedExpenses == null ? 0 : SummaryFixedExpenses.Where(e => e.WasPaid).Sum(e => e.Value);
+        public decimal PercentajePaidFixedExpenses => TotalFixedExpenses == 0 ? 0 : (int)((PaidFixedExpenses / TotalFixedExpenses) * 100);
 
-        public decimal TotalBudget { get; set; }
-        public decimal BudgetSpent { get; set; }
-        public decimal PercentajeBudgetSpent { get; set; }
+
         public List<SummaryBudgetModel> SummaryBudgets { get; set; }
+        public decimal TotalBudget => SummaryBudgets == null ? 0 : SummaryBudgets.Sum(e => e.Budget);
+        public decimal BudgetSpent => SummaryBudgets == null ? 0 : SummaryBudgets.Sum(e => e.Spent);
+        public decimal PercentajeBudgetSpent => TotalBudget == 0 ? 0 : (int)((BudgetSpent / TotalBudget) * 100);
 
         public List<SummaryPocketModel> SummaryPockets { get; set; }
+        public decimal TotalSavings => SummaryPockets == null ? 0 : SummaryPockets.Sum(e => e.InitialValue);
+        public decimal SavingsSpent => SummaryPockets == null ? 0 : SummaryPockets.Sum(e => e.Spent);
+        public int PercentajeSavingSpent => SummaryPockets == null ? 0 : (int)((SavingsSpent / TotalSavings) * 100);
     }
 
     public class SummaryFixedExpensesModel
@@ -64,36 +53,25 @@
 
     public class SummaryBudgetModel
     {
-        public SummaryBudgetModel()
-        {
-            PercentajeSpent = Budget == 0 ? 0 : (int)((Spent / Budget) * 100);
-            Left = Budget - Spent;
-        }
         public Guid Id { get; set; }
         public Guid BudgetPeriodBalanceId { get; set; }
         public string Name { get; set; }
         public decimal Budget { get; set; }
         public decimal Spent { get; set; }
-        public decimal Left { get; set; }
-        public int PercentajeSpent { get; set; }
+        public decimal Left => Budget - Spent;
+        public int PercentajeSpent => Budget == 0 ? 0 : (int)((Spent / Budget) * 100);
     }
 
     public class SummaryPocketModel
     {
-        public SummaryPocketModel()
-        {
-            Left = Value - Spent;
-            PercentajeSpent = Value == 0 ? 0 : (int)((Spent / Value) * 100);
-
-            PercentajeSaved = Goal == 0 ? 0 : (int)((Value / Goal) * 100);
-        }
         public Guid Id { get; set; }
         public string Name { get; set; }
         public decimal Value { get; set; }
         public decimal Spent { get; set; }
-        public decimal Left { get; set; }
-        public int PercentajeSpent { get; set; }
+        public decimal InitialValue => Value + Spent;
+        public decimal Left => InitialValue - Spent;
+        public int PercentajeSpent => Value == 0 ? 0 : (int)((Spent / InitialValue) * 100);
         public decimal Goal { get; set; }
-        public decimal PercentajeSaved { get; set; }
+        public int PercentajeSaved => Goal == 0 ? 0 : (int)((Value / Goal) * 100);
     }
 }

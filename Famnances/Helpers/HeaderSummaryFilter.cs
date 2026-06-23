@@ -18,7 +18,7 @@ namespace Famnances.Helpers
 
             if (!string.IsNullOrEmpty(date))
             {
-                var summary = await _httpHelper.Get<MiniSummaryModel?>($"{Constants.ACCOUNTING_URI}/GetHeaderSummary/{date}");
+                var summary = await _httpHelper.Get<MiniSummaryModel?>($"{Constants.ACCOUNTING_URI}/PeriodMiniSummary/{date}");
                 if(summary != null)
                 {
                     context.HttpContext.Session.SetString(Constants.CHEQUING, summary.Chequing.ToString());
