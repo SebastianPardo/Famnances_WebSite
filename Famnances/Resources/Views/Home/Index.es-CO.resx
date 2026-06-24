@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BalancePeriod" xml:space="preserve">
-    <value>Dinero este periodo</value>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
   </data>
   <data name="Budgets" xml:space="preserve">
     <value>Presupuestos</value>
@@ -126,8 +126,8 @@
   <data name="ChequingAccount" xml:space="preserve">
     <value>Cuenta Corriente</value>
   </data>
-  <data name="Current" xml:space="preserve">
-    <value>Actual</value>
+  <data name="ClosePeriod" xml:space="preserve">
+    <value>Cerrar periodo</value>
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>Gastos</value>
@@ -135,8 +135,14 @@
   <data name="FixedExpenses" xml:space="preserve">
     <value>Gastos Fijos</value>
   </data>
+  <data name="Goal" xml:space="preserve">
+    <value>Objetivo</value>
+  </data>
   <data name="HomeSavings" xml:space="preserve">
     <value>Ahorros del hogar</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Disponible</value>
   </data>
   <data name="MoneyPeriod" xml:space="preserve">
     <value>Dinero por periodo</value>
@@ -150,16 +156,25 @@
   <data name="Period" xml:space="preserve">
     <value>Periodo</value>
   </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Ahorrado</value>
+  </data>
   <data name="SavingPockets" xml:space="preserve">
     <value>Bolsillos de ahorro</value>
   </data>
   <data name="SavingsAccount" xml:space="preserve">
     <value>Cuenta de Ahorros</value>
   </data>
-  <data name="SavingsExpenses" xml:space="preserve">
-    <value>Gastos de ahorros</value>
+  <data name="SavingsBalance" xml:space="preserve">
+    <value>Balance de ahorros</value>
+  </data>
+  <data name="Spent" xml:space="preserve">
+    <value>Gastado</value>
   </data>
   <data name="Unpaid" xml:space="preserve">
     <value>Sin pagar</value>
+  </data>
+  <data name="Used" xml:space="preserve">
+    <value>Usado</value>
   </data>
 </root>

@@ -11,7 +11,7 @@
 {
     <div class="row justify-content-center">
         <div class=" col-12 mb-4 text-center">
-            <a asp-action="ClosePeriod" class="btn btn-danger">Close Period</a>
+            <a asp-action="ClosePeriod" class="btn btn-danger">@Localizer["ClosePeriod"]</a>
         </div>
     </div>
 }
@@ -22,12 +22,12 @@
             <div class="card-body">
                 <div class="card-title">
                     <div class="col-12 align-items-start">
-                        <span class="d-block h3">Balance</span>
+                        <span class="d-block h3">@Localizer["Balance"]</span>
                     </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-12 d-flex justify-content-between">
-                        <span class="fw-semibold d-flex d-block h4 mb-0">Mensualmente</span>
+                        <span class="fw-semibold d-flex d-block h4 mb-0">@Model.PeriodName</span>
                         <span class="fw-semibold d-block text-primary h4 mb-0">$@Model.PeriodBudget</span>
                     </div>
                 </div>
@@ -40,8 +40,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
-                        <span class="d-flex d-block h6 mb-0">$@Model.PeriodSpent spent</span>
-                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodLeft left</span>
+                        <span class="d-flex d-block h6 mb-0">$@Model.PeriodSpent @Localizer["Spent"]</span>
+                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodLeft @Localizer["Left"]</span>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-12 d-flex justify-content-between">
-                        <span class="fw-semibold d-flex d-block h4 mb-0">Savings balance</span>
+                        <span class="fw-semibold d-flex d-block h4 mb-0">@Localizer["SavingsBalance"]</span>
                         <span class="fw-semibold d-block text-primary h4 mb-0">$@Model.PeriodSavings</span>
                     </div>
                 </div>
@@ -95,8 +95,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12 d-flex justify-content-between">
-                        <span class="d-flex d-block h6 mb-0">$@Model.PeriodSavingsSpent spent</span>
-                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodSavingsLeft left</span>
+                        <span class="d-flex d-block h6 mb-0">$@Model.PeriodSavingsSpent @Localizer["Spent"]</span>
+                        <span class="d-block text-primary h6 mb-0">$@Model.PeriodSavingsLeft @Localizer["Left"]</span>
                     </div>
                 </div>
             </div>
@@ -137,7 +137,7 @@
                         </h2>
                         <div class="row">
                             <div class="col-12 d-flex justify-content-end mb-1">
-                                <span class="d-block text-black h6 mb-0 me-2 small">$@roommate.PaidFixedExpenses / $@roommate.TotalFixedExpenses paid</span>
+                                <span class="d-block text-black h6 mb-0 me-2 small">$@roommate.PaidFixedExpenses / $@roommate.TotalFixedExpenses @Localizer["Paid"]</span>
                             </div>
                         </div>
                         <div class="row">
@@ -213,7 +213,7 @@
                         </h2>
                         <div class="row">
                             <div class="col-12 d-flex justify-content-end mb-1">
-                                <span class="d-block text-black h6 mb-0 me-2 small">$@roommate.BudgetSpent / $@roommate.TotalBudget used</span>
+                                <span class="d-block text-black h6 mb-0 me-2 small">$@roommate.BudgetSpent / $@roommate.TotalBudget @Localizer["Used"]</span>
                             </div>
                         </div>
                         <div class="row">
@@ -257,8 +257,8 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 d-flex justify-content-between">
-                                                    <span class="d-flex d-block small mb-0">$@budget.Spent spent</span>
-                                                    <span class="d-block text-primary small mb-0">$@balance left</span>
+                                                    <span class="d-flex d-block small mb-0">$@budget.Spent @Localizer["Spent"]</span>
+                                                    <span class="d-block text-primary small mb-0">$@balance @Localizer["Left"]</span>
                                                 </div>
                                             </div>
                                         </li>
@@ -290,7 +290,7 @@
                         </h2>
                         <div class="row">
                             <div class="col-12 d-flex justify-content-end mb-1">
-                                <span class="d-block text-black h6 mb-0 me-2 small text-danger">$@roommate.SavingsSpent spent</span>
+                                <span class="d-block text-black h6 mb-0 me-2 small text-danger">$@roommate.SavingsSpent @Localizer["Spent"]</span>
                             </div>
                         </div>
                         <div class="row">
@@ -345,8 +345,8 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 d-flex justify-content-between">
-                                                    <span class="d-flex d-block small mb-0">$@(pocket.Goal != 0 ? $"{pocket.Value} saved" : $"{pocket.Spent} spent")</span>
-                                                    <span class="d-block text-primary small mb-0">@(pocket.Goal != 0 ? $"${pocket.Goal} goal" : string.Empty)</span>
+                                                    <span class="d-flex d-block small mb-0">$@(pocket.Goal != 0 ? $"{pocket.Value} {Localizer["Saved"].Value}" : $"{pocket.Spent} {Localizer["Spent"].Value}")</span>
+                                                    <span class="d-block text-primary small mb-0">@(pocket.Goal != 0 ? $"${pocket.Goal} {Localizer["Goal"].Value}" : string.Empty)</span>
                                                 </div>
                                             </div>
                                         </li>

@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BalancePeriod" xml:space="preserve">
-    <value>Balance this Period</value>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
   </data>
   <data name="Budgets" xml:space="preserve">
     <value>Budgets</value>
@@ -126,8 +126,8 @@
   <data name="ChequingAccount" xml:space="preserve">
     <value>Chequing Account</value>
   </data>
-  <data name="Current" xml:space="preserve">
-    <value>Current</value>
+  <data name="ClosePeriod" xml:space="preserve">
+    <value>Close period</value>
   </data>
   <data name="Expenses" xml:space="preserve">
     <value>Expenses</value>
@@ -135,8 +135,14 @@
   <data name="FixedExpenses" xml:space="preserve">
     <value>Fixed Expenses</value>
   </data>
+  <data name="Goal" xml:space="preserve">
+    <value>Goal</value>
+  </data>
   <data name="HomeSavings" xml:space="preserve">
     <value>Home Savings</value>
+  </data>
+  <data name="Left" xml:space="preserve">
+    <value>Left</value>
   </data>
   <data name="MoneyPeriod" xml:space="preserve">
     <value>Money by Period</value>
@@ -150,16 +156,25 @@
   <data name="Period" xml:space="preserve">
     <value>Period</value>
   </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
   <data name="SavingPockets" xml:space="preserve">
     <value>Saving Pockets</value>
   </data>
   <data name="SavingsAccount" xml:space="preserve">
     <value>Savings Account</value>
   </data>
-  <data name="SavingsExpenses" xml:space="preserve">
+  <data name="SavingsBalance" xml:space="preserve">
     <value>Saving Expenses</value>
+  </data>
+  <data name="Spent" xml:space="preserve">
+    <value>Spent</value>
   </data>
   <data name="Unpaid" xml:space="preserve">
     <value>Unpaid</value>
+  </data>
+  <data name="Used" xml:space="preserve">
+    <value>Used</value>
   </data>
 </root>

@@ -61,11 +61,11 @@ namespace Famnances.Resources.Views.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Balance this Period.
+        ///   Looks up a localized string similar to Balance.
         /// </summary>
-        public static string BalancePeriod {
+        public static string Balance {
             get {
-                return ResourceManager.GetString("BalancePeriod", resourceCulture);
+                return ResourceManager.GetString("Balance", resourceCulture);
             }
         }
         
@@ -88,11 +88,11 @@ namespace Famnances.Resources.Views.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current.
+        ///   Looks up a localized string similar to Close period.
         /// </summary>
-        public static string Current {
+        public static string ClosePeriod {
             get {
-                return ResourceManager.GetString("Current", resourceCulture);
+                return ResourceManager.GetString("ClosePeriod", resourceCulture);
             }
         }
         
@@ -115,11 +115,29 @@ namespace Famnances.Resources.Views.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Goal.
+        /// </summary>
+        public static string Goal {
+            get {
+                return ResourceManager.GetString("Goal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home Savings.
         /// </summary>
         public static string HomeSavings {
             get {
                 return ResourceManager.GetString("HomeSavings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left.
+        /// </summary>
+        public static string Left {
+            get {
+                return ResourceManager.GetString("Left", resourceCulture);
             }
         }
         
@@ -160,6 +178,15 @@ namespace Famnances.Resources.Views.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saved.
+        /// </summary>
+        public static string Saved {
+            get {
+                return ResourceManager.GetString("Saved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saving Pockets.
         /// </summary>
         public static string SavingPockets {
@@ -178,11 +205,20 @@ namespace Famnances.Resources.Views.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Saving Expenses.
+        ///   Looks up a localized string similar to Savings Balance.
         /// </summary>
-        public static string SavingsExpenses {
+        public static string SavingsBalance {
             get {
-                return ResourceManager.GetString("SavingsExpenses", resourceCulture);
+                return ResourceManager.GetString("SavingsBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spent.
+        /// </summary>
+        public static string Spent {
+            get {
+                return ResourceManager.GetString("Spent", resourceCulture);
             }
         }
         
@@ -192,6 +228,15 @@ namespace Famnances.Resources.Views.Home {
         public static string Unpaid {
             get {
                 return ResourceManager.GetString("Unpaid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used.
+        /// </summary>
+        public static string Used {
+            get {
+                return ResourceManager.GetString("Used", resourceCulture);
             }
         }
     }
