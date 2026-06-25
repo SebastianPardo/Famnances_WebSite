@@ -159,6 +159,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SavingsLabels.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ViewModels\Savings\SavingsLabels.Designer.cs">
+      <DependentUpon>SavingsLabels.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\ViewModels\Users\CreateLabels.Designer.cs">
       <DependentUpon>CreateLabels.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -168,6 +173,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Summary.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Views\Savings\EditFixed.Designer.cs">
+      <DependentUpon>EditFixed.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Savings\Index.Designer.cs">
+      <DependentUpon>Index.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Savings\Create.Designer.cs">
+      <DependentUpon>Create.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Resources\Views\Users\Details.Designer.cs">
       <DependentUpon>Details.resx</DependentUpon>
@@ -264,6 +284,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SavingsLabels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ViewModels\Savings\SavingsLabels.resx">
+      <LastGenOutput>SavingsLabels.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\ViewModels\Users\CreateLabels.resx">
       <LastGenOutput>CreateLabels.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -271,6 +295,18 @@
     <EmbeddedResource Update="Resources\Views\Introduction\Summary.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Summary.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Savings\EditFixed.resx">
+      <LastGenOutput>EditFixed.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Savings\Index.resx">
+      <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Savings\Create.resx">
+      <LastGenOutput>Create.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Users\Details.resx">
       <LastGenOutput>Details.Designer.cs</LastGenOutput>

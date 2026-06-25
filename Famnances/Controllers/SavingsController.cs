@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System.Text.RegularExpressions;
 
 namespace Famnances.Controllers
 {
@@ -16,13 +17,13 @@ namespace Famnances.Controllers
     public class SavingsController : Controller
     {
         IHttpHelper _httpHelper;
-        ILanguageHelper _utilities;
+        ILanguageHelper _languageHelper;
         IStringLocalizer<PrettyError> _localizer;
 
-        public SavingsController(IHttpHelper httpHelper, ILanguageHelper utilities, IStringLocalizer<PrettyError> localizer)
+        public SavingsController(IHttpHelper httpHelper, ILanguageHelper languageHelper, IStringLocalizer<PrettyError> localizer)
         {
             _httpHelper = httpHelper;
-            _utilities = utilities;
+            _languageHelper = languageHelper;
             _localizer = localizer;
         }
 
@@ -38,14 +39,18 @@ namespace Famnances.Controllers
 
         public async Task<IActionResult> Create()
         {
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+
             SavingTransactionViewModel model = new SavingTransactionViewModel
             {
                 FixedSavings = await _httpHelper.Get<List<FixedSaving>>($"{Constants.FIXED_SAVINGS_URI}")
             };
+
             var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name");
-            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
-            ViewData["SavingsSources"] = new SelectList(savingSources, "Code", "Name");
+            ViewData["SavingsSources"] = await _languageHelper.GetSourceDropdown(culture);
             return View(model);
         }
 
@@ -53,6 +58,10 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SavingTransactionViewModel model)
         {
+            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
+            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
+            var culture = Thread.CurrentThread.CurrentUICulture.ToString();
+
             SavingRecord savingRecord = model.SavingTransaction;
             var pocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{savingRecord.SavingsPocketId}");
 
@@ -103,8 +112,7 @@ namespace Famnances.Controllers
             var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name", savingRecord.SavingsPocketId);
 
-            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
-            ViewData["SavingsSources"] = new SelectList(savingSources, "Code", "Name", model.SavingSource);
+            ViewData["SavingsSources"] = _languageHelper.GetSourceDropdown(culture);
 
             return View(savingRecord);
         }
@@ -286,7 +294,7 @@ namespace Famnances.Controllers
         {
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
             ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name");
-            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
+            ViewBag.Periods = await _languageHelper.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name");
             return View();
@@ -305,7 +313,7 @@ namespace Famnances.Controllers
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
             ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name");
 
-            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
+            ViewBag.Periods = await _languageHelper.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name");
             return View(fixedSaving);
@@ -323,12 +331,12 @@ namespace Famnances.Controllers
             {
                 return NotFound();
             }
-            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
-            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId);
 
-            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
+            ViewBag.SavingSources = await _languageHelper.GetSourceDropdown(Thread.CurrentThread.CurrentUICulture.ToString(), fixedSaving.SavingSourceId) ;
+            ViewBag.Periods = await _languageHelper.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString(), fixedSaving.PeriodicityId);
+            
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
-            ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
+            ViewBag.SavingsPockets = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
             return View(fixedSaving);
         }
 
@@ -363,7 +371,7 @@ namespace Famnances.Controllers
             var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
             ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name", fixedSaving.SavingSourceId);
 
-            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
+            ViewBag.Periods = await _languageHelper.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
             return View(fixedSaving);
@@ -404,7 +412,7 @@ namespace Famnances.Controllers
             SavingRecord savingRecord = new SavingRecord
             {
                 Id = Guid.NewGuid(),
-                Description = $"Scheduled transfered - From {fixedSaving.SavingSource.Name} to {fixedSaving.SavingsPocket.Name}",
+                Description = $"Scheduled transfered - From {fixedSaving.SavingSource.NameEs} to {fixedSaving.SavingsPocket.Name}",
                 IsExpense = false,
                 TransactionDate = DateTimeEast.Now,
                 SavingsPocketId = fixedSaving.SavingsPocketId,

@@ -1,12 +1,16 @@
 ﻿@using Famnances.Helpers
 @model Famnances.Models.ViewModels.SavingTransactionViewModel
 
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Create - Saving";
 }
 <div class="d-flex justify-content-end">
     <div class="col-6 col-md-12 text-body-primary text-end">
-        <h3 class="card-title">Create <strong>Saving record</strong></h3>
+        <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
     </div>
 </div>
 @if (TempData[Constants.ERROR] != null)
@@ -26,63 +30,70 @@
 <div class="row">
     <div class="card minicard">
         <div class="card-body">
-            <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+            <ul class="nav nav-tabs justify-content-center d-flex" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="expense-tab" data-bs-toggle="tab" data-bs-target="#expense-tab-pane" type="button" role="tab" aria-controls="expense-tab-pane" aria-selected="true">Expense</button>
+                    <button class="nav-link active" id="expense-tab" data-bs-toggle="tab" data-bs-target="#expense-tab-pane" type="button" role="tab" aria-controls="expense-tab-pane" aria-selected="true">@Localizer["Expense"]</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-tab-pane" type="button" role="tab" aria-controls="add-tab-pane" aria-selected="false">Add</button>
+                    <button class="nav-link" id="add-tab" data-bs-toggle="tab" data-bs-target="#add-tab-pane" type="button" role="tab" aria-controls="add-tab-pane" aria-selected="false">@Localizer["Deposit"]</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="fixed-tab" data-bs-toggle="tab" data-bs-target="#fixed-tab-pane" type="button" role="tab" aria-controls="fixed-tab-pane" aria-selected="false">Fixed</button>
+                    <button class="nav-link" id="fixed-tab" data-bs-toggle="tab" data-bs-target="#fixed-tab-pane" type="button" role="tab" aria-controls="fixed-tab-pane" aria-selected="false">@Localizer["Fixed"]</button>
                 </li>
             </ul>
-            <div class="tab-content p-0 pt-4" id="myTabContent">
+            <div class="tab-content p-0 pt-2" id="myTabContent">
                 <div class="tab-pane fade show active" id="expense-tab-pane" role="tabpanel" aria-labelledby="expense-tab" tabindex="0">
                     <form asp-action="Create">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="row mb-2">
-                            <input type="hidden" asp-for="SavingTransaction.IsExpense" value="True" />
-                            <div class="col-6 col-md-6 form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="SavingTransaction.IsEmergency" /> @Html.DisplayNameFor(model => model.SavingTransaction.IsEmergency)
-                                </label>
-                            </div>
-                            <div class="col-6 col-md-6 form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" asp-for="TranferToChequing" /> @Html.DisplayNameFor(model => model.TranferToChequing)
-                                </label>
-                            </div>
-                        </div>
-
                         <div class="row">
-                            <div class="col-12 col-md-12">
-                                <label asp-for="SavingTransaction.SavingsPocketId" class="control-label"></label>
-                                <select asp-for="SavingTransaction.SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
-                                    <option selected disabled hidden>Select</option>
-                                </select>
-                            </div>
-                            <div class="col-12 col-md-12">
-                                <label asp-for="SavingTransaction.Description" class="control-label"></label>
-                                <input asp-for="SavingTransaction.Description" class="form-control" />
-                                <span asp-validation-for="SavingTransaction.Description" class="text-danger"></span>
-                            </div>
-                            <div class="col-12 col-md-12">
-                                <label asp-for="SavingTransaction.Value" class="control-label"></label>
-                                <input asp-for="SavingTransaction.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
-                                <span asp-validation-for="SavingTransaction.Value" class="text-danger"></span>
-                            </div>
-                            <div class="col-12 col-md-12">
+                            <div class="col-12 col-md-12 mt-2">
                                 <label asp-for="SavingTransaction.TransactionDate" class="control-label"></label>
                                 <input asp-for="SavingTransaction.TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                                 <span asp-validation-for="SavingTransaction.TransactionDate" class="text-danger"></span>
                             </div>
-                        </div>
-
-                        <div class="row justify-content-center align-items-center mt-3">
-                            <div class="col-12 text-center">
-                                <input type="submit" class="btn btn-primary w-100" value="Save" />
+                            <div class="col-12 col-md-12 mt-2">
+                                <label asp-for="SavingTransaction.SavingsPocketId" class="control-label"></label>
+                                <select asp-for="SavingTransaction.SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
+                                    <option selected disabled hidden>@Localizer["Select"]</option>
+                                </select>
                             </div>
+                            <div class="col-12 col-md-12 mt-2">
+                                <label asp-for="SavingTransaction.Description" class="control-label"></label>
+                                <input asp-for="SavingTransaction.Description" class="form-control" />
+                                <span asp-validation-for="SavingTransaction.Description" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-12 mt-2">
+                                <label asp-for="SavingTransaction.Value" class="control-label"></label>
+                                <input asp-for="SavingTransaction.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+                                <span asp-validation-for="SavingTransaction.Value" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-12 mt-2">
+                                <label asp-for="TranferToChequing" class="form-check-label"></label>
+                            </div>
+                            <div class="col-12 col-md-12 text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <input type="radio" asp-for="TranferToChequing" class="btn-check" value="true" id="ChequingYes" autocomplete="off" />
+                                    <label class="btn btn-outline-primary" for="ChequingYes">@Localizer["Yes"]</label>
+
+                                    <input type="radio" asp-for="TranferToChequing" class="btn-check" value="false" id="ChequingNo" autocomplete="off" checked />
+                                    <label class="btn btn-outline-primary" for="ChequingNo">@Localizer["No"]</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 mt-2">
+                                <label asp-for="SavingTransaction.IsEmergency" class="form-check-label"></label>
+                            </div>
+                            <div class="col-12 col-md-12 text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <input type="radio" asp-for="SavingTransaction.IsEmergency" class="btn-check" value="true" id="EmergencyYes" autocomplete="off" />
+                                    <label class="btn btn-outline-primary" for="EmergencyYes">@Localizer["Yes"]</label>
+
+                                    <input type="radio" asp-for="SavingTransaction.IsEmergency" class="btn-check" value="false" id="EmergencyNo" autocomplete="off" checked />
+                                    <label class="btn btn-outline-primary" for="EmergencyNo">@Localizer["No"]</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 text-center mt-3">
+                            <input type="submit" class="btn btn-primary w-100" value="@Localizer["Save"]" />
                         </div>
                     </form>
                 </div>
@@ -91,29 +102,29 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" asp-for="SavingTransaction.IsExpense" value="False" />
                         <div class="row">
-                            <div class="col-12 col-md-12">
+                            <div class="col-12 col-md-12 mb-2">
                                 <label asp-for="SavingSource" class="control-label"></label>
                                 <select asp-for="SavingSource" class="form-control select2" asp-items="@ViewBag.SavingsSources" data-live-search="true">
-                                    <option selected disabled hidden>Select</option>
+                                    <option selected disabled hidden>@Localizer["Select"]</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-md-12">
+                            <div class="col-12 col-md-12 mb-2">
                                 <label asp-for="SavingTransaction.SavingsPocketId" class="control-label"></label>
                                 <select asp-for="SavingTransaction.SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
-                                    <option selected disabled hidden>Select</option>
+                                    <option selected disabled hidden>@Localizer["Select"]</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-md-12">
+                            <div class="col-12 col-md-12 mb-2">
                                 <label asp-for="SavingTransaction.Description" class="control-label"></label>
                                 <input asp-for="SavingTransaction.Description" class="form-control" />
                                 <span asp-validation-for="SavingTransaction.Description" class="text-danger"></span>
                             </div>
-                            <div class="col-12 col-md-12">
+                            <div class="col-12 col-md-12 mb-2">
                                 <label asp-for="SavingTransaction.Value" class="control-label"></label>
                                 <input asp-for="SavingTransaction.Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
                                 <span asp-validation-for="SavingTransaction.Value" class="text-danger"></span>
                             </div>
-                            <div class="col-12 col-md-12">
+                            <div class="col-12 col-md-12 mb-2">
                                 <label asp-for="SavingTransaction.TransactionDate" class="control-label"></label>
                                 <input asp-for="SavingTransaction.TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                                 <span asp-validation-for="SavingTransaction.TransactionDate" class="text-danger"></span>
@@ -122,7 +133,7 @@
 
                         <div class="row justify-content-center align-items-center mt-3">
                             <div class="col-12 text-center">
-                                <input type="submit" class="btn btn-primary w-100" value="Save" />
+                                <input type="submit" class="btn btn-primary w-100" value="@Localizer["Save"]" />
                             </div>
                         </div>
                     </form>
@@ -132,13 +143,13 @@
                         <thead>
                             <tr>
                                 <th>
-                                    From
+                                    @Localizer["From"]
                                 </th>
                                 <th>
-                                    Value
+                                    @Localizer["Value"]
                                 </th>
                                 <th>
-                                    To
+                                    @Localizer["To"]
                                 </th>
                                 <th></th>
                             </tr>
@@ -148,8 +159,21 @@
                             {
                                 <tr>
                                     <td>
-
-                                        @Html.DisplayFor(modelItem => item.SavingSource.Name)
+                                        @switch (CultureInfo.CurrentCulture.Name)
+                                        {
+                                            case "ES":
+                                            case "es-CO":
+                                                <p>@item.SavingSource.NameEs</p>
+                                                break;
+                                            case "EN":
+                                            case "en-CA":
+                                                <p>@item.SavingSource.NameEn</p>
+                                                break;
+                                            case "FR":
+                                            case "fr-CA":
+                                                <p>@item.SavingSource.NameFr</p>
+                                                break;
+                                        }
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Value)
@@ -158,8 +182,8 @@
                                         @Html.DisplayFor(modelItem => item.SavingsPocket.Name)
                                     </td>
                                     <td class="justify-content-center text-center">
-                                        <a asp-action="EditFixed" class="btn btn-sm btn-secondary w-100 mb-1" asp-route-id="@item.Id">Edit</a>
-                                        <a class="btn btn-sm btn-tertiary w-100" asp-action="TransferFixed" asp-route-id="@item.Id" method="post">Transfer</a>
+                                        <a asp-action="EditFixed" class="btn btn-sm btn-secondary w-100 mb-1" asp-route-id="@item.Id">@Localizer["Edit"]</a>
+                                        <a class="btn btn-sm btn-tertiary w-100" asp-action="TransferFixed" asp-route-id="@item.Id" method="post">@Localizer["Transfer"]</a>
                                     </td>
                                 </tr>
                             }

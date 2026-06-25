@@ -11,21 +11,39 @@ namespace Famnances.Helpers
         {
             _httpHelper = httpHelper;
         }
-        public async Task<SelectList> GetPeriodDropdown(string language)
+        public async Task<SelectList> GetPeriodDropdown(string language, Guid? id)
         {
             switch (language)
             {
                 case "es-CO":
                 case "ES":
-                    return new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameES");
+                    return new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameES", id);
                 case "en-CA":
                 case "EN":
-                    return new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameEN");
+                    return new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameEN", id);
                 case "fr-CA":
                 case "FR":
-                    return new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameFR");
+                    return new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameFR", id);
                 default:
-                    return new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameEN");
+                    return new SelectList(await _httpHelper.Get<List<Period>>($"{Constants.PERIODS_URI}"), "Id", "NameEN", id);
+            }
+        }
+
+        public async Task<SelectList> GetSourceDropdown(string language, Guid? id)
+        {
+            switch (language)
+            {
+                case "es-CO":
+                case "ES":
+                    return new SelectList(await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}"), "Id", "NameEs", id);
+                case "en-CA":
+                case "EN":
+                    return new SelectList(await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}"), "Id", "NameEn", id);
+                case "fr-CA":
+                case "FR":
+                    return new SelectList(await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}"), "Id", "NameFr", id);
+                default:
+                    return new SelectList(await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}"), "Id", "NameEN", id);
             }
         }
 

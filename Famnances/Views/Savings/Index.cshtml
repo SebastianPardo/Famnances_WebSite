@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<Famnances.DataCore.Entities.SavingRecord>
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Index - Saving";
     Layout = "~/Views/Shared/_IndexLayout.cshtml";
@@ -12,7 +15,7 @@
         </a>
     </div>
     <div class="col col-9 text-body-primary text-end p-3">
-        <h3 class="card-title"><strong>Savings</strong></h3>
+        <h3 class="card-title"><strong>@Localizer["Savings"]</strong></h3>
     </div>
 </div>
 <div class="card minicard">
@@ -64,13 +67,27 @@
                             @Html.DisplayFor(modelItem => item.SavingsPocket.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IsExpense)
+                            @if (item.IsExpense)
+                            {
+                                <span class="badge bg-danger">@Localizer["Expense"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">@Localizer["Deposit"]</span>
+                            }                            
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IsEmergency)
+                            @if (item.IsEmergency)
+                            {
+                                <span class="badge bg-warning">@Localizer["Yes"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">@Localizer["No"]</span>
+                            }                            
                         </td>
                         <td>
-                            <a asp-action="Edit" class=" btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Edit" class=" btn btn-secondary btn-sm w-100" asp-route-id="@item.Id">Edit</a>
                         </td>
                     </tr>
                 }
