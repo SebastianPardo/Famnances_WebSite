@@ -1,5 +1,8 @@
 ﻿@model Famnances.DataCore.Entities.FixedSaving
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Create - Pocket";
 }
@@ -7,7 +10,7 @@
 <div class="row">
     <div class="d-flex justify-content-end">
         <div class="col col-12 text-body-primary text-end">
-            <h3 class="card-title">Create <strong>Recurring saving</strong></h3>
+            <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
         </div>
     </div>
 </div>
@@ -16,10 +19,25 @@
         <form asp-action="CreateFixed">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
+                <div class="col-12 col-md-12 text-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <input type="radio" asp-for="IsActive" class="btn-check" value="true" id="Active" autocomplete="off" />
+                        <label class="btn btn-outline-primary" for="Active">@Localizer["Active"]</label>
+                        <input type="radio" asp-for="IsActive" class="btn-check" value="false" id="Inactive" autocomplete="off" checked />
+                        <label class="btn btn-outline-primary" for="Inactive">@Localizer["Inactive"]</label>
+                    </div>
+                </div>
                 <div class="col-12 col-md-12 mt-2">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                    </label>
+                    <label asp-for="SavingSourceId" class="control-label"></label>
+                    <select asp-for="SavingSourceId" class="form-control select2" asp-items="@ViewBag.SavingSources" data-live-search="true">
+                        <option selected disabled hidden>@Localizer["Select"]</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="SavingsPocketId" class="control-label"></label>
+                    <select asp-for="SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPockets" data-live-search="true">
+                        <option selected disabled hidden>@Localizer["Select"]</option>
+                    </select>
                 </div>
                 <div class="col-12 col-md-12 mt-2">
                     <label asp-for="Value" class="control-label"></label>
@@ -29,13 +47,7 @@
                 <div class="col-12 col-md-12 mt-2">
                     <label asp-for="PeriodicityId" class="control-label"></label>
                     <select asp-for="PeriodicityId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
-                        <option selected disabled hidden>Select</option>
-                    </select>
-                </div>
-                <div class="col-12 col-md-12 mt-2">
-                    <label asp-for="SavingsPocketId" class="control-label"></label>
-                    <select asp-for="SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
-                        <option selected disabled hidden>Select</option>
+                        <option selected disabled hidden>@Localizer["Select"]</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-12 mt-2">
@@ -43,15 +55,10 @@
                     <input asp-for="EndDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                     <span asp-validation-for="EndDate" class="text-danger"></span>
                 </div>
-                <div class="col-12 col-md-12 mt-2">
-                    <label asp-for="SavingSourceId" class="control-label"></label>
-                    <select asp-for="SavingSourceId" class="form-control select2" asp-items="@ViewBag.SavingSourceId" data-live-search="true">
-                        <option selected disabled hidden>Select</option>
-                    </select>
-                </div>
+                
             </div>
             <div class="col-12 col-md-12 text-center mt-3">
-                <input type="submit" class="btn btn-primary w-100" value="Save" />
+                <input type="submit" class="btn btn-primary w-100" value="@Localizer["Save"]" />
             </div>
         </form>
     </div>

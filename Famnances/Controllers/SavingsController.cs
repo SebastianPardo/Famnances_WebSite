@@ -292,11 +292,10 @@ namespace Famnances.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateFixed()
         {
-            var savingSources = await _httpHelper.Get<List<SavingSource>>($"{Constants.SAVING_SOURCES_URI}");
-            ViewBag.SavingSourceId = new SelectList(savingSources, "Id", "Name");
+            ViewBag.SavingSources = await _languageHelper.GetSourceDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             ViewBag.Periods = await _languageHelper.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
-            ViewBag.SavingsPocketId = new SelectList(savingsPockets, "Id", "Name");
+            ViewBag.SavingsPockets = new SelectList(savingsPockets, "Id", "Name");
             return View();
         }
 

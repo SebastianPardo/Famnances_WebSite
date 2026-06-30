@@ -22,14 +22,14 @@ namespace Famnances.Resources.Views.Savings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Index {
+    public class CreateFixed {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Index() {
+        internal CreateFixed() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.Views.Savings {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Savings.Index", typeof(Index).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Savings.CreateFixed", typeof(CreateFixed).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,65 +61,47 @@ namespace Famnances.Resources.Views.Savings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deposit.
+        ///   Looks up a localized string similar to Active.
         /// </summary>
-        public static string Deposit {
+        public static string Active {
             get {
-                return ResourceManager.GetString("Deposit", resourceCulture);
+                return ResourceManager.GetString("Active", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to .
         /// </summary>
-        public static string Edit {
+        public static string Inactive {
             get {
-                return ResourceManager.GetString("Edit", resourceCulture);
+                return ResourceManager.GetString("Inactive", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expense.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
-        public static string Expense {
+        public static string Save {
             get {
-                return ResourceManager.GetString("Expense", resourceCulture);
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No.
+        ///   Looks up a localized string similar to Select.
         /// </summary>
-        public static string No {
+        public static string Select {
             get {
-                return ResourceManager.GetString("No", resourceCulture);
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Savings.
         /// </summary>
-        public static string Savings {
+        public static string Title {
             get {
-                return ResourceManager.GetString("Savings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Transfer.
-        /// </summary>
-        public static string Transfer {
-            get {
-                return ResourceManager.GetString("Transfer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Yes.
-        /// </summary>
-        public static string Yes {
-            get {
-                return ResourceManager.GetString("Yes", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

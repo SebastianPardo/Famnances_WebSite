@@ -22,14 +22,14 @@ namespace Famnances.Resources.Views.Savings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Index {
+    public class IndexFixed {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Index() {
+        internal IndexFixed() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.Views.Savings {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Savings.Index", typeof(Index).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Savings.IndexFixed", typeof(IndexFixed).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,15 +61,6 @@ namespace Famnances.Resources.Views.Savings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deposit.
-        /// </summary>
-        public static string Deposit {
-            get {
-                return ResourceManager.GetString("Deposit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -79,29 +70,11 @@ namespace Famnances.Resources.Views.Savings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expense.
+        ///   Looks up a localized string similar to Tile.
         /// </summary>
-        public static string Expense {
+        public static string Title {
             get {
-                return ResourceManager.GetString("Expense", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No.
-        /// </summary>
-        public static string No {
-            get {
-                return ResourceManager.GetString("No", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Savings.
-        /// </summary>
-        public static string Savings {
-            get {
-                return ResourceManager.GetString("Savings", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
@@ -111,15 +84,6 @@ namespace Famnances.Resources.Views.Savings {
         public static string Transfer {
             get {
                 return ResourceManager.GetString("Transfer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Yes.
-        /// </summary>
-        public static string Yes {
-            get {
-                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

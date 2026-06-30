@@ -174,8 +174,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Summary.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Views\Savings\CreateFixed.Designer.cs">
+      <DependentUpon>CreateFixed.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Savings\EditFixed.Designer.cs">
       <DependentUpon>EditFixed.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Savings\IndexFixed.Designer.cs">
+      <DependentUpon>IndexFixed.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -296,8 +306,16 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Summary.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Savings\CreateFixed.resx">
+      <LastGenOutput>CreateFixed.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Savings\EditFixed.resx">
       <LastGenOutput>EditFixed.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Savings\IndexFixed.resx">
+      <LastGenOutput>IndexFixed.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Savings\Index.resx">

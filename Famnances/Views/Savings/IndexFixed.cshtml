@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Famnances.DataCore.Entities.FixedSaving>
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using System.Globalization
+
 @{
     ViewData["Title"] = "Index - Fixed Savings";
 }
@@ -11,7 +15,7 @@
         </a>
     </div>
     <div class="col col-9 text-body-primary text-end p-3">
-        <h3 class="card-title"><strong>Recurring Savings</strong></h3>
+        <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
     </div>
 </div>
 <div class="card minicard">
@@ -51,20 +55,48 @@
                             @Html.DisplayFor(modelItem => item.Value)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.SavingSource.NameEn)
+                            @switch (CultureInfo.CurrentCulture.Name)
+                            {
+                                case "ES":
+                                case "es-CO":
+                                    <p>@item.SavingSource.NameEs</p>
+                                    break;
+                                case "EN":
+                                case "en-CA":
+                                    <p>@item.SavingSource.NameEn</p>
+                                    break;
+                                case "FR":
+                                case "fr-CA":
+                                    <p>@item.SavingSource.NameFr</p>
+                                    break;
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.SavingsPocket.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Periodicity.NameEN)
+                            @switch (CultureInfo.CurrentCulture.Name)
+                            {
+                                case "ES":
+                                case "es-CO":
+                                    <p>@item.Periodicity.NameES</p>
+                                    break;
+                                case "EN":
+                                case "en-CA":
+                                    <p>@item.Periodicity.NameEN</p>
+                                    break;
+                                case "FR":
+                                case "fr-CA":
+                                    <p>@item.Periodicity.NameFR</p>
+                                    break;
+                            }
                         </td>
                         <td>
                             @item.EndDate.Value.ToString("dd MMM yyyy")
                         </td>
                         <td>
-                            <a asp-action="EditFixed" class="btn btn-sm btn-secondary w-100" asp-route-id="@item.Id">Edit</a>
-                            <a asp-action="TransferFixed" asp-route-id="@item.Id" method="post" type="submit" class="btn btn-sm btn-tertiary w-100">Transfer</a>
+                            <a asp-action="EditFixed" class="btn btn-sm btn-secondary w-100" asp-route-id="@item.Id">@Localizer["Edit"]</a>
+                            <a asp-action="TransferFixed" asp-route-id="@item.Id" method="post" type="submit" class="btn btn-sm btn-tertiary w-100">@Localizer["Transfer"]</a>
                         </td>
                     </tr>
                 }
