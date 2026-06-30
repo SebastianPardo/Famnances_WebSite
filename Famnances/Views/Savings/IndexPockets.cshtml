@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Famnances.DataCore.Entities.SavingsPocket>
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using System.Globalization
+
 @{
     ViewData["Title"] = "Index - Pocket";
 }
@@ -11,7 +15,7 @@
         </a>
     </div>
     <div class="col col-9 text-body-primary text-end p-3">
-        <h3 class="card-title"><strong>Pockets</strong></h3>
+        <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
     </div>
 </div>
 <div class="card minicard">
@@ -39,19 +43,35 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IsActive)
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">@Localizer["Active"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@Localizer["Inactive"]</span>
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Total)
+                            
+                                @Html.DisplayFor(modelItem => item.Total)
+                            
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ChallengeValue)
+                            @if (item.ChallengeValue > 0)
+                            {
+                                @Html.DisplayFor(modelItem => item.ChallengeValue)
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">@Localizer["FreePocket"]</span>
+                            }
                         </td>
                         <td>
-                            <a asp-action="DetailsPocket" class="btn btn-secondary" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="DetailsPocket" class="btn btn-secondary" asp-route-id="@item.Id">@Localizer["Details"]</a>
                         </td>
                     </tr>
                 }

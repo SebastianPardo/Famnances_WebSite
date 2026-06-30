@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Famnances.Resources.Views.Introduction {
+namespace Famnances.Resources.Views.Savings {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Famnances.Resources.Views.Introduction {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Savings {
+    public class CreatePockets {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Savings() {
+        internal CreatePockets() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.Views.Introduction {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Introduction.Savings", typeof(Savings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Savings.CreatePockets", typeof(CreatePockets).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,20 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pockets.
+        ///   Looks up a localized string similar to Active.
         /// </summary>
-        public static string _Pockets {
+        public static string Active {
             get {
-                return ResourceManager.GetString("_Pockets", resourceCulture);
+                return ResourceManager.GetString("Active", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
+        ///   Looks up a localized string similar to Inactive.
         /// </summary>
-        public static string Add {
+        public static string Inactive {
             get {
-                return ResourceManager.GetString("Add", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Budget.
-        /// </summary>
-        public static string Budget {
-            get {
-                return ResourceManager.GetString("Budget", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exceeded.
-        /// </summary>
-        public static string Exceeded {
-            get {
-                return ResourceManager.GetString("Exceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Next.
-        /// </summary>
-        public static string Next {
-            get {
-                return ResourceManager.GetString("Next", resourceCulture);
+                return ResourceManager.GetString("Inactive", resourceCulture);
             }
         }
         
@@ -115,29 +88,29 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
-        public static string Skip {
+        public static string Save {
             get {
-                return ResourceManager.GetString("Skip", resourceCulture);
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finally, we&apos;re going to organize the rest of your money into savings goals with their own objectives..
+        ///   Looks up a localized string similar to Select.
         /// </summary>
-        public static string Subtittle {
+        public static string Select {
             get {
-                return ResourceManager.GetString("Subtittle", resourceCulture);
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Savings pockets.
+        ///   Looks up a localized string similar to Saving Pocket.
         /// </summary>
-        public static string Tittle {
+        public static string Title {
             get {
-                return ResourceManager.GetString("Tittle", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         

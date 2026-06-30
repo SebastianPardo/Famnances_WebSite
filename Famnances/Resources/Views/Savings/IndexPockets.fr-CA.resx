@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Active" xml:space="preserve">
-    <value>Active</value>
+    <value>Actif</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+  <data name="Details" xml:space="preserve">
+    <value>Voir les détails</value>
+  </data>
+  <data name="FreePocket" xml:space="preserve">
+    <value>Épargne libre</value>
   </data>
   <data name="Inactive" xml:space="preserve">
-    <value>Inactive</value>
+    <value>Inactif</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Automatic Savings Contributions</value>
-  </data>
-  <data name="Transfer" xml:space="preserve">
-    <value>Transfer</value>
+    <value>Cagnottes</value>
   </data>
 </root>

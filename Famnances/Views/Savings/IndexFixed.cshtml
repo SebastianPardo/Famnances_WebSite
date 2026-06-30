@@ -49,7 +49,14 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IsActive)
+                            @if (item.IsActive)
+                            {
+                                <span class="badge bg-success">@Localizer["Active"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@Localizer["Inactive"]</span>
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Value)
