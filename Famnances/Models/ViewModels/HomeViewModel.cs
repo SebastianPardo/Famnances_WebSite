@@ -40,7 +40,7 @@ namespace Famnances.Models.ViewModels
         public List<SummaryPocketModel> SummaryPockets { get; set; }
         public decimal TotalSavings => SummaryPockets == null ? 0 : SummaryPockets.Sum(e => e.InitialValue);
         public decimal SavingsSpent => SummaryPockets == null ? 0 : SummaryPockets.Sum(e => e.Spent);
-        public int PercentajeSavingSpent => SummaryPockets == null ? 0 : (int)((SavingsSpent / TotalSavings) * 100);
+        public int PercentajeSavingSpent => SummaryPockets == null || TotalSavings == 0 ? 0 : (int)((SavingsSpent / TotalSavings) * 100);
     }
 
     public class SummaryFixedExpensesModel
