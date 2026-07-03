@@ -1,4 +1,8 @@
 ﻿@model Famnances.DataCore.Entities.ExpensesBudget
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Details - Budget";
 }
@@ -6,17 +10,23 @@
 <div class="row">
     <div class="d-flex justify-content-end">
         <div class="col col-12 text-body-primary text-end">
-            <h3 class="card-title">@Model.Name <strong>Budget</strong></h3>
+            <h3 class="card-title">@Model.Name <strong>@Localizer["Title"]</strong></h3>
         </div>
     </div>
 </div>
 <div class="card minicard">
     <div class="card-body">
         <div class="row">
-            <div class="col-12 col-md-12">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ShareOnHousehold" disabled /> @Html.DisplayNameFor(model => model.ShareOnHousehold)
-                </label>
+            <div class="col-12 col-md-12 mt-2">
+                <label class="form-check-label">@Html.DisplayNameFor(model => model.ShareOnHousehold)</label>
+                @if (Model.ShareOnHousehold)
+                {
+                    <span class="badge bg-success">@Localizer["Yes"]</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">@Localizer["No"]</span>
+                }
             </div>
             <div class="col-12 col-md-12 mt-2">
                 <label asp-for="Value" class="control-label text-start"></label>
@@ -24,7 +34,7 @@
                 <span asp-validation-for="Value" class="text-danger"></span>
             </div>
             <div class="col-12 col-md-12 text-center mt-3">
-                <a asp-action="Edit" class="btn btn-secondary w-100" asp-route-id="@Model.Id">Edit</a>
+                <a asp-action="Edit" class="btn btn-secondary w-100" asp-route-id="@Model.Id">@Localizer["Edit"]</a>
             </div>
         </div>
         <div class="row">
@@ -63,7 +73,7 @@
                                 @item.DateTimeStamp.ToString("dd MMM yyyy")
                             </td>
                             <td>
-                                <a asp-controller="Outflows" asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                                <a asp-controller="Outflows" asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">@Localizer["Edit"]</a>
                             </td>
                         </tr>
                     }
