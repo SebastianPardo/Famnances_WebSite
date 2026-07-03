@@ -129,9 +129,6 @@
   <data name="Expenses" xml:space="preserve">
     <value>Expenses</value>
   </data>
-  <data name="Fixed" xml:space="preserve">
-    <value>Fixed</value>
-  </data>
   <data name="FixedSavings" xml:space="preserve">
     <value>Fixed Savings</value>
   </data>
@@ -144,14 +141,11 @@
   <data name="Incomes" xml:space="preserve">
     <value>Incomes</value>
   </data>
-  <data name="Inflow" xml:space="preserve">
-    <value>Inflow</value>
-  </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
-  <data name="Outflow" xml:space="preserve">
-    <value>Outflow</value>
+  <data name="FixedExpenses" xml:space="preserve">
+    <value>Fixed Expenses</value>
   </data>
   <data name="Pockets" xml:space="preserve">
     <value>Pockets</value>
@@ -164,5 +158,20 @@
   </data>
   <data name="Transactions" xml:space="preserve">
     <value>Transactions</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="FixedIncomes" xml:space="preserve">
+    <value>Fixed Income</value>
+  </data>
+  <data name="AddIncome" xml:space="preserve">
+    <value>Add income</value>
+  </data>
+  <data name="AddExpense" xml:space="preserve">
+    <value>Add expense</value>
+  </data>
+  <data name="AddWithdrawSavings" xml:space="preserve">
+    <value>Add / Withdraw savings</value>
   </data>
 </root>

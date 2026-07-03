@@ -129,9 +129,6 @@
   <data name="Expenses" xml:space="preserve">
     <value>Gastos</value>
   </data>
-  <data name="Fixed" xml:space="preserve">
-    <value>Fijos</value>
-  </data>
   <data name="FixedSavings" xml:space="preserve">
     <value>Depositos fijos</value>
   </data>
@@ -144,14 +141,11 @@
   <data name="Incomes" xml:space="preserve">
     <value>Ingresos</value>
   </data>
-  <data name="Inflow" xml:space="preserve">
-    <value>Entradas</value>
-  </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
-  <data name="Outflow" xml:space="preserve">
-    <value>Salidas</value>
+  <data name="FixedExpenses" xml:space="preserve">
+    <value>Gastos Fijos</value>
   </data>
   <data name="Pockets" xml:space="preserve">
     <value>Bolsillos</value>
@@ -164,5 +158,20 @@
   </data>
   <data name="Transactions" xml:space="preserve">
     <value>Transacciones</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>Más</value>
+  </data>
+  <data name="FixedIncomes" xml:space="preserve">
+    <value>Ingresos fijos</value>
+  </data>
+  <data name="AddIncome" xml:space="preserve">
+    <value>Agregar ingreso</value>
+  </data>
+  <data name="AddExpense" xml:space="preserve">
+    <value>Agregar gasto</value>
+  </data>
+  <data name="AddWithdrawSavings" xml:space="preserve">
+    <value>Agregar / Retirar ahorros</value>
   </data>
 </root>

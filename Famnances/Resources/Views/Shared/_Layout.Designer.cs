@@ -70,6 +70,33 @@ namespace Famnances.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add expense.
+        /// </summary>
+        public static string AddExpense {
+            get {
+                return ResourceManager.GetString("AddExpense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add income.
+        /// </summary>
+        public static string AddIncome {
+            get {
+                return ResourceManager.GetString("AddIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add / Withdraw savings.
+        /// </summary>
+        public static string AddWithdrawSavings {
+            get {
+                return ResourceManager.GetString("AddWithdrawSavings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Budgets.
         /// </summary>
         public static string Budgets {
@@ -97,11 +124,20 @@ namespace Famnances.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fixed.
+        ///   Looks up a localized string similar to Fixed Expenses.
         /// </summary>
-        public static string Fixed {
+        public static string FixedExpenses {
             get {
-                return ResourceManager.GetString("Fixed", resourceCulture);
+                return ResourceManager.GetString("FixedExpenses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fixed Income.
+        /// </summary>
+        public static string FixedIncomes {
+            get {
+                return ResourceManager.GetString("FixedIncomes", resourceCulture);
             }
         }
         
@@ -142,15 +178,6 @@ namespace Famnances.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inflow.
-        /// </summary>
-        public static string Inflow {
-            get {
-                return ResourceManager.GetString("Inflow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
         public static string Logout {
@@ -160,11 +187,11 @@ namespace Famnances.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Outflow.
+        ///   Looks up a localized string similar to More.
         /// </summary>
-        public static string Outflow {
+        public static string More {
             get {
-                return ResourceManager.GetString("Outflow", resourceCulture);
+                return ResourceManager.GetString("More", resourceCulture);
             }
         }
         

@@ -79,16 +79,16 @@
                 <div class="nav-item dropup">
                     <a class="dropdown-toggle btn panel-btn justify-content-center" data-bs-toggle="dropdown">@Localizer["Incomes"]</a>
                     <div class="dropdown-menu m-0">
-                        <a asp-controller="Inflows" asp-action="Index" class="dropdown-item">@Localizer["Inflow"]</a>
-                        <a asp-controller="Inflows" asp-action="IndexFixedIncomes" class="dropdown-item">@Localizer["Fixed"]</a>
+                        <a asp-controller="Inflows" asp-action="Index" class="dropdown-item">@Localizer["Incomes"]</a>
+                        <a asp-controller="Inflows" asp-action="IndexFixedIncomes" class="dropdown-item">@Localizer["FixedIncomes"]</a>
                         <a asp-controller="IncomeDiscounts" asp-action="Index" class="dropdown-item">@Localizer["Discounts"]</a>
                     </div>
                 </div>
                 <div class="nav-item dropup">
                     <a class="dropdown-toggle btn panel-btn justify-content-center" data-bs-toggle="dropdown">@Localizer["Expenses"]</a>
                     <div class="dropdown-menu m-0">
-                        <a asp-controller="Outflows" asp-action="Index" class="dropdown-item">@Localizer["Outflow"]</a>
-                        <a asp-controller="Outflows" asp-action="IndexFixedExpenses" class="dropdown-item">@Localizer["Fixed"]</a>
+                        <a asp-controller="Outflows" asp-action="Index" class="dropdown-item">@Localizer["Expenses"]</a>
+                        <a asp-controller="Outflows" asp-action="IndexFixedExpenses" class="dropdown-item">@Localizer["FixedExpenses"]</a>
                         <a asp-controller="Budgets" asp-action="Index" class="dropdown-item">@Localizer["Budgets"]</a>
                     </div>
                 </div>
@@ -105,15 +105,15 @@
             <div id="add-panel">
                 <a class="btn panel-btn" asp-controller="Inflows" asp-action="Create">
                     <i class="bi bi-arrow-down-circle" style="color:var(--bs-success);"></i>
-                    <span>Agregar ingreso</span>
+                    <span>@Localizer["AddIncome"]</span>
                 </a>
                 <a class="btn panel-btn" asp-controller="Outflows" asp-action="Create">
                     <i class="bi bi-arrow-up-circle" style="color:var(--bs-danger)"></i>
-                    <span>Agregar gasto</span>
+                    <span>@Localizer["AddExpense"]</span>
                 </a>
                 <a class="btn panel-btn" asp-controller="Savings" asp-action="Create">
                     <i class="bi bi-piggy-bank" style="color:var(--bs-tertiary)"></i>
-                    <span>Agregar / Retirar ahorros</span>
+                    <span>@Localizer["AddWithdrawSavings"]</span>
                 </a>
             </div>
         </nav>
@@ -122,15 +122,14 @@
         <nav class="stick-bottom bg-primary col-12 col-md-4">
             <a class="nav-item active" asp-controller="Home" asp-action="Index">
                 <i class="bi bi-house-fill fs-4"></i>
-                <span>Home</span>
             </a>
             <a class="nav-item" asp-controller="Savings" asp-action="Index">
                 <i class="bi bi bi-piggy-bank-fill fs-4"></i>
-                <span>Savings</span>
+                <span>@Localizer["Savings"]</span>
             </a>
             <a class="nav-item" asp-controller="Outflows" asp-action="Index">
                 <i class="bi bi-cash-coin fs-4"></i>
-                <span>Outflow</span>
+                <span>@Localizer["Expenses"]</span>
             </a>
             <div class="nav-center-slot">
                 <button id="add-btn" class="btn-circle btn-tertiary">
@@ -139,15 +138,15 @@
             </div>
             <a class="nav-item" asp-controller="Inflows" asp-action="IndexFixedIncomes">
                 <i class="bi bi bi-cash-stack fs-4"></i>
-                <span>Fixed Income</span>
+                <span>@Localizer["FixedIncomes"]</span>
             </a>
             <a class="nav-item" asp-controller="Inflows" asp-action="Index">
                 <i class="bi bi-bank2 fs-4"></i>
-                <span>Inflow</span>
+                <span>@Localizer["Incomes"]</span>
             </a>
             <a id="more-btn" class="nav-item" id="more-btn">
                 <i class="bi bi bi-list fs-4" style="color:var(--bs-light)"></i>
-                <span style="color:var(--bs-light)">More</span>
+                <span style="color:var(--bs-light)">@Localizer["More"]</span>
             </a>
         </nav>
     </div>
