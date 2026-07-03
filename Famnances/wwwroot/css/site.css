@@ -8,7 +8,7 @@
     --bs-info: #5F8FA8;
     --bs-warning: #D4A65A;
     --bs-danger: #c65a5a;
-    --bs-light: #F4EDE4;
+    --bs-light: #FEFBF6;
     --bs-dark: #3E3A39;
     --bs-blue: #05A3FF;
     --bs-indigo: #6610f2;
@@ -54,8 +54,8 @@
     --bs-body-line-height: 1.5;
     --bs-body-text-color: #3e3a39;
     --bs-body-color: #3e3a39;
-    --bs-body-bg: #f4ede4;
-    --bs-minicard-bg: #FFFEFC;
+    --bs-body-bg: #FEFBF6;
+    --bs-minicard-bg: #FEFEFA;
     --bs-border-color: #2f6f57;
 }
 
