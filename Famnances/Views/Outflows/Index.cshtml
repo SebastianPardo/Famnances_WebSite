@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<Famnances.DataCore.Entities.Outflow>
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Index - Outflow";
     Layout = "~/Views/Shared/_IndexLayout.cshtml";
@@ -12,7 +15,7 @@
         </a>
     </div>
     <div class="col col-9 text-body-primary text-end p-3">
-        <h3 class="card-title"><strong>Outflows</strong></h3>
+        <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
     </div>
 </div>
 <div class="card minicard">
@@ -33,7 +36,7 @@
                         @Html.DisplayNameFor(model => model.DateTimeStamp)
                     </th>
                     <th>
-                        Budget
+                        @Html.DisplayNameFor(model => model.ExpenseBudgetId)
                     </th>
                     <th></th>
                 </tr>
@@ -58,7 +61,7 @@
                             @Html.DisplayFor(modelItem => item.ExpensesBudget.Name)
                         </td>
                         <td>
-                            <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">@Localizer["Edit"]</a>
                         </td>
                     </tr>
                 }
