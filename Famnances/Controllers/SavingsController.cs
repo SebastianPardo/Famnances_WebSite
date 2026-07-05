@@ -79,7 +79,9 @@ namespace Famnances.Controllers
                     return View();
                 }
 
-                if (model.SavingSource != "OTHER" && !savingRecord.IsExpense)
+                SavingSource savingSource = await _httpHelper.Get<SavingSource>($"{Constants.SAVING_SOURCES_URI}/OTHER");
+
+                if (model.SavingSource != null && savingSource.Id != Guid.Parse(model.SavingSource) && !savingRecord.IsExpense)
                 {
                     var budget = await _httpHelper.Get<List<ExpensesBudget>>($"{Constants.BUDGETS_URI}/GetByType/SAV");
                     Outflow outflow = new Outflow
