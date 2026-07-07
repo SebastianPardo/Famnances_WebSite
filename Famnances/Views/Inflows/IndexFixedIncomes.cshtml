@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<Famnances.DataCore.Entities.FixedIncome>
 
+@using System.Globalization   
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
 @{
     ViewData["Title"] = "Index - Fixed Income";
     Layout = "~/Views/Shared/_IndexLayout.cshtml";
@@ -12,7 +17,7 @@
         </a>
     </div>
     <div class="col col-9 text-body-primary text-end p-3">
-        <h2 class="card-title"><strong>Fixed Incomes</strong></h2>
+        <h2 class="card-title"><strong>@Localizer["Title"]</strong></h2>
     </div>
 </div>
 <div class="card minicard">
@@ -20,10 +25,10 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Description</th>
-                    <th>Value</th>
-                    <th>Period</th>
-                    <th>Active</th>
+                    <th>@Html.DisplayNameFor(model => model.Active)</th>
+                    <th>@Html.DisplayNameFor(model => model.Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.Value)</th>
+                    <th>@Html.DisplayNameFor(model => model.PayablePeriod)</th>
                     <th></th>
                 </tr>
             </thead>
@@ -31,33 +36,47 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <th>
+                        <td>
+                            @if (item.Active)
+                            {
+                                <span class="badge bg-success">@Localizer["Active"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@Localizer["Inactive"]</span>
+                            }
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Description)
-                        </th>
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Value)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.PayablePeriod.NameEN)
-                        </td>
-                        <td>
-                            @if (item.Active)
+                            @switch (CultureInfo.CurrentCulture.Name)
                             {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" checked disabled />
+                                case "ES":
+                                case "es-CO":
+                                    <p>@item.PayablePeriod.NameES</p>
+                                    break;
+                                case "EN":
+                                case "en-CA":
+                                    <p>@item.PayablePeriod.NameEN</p>
+                                    break;
+                                case "FR":
+                                case "fr-CA":
+                                    <p>@item.PayablePeriod.NameFR</p>
+                                    break;
                             }
-                            else
-                            {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" disabled />
-                            }
-                        </td>
+                        </td>                        
                         <td>
                             <div class="row">
                                 <div class="col-auto">
-                                    <a asp-action="EditFixedIncomes" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                                    <a asp-action="EditFixedIncomes" class="btn btn-secondary" asp-route-id="@item.Id">@Localizer["Edit"]</a>
                                 </div>
                                 <div class="col-auto">
                                     <form asp-action="ReceiveFixedIncome" asp-route-id="@item.Id" method="post" style="display:inline;">
-                                        <button type="submit" class="btn btn-tertiary">Deposit</button>
+                                        <button type="submit" class="btn btn-tertiary">@Localizer["Deposit"]</button>
                                     </form>
                                 </div>
                             </div>

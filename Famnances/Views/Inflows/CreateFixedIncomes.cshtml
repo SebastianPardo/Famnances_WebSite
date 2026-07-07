@@ -1,5 +1,9 @@
 ﻿@model Famnances.Models.ViewModels.FixedIncomeViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
 @{
     ViewData["Title"] = "Create - Fixed Income";
 }
@@ -7,7 +11,7 @@
 <div class="row">
     <div class="d-flex justify-content-end">
         <div class="col col-12 text-body-primary text-end">
-            <h3 class="card-title">Create <strong>Fixed Income</strong></h3>
+            <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
         </div>
     </div>
 </div>
@@ -15,18 +19,27 @@
     <div class="card-body">
         <form asp-action="CreateFixedIncomes" asp-controller="Inflows" method="post">
             <div class="row">
-                <div class="col-4 col-md-4">
-                    <div class="form-check-label">
-                        <input class="form-check-input" asp-for="FixedIncome.Active" /> @Html.DisplayNameFor(model => model.FixedIncome.Active)
+                <div class="row">
+                    <div class="col-12 col-md-12 text-center">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <input type="radio" asp-for="FixedIncome.Active" class="btn-check" value="true" id="Active" autocomplete="off" />
+                            <label class="btn btn-outline-primary" for="Active">@Localizer["Active"]</label>
+                            <input type="radio" asp-for="FixedIncome.Active" class="btn-check" value="false" id="Inactive" autocomplete="off" checked />
+                            <label class="btn btn-outline-primary" for="Inactive">@Localizer["Inactive"]</label>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 mt-2">
+                        <label asp-for="FixedIncome.ShareOnHousehold" class="form-check-label"></label>
+                    </div>
+                    <div class="col-12 col-md-12 text-center">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <input type="radio" asp-for="FixedIncome.ShareOnHousehold" class="btn-check" value="true" id="Share" autocomplete="off" />
+                            <label class="btn btn-outline-primary" for="Share">@Localizer["Yes"]</label>
+                            <input type="radio" asp-for="FixedIncome.ShareOnHousehold" class="btn-check" value="false" id="NoShare" autocomplete="off" checked />
+                            <label class="btn btn-outline-primary" for="NoShare">@Localizer["No"]</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-8 col-md-8">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="FixedIncome.ShareOnHousehold" /> @Html.DisplayNameFor(model => model.FixedIncome.ShareOnHousehold)
-                    </label>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-12 col-md-12 mt-2">
                     <label asp-for="FixedIncome.Description" class="control-label text-start"></label>
                     <input asp-for="FixedIncome.Description" class="form-control" />
@@ -40,20 +53,20 @@
                 <div class="col-12 col-md-12 mt-2">
                     <label asp-for="FixedIncome.ValuePeriodId" class="control-label text-start"></label>
                     <select asp-for="FixedIncome.ValuePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
-                        <option selected disabled hidden>Select</option>
+                        <option selected disabled hidden>@Localizer["Select"]</option>
                     </select>
                     <span asp-validation-for="FixedIncome.PayablePeriod" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-md-12 mt-2">
                     <label asp-for="FixedIncome.PayablePeriodId" class="control-label text-start"></label>
                     <select asp-for="FixedIncome.PayablePeriodId" class="form-control select2" asp-items="@ViewBag.Periods" data-live-search="true">
-                        <option selected disabled hidden>Select</option>
+                        <option selected disabled hidden>@Localizer["Select"]</option>
                     </select>
                     <span asp-validation-for="FixedIncome.PayablePeriod" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-md-12 mt-2">
-                    <label class="control-label text-start">Discount</label>
-                    <select asp-for="SelectedIncomeDiscountIds" class="select2 form-control" asp-items=@ViewBag.Discounts multiple placeholder="Select"></select>
+                    <label class="control-label text-start">@Localizer["Deductions"]</label>
+                    <select asp-for="SelectedIncomeDiscountIds" class="select2 form-control" asp-items=@ViewBag.Discounts multiple placeholder="@Localizer["Select"]"></select>
                 </div>
                 <div class="col-12 col-md-12 mt-2">
                     <label asp-for="FixedIncome.FirstPayDate" class="control-label text-start"></label>
@@ -62,7 +75,7 @@
                 </div>
             </div>
             <div class="col-12 col-md-12 text-center mt-3">
-                <input type="submit" class="btn btn-primary w-100" value="Save" />
+                <input type="submit" class="btn btn-primary w-100" value="@Localizer["Save"]" />
             </div>
         </form>
     </div>

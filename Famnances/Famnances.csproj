@@ -189,6 +189,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Views\Inflows\CreateFixedIncomes.Designer.cs">
+      <DependentUpon>CreateFixedIncomes.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Inflows\EditFixedIncomes.Designer.cs">
+      <DependentUpon>EditFixedIncomes.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Inflows\Edit.Designer.cs">
       <DependentUpon>Edit.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -196,6 +206,11 @@
     </Compile>
     <Compile Update="Resources\Views\Inflows\Create.Designer.cs">
       <DependentUpon>Create.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Inflows\IndexFixedIncomes.Designer.cs">
+      <DependentUpon>IndexFixedIncomes.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -393,12 +408,24 @@
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Inflows\CreateFixedIncomes.resx">
+      <LastGenOutput>CreateFixedIncomes.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Inflows\EditFixedIncomes.resx">
+      <LastGenOutput>EditFixedIncomes.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Inflows\Edit.resx">
       <LastGenOutput>Edit.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Inflows\Create.resx">
       <LastGenOutput>Create.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Inflows\IndexFixedIncomes.resx">
+      <LastGenOutput>IndexFixedIncomes.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Inflows\Index.resx">
