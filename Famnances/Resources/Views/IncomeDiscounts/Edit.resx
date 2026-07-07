@@ -117,61 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account" xml:space="preserve">
-    <value>Mi Cuenta</value>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
   </data>
-  <data name="Budgets" xml:space="preserve">
-    <value>Presupuestos</value>
+  <data name="After" xml:space="preserve">
+    <value>After</value>
   </data>
-  <data name="Discounts" xml:space="preserve">
-    <value>Deducciones</value>
+  <data name="Before" xml:space="preserve">
+    <value>Before</value>
   </data>
-  <data name="Expenses" xml:space="preserve">
-    <value>Gastos</value>
+  <data name="ByPayablePeriod" xml:space="preserve">
+    <value>Payable Period</value>
   </data>
-  <data name="FixedSavings" xml:space="preserve">
-    <value>Depositos fijos</value>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Inicio</value>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inactive</value>
   </data>
-  <data name="Household" xml:space="preserve">
-    <value>Hogar</value>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
   </data>
-  <data name="Incomes" xml:space="preserve">
-    <value>Ingresos</value>
+  <data name="SameAsPay" xml:space="preserve">
+    <value>Same payment period</value>
   </data>
-  <data name="Logout" xml:space="preserve">
-    <value>Logout</value>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
-  <data name="FixedExpenses" xml:space="preserve">
-    <value>Gastos Fijos</value>
+  <data name="Title" xml:space="preserve">
+    <value>Deduction</value>
   </data>
-  <data name="Pockets" xml:space="preserve">
-    <value>Bolsillos</value>
-  </data>
-  <data name="Profile" xml:space="preserve">
-    <value>Perfil</value>
-  </data>
-  <data name="Savings" xml:space="preserve">
-    <value>Ahorros</value>
-  </data>
-  <data name="Transactions" xml:space="preserve">
-    <value>Transacciones</value>
-  </data>
-  <data name="More" xml:space="preserve">
-    <value>Más</value>
-  </data>
-  <data name="FixedIncomes" xml:space="preserve">
-    <value>Ingresos fijos</value>
-  </data>
-  <data name="AddIncome" xml:space="preserve">
-    <value>Agregar ingreso</value>
-  </data>
-  <data name="AddExpense" xml:space="preserve">
-    <value>Agregar gasto</value>
-  </data>
-  <data name="AddWithdrawSavings" xml:space="preserve">
-    <value>Agregar / Retirar ahorros</value>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
   </data>
 </root>

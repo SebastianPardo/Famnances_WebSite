@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<Famnances.DataCore.Entities.IncomeDiscount>
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Index - Discounts";
 }
@@ -11,7 +14,7 @@
         </a>
     </div>
     <div class="col col-9 text-body-primary text-end p-3">
-        <h3 class="card-title"><strong>Income Discounts</strong></h3>
+        <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
     </div>
 </div>
 <div class="card minicard">
@@ -47,11 +50,11 @@
                         <td>
                             @if (item.Active)
                             {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
+                                <span class="badge bg-success">@Localizer["Active"]</span>
                             }
                             else
                             {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
+                                <span class="badge bg-danger">@Localizer["Inactive"]</span>
                             }
                         </td>
                         <td>
@@ -63,35 +66,35 @@
                         <td>
                             @if (item.IsPercentage)
                             {
-                                <input class="form-check-input" type="checkbox" id="IsPercentage" name="IsPercentage" value="true" checked disabled />
+                                <span class="badge bg-warning">@Localizer["Yes"]</span>
                             }
                             else
                             {
-                                <input class="form-check-input" type="checkbox" id="IsPercentage" name="IsPercentage" value="true" disabled />
+                                <span class="badge bg-warning">@Localizer["No"]</span>
                             }
                         </td>
                         <td>
                             @if (item.IsPrediscount)
                             {
-                                <input class="form-check-input" type="checkbox" id="IsPrediscount" name="IsPrediscount" value="true" checked disabled />
+                                <span class="badge bg-warning">@Localizer["Before"]</span>
                             }
                             else
                             {
-                                <input class="form-check-input" type="checkbox" id="IsPrediscount" name="IsPrediscount" value="true" disabled />
+                                <span class="badge bg-warning">@Localizer["After"]</span>
                             }
                         </td>
                         <td>
                             @if (item.IsTax)
                             {
-                                <input class="form-check-input" type="checkbox" id="IsTax" name="IsTax" value="true" checked disabled />
+                                <span class="badge bg-warning">@Localizer["Yes"]</span>
                             }
                             else
                             {
-                                <input class="form-check-input" type="checkbox" id="IsTax" name="IsTax" value="true" disabled />
+                                <span class="badge bg-warning">@Localizer["No"]</span>
                             }
                         </td>
                         <td>
-                            <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Edit" class="btn btn-secondary" asp-route-id="@item.Id">@Localizer["Edit"]</a>
                         </td>
                     </tr>
                 }

@@ -106,7 +106,7 @@ namespace Famnances.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Discounts.
+        ///   Looks up a localized string similar to Deductions.
         /// </summary>
         public static string Discounts {
             get {

@@ -189,6 +189,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Views\IncomeDiscounts\EDit.Designer.cs">
+      <DependentUpon>Edit.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\IncomeDiscounts\Create.Designer.cs">
+      <DependentUpon>Create.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\IncomeDiscounts\Index.Designer.cs">
+      <DependentUpon>Index.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Inflows\CreateFixedIncomes.Designer.cs">
       <DependentUpon>CreateFixedIncomes.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -405,6 +420,18 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Budgets\Index.resx">
+      <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\IncomeDiscounts\Edit.resx">
+      <LastGenOutput>EDit.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\IncomeDiscounts\Create.resx">
+      <LastGenOutput>Create.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\IncomeDiscounts\Index.resx">
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
