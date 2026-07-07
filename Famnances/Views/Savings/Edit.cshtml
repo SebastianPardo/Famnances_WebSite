@@ -1,5 +1,8 @@
 ﻿@model Famnances.DataCore.Entities.SavingRecord
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Edit - Saving";
 }
@@ -7,7 +10,7 @@
 <div class="row">
     <div class="d-flex justify-content-end">
         <div class="col col-12 text-body-primary text-end">
-            <h3 class="card-title">Edit @Model.Description <strong>Savings record</strong></h3>
+            <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
         </div>
     </div>
 </div>
@@ -16,26 +19,33 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="IsExpense" />
             <div class="row">
-                <div class="col-12 col-md-12 mt-2">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="IsExpense" disabled /> @Html.DisplayNameFor(model => model.IsExpense)
-                    </label>
-                </div>
-                <div class="col-12 col-md-12 mt-2">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="IsEmergency" disabled /> @Html.DisplayNameFor(model => model.IsEmergency)
-                    </label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12 mt-2">
-                    <label asp-for="SavingsPocketId" class="control-label"></label>
-                    <select asp-for="SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
-                        <option selected disabled hidden>Select</option>
-                    </select>
-                    <span asp-validation-for="SavingsPocketId" class="text-danger"></span>
-                </div>
+                @if (!Model.IsExpense)
+                {
+                    <input type="hidden" asp-for="IsEmergency" />
+                    <div class="col-12 col-md-12 text-center">
+                        <span class="badge bg-success">@Localizer["Deposit"]</span>
+                    </div>
+                    }
+                else
+                {
+                    <div class="col-12 col-md-12 text-center">
+                        <span class="badge bg-danger">@Localizer["Expense"]</span>
+                    </div>
+                    <div class="col-12 col-md-12 mt-2">
+                        <label asp-for="IsEmergency" class="form-check-label"></label>
+                    </div>
+                    <div class="col-12 col-md-12 text-center">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <input type="radio" asp-for="IsEmergency" class="btn-check" value="true" id="EmergencyYes" autocomplete="off" />
+                            <label class="btn btn-outline-primary" for="EmergencyYes">@Localizer["Yes"]</label>
+
+                            <input type="radio" asp-for="IsEmergency" class="btn-check" value="false" id="EmergencyNo" autocomplete="off" checked />
+                            <label class="btn btn-outline-primary" for="EmergencyNo">@Localizer["No"]</label>
+                        </div>
+                    </div>
+                }
                 <div class="col-12 col-md-12 mt-2">
                     <label asp-for="Description" class="control-label"></label>
                     <input asp-for="Description" class="form-control" />
@@ -47,16 +57,23 @@
                     <span asp-validation-for="Value" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="SavingsPocketId" class="control-label"></label>
+                    <select asp-for="SavingsPocketId" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
+                        <option selected disabled hidden>@Localizer["Select"]</option>
+                    </select>
+                    <span asp-validation-for="SavingsPocketId" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
                     <label asp-for="TransactionDate" class="control-label"></label>
-                    <input asp-for="TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                    <input asp-for="TransactionDate" class="form-control" type="date" />
                     <span asp-validation-for="TransactionDate" class="text-danger"></span>
                 </div>
             </div>
-            <div class="col-12 col-md-12 mt-2">
-                <input type="submit" class="btn btn-primary form-control w-100" value="Save" />
+            <div class="col-12 col-md-12 mt-3">
+                <input type="submit" class="btn btn-primary form-control w-100" value=@Localizer["Save"] />
             </div>
             <div class="col-12 col-md-12 mt-2">
-                <input type="submit" class="btn btn-danger form-control w-100" value="Delete" formaction="@Url.Action("Delete")" formmethod="post" />
+                <input type="submit" class="btn btn-danger form-control w-100" value=@Localizer["Delete"] formaction="@Url.Action("Delete")" formmethod="post" />
             </div>
         </form>
     </div>

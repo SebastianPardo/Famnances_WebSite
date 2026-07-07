@@ -209,6 +209,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Views\Savings\Edit.Designer.cs">
+      <DependentUpon>Edit.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Savings\EditPockets.Designer.cs">
       <DependentUpon>EditPockets.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -387,6 +392,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Outflows\Index.resx">
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Savings\Edit.resx">
+      <LastGenOutput>Edit.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Savings\EditPockets.resx">

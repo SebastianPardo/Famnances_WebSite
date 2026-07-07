@@ -61,15 +61,6 @@ namespace Famnances.Resources.Views.Savings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chequing Expense.
-        /// </summary>
-        public static string ChequingExpense {
-            get {
-                return ResourceManager.GetString("ChequingExpense", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Deposit.
         /// </summary>
         public static string Deposit {
@@ -97,24 +88,6 @@ namespace Famnances.Resources.Views.Savings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fixed.
-        /// </summary>
-        public static string Fixed {
-            get {
-                return ResourceManager.GetString("Fixed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to From.
-        /// </summary>
-        public static string From {
-            get {
-                return ResourceManager.GetString("From", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {
@@ -133,15 +106,6 @@ namespace Famnances.Resources.Views.Savings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Savings.
-        /// </summary>
-        public static string Savings {
-            get {
-                return ResourceManager.GetString("Savings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Select.
         /// </summary>
         public static string Select {
@@ -156,24 +120,6 @@ namespace Famnances.Resources.Views.Savings {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To.
-        /// </summary>
-        public static string To {
-            get {
-                return ResourceManager.GetString("To", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Transfer.
-        /// </summary>
-        public static string Transfer {
-            get {
-                return ResourceManager.GetString("Transfer", resourceCulture);
             }
         }
         
