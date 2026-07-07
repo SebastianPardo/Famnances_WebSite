@@ -1,5 +1,8 @@
 ﻿@model Famnances.DataCore.ServicesModels.IncomeTransactionModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Edit - Inflow";
 }
@@ -7,7 +10,7 @@
 <div class="row">
     <div class="d-flex justify-content-end">
         <div class="col col-12 text-body-primary text-end">
-            <h3 class="card-title">Edit @Model.Income.Description <strong>Inflow</strong></h3>
+            <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
         </div>
     </div>
 </div>
@@ -29,19 +32,19 @@
                 </div>
                 <div class="col-12 col-md-12 mt-2">
                     <label asp-for="Income.TransactionDate" class="control-label"></label>
-                    <input asp-for="Income.TransactionDate" class="form-control" type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                    <input asp-for="Income.TransactionDate" class="form-control" type="date" />
                     <span asp-validation-for="Income.TransactionDate" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-md-12 mt-2">
-                    <label class="control-label text-start">Discount</label>
-                    <select asp-for="SelectedIncomeDiscountIds" class="select2 form-control" asp-items=@ViewBag.Discounts multiple placeholder="Select"></select>
+                    <label class="control-label text-start">@Localizer["Deductions"]</label>
+                    <select asp-for="SelectedIncomeDiscountIds" class="select2 form-control" asp-items=@ViewBag.Discounts multiple placeholder="@Localizer["Select"]"></select>
                 </div>
             </div>
             <div class="col-12 col-md-12 mt-2">
-                <input type="submit" class="btn btn-primary form-control w-100" value="Save" />
+                <input type="submit" class="btn btn-primary form-control w-100" value="@Localizer["Save"]" />
             </div>
             <div class="col-12 col-md-12 mt-2">
-                <input type="submit" class="btn btn-danger form-control w-100" value="Delete" formaction="@Url.Action("Delete", new { id = Model.Income.Id })" formmethod="post" />
+                <input type="submit" class="btn btn-danger form-control w-100" value="@Localizer["Delete"]" formaction="@Url.Action("Delete", new { id = Model.Income.Id })" formmethod="post" />
             </div>
         </form>
     </div>
