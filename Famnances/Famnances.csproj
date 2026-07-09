@@ -244,8 +244,28 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Views\Outflows\EditFixedExpenses.Designer.cs">
+      <DependentUpon>EditFixedExpenses.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Outflows\DetailsFixedExpenses.Designer.cs">
+      <DependentUpon>DetailsFixedExpenses.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Outflows\Edit.Designer.cs">
       <DependentUpon>Edit.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Outflows\CreateFixedExpenses.Designer.cs">
+      <DependentUpon>CreateFixedExpenses.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Outflows\IndexFixedExpenses.Designer.cs">
+      <DependentUpon>IndexFixedExpenses.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -467,8 +487,24 @@
       <LastGenOutput>Create.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Outflows\EditFixedExpenses.resx">
+      <LastGenOutput>EditFixedExpenses.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Outflows\DetailsFixedExpenses.resx">
+      <LastGenOutput>DetailsFixedExpenses.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Outflows\Edit.resx">
       <LastGenOutput>Edit.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Outflows\CreateFixedExpenses.resx">
+      <LastGenOutput>CreateFixedExpenses.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Outflows\IndexFixedExpenses.resx">
+      <LastGenOutput>IndexFixedExpenses.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Outflows\Index.resx">

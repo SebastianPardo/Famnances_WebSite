@@ -235,6 +235,7 @@ namespace Famnances.Controllers
             var from = HttpContext.Session.GetString(Constants.DATE_FROM);
             var to = HttpContext.Session.GetString(Constants.DATE_TO);
             var fixedExpense = await _httpHelper.Get<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}/{id}/{from}/{to}");
+            ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString(), fixedExpense.PeriodId);
             return View(fixedExpense);
         }
 

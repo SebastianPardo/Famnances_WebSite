@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Famnances.DataCore.Entities.FixedExpense>
 
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Index - Fixed Expenses";
     Layout = "~/Views/Shared/_IndexLayout.cshtml";
@@ -12,7 +16,7 @@
         </a>
     </div>
     <div class="col col-9 text-body-primary text-end p-3">
-        <h3 class="card-title"><strong>Fixed Expenses</strong></h3>
+        <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
     </div>
 </div>
 <div class="card minicard">
@@ -20,7 +24,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Status</th>
+                    <th>@Localizer["Status"]</th>
                     <th>
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
@@ -49,11 +53,13 @@
                         <td>
                             @if (item.FixedExpensesPaymentsRecord == null || item.FixedExpensesPaymentsRecord.Count == 0)
                             {
-                                <a asp-action="PayFixedExpenses" asp-route-id="@item.Id" method="post" class="btn btn-tertiary btn-sm w-100">Pay</a>
+                                <form asp-action="PayFixedExpenses" asp-route-id="@item.Id" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-tertiary w-100">@Localizer["Pay"]</button>
+                                </form>
                             }
                             else
                             {
-                                <h5 class="text-success mb-0">Paid</h5>
+                                <span class="badge bg-success">@Localizer["Paid"]</span>
                             }
                         </td>
                         <td>
@@ -72,20 +78,34 @@
                             }
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Period.NameEN)
+                            @switch (CultureInfo.CurrentCulture.Name)
+                            {
+                                case "ES":
+                                case "es-CO":
+                                    <p>@item.Period.NameES</p>
+                                    break;
+                                case "EN":
+                                case "en-CA":
+                                    <p>@item.Period.NameEN</p>
+                                    break;
+                                case "FR":
+                                case "fr-CA":
+                                    <p>@item.Period.NameFR</p>
+                                    break;
+                            }
                         </td>
                         <td>
                             @if (item.Active)
                             {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" checked disabled />
+                                <span class="badge bg-success">@Localizer["Active"]</span>
                             }
                             else
                             {
-                                <input class="form-check-input" type="checkbox" id="Active" name="Active" value="true" disabled />
+                                <span class="badge bg-danger">@Localizer["Inactive"]</span>
                             }
                         </td>
                         <td>
-                            <a asp-action="DetailsFixedExpenses" class="btn btn-secondary btn-sm w-100" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="DetailsFixedExpenses" class="btn btn-secondary btn-sm w-100" asp-route-id="@item.Id">@Localizer["Details"]</a>
                         </td>
                     </tr>
                 }
