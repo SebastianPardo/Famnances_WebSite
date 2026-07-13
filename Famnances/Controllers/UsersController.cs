@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using System.Globalization;
 using System.Text.Json;
 
@@ -176,7 +175,7 @@ namespace Famnances.Controllers
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
-            user.Account = await _httpHelper.Get<Account>($"{Constants.ACCOUNT_URI}/{accountId}");
+            //user.Account = await _httpHelper.Get<Account>($"{Constants.ACCOUNT_URI}/{accountId}");
             if (user.HomeAdministrator)
             {
                 var invitations = await _httpHelper.Get<List<HomeInvitation>>($"{Constants.HOME_URI}/GetGuestRequests/{user.HomeId}");

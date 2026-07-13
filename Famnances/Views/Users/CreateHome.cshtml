@@ -1,11 +1,15 @@
 ﻿@model Famnances.DataCore.Entities.Home
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Create - Household";
 }
 <div class="row">
     <div class="d-flex justify-content-end">
         <div class="col col-12 text-body-primary text-end">
-            <h3 class="card-title">Create <strong>Household</strong></h3>
+            <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
         </div>
     </div>
 </div>
@@ -14,20 +18,38 @@
         <form asp-action="CreateHome" asp-controller="Users">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
-                <div class="col-6 col-md-6 form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="ShareIncomes" /> @Html.DisplayNameFor(model => model.ShareIncomes)
-                    </label>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="ShareIncomes" class="form-check-label"></label>
                 </div>
-                <div class="col-6 col-md-6 form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="ShareExpenses" /> @Html.DisplayNameFor(model => model.ShareExpenses)
-                    </label>
+                <div class="col-12 col-md-12 text-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <input type="radio" asp-for="ShareIncomes" class="btn-check" value="true" id="ShareIncomes" autocomplete="off" />
+                        <label class="btn btn-outline-primary" for="ShareIncomes">@Localizer["Yes"]</label>
+                        <input type="radio" asp-for="ShareIncomes" class="btn-check" value="false" id="NoShareIncomes" autocomplete="off" checked />
+                        <label class="btn btn-outline-primary" for="NoShareIncomes">@Localizer["No"]</label>
+                    </div>
                 </div>
-                <div class="col-6 col-md-6 form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="ShareSavings" /> @Html.DisplayNameFor(model => model.ShareSavings)
-                    </label>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="ShareExpenses" class="form-check-label"></label>
+                </div>
+                <div class="col-12 col-md-12 text-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <input type="radio" asp-for="ShareExpenses" class="btn-check" value="true" id="ShareExpenses" autocomplete="off" />
+                        <label class="btn btn-outline-primary" for="ShareExpenses">@Localizer["Yes"]</label>
+                        <input type="radio" asp-for="ShareExpenses" class="btn-check" value="false" id="NoShareExpenses" autocomplete="off" checked />
+                        <label class="btn btn-outline-primary" for="NoShareExpenses">@Localizer["No"]</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="ShareSavings" class="form-check-label"></label>
+                </div>
+                <div class="col-12 col-md-12 text-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <input type="radio" asp-for="ShareSavings" class="btn-check" value="true" id="ShareSavings" autocomplete="off" />
+                        <label class="btn btn-outline-primary" for="ShareSavings">@Localizer["Yes"]</label>
+                        <input type="radio" asp-for="ShareSavings" class="btn-check" value="false" id="NoShareSavings" autocomplete="off" checked />
+                        <label class="btn btn-outline-primary" for="NoShareSavings">@Localizer["No"]</label>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -38,10 +60,10 @@
                 </div>
             </div>
             <div class="col-12 col-md-12 text-center mt-3">
-                <input type="submit" class="btn btn-primary w-100" value="Save" />
+                <input type="submit" class="btn btn-primary w-100" value="@Localizer["Save"]" />
             </div>
             <div class="col-12 col-md-12 text-center mt-3">
-                <input type="submit" class="btn btn-secondary form-control" value="Request join" formaction="@Url.Action("Invitations")" formmethod="get" />
+                <input type="submit" class="btn btn-secondary form-control" value="@Localizer["RequestJoin"]" formaction="@Url.Action("Invitations")" formmethod="get" />
             </div>
         </form>
     </div>

@@ -324,6 +324,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Views\Users\Invitations.Designer.cs">
+      <DependentUpon>Invitations.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Users\EditHome.Designer.cs">
+      <DependentUpon>EditHome.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Views\Users\CreateHome.Designer.cs">
+      <DependentUpon>CreateHome.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Users\Details.Designer.cs">
       <DependentUpon>Details.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -549,6 +564,18 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Savings\Create.resx">
       <LastGenOutput>Create.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Users\Invitations.resx">
+      <LastGenOutput>Invitations.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Users\EditHome.resx">
+      <LastGenOutput>EditHome.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Users\CreateHome.resx">
+      <LastGenOutput>CreateHome.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Users\Details.resx">

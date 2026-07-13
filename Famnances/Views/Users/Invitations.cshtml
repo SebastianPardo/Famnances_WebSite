@@ -1,36 +1,39 @@
 ﻿@model Famnances.Models.ViewModels.SearchUserViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Househould";
 }
 <div class="d-flex justify-content-end">
     <div class="col col-md-3 me-5 text-body-primary text-end">
-        <h3 class="card-title">User <strong>Household</strong></h3>
+        <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
     </div>
 </div>
 <hr />
 <form asp-action="Invitations">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-12 col-md-12 text-center">
             @Html.HiddenFor(m => m.HomeId)
             @Html.HiddenFor(m => m.Guest.UserId)
-            <label asp-for="Guest.Name" class="control-label" style="margin:1rem 0.5rem 0.5rem 1rem">Search</label>
-            <input asp-for="Guest.Name" class="form-control autocomplete" placeholder="Begin typing name or email" />
+            <label asp-for="Guest.Name" class="control-label" style="margin:1rem 0.5rem 0.5rem 1rem">@Localizer["Search"]</label>
+            <input asp-for="Guest.Name" class="form-control autocomplete" placeholder="@Localizer["SearchPlaceholder"]" />
             @Html.ValidationMessageFor(m => m.Guest.Name, "", new { @class = "text-danger", @id = "GuestValidationMessage" })
             @Html.ValidationMessage("GuestValidation", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-2">
-            <label class="control-label">&nbsp;</label>
-            <input type="submit" class="btn btn-primary form-control" value="Invite" />
+    <div class="row justify-content-center mt-3">
+        <div class="col-12 col-md-12">
+            <input type="submit" class="btn btn-primary form-control" value="@Localizer["Invite"]" />
         </div>
     </div>
 </form>
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Email</th>
+            <th>@Localizer["Name"]</th>
+            <th>@Localizer["Email"]</th>
             <th></th>
         </tr>
     </thead>
@@ -45,8 +48,8 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    <a asp-action="AceptInvitation" class="btn btn-secondary" asp-route-invitationId="@item.InvitationId">Acept</a>
-                    <a asp-action="DeleteInvitation" class="btn btn-danger" asp-route-id="@item.InvitationId">Delete</a>
+                    <a asp-action="AceptInvitation" class="btn btn-secondary" asp-route-invitationId="@item.InvitationId">@Localizer["Accept"]</a>
+                    <a asp-action="DeleteInvitation" class="btn btn-danger" asp-route-id="@item.InvitationId">@Localizer["Delete"]</a>
                 </td>
             </tr>
         }
