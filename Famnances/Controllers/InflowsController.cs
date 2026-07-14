@@ -158,7 +158,7 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateFixedIncomes(FixedIncomeViewModel entity)
         {
-            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds.Select(e => new FixedIncomeByDiscount { IncomeDiscountId = e }).ToList();
+            entity.FixedIncome.FixedIncomeByDiscount = entity.SelectedIncomeDiscountIds?.Select(e => new FixedIncomeByDiscount { IncomeDiscountId = e }).ToList();
             entity.FixedIncome = await _httpHelper.Post<FixedIncome>($"{Constants.FIXED_INCOMES_URI}", entity.FixedIncome);
             return RedirectToAction(nameof(IndexFixedIncomes));
         }
@@ -192,7 +192,7 @@ namespace Famnances.Controllers
         public async Task<IActionResult> DeleteFixedIncome(Guid id)
         {
             await _httpHelper.Delete<FixedIncome>($"{Constants.FIXED_INCOMES_URI}/{id}");
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(IndexFixedIncomes));
         }
 
         [HttpPost]

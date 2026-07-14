@@ -20,6 +20,14 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="BudgetTypeId" />
             <div class="row">
+                <div class="col-12 col-md-12 text-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <input type="radio" asp-for="Active" class="btn-check" value="true" id="Active" autocomplete="off" />
+                        <label class="btn btn-outline-primary" for="Active">@Localizer["Active"]</label>
+                        <input type="radio" asp-for="Active" class="btn-check" value="false" id="Inactive" autocomplete="off" checked />
+                        <label class="btn btn-outline-primary" for="Inactive">@Localizer["Inactive"]</label>
+                    </div>
+                </div>
                 <div class="col-12 col-md-12 mt-2">
                     <label asp-for="ShareOnHousehold" class="form-check-label"></label>
                 </div>

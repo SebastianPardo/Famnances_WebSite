@@ -17,6 +17,16 @@
 <div class="card minicard">
     <div class="card-body">
         <div class="row">
+            <div class="col-12 col-md-12 mt-2 text-center">
+                @if (Model.Active)
+                {
+                    <span class="badge bg-success">@Localizer["Active"]</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">@Localizer["Inactive"]</span>
+                }
+            </div>
             <div class="col-12 col-md-12 mt-2">
                 <label class="form-check-label">@Html.DisplayNameFor(model => model.ShareOnHousehold)</label>
                 @if (Model.ShareOnHousehold)

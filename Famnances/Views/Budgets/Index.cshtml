@@ -23,6 +23,9 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Active)
+                    </th>
                     <th>@Html.DisplayNameFor(model => model.Name)</th>
                     <th>@Html.DisplayNameFor(model => model.Value)</th>
                     <th></th>
@@ -32,9 +35,19 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <th>
+                        <td>
+                            @if (item.Active)
+                            {
+                                <span class="badge bg-success">@Localizer["Active"]</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">@Localizer["Inactive"]</span>
+                            }
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Name)
-                        </th>
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Value)
                         </td>
