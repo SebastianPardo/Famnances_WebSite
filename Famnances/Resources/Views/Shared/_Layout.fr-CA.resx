@@ -174,4 +174,7 @@
   <data name="AddWithdrawSavings" xml:space="preserve">
     <value>Ajouter/Retirer des économies</value>
   </data>
+  <data name="PocketTransfer" xml:space="preserve">
+    <value>Transfert entre cagnottes</value>
+  </data>
 </root>

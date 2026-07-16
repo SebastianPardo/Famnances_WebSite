@@ -324,6 +324,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Views\Savings\PocketTransfer.Designer.cs">
+      <DependentUpon>PocketTransfer.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Users\Invitations.Designer.cs">
       <DependentUpon>Invitations.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -564,6 +569,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Savings\Create.resx">
       <LastGenOutput>Create.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Savings\PocketTransfer.resx">
+      <LastGenOutput>PocketTransfer.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Users\Invitations.resx">

@@ -205,6 +205,15 @@ namespace Famnances.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PocketTransfer.
+        /// </summary>
+        public static string PocketTransfer {
+            get {
+                return ResourceManager.GetString("PocketTransfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string Profile {

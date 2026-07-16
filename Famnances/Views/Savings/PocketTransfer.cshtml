@@ -1,0 +1,50 @@
+﻿@model Famnances.Models.ViewModels.PocketsTransferModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Transfer - Pocket";
+}
+
+<div class="row">
+    <div class="d-flex justify-content-end">
+        <div class="col col-12 text-body-primary text-end">
+            <h3 class="card-title"><strong>@Localizer["Title"]</strong></h3>
+        </div>
+    </div>
+</div>
+<div class="card minicard">
+    <div class="card-body">
+        <form asp-action="PocketTransfer">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div class="row">
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="FromPocket" class="control-label"></label>
+                    <select asp-for="FromPocket" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
+                        <option selected disabled hidden>@Localizer["Select"]</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="Value" class="control-label"></label>
+                    <input asp-for="Value" class="form-control" type="number" step="0.01" placeholder="00.00" />
+                    <span asp-validation-for="Value" class="text-danger"></span>
+                </div>
+                <div class="col-12 col-md-12 mt-2">
+                    <label asp-for="ToPocket" class="control-label"></label>
+                    <select asp-for="ToPocket" class="form-control select2" asp-items="@ViewBag.SavingsPocketId" data-live-search="true">
+                        <option selected disabled hidden>@Localizer["Select"]</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 text-center mt-3">
+                <input type="submit" class="btn btn-primary w-100" value="@Localizer["Transfer"]" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

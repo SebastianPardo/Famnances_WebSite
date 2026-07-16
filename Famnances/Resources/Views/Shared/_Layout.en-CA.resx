@@ -174,4 +174,7 @@
   <data name="AddWithdrawSavings" xml:space="preserve">
     <value>Add / Withdraw savings</value>
   </data>
+  <data name="PocketTransfer" xml:space="preserve">
+    <value>Pocket Transfer</value>
+  </data>
 </root>

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 
 namespace Famnances.Controllers
@@ -281,6 +282,57 @@ namespace Famnances.Controllers
             }
             return RedirectToAction(nameof(IndexPockets));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> PocketTransfer()
+        {
+            var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PocketTransfer(PocketsTransferModel pocketsTransfer)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var fromPocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{pocketsTransfer.FromPocket}");
+                var toPocket = await _httpHelper.Get<SavingsPocket>($"{Constants.SAVINGS_POCKETS_URI}/{pocketsTransfer.ToPocket}");
+                if (fromPocket.Total < pocketsTransfer.Value)
+                {
+                    TempData[Constants.ERROR] = _localizer[PrettyError.SAVING_OVERSPENT];
+                    return RedirectToAction(nameof(PocketTransfer));
+                }
+                SavingRecord savingRecordFrom = new SavingRecord
+                {
+                    Id = Guid.NewGuid(),
+                    Description = $"Transfer to {toPocket.Name} saving pocket",
+                    IsExpense = true,
+                    TransactionDate = DateTimeEast.Now,
+                    SavingsPocketId = fromPocket.Id,
+                    IsEmergency = false,
+                    Value = pocketsTransfer.Value
+                };
+                await _httpHelper.Post<SavingRecord>($"{Constants.SAVINGS_URI}", savingRecordFrom);
+                SavingRecord savingRecordTo = new SavingRecord
+                {
+                    Id = Guid.NewGuid(),
+                    Description = $"Transfer from {fromPocket.Name} saving pocket",
+                    IsExpense = false,
+                    TransactionDate = DateTimeEast.Now,
+                    SavingsPocketId = toPocket.Id,
+                    IsEmergency = false,
+                    Value = pocketsTransfer.Value
+                };
+                await _httpHelper.Post<SavingRecord>($"{Constants.SAVINGS_URI}", savingRecordTo);
+                return RedirectToAction(nameof(Index), "Home");
+            }   
+            var pockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
+            ViewData["SavingsPocketId"] = new SelectList(pockets, "Id", "Name");
+            return View();
+        }
+
         #endregion
 
         #region Fixed savings

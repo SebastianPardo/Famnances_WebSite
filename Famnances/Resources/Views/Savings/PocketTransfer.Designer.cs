@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Famnances.Resources.ViewModels.Savings {
+namespace Famnances.Resources.Views.Savings {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Famnances.Resources.ViewModels.Savings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SavingsLabels {
+    public class PocketTransfer {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SavingsLabels() {
+        internal PocketTransfer() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Famnances.Resources.ViewModels.Savings {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.ViewModels.Savings.SavingsLabels", typeof(SavingsLabels).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Famnances.Resources.Views.Savings.PocketTransfer", typeof(PocketTransfer).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,29 @@ namespace Famnances.Resources.ViewModels.Savings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to From.
+        ///   Looks up a localized string similar to Select.
         /// </summary>
-        public static string From {
+        public static string Select {
             get {
-                return ResourceManager.GetString("From", resourceCulture);
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Required.
+        ///   Looks up a localized string similar to TransferTitle.
         /// </summary>
-        public static string RequiredField {
+        public static string Title {
             get {
-                return ResourceManager.GetString("RequiredField", resourceCulture);
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Source.
+        ///   Looks up a localized string similar to Transferbtn.
         /// </summary>
-        public static string SavignsSource {
+        public static string Transfer {
             get {
-                return ResourceManager.GetString("SavignsSource", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To.
-        /// </summary>
-        public static string To {
-            get {
-                return ResourceManager.GetString("To", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Transfer to Chequing.
-        /// </summary>
-        public static string ToChecking {
-            get {
-                return ResourceManager.GetString("ToChecking", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value.
-        /// </summary>
-        public static string Value {
-            get {
-                return ResourceManager.GetString("Value", resourceCulture);
+                return ResourceManager.GetString("Transfer", resourceCulture);
             }
         }
     }
