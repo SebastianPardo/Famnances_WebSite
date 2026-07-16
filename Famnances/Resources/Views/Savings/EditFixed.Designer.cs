@@ -106,7 +106,7 @@ namespace Famnances.Resources.Views.Savings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Savings.
+        ///   Looks up a localized string similar to Tile.
         /// </summary>
         public static string Title {
             get {

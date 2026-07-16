@@ -333,9 +333,9 @@ namespace Famnances.Controllers
                 return NotFound();
             }
 
-            ViewBag.SavingSources = await _languageHelper.GetSourceDropdown(Thread.CurrentThread.CurrentUICulture.ToString(), fixedSaving.SavingSourceId) ;
+            ViewBag.SavingSources = await _languageHelper.GetSourceDropdown(Thread.CurrentThread.CurrentUICulture.ToString(), fixedSaving.SavingSourceId);
             ViewBag.Periods = await _languageHelper.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString(), fixedSaving.PeriodicityId);
-            
+
             var savingsPockets = await _httpHelper.Get<List<SavingsPocket>>($"{Constants.SAVINGS_POCKETS_URI}");
             ViewBag.SavingsPockets = new SelectList(savingsPockets, "Id", "Name", fixedSaving.SavingsPocketId);
             return View(fixedSaving);
@@ -422,8 +422,10 @@ namespace Famnances.Controllers
             };
             await _httpHelper.Post<SavingRecord>($"{Constants.SAVINGS_URI}", savingRecord);
 
-            return RedirectToAction(nameof(Index));
+            fixedSaving.LastTransactionDate = DateTimeEast.Now;
+            await _httpHelper.Put($"{Constants.FIXED_SAVINGS_URI}/{fixedSaving.Id}", fixedSaving);
 
+            return RedirectToAction(nameof(Index));
         }
         #endregion
     }

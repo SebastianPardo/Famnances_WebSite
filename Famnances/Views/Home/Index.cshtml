@@ -200,6 +200,83 @@
         </div>
     </div>
     <div class="col-12">
+        <span class="fw-semibold d-block mb-2 mt-4 h4">@Localizer["FixedSavingDeposits"]</span>
+        <div class="col-md">
+            <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">
+
+                @foreach (var roommate in Model.Roommates)
+                {
+                    <div class="accordion-item card mb-2 bg-card">
+                        <h2 class="accordion-header text-body d-flex justify-content-between fw-semibold" id="accordionIcon_@i">
+                            <button type="button" class="accordion-button collapsed bg-card text-black pb-0" data-bs-toggle="collapse" data-bs-target="#accordionIcon-@i" aria-controls="accordionIcon-@i">
+                                @roommate.Name
+                            </button>
+                        </h2>
+                        <div class="row">
+                            <div class="col-12 d-flex justify-content-end mb-1">
+                                <span class="d-block text-black h6 mb-0 me-2 small">$@roommate.TransferredFixedSavings / $@roommate.TotalFixedSavings @Localizer["Transferred"]</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="@roommate.PercentajeTransferredFixedSavings" aria-valuemin="0" aria-valuemax="100" style="height:6px">
+                                    <div class="progress-bar bg-primary" style="width: @roommate.PercentajeTransferredFixedSavings%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accordionIcon-@i" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                            <div class="accordion-body">
+                                <ul class="list-group">
+                                    @foreach (var fixedSavings in roommate.SummaryFixedSavings)
+                                    {
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-6 col-md-6 position-relative">
+                                                    @if (fixedSavings.Id != Guid.Empty)
+                                                    {
+                                                        <a class="stretched-link" asp-controller="Outflows" asp-action="DetailsFixedSavings" asp-route-id=@fixedSavings.Id></a>
+                                                    }
+                                                    <div class="row">
+                                                        <div class="col text-primary"><h5 class="mb-0">@fixedSavings.Name</h5></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col text-primary"><small class="mb-0">$@fixedSavings.Value</small></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-6">
+                                                    <div class="col-md-auto text-end fw-semibold">
+                                                        @if (!fixedSavings.WasTransferred)
+                                                        {
+                                                            @if (roommate.IsCurrentUser)
+                                                            {
+                                                                <form asp-controller="Savings" asp-action="TransferFixed" asp-route-id="@fixedSavings.Id" method="post" style="display:inline;">
+                                                                    <button type="submit" class="btn btn-tertiary">@Localizer["Transfer"]</button>
+                                                                </form>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h5 class="text-danger mb-0">@Localizer["Untransferred"]</h5>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <h5 class="text-success mb-0">@Localizer["Transferred"]</h5>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    i++;
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
         <span class="fw-semibold d-block mt-4 mb-2 h4">@Localizer["Budgets"]</span>
         <div class="col-md">
             <div id="accordionIcon" class="accordion mt-3 accordion-without-arrow">

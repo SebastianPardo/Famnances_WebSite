@@ -171,10 +171,22 @@
   <data name="Spent" xml:space="preserve">
     <value>Gastado</value>
   </data>
+  <data name="FixedSavingDeposits" xml:space="preserve">
+    <value>Depositos programadas a ahorros</value>
+  </data>
   <data name="Unpaid" xml:space="preserve">
     <value>Sin pagar</value>
   </data>
   <data name="Used" xml:space="preserve">
     <value>Usado</value>
+  </data>
+  <data name="Transferred" xml:space="preserve">
+    <value>Transferido</value>
+  </data>
+  <data name="Untransferred" xml:space="preserve">
+    <value>Pendiente</value>
+  </data>
+  <data name="Transfer" xml:space="preserve">
+    <value>Transferir</value>
   </data>
 </root>

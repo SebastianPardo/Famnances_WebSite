@@ -31,6 +31,11 @@ namespace Famnances.Models.ViewModels
         public decimal PaidFixedExpenses => SummaryFixedExpenses == null ? 0 : SummaryFixedExpenses.Where(e => e.WasPaid).Sum(e => e.Value);
         public decimal PercentajePaidFixedExpenses => TotalFixedExpenses == 0 ? 0 : (int)((PaidFixedExpenses / TotalFixedExpenses) * 100);
 
+        public List<SummaryFixedSavingsModel> SummaryFixedSavings { get; set; }
+        public decimal TotalFixedSavings => SummaryFixedSavings == null ? 0 : SummaryFixedSavings.Sum(e => e.Value);
+        public decimal TransferredFixedSavings => SummaryFixedSavings == null ? 0 : SummaryFixedSavings.Where(e => e.WasTransferred).Sum(e => e.Value);
+        public decimal PercentajeTransferredFixedSavings => TotalFixedSavings == 0 ? 0 : (int)((TransferredFixedSavings / TotalFixedSavings) * 100);
+
 
         public List<SummaryBudgetModel> SummaryBudgets { get; set; }
         public decimal TotalBudget => SummaryBudgets == null ? 0 : SummaryBudgets.Sum(e => e.Budget);
@@ -49,6 +54,14 @@ namespace Famnances.Models.ViewModels
         public string Name { get; set; }
         public decimal Value { get; set; }
         public bool WasPaid { get; set; }
+    }
+
+    public class SummaryFixedSavingsModel
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public decimal Value { get; set; }
+        public bool WasTransferred { get; set; }
     }
 
     public class SummaryBudgetModel

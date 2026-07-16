@@ -115,6 +115,15 @@ namespace Famnances.Resources.Views.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tile.
+        /// </summary>
+        public static string FixedSavingDeposits {
+            get {
+                return ResourceManager.GetString("FixedSavingDeposits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Goal.
         /// </summary>
         public static string Goal {
@@ -223,11 +232,38 @@ namespace Famnances.Resources.Views.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transfer.
+        /// </summary>
+        public static string Transfer {
+            get {
+                return ResourceManager.GetString("Transfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to transferred.
+        /// </summary>
+        public static string Transferred {
+            get {
+                return ResourceManager.GetString("Transferred", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unpaid.
         /// </summary>
         public static string Unpaid {
             get {
                 return ResourceManager.GetString("Unpaid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untransferred.
+        /// </summary>
+        public static string Untransferred {
+            get {
+                return ResourceManager.GetString("Untransferred", resourceCulture);
             }
         }
         
