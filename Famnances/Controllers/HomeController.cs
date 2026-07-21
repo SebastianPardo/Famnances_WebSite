@@ -27,6 +27,12 @@ namespace Famnances.Controllers
             _languageHelper = languageHelper;
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> Landing()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Index()
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
