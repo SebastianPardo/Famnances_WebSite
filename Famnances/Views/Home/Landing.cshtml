@@ -1,17 +1,34 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@using System.Globalization
+
+@{
     Layout = null;
 }
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Famnances — Las finanzas de tu familia, en un solo lugar</title>
-    <meta name="description" content="Famnances es la app para llevar el presupuesto, los gastos y los ahorros de tu familia, en el idioma que hablas en casa.">
+    <title>@Localizer["Meta_Title"]</title>
+    <meta name="description" content="@Localizer["Meta_Description"]">
     <link rel="icon" href="~/favicon.ico">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/3.0.4/css/responsive.dataTables.min.css" rel="stylesheet" />
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/core.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3004437161279642" crossorigin="anonymous"></script>
     <style>
             /* Lo único que no existe ya en core.css/site.css: el degradado del hero y el marco del "teléfono". Todo lo demás son clases de Bootstrap. */
             .hero-bg {
@@ -43,15 +60,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navMain">
                 <ul class="navbar-nav mx-auto gap-lg-4">
-                    <li class="nav-item"><a class="nav-link text-primary" href="#como-funciona">Cómo funciona</a></li>
-                    <li class="nav-item"><a class="nav-link text-primary" href="#para-quien">Para quién es</a></li>
-                    <li class="nav-item"><a class="nav-link text-primary" href="#historias">Historias</a></li>
+                    <li class="nav-item"><a class="nav-link text-primary" href="#como-funciona">@Localizer["Nav_HowItWorks"]</a></li>
+                    <li class="nav-item"><a class="nav-link text-primary" href="#para-quien">@Localizer["Nav_WhoItsFor"]</a></li>
+                    <li class="nav-item"><a class="nav-link text-primary" href="#historias">@Localizer["Nav_Stories"]</a></li>
                 </ul>
                 <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-primary">ES</button>
-                        <button type="button" class="btn btn-outline-secondary">EN</button>
-                        <button type="button" class="btn btn-outline-secondary">FR</button>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Selector de idioma">
+                        <input type="radio" class="btn-check" name="langRadio" id="langEs" autocomplete="off"
+                               onchange="location.href='@Url.Action("ChangeLanguage", "Languages", new { culture = "ES" })'"
+                               checked="@(CultureInfo.CurrentCulture.Name == "es-CO" ? "checked" : null)">
+                        <label class="btn btn-outline-primary" for="langEs">ES</label>
+
+                        <input type="radio" class="btn-check" name="langRadio" id="langEn" autocomplete="off"
+                               onchange="location.href='@Url.Action("ChangeLanguage", "Languages", new { culture = "EN" })'"
+                               checked="@(CultureInfo.CurrentCulture.Name == "en-CA" ? "checked" : null)">
+                        <label class="btn btn-outline-primary" for="langEn">EN</label>
+
+                        <input type="radio" class="btn-check" name="langRadio" id="langFr" autocomplete="off"
+                               onchange="location.href='@Url.Action("ChangeLanguage", "Languages", new { culture = "FR" })'"
+                               checked="@(CultureInfo.CurrentCulture.Name == "fr-CA" ? "checked" : null)">
+                        <label class="btn btn-outline-primary" for="langFr">FR</label>
                     </div>
                     <a class="btn btn-primary rounded-pill" href="@Url.Action("Index", "Login")">Log in</a>
                 </div>
@@ -64,25 +92,24 @@
             <div class="row align-items-center g-5 py-4">
                 <div class="col-lg-6">
                     <span class="badge rounded-pill text-bg-light text-primary border mb-3 px-3 py-2">
-                        <i class="bi bi-piggy-bank-fill text-primary me-1"></i> Gratis para empezar · sin tarjeta
+                        <i class="bi bi-piggy-bank-fill text-primary me-1"></i> @Localizer["Hero_Badge"]
                     </span>
-                    <h1 class="display-5 fw-bold">Las finanzas de tu familia, <span class="text-primary">en un solo lugar</span> y en tu idioma.</h1>
-                    <p class="lead text-secondary mt-3">Famnances organiza el presupuesto, los gastos y los ahorros de tu hogar por período — y se entiende en español, inglés o francés, según en qué idioma piensen los números en tu casa.</p>
+                    <h1 class="display-5 fw-bold">@Localizer["Hero_TitlePart1"]<span class="text-primary">@Localizer["Hero_TitleHighlight"]</span>@Localizer["Hero_TitlePart2"]</h1>
+                    <p class="lead text-secondary mt-3">@Localizer["Hero_Subtitle"]</p>
                     <div class="d-flex flex-wrap gap-2 mt-4">
-                        <a class="btn btn-primary btn-lg rounded-pill" href="@Url.Action("Guest", "Login")">Explorar como invitado <i class="bi bi-arrow-right"></i></a>
-                        <a class="btn btn-outline-secondary btn-lg rounded-pill" href="#como-funciona">Ver cómo funciona</a>
+                        <a class="btn btn-primary btn-lg rounded-pill" href="@Url.Action("Guest", "Login")">@Localizer["Hero_CtaGuest"] <i class="bi bi-arrow-right"></i></a>
+                        <a class="btn btn-outline-secondary btn-lg rounded-pill" href="#como-funciona">@Localizer["Hero_CtaHowItWorks"]</a>
                     </div>
-                    <p class="small text-secondary mt-3"><i class="bi bi-check-circle text-primary"></i> Sin correo, sin contraseña — entras y ya estás usando la app real.</p>
+                    <p class="small text-secondary mt-3"><i class="bi bi-check-circle text-primary"></i>@Localizer["Hero_Note"]</p>
                 </div>
-
                 <div class="col-lg-6">
                     <div class="card shadow-lg border-0 rounded-4 p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <button class="btn btn-sm btn-light rounded-circle"><i class="bi bi-chevron-left"></i></button>
                             <div class="text-center">
-                                <div class="small text-secondary text-uppercase">Período actual</div>
+                                <div class="small text-secondary text-uppercase">@Localizer["HeroCard_CurrentPeriod"]</div>
                                 <div class="fw-bold fs-5">
-                                    <script type="text/javascript">var d = new Date(); m = d.toLocaleString('es-CO', { month: 'long' }); document.write(m);</script> 
+                                    <script type="text/javascript">var d = new Date(); m = d.toLocaleString('@CultureInfo.CurrentCulture.Name', { month: 'long' }); document.write(m);</script>
                                     <script type="text/javascript">var d = new Date(); yr = d.getFullYear(); document.write(yr);</script>
                                 </div>
                             </div>
@@ -92,14 +119,14 @@
                         <hr>
 
                         <div class="d-flex justify-content-between small mb-1">
-                            <span class="text-secondary">Gastado — $1,656 de $2,400</span>
+                            <span class="text-secondary">@Localizer["HeroCard_Spent"]</span>
                             <span class="fw-bold text-primary">69%</span>
                         </div>
                         <div class="progress mb-3" style="height:10px;">
                             <div class="progress-bar bg-primary" style="width:69%"></div>
                         </div>
                         <div class="d-flex justify-content-between small fw-bold mb-3">
-                            <span>Disponible</span>
+                            <span>@Localizer["HeroCard_Available"]</span>
                             <span class="text-primary">$744.00</span>
                         </div>
 
@@ -107,21 +134,21 @@
                             <div class="col-4">
                                 <div class="bg-light rounded-3 p-2">
                                     <i class="bi bi-piggy-bank text-primary"></i>
-                                    <div class="small fw-bold">Vacaciones</div>
+                                    <div class="small fw-bold">@Localizer["HeroCard_PocketVacation"]</div>
                                     <div class="small text-secondary">$620</div>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="bg-light rounded-3 p-2">
                                     <i class="bi bi-bank2 text-primary"></i>
-                                    <div class="small fw-bold">Colegio</div>
+                                    <div class="small fw-bold">@Localizer["HeroCard_PocketSchool"]</div>
                                     <div class="small text-secondary">$310</div>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="bg-light rounded-3 p-2">
                                     <i class="bi bi-cash-coin text-primary"></i>
-                                    <div class="small fw-bold">Emergencias</div>
+                                    <div class="small fw-bold">@Localizer["HeroCard_PocketEmergency"]</div>
                                     <div class="small text-secondary">$1,050</div>
                                 </div>
                             </div>
@@ -135,10 +162,10 @@
     <div class="border-top border-bottom bg-white">
         <div class="container py-3">
             <div class="row text-center text-secondary small g-3">
-                <div class="col-6 col-md-3"><i class="bi bi-shield-check text-primary"></i> Tus datos, solo tuyos</div>
-                <div class="col-6 col-md-3"><i class="bi bi-bar-chart text-primary"></i> Presupuestos por período</div>
-                <div class="col-6 col-md-3"><i class="bi bi-piggy-bank text-primary"></i> Ahorros por objetivo</div>
-                <div class="col-6 col-md-3"><i class="bi bi-people text-primary"></i> Pensado para hogares</div>
+                <div class="col-6 col-md-3"><i class="bi bi-shield-check text-primary"></i> @Localizer["Trust_YourDataOnly"]</div>
+                <div class="col-6 col-md-3"><i class="bi bi-bar-chart text-primary"></i> @Localizer["Trust_BudgetsByPeriod"]</div>
+                <div class="col-6 col-md-3"><i class="bi bi-piggy-bank text-primary"></i> @Localizer["Trust_SavingsByGoal"]</div>
+                <div class="col-6 col-md-3"><i class="bi bi-people text-primary"></i> @Localizer["Trust_MadeForHouseholds"]</div>
             </div>
         </div>
     </div>
@@ -146,16 +173,16 @@
     <section id="como-funciona" class="py-5">
         <div class="container py-4">
             <div class="text-center mx-auto mb-5" style="max-width:620px;">
-                <h2 class="fw-bold">Cuatro piezas, un solo panorama</h2>
-                <p class="text-secondary mt-2">Nada de hojas de cálculo improvisadas ni apps genéricas traducidas a medias. Famnances se construyó pensando en cómo una familia real organiza su dinero.</p>
+                <h2 class="fw-bold">@Localizer["Features_SectionTitle"]</h2>
+                <p class="text-secondary mt-2">@Localizer["Features_SectionSubtitle"]</p>
             </div>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <div class="col">
                     <div class="card h-100 border-0 shadow-sm p-3">
                         <div class="card-body">
                             <i class="bi bi-calendar-range fs-3 text-primary"></i>
-                            <h5 class="fw-bold mt-3">Períodos, no solo meses</h5>
-                            <p class="text-secondary small">Define el ciclo que tenga sentido para ti y compara de un período a otro con un par de clics.</p>
+                            <h5 class="fw-bold mt-3">@Localizer["Feature1_Title"]</h5>
+                            <p class="text-secondary small">@Localizer["Feature1_Body"]</p>
                         </div>
                     </div>
                 </div>
@@ -163,8 +190,8 @@
                     <div class="card h-100 border-0 shadow-sm p-3">
                         <div class="card-body">
                             <i class="bi bi-arrow-down-up fs-3 text-primary"></i>
-                            <h5 class="fw-bold mt-3">Ingresos y gastos, fijos o del día a día</h5>
-                            <p class="text-secondary small">Registra lo que se repite cada período junto con lo imprevisto, sin hacer la cuenta tú mismo.</p>
+                            <h5 class="fw-bold mt-3">@Localizer["Feature2_Title"]</h5>
+                            <p class="text-secondary small">@Localizer["Feature2_Body"]</p>
                         </div>
                     </div>
                 </div>
@@ -172,8 +199,8 @@
                     <div class="card h-100 border-0 shadow-sm p-3">
                         <div class="card-body">
                             <i class="bi bi-piggy-bank fs-3 text-primary"></i>
-                            <h5 class="fw-bold mt-3">Ahorros con nombre y meta</h5>
-                            <p class="text-secondary small">"Vacaciones", "Colegio", "Emergencias" — cada objetivo se guarda aparte del gasto de la semana.</p>
+                            <h5 class="fw-bold mt-3">@Localizer["Feature3_Title"]</h5>
+                            <p class="text-secondary small">@Localizer["Feature3_Body"]</p>
                         </div>
                     </div>
                 </div>
@@ -181,8 +208,8 @@
                     <div class="card h-100 border-0 shadow-sm p-3">
                         <div class="card-body">
                             <i class="bi bi-people fs-3 text-primary"></i>
-                            <h5 class="fw-bold mt-3">Un hogar, varias personas</h5>
-                            <p class="text-secondary small">Invita a tu pareja o familia a tu mismo "Home" — todos ven el mismo presupuesto.</p>
+                            <h5 class="fw-bold mt-3">@Localizer["Feature4_Title"]</h5>
+                            <p class="text-secondary small">@Localizer["Feature4_Body"]</p>
                         </div>
                     </div>
                 </div>
@@ -190,8 +217,8 @@
                     <div class="card h-100 border-0 shadow-sm p-3">
                         <div class="card-body">
                             <i class="bi bi-translate fs-3 text-primary"></i>
-                            <h5 class="fw-bold mt-3">Español, inglés o francés</h5>
-                            <p class="text-secondary small">Cambia el idioma de toda la app sin perder ni un dato — para casas donde se habla más de uno.</p>
+                            <h5 class="fw-bold mt-3">@Localizer["Feature5_Title"]</h5>
+                            <p class="text-secondary small">@Localizer["Feature5_Body"]</p>
                         </div>
                     </div>
                 </div>
@@ -199,8 +226,8 @@
                     <div class="card h-100 border-0 shadow-sm p-3">
                         <div class="card-body">
                             <i class="bi bi-phone fs-3 text-primary"></i>
-                            <h5 class="fw-bold mt-3">Pensada para el celular</h5>
-                            <p class="text-secondary small">Navegación de una mano, con lo que más usas siempre a un pulgar de distancia.</p>
+                            <h5 class="fw-bold mt-3">@Localizer["Feature6_Title"]</h5>
+                            <p class="text-secondary small">@Localizer["Feature6_Body"]</p>
                         </div>
                     </div>
                 </div>
@@ -214,24 +241,27 @@
                 <div class="col-lg-5 text-center">
                     <div class="phone-frame mx-auto bg-white">
                         <div class="p-3 bg-white rounded-top-4">
-                            <div class="small text-secondary text-uppercase">Período actual</div>
+                            <div class="small text-secondary text-uppercase">@Localizer["WhoItsFor_PhoneCurrentPeriod"]</div>
                             <div class="d-flex justify-content-between align-items-center">
                                 <i class="bi bi-chevron-left"></i>
-                                <span class="fw-bold">Julio 2026</span>
+                                <span class="fw-bold">
+                                    <script type="text/javascript">var d = new Date(); m = d.toLocaleString('@CultureInfo.CurrentCulture.Name', { month: 'long' }); document.write(m);</script>
+                                    <script type="text/javascript">var d = new Date(); yr = d.getFullYear(); document.write(yr);</script>
+                                </span>
                                 <i class="bi bi-chevron-right"></i>
                             </div>
                         </div>
                         <div class="list-group list-group-flush">
                             <div class="list-group-item d-flex justify-content-between">
-                                <span class="small">Disponible</span>
+                                <span class="small">@Localizer["WhoItsFor_PhoneAvailable"]</span>
                                 <span class="fw-bold small text-primary">$744.00</span>
                             </div>
                             <div class="list-group-item d-flex justify-content-between">
-                                <span class="small"><i class="bi bi-cash-stack"></i> Mercado</span>
+                                <span class="small"><i class="bi bi-cash-stack"></i> @Localizer["WhoItsFor_PhoneGroceries"]</span>
                                 <span class="small text-secondary">-$86.40</span>
                             </div>
                             <div class="list-group-item d-flex justify-content-between">
-                                <span class="small"><i class="bi bi-piggy-bank"></i> Vacaciones</span>
+                                <span class="small"><i class="bi bi-piggy-bank"></i> @Localizer["WhoItsFor_PhoneVacation"]</span>
                                 <span class="small text-secondary">+$50.00</span>
                             </div>
                         </div>
@@ -245,26 +275,26 @@
                     </div>
                 </div>
                 <div class="col-lg-7">
-                    <span class="badge rounded-pill text-bg-light text-primary border mb-3 px-3 py-2">Para quién es</span>
+                    <span class="badge rounded-pill text-bg-light text-primary border mb-3 px-3 py-2">@Localizer["WhoItsFor_Badge"]</span>
                     <div class="d-flex gap-3 mb-4">
                         <h3 class="text-primary fw-bold m-0">1</h3>
                         <div>
-                            <h5 class="fw-bold">Familias con cuentas en más de un idioma</h5>
-                            <p class="text-secondary small">Si en tu casa el presupuesto se conversa en español pero las cuentas llegan en inglés, Famnances no te obliga a traducir en tu cabeza.</p>
+                            <h5 class="fw-bold">@Localizer["WhoItsFor_Step1Title"]</h5>
+                            <p class="text-secondary small">@Localizer["WhoItsFor_Step1Body"]</p>
                         </div>
                     </div>
                     <div class="d-flex gap-3 mb-4">
                         <h3 class="text-primary fw-bold m-0">2</h3>
                         <div>
-                            <h5 class="fw-bold">Parejas que quieren ver lo mismo</h5>
-                            <p class="text-secondary small">Un solo hogar compartido, un solo número de "cuánto nos queda" — sin capturas de pantalla ni notas de voz.</p>
+                            <h5 class="fw-bold">@Localizer["WhoItsFor_Step2Title"]</h5>
+                            <p class="text-secondary small">@Localizer["WhoItsFor_Step2Body"]</p>
                         </div>
                     </div>
                     <div class="d-flex gap-3">
                         <h3 class="text-primary fw-bold m-0">3</h3>
                         <div>
-                            <h5 class="fw-bold">Cualquiera que quiera empezar hoy</h5>
-                            <p class="text-secondary small">Sin registrarte, sin tarjeta: entras como invitado y ya estás moviendo períodos en tu presupuesto real.</p>
+                            <h5 class="fw-bold">@Localizer["WhoItsFor_Step3Title"]</h5>
+                            <p class="text-secondary small">@Localizer["WhoItsFor_Step3Body"]</p>
                         </div>
                     </div>
                 </div>
@@ -276,13 +306,13 @@
         <div class="container py-4">
             <div class="row g-5">
                 <div class="col-lg-5">
-                    <span class="badge rounded-pill text-bg-light text-primary border mb-3 px-3 py-2">Por qué existe Famnances</span>
-                    <h2 class="fw-bold">El presupuesto familiar no debería vivir en tres apps distintas.</h2>
+                    <span class="badge rounded-pill text-bg-light text-primary border mb-3 px-3 py-2">@Localizer["Story_Badge"]</span>
+                    <h2 class="fw-bold">@Localizer["Story_Title"]</h2>
                 </div>
                 <div class="col-lg-7">
-                    <p class="text-secondary">Cuando una familia se muda de país, algo curioso pasa con el dinero: las cifras cambian de moneda, pero las conversaciones sobre el presupuesto se quedan en el idioma de casa. Se habla de "el mercado" o "los ahorros para el colegio" en español, aunque el estado de cuenta llegue en inglés.</p>
-                    <p class="text-secondary">Ese desfase es exactamente el problema que <strong>Famnances</strong> busca resolver — no por accesibilidad únicamente, sino porque una herramienta de presupuesto real tiene que respetar que el idioma del dinero y el idioma del corazón no siempre coinciden.</p>
-                    <p class="text-secondary">Por eso el eje de la app no es la cuenta bancaria, sino el <strong>período</strong> — la unidad de tiempo en la que una familia realmente piensa su dinero — y el <strong>hogar</strong>, no el usuario individual, como la unidad que comparte ese presupuesto.</p>
+                    <p class="text-secondary">@Localizer["Story_Body1"]</p>
+                    <p class="text-secondary">@Localizer["Story_Body2"]</p>
+                    <p class="text-secondary">@Localizer["Story_Body3"]</p>
                 </div>
             </div>
 
@@ -292,8 +322,8 @@
                         <span class="quote-mark">&ldquo;</span>
                     </div>
                     <div class="col">
-                        <p class="fs-4 m-0">Empezó como la manera de organizar las cuentas de mi propia casa — entre dos idiomas y dos países. Si a ti te sirve igual, para eso está.</p>
-                        <span class="small opacity-75">— Sebastián, creador de Famnances</span>
+                        <p class="fs-4 m-0">@Localizer["Story_Quote"]</p>
+                        <span class="small opacity-75">@Localizer["Story_QuoteAuthor"]</span>
                     </div>
                 </div>
             </div>
@@ -302,11 +332,11 @@
 
     <section class="py-5 text-center">
         <div class="container py-4">
-            <h2 class="fw-bold">Entra y mira tu propio período de <script type="text/javascript">var d = new Date(); m = d.toLocaleString('es-CO', { month: 'long' }); document.write(m);</script>, ahora mismo.</h2>
-            <p class="text-secondary">Sin formularios. Sin correo. La app real, lista para que la muevas.</p>
+            <h2 class="fw-bold">@Localizer["FinalCta_Title1"]<script type="text/javascript">var d = new Date(); m = d.toLocaleString('@CultureInfo.CurrentCulture.Name', { month: 'long' }); document.write(m);</script>@Localizer["FinalCta_Title2"]</h2>
+            <p class="text-secondary">@Localizer["FinalCta_Subtitle"]</p>
             <div class="d-flex justify-content-center gap-2 mt-4">
-                <a class="btn btn-primary btn-lg rounded-pill" href="@Url.Action("Guest", "Login")">Explorar como invitado <i class="bi bi-arrow-right"></i></a>
-                <a class="btn btn-outline-secondary btn-lg rounded-pill" href="@Url.Action("Language", "Introduction")">Crear una cuenta</a>
+                <a class="btn btn-primary btn-lg rounded-pill" href="@Url.Action("Guest", "Login")">@Localizer["FinalCta_CtaGuest"] <i class="bi bi-arrow-right"></i></a>
+                <a class="btn btn-outline-secondary btn-lg rounded-pill" href="@Url.Action("Language", "Introduction")">@Localizer["FinalCta_CreateAccount"]</a>
             </div>
         </div>
     </section>
@@ -316,20 +346,20 @@
             <div class="row g-4 pb-4 border-bottom border-secondary">
                 <div class="col-md-4">
                     <img src="~/images/logos/Logo_2_white.png" alt="Famnances" style="height:28px;">
-                    <p class="small mt-2">El presupuesto de tu familia, en el idioma en el que lo piensas.</p>
+                    <p class="small mt-2">@Localizer["Footer_Tagline"]</p>
                 </div>
                 <div class="col-6 col-md-2">
-                    <h6 class="text-white small text-uppercase">Producto</h6>
-                    <a href="#como-funciona" class="d-block text-white-50 small mb-1">Cómo funciona</a>
-                    <a href="#para-quien" class="d-block text-white-50 small mb-1">Para quién es</a>
-                    <a href="@Url.Action("Guest", "Login")" class="d-block text-white-50 small mb-1">Probar como invitado</a>
+                    <h6 class="text-white small text-uppercase">@Localizer["Footer_ProductHeading"]</h6>
+                    <a href="#como-funciona" class="d-block text-white-50 small mb-1">@Localizer["Nav_HowItWorks"]</a>
+                    <a href="#para-quien" class="d-block text-white-50 small mb-1">@Localizer["Nav_WhoItsFor"]</a>
+                    <a href="@Url.Action("Guest", "Login")" class="d-block text-white-50 small mb-1">@Localizer["Footer_TryGuest"]</a>
                 </div>
                 <div class="col-6 col-md-2">
-                    <h6 class="text-white small text-uppercase">Legal</h6>
-                    <a href="@Url.Action("Privacy", "Home")" class="d-block text-white-50 small mb-1">Política de privacidad</a>
+                    <h6 class="text-white small text-uppercase">@Localizer["Footer_LegalHeading"]</h6>
+                    <a href="@Url.Action("Privacy", "Home")" class="d-block text-white-50 small mb-1">@Localizer["Footer_PrivacyPolicy"]</a>
                 </div>
                 <div class="col-6 col-md-2">
-                    <h6 class="text-white small text-uppercase">Idioma</h6>
+                    <h6 class="text-white small text-uppercase">@Localizer["Footer_LanguageHeading"]</h6>
                     <a href="#" class="d-block text-white-50 small mb-1">Español</a>
                     <a href="#" class="d-block text-white-50 small mb-1">English</a>
                     <a href="#" class="d-block text-white-50 small mb-1">Français</a>
@@ -343,6 +373,11 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
-</html>

@@ -23,12 +23,15 @@ namespace Famnances.Controllers
             switch (culture)
             {
                 case "ES":
+                case "es-CO":
                     languageCulture = "es-CO";
                     break;
                 case "EN":
+                case "en-CA":
                     languageCulture = "en-CA";
                     break;
                 case "FR":
+                case "fr-CA":
                     languageCulture = "fr-CA";
                     break;
                 default:
@@ -47,14 +50,19 @@ namespace Famnances.Controllers
 
             var token = HttpContext.Session.GetString(Constants.TOKEN);
 
-            if (token == null)
-            {
-                return RedirectToAction(nameof(UsersController.Create), "Users");
-            }
+            //if (token == null)
+            //{
+            //    return RedirectToAction(nameof(UsersController.Create), "Users");
+            //}
 
             var currentUrl = Request.Headers["Referer"].ToString();
+            var urlSplit = currentUrl.Split('/');
 
-            if(string.IsNullOrWhiteSpace(currentUrl) || currentUrl.Contains("Introduction"))
+            if ((urlSplit.Length <= 4 || currentUrl.Contains("Landing")) && token == null)
+            {
+                return RedirectToAction(nameof(HomeController.Landing), "Home");
+            }
+            else if (string.IsNullOrWhiteSpace(currentUrl) || currentUrl.Contains("Introduction"))
             {
                 return RedirectToAction(nameof(IntroductionController.Index), "Introduction");
             }

@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Feature1_Body" xml:space="preserve">
+    <value>Define whatever cycle makes sense for you, and compare one period to the next in a couple of clicks.</value>
+  </data>
+  <data name="Feature1_Title" xml:space="preserve">
+    <value>Periods, not just months</value>
+  </data>
+  <data name="Feature2_Body" xml:space="preserve">
+    <value>Track what repeats every period alongside the unexpected, without doing the math yourself.</value>
+  </data>
+  <data name="Feature2_Title" xml:space="preserve">
+    <value>Income and expenses, fixed or everyday</value>
+  </data>
+  <data name="Feature3_Body" xml:space="preserve">
+    <value>"Vacation," "School," "Emergencies" — every goal is kept separate from this week's spending.</value>
+  </data>
+  <data name="Feature3_Title" xml:space="preserve">
+    <value>Savings with a name and a goal</value>
+  </data>
+  <data name="Feature4_Body" xml:space="preserve">
+    <value>Invite your partner or family into the same "Home" — everyone sees the same budget.</value>
+  </data>
+  <data name="Feature4_Title" xml:space="preserve">
+    <value>One household, several people</value>
+  </data>
+  <data name="Feature5_Body" xml:space="preserve">
+    <value>Switch the whole app's language without losing a single piece of data — for homes where more than one is spoken.</value>
+  </data>
+  <data name="Feature5_Title" xml:space="preserve">
+    <value>Spanish, English, or French</value>
+  </data>
+  <data name="Feature6_Body" xml:space="preserve">
+    <value>One-handed navigation, with what you use most always a thumb away.</value>
+  </data>
+  <data name="Feature6_Title" xml:space="preserve">
+    <value>Designed for your phone</value>
+  </data>
+  <data name="Features_SectionSubtitle" xml:space="preserve">
+    <value>No improvised spreadsheets, no generic apps half-translated. Famnances was built around how a real family actually organizes its money.</value>
+  </data>
+  <data name="Features_SectionTitle" xml:space="preserve">
+    <value>Four pieces, one clear picture</value>
+  </data>
+  <data name="FinalCta_CreateAccount" xml:space="preserve">
+    <value>Create an account</value>
+  </data>
+  <data name="FinalCta_CtaGuest" xml:space="preserve">
+    <value>Explore as a guest</value>
+  </data>
+  <data name="FinalCta_Subtitle" xml:space="preserve">
+    <value>No forms. No email. The real app, ready for you to use.</value>
+  </data>
+  <data name="FinalCta_Title1" xml:space="preserve">
+    <value>Come in and see your own </value>
+  </data>
+  <data name="Footer_Copyright" xml:space="preserve">
+    <value>© 2026 Famnances. An actively developed personal project.</value>
+  </data>
+  <data name="Footer_LanguageHeading" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Footer_LegalHeading" xml:space="preserve">
+    <value>Legal</value>
+  </data>
+  <data name="Footer_MadeIn" xml:space="preserve">
+    <value>Made between Bogotá and Mississauga.</value>
+  </data>
+  <data name="Footer_PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="Footer_ProductHeading" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Footer_Tagline" xml:space="preserve">
+    <value>Your family's budget, in the language you think it in.</value>
+  </data>
+  <data name="Footer_TryGuest" xml:space="preserve">
+    <value>Try as a guest</value>
+  </data>
+  <data name="Hero_Badge" xml:space="preserve">
+    <value>Free to start · no card required</value>
+  </data>
+  <data name="Hero_CtaGuest" xml:space="preserve">
+    <value>Explore as a guest</value>
+  </data>
+  <data name="Hero_CtaHowItWorks" xml:space="preserve">
+    <value>See how it works</value>
+  </data>
+  <data name="Hero_Note" xml:space="preserve">
+    <value>No email, no password — you're using the real app right away.</value>
+  </data>
+  <data name="Hero_Subtitle" xml:space="preserve">
+    <value>Famnances organizes your household's budget, expenses, and savings by period — and it speaks Spanish, English, or French, whichever language your numbers think in at home.</value>
+  </data>
+  <data name="Hero_TitleHighlight" xml:space="preserve">
+    <value>all in one place</value>
+  </data>
+  <data name="Hero_TitlePart1" xml:space="preserve">
+    <value>Your family's finances,</value>
+  </data>
+  <data name="Hero_TitlePart2" xml:space="preserve">
+    <value>in your language.</value>
+  </data>
+  <data name="HeroCard_Available" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="HeroCard_CurrentPeriod" xml:space="preserve">
+    <value>Current period</value>
+  </data>
+  <data name="HeroCard_MonthLabel" xml:space="preserve">
+    <value>July 2026</value>
+  </data>
+  <data name="HeroCard_PocketEmergency" xml:space="preserve">
+    <value>Emergencies</value>
+  </data>
+  <data name="HeroCard_PocketSchool" xml:space="preserve">
+    <value>School</value>
+  </data>
+  <data name="HeroCard_PocketVacation" xml:space="preserve">
+    <value>Vacation</value>
+  </data>
+  <data name="HeroCard_Spent" xml:space="preserve">
+    <value>Spent — $1,656 of $2,400</value>
+  </data>
+  <data name="Meta_Description" xml:space="preserve">
+    <value>Famnances is the app for managing your family's budget, expenses, and savings, in the language you speak at home.</value>
+  </data>
+  <data name="Meta_Title" xml:space="preserve">
+    <value>Famnances — Your family's finances, all in one place</value>
+  </data>
+  <data name="Nav_HowItWorks" xml:space="preserve">
+    <value>How it works</value>
+  </data>
+  <data name="Nav_Stories" xml:space="preserve">
+    <value>Stories</value>
+  </data>
+  <data name="Nav_TryWithoutSignup" xml:space="preserve">
+    <value>Try without signing up</value>
+  </data>
+  <data name="Nav_WhoItsFor" xml:space="preserve">
+    <value>Who it's for</value>
+  </data>
+  <data name="Story_Badge" xml:space="preserve">
+    <value>Why Famnances exists</value>
+  </data>
+  <data name="Story_Body1" xml:space="preserve">
+    <value>When a family moves to a new country, something curious happens with money: the numbers change currency, but the conversations about the budget stay in the language of home. You still talk about "groceries" or "savings for school" in Spanish, even if the bank statement arrives in English.</value>
+  </data>
+  <data name="Story_Body2" xml:space="preserve">
+    <value>That mismatch is exactly the problem Famnances set out to solve — not just for accessibility's sake, but because a real budgeting tool has to respect that the language of money and the language of the heart don't always match.</value>
+  </data>
+  <data name="Story_Body3" xml:space="preserve">
+    <value>That's why the app is built around the period — the unit of time a family actually thinks about its money in — and the household, not the individual user, as the unit that shares that budget, rather than the bank account.</value>
+  </data>
+  <data name="Story_Quote" xml:space="preserve">
+    <value>It started as a way to organize my own household's accounts — between two languages and two countries. If it works the same way for you, that's exactly what it's here for.</value>
+  </data>
+  <data name="Story_QuoteAuthor" xml:space="preserve">
+    <value>— Sebastián, creator of Famnances</value>
+  </data>
+  <data name="Story_Title" xml:space="preserve">
+    <value>A family budget shouldn't have to live across three different apps.</value>
+  </data>
+  <data name="Trust_BudgetsByPeriod" xml:space="preserve">
+    <value>Budgets by period</value>
+  </data>
+  <data name="Trust_MadeForHouseholds" xml:space="preserve">
+    <value>Built for households</value>
+  </data>
+  <data name="Trust_SavingsByGoal" xml:space="preserve">
+    <value>Savings by goal</value>
+  </data>
+  <data name="Trust_YourDataOnly" xml:space="preserve">
+    <value>Your data, only yours</value>
+  </data>
+  <data name="WhoItsFor_Badge" xml:space="preserve">
+    <value>Who it's for</value>
+  </data>
+  <data name="WhoItsFor_PhoneAvailable" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="WhoItsFor_PhoneCurrentPeriod" xml:space="preserve">
+    <value>Current period</value>
+  </data>
+  <data name="WhoItsFor_PhoneGroceries" xml:space="preserve">
+    <value>Groceries</value>
+  </data>
+  <data name="WhoItsFor_PhoneMonth" xml:space="preserve">
+    <value>July 2026</value>
+  </data>
+  <data name="WhoItsFor_PhoneVacation" xml:space="preserve">
+    <value>Vacation</value>
+  </data>
+  <data name="WhoItsFor_Step1Body" xml:space="preserve">
+    <value>If your budget gets talked about in Spanish at home but your statements arrive in English, Famnances doesn't make you translate in your head.</value>
+  </data>
+  <data name="WhoItsFor_Step1Title" xml:space="preserve">
+    <value>Families juggling accounts in more than one language</value>
+  </data>
+  <data name="WhoItsFor_Step2Body" xml:space="preserve">
+    <value>One shared household, one single "how much do we have left" number — no screenshots, no voice notes.</value>
+  </data>
+  <data name="WhoItsFor_Step2Title" xml:space="preserve">
+    <value>Couples who want to see the same thing</value>
+  </data>
+  <data name="WhoItsFor_Step3Body" xml:space="preserve">
+    <value>No sign-up, no card: come in as a guest and you're already moving through periods in a real budget.</value>
+  </data>
+  <data name="WhoItsFor_Step3Title" xml:space="preserve">
+    <value>Anyone who wants to start today</value>
+  </data>
+  <data name="FinalCta_Title2" xml:space="preserve">
+    <value>period, right now.</value>
+  </data>
+</root>

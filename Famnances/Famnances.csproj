@@ -189,6 +189,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Views\Home\Landing.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Landing.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Views\IncomeDiscounts\EDit.Designer.cs">
       <DependentUpon>Edit.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -462,6 +467,10 @@
     <EmbeddedResource Update="Resources\Views\Budgets\Index.resx">
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Home\Landing.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Landing.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\IncomeDiscounts\Edit.resx">
       <LastGenOutput>EDit.Designer.cs</LastGenOutput>
