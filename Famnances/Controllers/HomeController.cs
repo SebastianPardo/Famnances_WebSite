@@ -62,7 +62,8 @@ namespace Famnances.Controllers
         public async Task<IActionResult> ClosePeriod()
         {
             var period = await _httpHelper.Get<TotalsByPeriod>($"{Constants.TOTALSBYPERIOD_URI}/GetLastPeriod");
-            GetHeaderSummary(period.PeriodDateStart.ToString("yyyy-MM-dd"));
+            var periodDateStart = period != null ? period.PeriodDateStart.ToString("yyyy-MM-dd") : DateTimeEast.Now.ToString("yyyy-MM-dd");
+            GetHeaderSummary(periodDateStart);
 
             var summary = await _httpHelper.Get<List<SummaryBudgetModel>>($"{Constants.BUDGETS_URI}/GetSummary");
             List<RemainderBalance> remainderBalance = summary.Select(e =>
