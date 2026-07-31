@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using Constants = Famnances.Helpers.Constants;
 
 namespace Famnances.Controllers
@@ -47,7 +48,7 @@ namespace Famnances.Controllers
                 return RedirectToAction(nameof(ClosePeriod));
             }
 
-            var homeSummary = await _httpHelper.Get<HomeViewModel>($"{Constants.ACCOUNTING_URI}/PeriodSummary/{DateTime.Parse(dateFrom).AddDays(1).ToString("yyyy-MM-dd")}");
+            var homeSummary = await _httpHelper.Get<HomeViewModel>($"{Constants.ACCOUNTING_URI}/PeriodSummary/{DateTime.Parse(dateFrom).ToString("yyyy-MM-dd")}");
             homeSummary.PeriodName = await _languageHelper.GetPeriodName(culture, user.Period);
             homeSummary.ToBeClosed = miniSummaryModel.ToBeClosed;
             return View(homeSummary);
@@ -89,7 +90,14 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<IActionResult> ClosePeriod(List<RemainderBalance> remainderBalance)
         {
-            await _httpHelper.Post<Guid>($"{Constants.ACCOUNTING_URI}/ClosePeriod", remainderBalance);
+            var newTotalsByPeriodId = await _httpHelper.Post<Guid>($"{Constants.ACCOUNTING_URI}/ClosePeriod", remainderBalance);
+            var totalsByPeriod = await _httpHelper.Get<TotalsByPeriod>($"{Constants.TOTALSBYPERIOD_URI}/GetLastPeriod");
+
+            if(newTotalsByPeriodId == totalsByPeriod.Id)
+            {
+                GetHeaderSummary(totalsByPeriod.PeriodDateStart.AddDays(1).ToString("yyyy-MM-dd"));
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
