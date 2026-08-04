@@ -166,13 +166,13 @@
     <value>Savings Account</value>
   </data>
   <data name="SavingsBalance" xml:space="preserve">
-    <value>Saving Expenses</value>
+    <value>Savings Balance</value>
   </data>
   <data name="Spent" xml:space="preserve">
     <value>Spent</value>
   </data>
   <data name="FixedSavingDeposits" xml:space="preserve">
-    <value>Scheduled Savins Transfers</value>
+    <value>Scheduled Savings Transfers</value>
   </data>
   <data name="Unpaid" xml:space="preserve">
     <value>Unpaid</value>
