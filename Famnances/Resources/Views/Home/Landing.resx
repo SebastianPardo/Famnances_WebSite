@@ -330,4 +330,7 @@
   <data name="FinalCta_Title2" xml:space="preserve">
     <value>period, right now.</value>
   </data>
+  <data name="InstallApp" xml:space="preserve">
+    <value>Install app</value>
+  </data>
 </root>

@@ -330,4 +330,7 @@
   <data name="FinalCta_Title2" xml:space="preserve">
     <value>, dès maintenant.</value>
   </data>
+  <data name="InstallApp" xml:space="preserve">
+    <value>Installer l'application</value>
+  </data>
 </root>

@@ -13,7 +13,7 @@
     <meta name="description" content="@Localizer["Meta_Description"]">
     <link rel="icon" href="~/favicon.ico">
 
-    <link rel="apple-touch-icon" href="~/images/logos/apple-touch-icon.png" asp-append-version="true" />
+    @* <link rel="apple-touch-icon" href="~/images/logos/apple-touch-icon.png" asp-append-version="true" /> *@
     <meta name="apple-mobile-web-app-title" content="Famnances">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -54,6 +54,8 @@
                 opacity: .5;
             }
     </style>
+    <link rel="manifest" href="~/manifest.json" />
+    <meta name="theme-color" content="#2F6F57">
 </head>
 <body>
 
@@ -62,35 +64,38 @@
             <a class="navbar-brand d-flex align-items-center gap-2" href="@Url.Action("Landing", "Home")">
                 <img src="~/images/logos/Logo_2.png" alt="Famnances" style="height:34px;">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
             <div class="collapse navbar-collapse" id="navMain">
                 <ul class="navbar-nav mx-auto gap-lg-4">
                     <li class="nav-item"><a class="nav-link text-primary" href="#como-funciona">@Localizer["Nav_HowItWorks"]</a></li>
                     <li class="nav-item"><a class="nav-link text-primary" href="#para-quien">@Localizer["Nav_WhoItsFor"]</a></li>
                     <li class="nav-item"><a class="nav-link text-primary" href="#historias">@Localizer["Nav_Stories"]</a></li>
                 </ul>
-                <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Selector de idioma">
-                        <input type="radio" class="btn-check" name="langRadio" id="langEs" autocomplete="off"
-                               onchange="location.href='@Url.Action("ChangeLanguage", "Languages", new { culture = "ES" })'"
-                               checked="@(CultureInfo.CurrentCulture.Name == "es-CO" ? "checked" : null)">
-                        <label class="btn btn-outline-primary" for="langEs">ES</label>
-
-                        <input type="radio" class="btn-check" name="langRadio" id="langEn" autocomplete="off"
-                               onchange="location.href='@Url.Action("ChangeLanguage", "Languages", new { culture = "EN" })'"
-                               checked="@(CultureInfo.CurrentCulture.Name == "en-CA" ? "checked" : null)">
-                        <label class="btn btn-outline-primary" for="langEn">EN</label>
-
-                        <input type="radio" class="btn-check" name="langRadio" id="langFr" autocomplete="off"
-                               onchange="location.href='@Url.Action("ChangeLanguage", "Languages", new { culture = "FR" })'"
-                               checked="@(CultureInfo.CurrentCulture.Name == "fr-CA" ? "checked" : null)">
-                        <label class="btn btn-outline-primary" for="langFr">FR</label>
-                    </div>
-                    <a class="btn btn-primary rounded-pill" href="@Url.Action("Index", "Login")">Log in</a>
-                </div>
             </div>
+
+            <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                <div class="btn-group btn-group-sm" role="group" aria-label="Selector de idioma">
+                    <input type="radio" class="btn-check" name="langRadio" id="langEs" autocomplete="off"
+                           onchange="location.href='@Url.Action("ChangeLanguage", "Languages", new { culture = "ES" })'"
+                           checked="@(CultureInfo.CurrentCulture.Name == "es-CO" ? "checked" : null)">
+                    <label class="btn btn-outline-primary" for="langEs">ES</label>
+
+                    <input type="radio" class="btn-check" name="langRadio" id="langEn" autocomplete="off"
+                           onchange="location.href='@Url.Action("ChangeLanguage", "Languages", new { culture = "EN" })'"
+                           checked="@(CultureInfo.CurrentCulture.Name == "en-CA" ? "checked" : null)">
+                    <label class="btn btn-outline-primary" for="langEn">EN</label>
+
+                    <input type="radio" class="btn-check" name="langRadio" id="langFr" autocomplete="off"
+                           onchange="location.href='@Url.Action("ChangeLanguage", "Languages", new { culture = "FR" })'"
+                           checked="@(CultureInfo.CurrentCulture.Name == "fr-CA" ? "checked" : null)">
+                    <label class="btn btn-outline-primary" for="langFr">FR</label>
+                </div>
+                <a class="btn btn-primary rounded-pill" href="@Url.Action("Index", "Login")">Log in</a>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
     </nav>
 
@@ -108,6 +113,11 @@
                         <a class="btn btn-outline-secondary btn-lg rounded-pill" href="#como-funciona">@Localizer["Hero_CtaHowItWorks"]</a>
                     </div>
                     <p class="small text-secondary mt-3"><i class="bi bi-check-circle text-primary"></i>@Localizer["Hero_Note"]</p>
+                    <div class="text-center">
+                        <button id="installBtn" type="button" class="btn btn-primary btn-lg rounded-pill">
+                            <i class="bi bi-download"></i> @Localizer["InstallApp"]
+                        </button>
+                    </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="card shadow-lg border-0 rounded-4 p-4">
@@ -387,4 +397,54 @@
     <script src="https://cdn.datatables.net/responsive/3.0.4/js/dataTables.responsive.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+            // Registrar el service worker mínimo — requisito de Chrome para poder
+            // mostrar el botón real de instalación (beforeinstallprompt).
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').catch(function(err) {
+                    console.warn('No se pudo registrar el service worker:', err);
+                });
+            }
+
+            var installBtn = document.getElementById('installBtn');
+            var deferredPrompt = null;
+
+            function isStandalone() {
+                return window.matchMedia('(display-mode: standalone)').matches
+                    || window.navigator.standalone === true; // Safari iOS
+            }
+
+            function isIOS() {
+                return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+            }
+
+            if (!isStandalone()) {
+                if (isIOS()) {
+                    // iOS: no hay evento que capturar. Mostramos el botón desde ya,
+                    // y al hacer clic se abre el modal con las instrucciones manuales.
+                    installBtn.classList.remove('d-none');
+                    installBtn.addEventListener('click', function() {
+                        new bootstrap.Modal(document.getElementById('iosInstallModal')).show();
+                    });
+                } else {
+                    // Android/Chrome (y otros navegadores compatibles): esperamos el
+                    // evento real del navegador antes de mostrar el botón, porque si
+                    // el sitio no cumple los criterios de instalabilidad, el evento
+                    // nunca llega — y no queremos un botón que no haga nada.
+                    window.addEventListener('beforeinstallprompt', function(event) {
+                        event.preventDefault();
+                        deferredPrompt = event;
+                        installBtn.classList.remove('d-none');
+                    });
+
+                    installBtn.addEventListener('click', async function() {
+                        if (!deferredPrompt) return;
+                        deferredPrompt.prompt();
+                        await deferredPrompt.userChoice;
+                        deferredPrompt = null;
+                        installBtn.classList.add('d-none');
+                    });
+                }
+            }
+    </script>
 </body>

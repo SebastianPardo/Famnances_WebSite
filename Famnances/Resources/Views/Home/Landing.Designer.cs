@@ -439,6 +439,15 @@ namespace Famnances.Resources.Views.Home {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install app.
+        /// </summary>
+        public static string InstallApp {
+            get {
+                return ResourceManager.GetString("InstallApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Famnances is the app for managing your family&apos;s budget, expenses, and savings, in the language you speak at home..
         /// </summary>
         public static string Meta_Description {
