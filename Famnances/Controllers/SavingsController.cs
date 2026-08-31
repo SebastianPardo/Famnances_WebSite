@@ -72,12 +72,14 @@ namespace Famnances.Controllers
                 if (totalsByPeriod == null)
                 {
                     TempData[Constants.ERROR] = _localizer[PrettyError.OUT_DATE];
-                    return View();
+                    model.FixedSavings = await _httpHelper.Get<List<FixedSaving>>($"{Constants.FIXED_SAVINGS_URI}");
+                    return View(model);
                 }
                 if (await ValidateOverspent(savingRecord.SavingsPocketId, savingRecord.Value) && savingRecord.IsExpense)
                 {
                     TempData[Constants.ERROR] = _localizer[PrettyError.SAVING_OVERSPENT];
-                    return View();
+                    model.FixedSavings = await _httpHelper.Get<List<FixedSaving>>($"{Constants.FIXED_SAVINGS_URI}");
+                    return View(model);
                 }
 
                 SavingSource savingSource = await _httpHelper.Get<SavingSource>($"{Constants.SAVING_SOURCES_URI}/OTHER");
