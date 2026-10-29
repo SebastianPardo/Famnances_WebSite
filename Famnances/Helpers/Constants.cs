@@ -23,13 +23,20 @@
 
         //Temporal
 #if DEBUG
-        public const string AUTH_SERVICES_URI = "https://localhost:7048/auth-services/";
-        public const string FAMNACES_SERVICES_URI = "https://localhost:7048/famnances-services/";
-        //public const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
-        //public const string FAMNACES_SERVICES_URI = "https://localhost:7246/Api/";
+        //public const string AUTH_SERVICES_URI = "https://famnances-authservices.azurewebsites.net/Api/";
+        //public const string FAMNACES_SERVICES_URI = "https://famnances-services.azurewebsites.net/Api/";
+
+        //public const string AUTH_SERVICES_URI = "https://localhost:7048/auth-services/";
+        //public const string FAMNACES_SERVICES_URI = "https://localhost:7048/famnances-services/";
+
+        public const string AUTH_SERVICES_URI = "https://localhost:7238/Api/";
+        public const string FAMNACES_SERVICES_URI = "https://localhost:7246/Api/";
 #else
-        public const string AUTH_SERVICES_URI = "https://frustrate-affiliate-devourer.ngrok-free.dev/auth-services/";
-        public const string FAMNACES_SERVICES_URI = "https://frustrate-affiliate-devourer.ngrok-free.dev/famnances-services/";
+        //public const string AUTH_SERVICES_URI = "https://frustrate-affiliate-devourer.ngrok-free.dev/auth-services/";
+        //public const string FAMNACES_SERVICES_URI = "https://frustrate-affiliate-devourer.ngrok-free.dev/famnances-services/";
+
+        public const string AUTH_SERVICES_URI = "https://famnances-authservices.azurewebsites.net/Api/";
+        public const string FAMNACES_SERVICES_URI = "https://famnances-services.azurewebsites.net/Api/";
 #endif
 
         public const string AUTH_URI = "Auth";
