@@ -555,7 +555,7 @@ namespace Famnances.Controllers
                 }
                 var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
                 var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
-                user.TotalSavings = currentSavings;
+                //user.TotalSavings = currentSavings;
                 await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
             }
             TempData[Constants.TOTAL] = model.Total;
@@ -577,7 +577,7 @@ namespace Famnances.Controllers
                 Total = Convert.ToDecimal(TempData[Constants.TOTAL]),
                 BudgetByPeriod = user.BudgetByPeriod,
                 CurrentMoney = 0,
-                Savings = user.TotalSavings,
+                Savings = user.FinancialAccounts.Where(e => e.FinancialAccountType.Code == "HISA").Sum(e => e.Amount),
                 SavingsByPeriod = fixedSavings.Select(e => e.Value).Sum()
             };
             return View(summary);
@@ -588,7 +588,7 @@ namespace Famnances.Controllers
         {
             var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
-            user.TotalBudget = currentMoney;
+            //user.TotalBudget = currentMoney;
             await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
 
             return RedirectToAction(nameof(HomeController.VeryFirstPeriod), "Home");

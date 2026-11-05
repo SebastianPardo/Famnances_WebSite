@@ -68,7 +68,7 @@ namespace Famnances.Controllers
 
             if (ModelState.IsValid)
             {
-                TotalsByPeriod? totalsByPeriod = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{savingRecord.TransactionDate.ToString("yyyy-MM-dd")}");
+                PeriodDates? totalsByPeriod = await _httpHelper.Get<PeriodDates?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{savingRecord.TransactionDate.ToString("yyyy-MM-dd")}");
                 if (totalsByPeriod == null)
                 {
                     TempData[Constants.ERROR] = _localizer[PrettyError.OUT_DATE];

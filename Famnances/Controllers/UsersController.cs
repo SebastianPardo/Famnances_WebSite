@@ -116,8 +116,6 @@ namespace Famnances.Controllers
                     Address = "NO ADDRESS",
                     PostalCode = "A0B1C2",
                     PhoneNumber = "0000000000",
-                    TotalSavings = 0,
-                    TotalBudget = 0,
                     BudgetByPeriod = 0,
                     PeriodStartsMonthsDay = 1,
                     HomeAdministrator = false,

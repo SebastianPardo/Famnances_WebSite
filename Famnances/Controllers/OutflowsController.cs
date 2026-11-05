@@ -53,7 +53,7 @@ namespace Famnances.Controllers
         {
             var outflow = outflowViewModel.Outflow;
 
-            TotalsByPeriod? totalsByPeriod = await _httpHelper.Get<TotalsByPeriod?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{outflow.TransactionDate.ToString("yyyy-MM-dd")}");
+            PeriodDates? totalsByPeriod = await _httpHelper.Get<PeriodDates?>($"{Constants.TOTALSBYPERIOD_URI}/GetByDate/{outflow.TransactionDate.ToString("yyyy-MM-dd")}");
             if (totalsByPeriod == null)
             {
                 TempData[Constants.ERROR] = _localizer[PrettyError.OUT_DATE];
@@ -204,8 +204,8 @@ namespace Famnances.Controllers
         private async Task<OverspentViewModel?> ValidateOverSpent(Guid budgetId, DateTime date, decimal value)
         {
             var budgetStatus = await _httpHelper
-                .Get<ExpenseBudgetByPeriod>($"{Constants.BUDGETS_URI}/GetBalanceByIdDate/{budgetId}/{date.ToString("yyyy-MM-dd")}");
-            var balace = budgetStatus.Budget - budgetStatus.Expense;
+                .Get<ExpenseBudgetByPeriodDates>($"{Constants.BUDGETS_URI}/GetBalanceByIdDate/{budgetId}/{date.ToString("yyyy-MM-dd")}");
+            var balace = budgetStatus.TotalDeposits - budgetStatus.TotalWithdrawals;
 
             if (balace < value && value > 0)
             {
