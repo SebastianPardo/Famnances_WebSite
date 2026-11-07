@@ -49,12 +49,12 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IncomeTransactionModel inflow)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 inflow.Income.Id = Guid.NewGuid();
                 inflow = await _httpHelper.Post<IncomeTransactionModel>($"{Constants.INFLOWS_URI}", inflow);
                 return RedirectToAction(nameof(Index));
-            }
+            //}
             var discounts = await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}");
             ViewData["Discounts"] = new SelectList(discounts, "Id", "Address");
             return View(inflow);

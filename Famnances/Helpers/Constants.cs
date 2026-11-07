@@ -47,6 +47,7 @@
         public const string BUDGET_TYPES_URI = "BudgetTypes";
         public const string CITIES_URI = "Cities";
         public const string COUNTRIES_URI = "Countries";
+        public const string FINANCIAL_ACCOUNTS_URI = "Currencies";
         public const string FIXED_EXPENSES_URI = "FixedExpenses";
         public const string FIXED_INCOMES_URI = "FixedIncomes";
         public const string INCOME_DISCOUNTS_URI = "IncomeDiscounts";
