@@ -51,9 +51,10 @@ namespace Famnances.Controllers
         {
             //if (ModelState.IsValid)
             //{
-                inflow.Income.Id = Guid.NewGuid();
-                inflow = await _httpHelper.Post<IncomeTransactionModel>($"{Constants.INFLOWS_URI}", inflow);
-                return RedirectToAction(nameof(Index));
+            inflow.Income.Id = Guid.NewGuid();
+            inflow.Income.FinancialAccountId = Guid.Empty;
+            inflow = await _httpHelper.Post<IncomeTransactionModel>($"{Constants.INFLOWS_URI}", inflow);
+            return RedirectToAction(nameof(Index));
             //}
             var discounts = await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}");
             ViewData["Discounts"] = new SelectList(discounts, "Id", "Address");
