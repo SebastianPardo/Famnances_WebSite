@@ -61,6 +61,15 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string _Account {
+            get {
+                return ResourceManager.GetString("_Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Budgets.
         /// </summary>
         public static string _Budgets {

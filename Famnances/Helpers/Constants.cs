@@ -47,7 +47,8 @@
         public const string BUDGET_TYPES_URI = "BudgetTypes";
         public const string CITIES_URI = "Cities";
         public const string COUNTRIES_URI = "Countries";
-        public const string FINANCIAL_ACCOUNTS_URI = "Currencies";
+        public const string CURRENCIES = "Currencies";
+        public const string FINANCIAL_ACCOUNTS_URI = "FinancialAccount";
         public const string FIXED_EXPENSES_URI = "FixedExpenses";
         public const string FIXED_INCOMES_URI = "FixedIncomes";
         public const string INCOME_DISCOUNTS_URI = "IncomeDiscounts";
@@ -64,5 +65,7 @@
         public const string USER_URI = "Users";
         public const string HOME_URI = "Homes";
         public const string ERROR_LOG_URI = "ErrorLog";
+        public static string FINANCIAL_ACCOUNT_TYPES_URI = "FinancialAccountTypes";
+        public static string FINANCIAL_INSTITUTIONS_URI = "FinancialInstitutions";
     }
 }

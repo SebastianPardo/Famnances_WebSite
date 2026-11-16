@@ -27,6 +27,12 @@
     <p class="text-center mt-3">
         @Localizer["Subtittle"]
     </p>
+    <div class="col-12 mt-2">
+        <label class="control-label">@Localizer["FinancialAccount"]</label>
+        <select asp-for="Pocket.FinancialAccount.Id" class="form-control select2" asp-items="@ViewBag.FinancialAccounts" data-live-search="true">
+            <option selected disabled hidden>Select</option>
+        </select>
+    </div>
     <div class="col-md-12 mt-2">
         <label asp-for="Pocket.Name" class="control-label"></label>
         <input asp-for="Pocket.Name" class="form-control" />
@@ -81,6 +87,8 @@
                 <input type="hidden" asp-for="@Model.Pockets[i].FrecuentDeposits" />
                 <input type="hidden" asp-for="@Model.Pockets[i].FrecuentValue" />
                 <input type="hidden" asp-for="@Model.Pockets[i].Total" />
+                <input type="hidden" asp-for="@Model.Pockets[i].FinancialAccount.Id" />
+                <input type="hidden" asp-for="@Model.Pockets[i].FinancialAccount.Name" />
                 <div class="row justify-content-end">
                     <button class="btn-close btn-danger" asp-route-index="@i" asp-action="RemovePocket"></button>
                 </div>
@@ -98,15 +106,15 @@
                             }
                         </div>
                         <div class="row">
-                            <div class="col-6 col-md-6 text-start fw-semibold"><h6 class="mb-0">$@Model.Pockets[i].Total</h6></div>
                             @if (Model.Pockets[i].FrecuentDeposits)
                             {
-                                <div class="col-6 col-md-6 text-end fw-semibold"><h6 class="mb-0">@Model.Period</h6></div>
+                                <div class="col-6 col-md-6 text-start fw-semibold"><h6 class="mb-0">@Model.Pockets[i].FinancialAccount.Name - @Model.Period</h6></div>
                             }
                             else
                             {
-                                <div class="col-6 col-md-6 text-end fw-semibold"><h6 class="mb-0">@Model.Period</h6></div>
-                            }
+                                <div class="col-6 col-md-6 text-start fw-semibold"><h6 class="mb-0">@Model.Pockets[i].FinancialAccount.Name</h6></div>
+                            }                            
+                            <div class="col-6 col-md-6 text-end fw-semibold"><h6 class="mb-0">$@Model.Pockets[i].Total</h6></div>
                         </div>
                     </div>
                 </div>
@@ -115,12 +123,12 @@
     </ul>
     <div class="row justify-content-center align-items-center mt-3">
         <div class="col-12 text-center">
-            <button class="btn btn-primary w-100" asp-action="EndIntroduction">@Localizer["Next"]</button>
+            <button class="btn btn-primary w-100" asp-action="SavePocket">@Localizer["Next"]</button>
         </div>
     </div>
     <div class="row justify-content-center align-items-center">
         <div class="col-12 text-center">
-            <button class="btn btn-outline-primary w-100" asp-action="Summary">@Localizer["Skip"]</button>
+            <button class="btn btn-outline-primary w-100" asp-action="EndIntroduction">@Localizer["Skip"]</button>
         </div>
     </div>
 </form>

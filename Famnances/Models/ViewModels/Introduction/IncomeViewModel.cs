@@ -17,6 +17,7 @@ namespace Famnances.Models.ViewModels.Introduction
         public List<Income> Incomes { get; set; }
         public class Income
         {
+            public Income() { }
             public Income(FixedIncome fixedIncome)
             {
                 Description = fixedIncome.Description;

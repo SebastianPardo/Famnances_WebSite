@@ -4,6 +4,7 @@ using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels.Introduction;
+using Famnances.Resources.Views.Introduction;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static Famnances.Models.ViewModels.Introduction.DiscountViewModel;
@@ -76,8 +77,77 @@ namespace Famnances.Controllers
             user.PeriodId = periodId != Guid.Empty ? periodId : user.PeriodId;
 
             await _httpHelper.Put($"{Constants.USER_URI}/{accountId}", user);
+            return RedirectToAction(nameof(FinancialAccounts));
+        }
+        #endregion
+
+        #region FinancialAccounts
+
+        [HttpGet]
+        public async Task<ActionResult> FinancialAccounts()
+        {
+            var accountTypes = await _httpHelper.Get<List<FinancialAccountType>>(Constants.FINANCIAL_ACCOUNT_TYPES_URI);
+            ViewBag.AccountTypes = new SelectList(accountTypes, "Id", "Name");
+
+            var financialInstitutions = await _httpHelper.Get<List<FinancialInstitution>>(Constants.FINANCIAL_INSTITUTIONS_URI);
+            ViewBag.FinancialInstitutions = new SelectList(financialInstitutions, "Id", "Name");
+
+            return View(new FinancialAccountViewModel {  financialAccounts = new List<FinancialAccount>() });
+        }
+
+        public async Task<ActionResult> AddFinancialAccount(FinancialAccountViewModel model)
+        {
+            var newFinantialAccount = model.financialAccount;
+            if (newFinantialAccount.Amount > 0)
+            {
+                newFinantialAccount.FinancialAccountType = await _httpHelper.Get<FinancialAccountType>($"{Constants.FINANCIAL_ACCOUNT_TYPES_URI}/{newFinantialAccount.FinancialAccountTypeId}");
+                newFinantialAccount.FinancialInstitution = await _httpHelper.Get<FinancialInstitution>($"{Constants.FINANCIAL_INSTITUTIONS_URI}/{newFinantialAccount.FinancialInstitutionId}");
+                model.financialAccounts ??= new List<FinancialAccount>();
+                model.financialAccounts.Add(newFinantialAccount);
+            }
+            else
+            {
+                TempData[Constants.ERROR] = "Exceeded";
+            }
+            ModelState.Clear();
+            var accountTypes = await _httpHelper.Get<List<FinancialAccountType>>(Constants.FINANCIAL_ACCOUNT_TYPES_URI);
+            ViewBag.AccountTypes = new SelectList(accountTypes, "Id", "Name");
+            var financialInstitutions = await _httpHelper.Get<List<FinancialInstitution>>(Constants.FINANCIAL_INSTITUTIONS_URI);
+            ViewBag.FinancialInstitutions = new SelectList(financialInstitutions, "Id", "Name");
+
+            return View(nameof(FinancialAccounts), model);
+        }
+
+        public async Task<ActionResult> RemoveFinancialAccount(int index, FinancialAccountViewModel model)
+        {
+            var account = model.financialAccounts[index];
+            model.financialAccounts.Remove(account);
+            ModelState.Clear();
+            var accountTypes = await _httpHelper.Get<List<FinancialAccountType>>(Constants.FINANCIAL_ACCOUNT_TYPES_URI);
+            ViewBag.AccountTypes = new SelectList(accountTypes, "Id", "Name");
+            var financialInstitutions = await _httpHelper.Get<List<FinancialInstitution>>(Constants.FINANCIAL_INSTITUTIONS_URI);
+            ViewBag.FinancialInstitutions = new SelectList(financialInstitutions, "Id", "Name");
+            return View(nameof(FinancialAccounts), model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SaveFinancialAccounts(FinancialAccountViewModel model)
+        {
+            if (model.financialAccounts != null)
+            {
+                foreach (var account in model.financialAccounts)
+                {
+                    account.IsActive = true;
+                    account.Currency = "CAD";
+                    account.FinancialInstitution = null;
+                    account.FinancialAccountType = null;
+                    await _httpHelper.Post<FinancialAccount>(Constants.FINANCIAL_ACCOUNTS_URI, account);
+                }
+            }
             return RedirectToAction(nameof(Incomes));
         }
+
         #endregion
 
         #region Income
@@ -402,6 +472,8 @@ namespace Famnances.Controllers
                 model.Budgets = budgets;
             }
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             return View(model);
         }
 
@@ -412,6 +484,7 @@ namespace Famnances.Controllers
 
             if (model.Budget.Value <= model.Total)
             {
+                model.Budget.FinancialAccount = await _httpHelper.Get<FinancialAccount>($"{Constants.FINANCIAL_ACCOUNTS_URI}/{model.Budget.FinancialAccountId}");
                 model.Budgets.Add(model.Budget);
                 model.Total -= model.Budget.Value;
             }
@@ -447,6 +520,8 @@ namespace Famnances.Controllers
                 {
                     var budgetType = await _httpHelper.Get<ExpensesBudgetType>($"{Constants.BUDGET_TYPES_URI}/GetByCode/PER");
                     budget.BudgetTypeId = budgetType.Id;
+                    budget.FinancialAccount = null;
+                    budget.Active = true;
                     await _httpHelper.Post(Constants.BUDGETS_URI, budget);
                 }
             }
@@ -477,6 +552,8 @@ namespace Famnances.Controllers
                 model.Pockets = pockets;
             }
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/HISA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             return View(model);
         }
 
@@ -484,6 +561,8 @@ namespace Famnances.Controllers
         {
             if (model.Pockets == null)
                 model.Pockets = new List<SavingPocket>();
+
+            model.Pocket.FinancialAccount = await _httpHelper.Get<FinancialAccount>($"{Constants.FINANCIAL_ACCOUNTS_URI}/{model.Pocket.FinancialAccount.Id}");
 
             if (model.Pocket.FrecuentDeposits && model.Pocket.FrecuentValue <= model.Total)
             {
@@ -498,7 +577,8 @@ namespace Famnances.Controllers
             {
                 TempData[Constants.ERROR] = "Exceeded";
             }
-
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/HISA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ModelState.Clear();
             return View(nameof(Savings), model);
         }
@@ -512,15 +592,18 @@ namespace Famnances.Controllers
                 model.Total += pocket.FrecuentValue.Value;
             ModelState.Clear();
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/HISA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             return View(nameof(Savings), model);
         }
 
+        [HttpPost]
         public async Task<ActionResult> SavePocket(SavingsViewModel model)
         {
-            var budgets = await _httpHelper.Get<List<ExpensesBudget>>(Constants.BUDGETS_URI);
-            if (budgets != null && budgets.Count > 0)
+            var savingPockets = await _httpHelper.Get<List<SavingPocket>>(Constants.SAVINGS_POCKETS_URI);
+            if (savingPockets != null && savingPockets.Count > 0)
             {
-                await _httpHelper.Put($"{Constants.BUDGETS_URI}/Inactive", null);
+                await _httpHelper.Put($"{Constants.SAVINGS_POCKETS_URI}/Inactive", null);
             }
 
             if (model.Pockets != null)
@@ -535,6 +618,7 @@ namespace Famnances.Controllers
                         Name = pocket.Name,
                         ShareOnHousehold = false,
                         Total = pocket.Total,
+                        FinancialAccountId = pocket.FinancialAccount.Id
                     };
                     savingPocket = await _httpHelper.Post<SavingsPocket>(Constants.SAVINGS_POCKETS_URI, savingPocket);
 
@@ -570,13 +654,14 @@ namespace Famnances.Controllers
             var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
             var culture = Thread.CurrentThread.CurrentUICulture.ToString();
             var fixedSavings = await _httpHelper.Get<List<FixedSaving>>($"{Constants.FIXED_SAVINGS_URI}");
+            user.FinancialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}");
 
             SummaryViewModel summary = new SummaryViewModel
             {
                 Period = await _utilities.GetPeriodName(culture, user.Period),
                 Total = Convert.ToDecimal(TempData[Constants.TOTAL]),
                 BudgetByPeriod = user.BudgetByPeriod,
-                CurrentMoney = 0,
+                CurrentMoney = user.FinancialAccounts.Where(e => e.FinancialAccountType.Code == "CA").Sum(e => e.Amount),
                 Savings = user.FinancialAccounts.Where(e => e.FinancialAccountType.Code == "HISA").Sum(e => e.Amount),
                 SavingsByPeriod = fixedSavings.Select(e => e.Value).Sum()
             };
@@ -586,11 +671,6 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<ActionResult> EndIntroduction(decimal currentMoney)
         {
-            var accountId = HttpContext.Session.GetString(Constants.ACCOUNT_ID);
-            var user = await _httpHelper.Get<User>($"{Constants.USER_URI}/{accountId}");
-            //user.TotalBudget = currentMoney;
-            await _httpHelper.Put<User>($"{Constants.USER_URI}/{user.Id}", user);
-
             return RedirectToAction(nameof(HomeController.VeryFirstPeriod), "Home");
         }
         #endregion

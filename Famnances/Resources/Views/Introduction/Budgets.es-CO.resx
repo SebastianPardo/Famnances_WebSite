@@ -138,6 +138,9 @@
   <data name="Tittle" xml:space="preserve">
     <value>Asigna presupuestos</value>
   </data>
+  <data name="_Account" xml:space="preserve">
+    <value>Cuenta</value>
+  </data>
   <data name="_Budgets" xml:space="preserve">
     <value>Presupuestos</value>
   </data>

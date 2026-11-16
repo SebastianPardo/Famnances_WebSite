@@ -97,6 +97,15 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string FinancialAccount {
+            get {
+                return ResourceManager.GetString("FinancialAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         public static string Next {

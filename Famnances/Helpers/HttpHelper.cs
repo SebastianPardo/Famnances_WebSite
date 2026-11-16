@@ -101,8 +101,11 @@ namespace Famnances.Helpers
 
             using var httpClient = GetClientForUri(request.RequestUri.ToString());
             using var response = await httpClient.SendAsync(request);
+#if DEBUG
+            string responseCheck = await response.Content.ReadAsStringAsync();
+#endif
 
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.UnsupportedMediaType)
             {
                 return;
             }

@@ -1,4 +1,5 @@
-﻿using Famnances.Resources.ViewModels.Introduction;
+﻿using Famnances.DataCore.Entities;
+using Famnances.Resources.ViewModels.Introduction;
 using System.ComponentModel.DataAnnotations;
 
 namespace Famnances.Models.ViewModels.Introduction
@@ -13,6 +14,9 @@ namespace Famnances.Models.ViewModels.Introduction
 
         public class SavingPocket
         {
+            [Display(Name = nameof(SavingsLabels.FinancialAccount), ResourceType = typeof(SavingsLabels))]
+            public FinancialAccount FinancialAccount { get; set; }
+
             [Display(Name = nameof(SavingsLabels.FrecuentDeposits), ResourceType = typeof(SavingsLabels))]
             public bool FrecuentDeposits { get; set; }
 

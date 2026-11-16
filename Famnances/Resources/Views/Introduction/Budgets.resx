@@ -138,6 +138,9 @@
   <data name="Tittle" xml:space="preserve">
     <value>Tell us about your fixed expenses</value>
   </data>
+  <data name="_Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
   <data name="_Budgets" xml:space="preserve">
     <value>Budgets</value>
   </data>

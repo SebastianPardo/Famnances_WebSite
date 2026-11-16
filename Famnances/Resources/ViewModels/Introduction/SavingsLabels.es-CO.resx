@@ -132,4 +132,7 @@
   <data name="Total" xml:space="preserve">
     <value>¿Cuánto tienes ahora?</value>
   </data>
+  <data name="FinancialAccount" xml:space="preserve">
+    <value>Cuentas</value>
+  </data>
 </root>

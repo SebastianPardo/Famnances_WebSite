@@ -144,6 +144,9 @@
   <data name="Yes" xml:space="preserve">
     <value>Oui</value>
   </data>
+  <data name="FinancialAccount" xml:space="preserve">
+    <value>Compte</value>
+  </data>
   <data name="_Pockets" xml:space="preserve">
     <value>Poches</value>
   </data>

@@ -239,6 +239,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Views\Introduction\FinancialAccounts.Designer.cs">
+      <DependentUpon>FinancialAccounts.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Views\Introduction\Summary.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -506,6 +511,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Inflows\Index.resx">
       <LastGenOutput>Index.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Introduction\FinancialAccounts.resx">
+      <LastGenOutput>FinancialAccounts.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Introduction\Summary.resx">

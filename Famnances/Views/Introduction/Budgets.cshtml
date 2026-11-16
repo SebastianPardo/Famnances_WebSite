@@ -29,6 +29,12 @@
     </p>
     <div class="row">
         <div class="col-12 mt-2">
+            <label asp-for="Budget.FinancialAccountId" class="control-label"></label>
+            <select asp-for="Budget.FinancialAccountId" class="form-control select2" asp-items="@ViewBag.FinancialAccounts" data-live-search="true">
+                <option selected disabled hidden>Select</option>
+            </select>
+        </div>
+        <div class="col-12 mt-2">
             <label asp-for="Budget.Name" class="control-label"></label>
             <input asp-for="Budget.Name" class="form-control" />
             <span asp-validation-for="Budget.Name" class="text-danger"></span>
@@ -56,6 +62,8 @@
             <li class="list-group-item p-0">
                 <input type="hidden" asp-for="@Model.Budgets[i].Name" />
                 <input type="hidden" asp-for="@Model.Budgets[i].Value" />
+                <input type="hidden" asp-for="@Model.Budgets[i].FinancialAccountId" />
+                <input type="hidden" asp-for="@Model.Budgets[i].FinancialAccount.Name" />
                 <div class="row justify-content-end">
                     <button class="btn-close btn-danger" asp-route-index="@i" asp-action="RemoveBudget"></button>
                 </div>
@@ -64,6 +72,9 @@
                         <div class="row">
                             <div class="col-6 col-md-6 fw-semibold text-primary"><h3 class="mb-0">@Model.Budgets[i].Name</h3></div>
                             <div class="col-6 col-md-6 text-end fw-semibold"><h3 class="text-success mb-0">$@Model.Budgets[i].Value</h3></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-md-6 fw-semibold text-primary"><h6 class="mb-0">@Model.Budgets[i].FinancialAccount.Name</h6></div>
                         </div>
                     </div>
                 </div>
