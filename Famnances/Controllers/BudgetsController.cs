@@ -3,6 +3,7 @@ using Famnances.DataCore.Entities;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 namespace Famnances.Controllers
 {
@@ -26,17 +27,22 @@ namespace Famnances.Controllers
             var from = HttpContext.Session.GetString(Constants.DATE_FROM);
             var to = HttpContext.Session.GetString(Constants.DATE_TO);
             var budget = await _httpHelper.Get<ExpensesBudget>($"{Constants.BUDGETS_URI}/{id}/{from}/{to}");
+
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name", budget.FinancialAccountId);
             return View(budget);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             return View(new ExpensesBudget());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id, Active,Name,Value,ShareOnHousehold,BudgetTypeId")]ExpensesBudget entity)
+        public async Task<IActionResult> Create([Bind("Id, Active, Name, Value, ShareOnHousehold, BudgetTypeId, FinancialAccountId")] ExpensesBudget entity)
         {
             if (ModelState.IsValid)
             {
@@ -46,24 +52,32 @@ namespace Famnances.Controllers
                 var budget = await _httpHelper.Post<ExpensesBudget>($"{Constants.BUDGETS_URI}", entity);
                 return RedirectToAction(nameof(Index));
             }
+
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             return View(entity);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             var budget = await _httpHelper.Get<ExpensesBudget>($"{Constants.BUDGETS_URI}/{id}");
             return View(budget);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([Bind("Id, Active,Name,Value,ShareOnHousehold,BudgetTypeId")] ExpensesBudget entity)
+        public async Task<IActionResult> Edit([Bind("Id, Active, Name, Value, ShareOnHousehold, BudgetTypeId, FinancialAccountId")] ExpensesBudget entity)
         {
             if (ModelState.IsValid)
             {
                 await _httpHelper.Put($"{Constants.BUDGETS_URI}/{entity.Id}", entity);
                 return RedirectToAction(nameof(Index));
             }
+
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             return View(entity);
         }
 

@@ -97,6 +97,15 @@ namespace Famnances.Resources.Views.Introduction {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total of your accounts.
+        /// </summary>
+        public static string CurrentMoney {
+            get {
+                return ResourceManager.GetString("CurrentMoney", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string ExpensesScheduled {

@@ -17,6 +17,12 @@
         @Localizer["Subtittle"]
     </p>
     <div class="col-12 mt-2">
+        <label class="control-label">@Localizer["FinancialAccount"]</label>
+        <select asp-for="NewIncome.FinancialAccountId" class="form-control select2" asp-items="@ViewBag.FinancialAccounts" data-live-search="true">
+            <option selected disabled hidden>Select</option>
+        </select>
+    </div>
+    <div class="col-12 mt-2">
         <label asp-for="NewIncome.Type" class="control-label text-start"></label>
         <select asp-for="NewIncome.Type" class="form-control select2" data-live-search="true">
             <option selected disabled hidden>@Localizer["Select"]</option>
@@ -76,6 +82,7 @@
                 <input type="hidden" asp-for="@Model.Incomes[i].FirstPayDate" />
                 <input type="hidden" asp-for="@Model.Incomes[i].Type" />
                 <input type="hidden" asp-for="@Model.Incomes[i].Value" />
+                <input type="hidden" asp-for="@Model.Incomes[i].FinancialAccountId" />
                 <div class="row justify-content-end">
                     <button class="btn-close btn-danger" asp-route-index="@i" asp-action="RemoveIncome"></button>
                 </div>

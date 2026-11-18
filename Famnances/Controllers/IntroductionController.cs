@@ -92,7 +92,7 @@ namespace Famnances.Controllers
             var financialInstitutions = await _httpHelper.Get<List<FinancialInstitution>>(Constants.FINANCIAL_INSTITUTIONS_URI);
             ViewBag.FinancialInstitutions = new SelectList(financialInstitutions, "Id", "Name");
 
-            return View(new FinancialAccountViewModel {  financialAccounts = new List<FinancialAccount>() });
+            return View(new FinancialAccountViewModel { financialAccounts = new List<FinancialAccount>() });
         }
 
         public async Task<ActionResult> AddFinancialAccount(FinancialAccountViewModel model)
@@ -171,6 +171,8 @@ namespace Famnances.Controllers
                 model.Incomes = fixedIncomes.Select(e => new Income(e)).ToList();
             }
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             return View(model);
         }
 
@@ -187,7 +189,10 @@ namespace Famnances.Controllers
             model.Total += _utilities.GetValueByPeriod(model.NewIncome.Value, periodFrom.Code, periodTo.Code);
             ModelState.Clear();
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             return View(nameof(Incomes), model);
         }
 
@@ -204,7 +209,10 @@ namespace Famnances.Controllers
             model.Total -= _utilities.GetValueByPeriod(income.Value, periodFrom.Code, periodTo.Code);
             ModelState.Clear();
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             return View(nameof(Incomes), model);
         }
 
@@ -232,7 +240,8 @@ namespace Famnances.Controllers
                             PayablePeriodId = income.PayablePeriodId,
                             ValuePeriodId = income.ValuePeriodId,
                             ShareOnHousehold = false,
-                            Value = income.Value
+                            Value = income.Value,
+                            FinancialAccountId = income.FinancialAccountId
                         };
                         await _httpHelper.Post<FixedIncome>(Constants.FIXED_INCOMES_URI, fixedIncome);
                     }
@@ -380,6 +389,8 @@ namespace Famnances.Controllers
                 model.Expenses = fixedExpenses;
             }
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
             return View(model);
         }
@@ -405,6 +416,8 @@ namespace Famnances.Controllers
                 TempData[Constants.ERROR] = "Exceeded";
             }
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
             return View(nameof(FixedExpenses), model);
         }
@@ -422,6 +435,8 @@ namespace Famnances.Controllers
             model.Total += _utilities.GetValueByPeriod(expense.Value, periodFrom.Code, periodTo.Code);
             ModelState.Clear();
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(culture);
             return View(nameof(FixedExpenses), model);
         }
@@ -671,11 +686,36 @@ namespace Famnances.Controllers
         [HttpPost]
         public async Task<ActionResult> EndIntroduction(decimal currentMoney)
         {
+            await Defaults();
             return RedirectToAction(nameof(HomeController.VeryFirstPeriod), "Home");
         }
         #endregion
 
         #region Helper Methods
+
+        private async Task Defaults()
+        {
+            var budgetTypes = (await _httpHelper.Get<List<ExpensesBudgetType>>($"{Constants.BUDGET_TYPES_URI}")).Where(e => e.IsDefault == true);
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}");
+
+            foreach (var account in financialAccounts)
+            {
+                foreach (var budgetType in budgetTypes)
+                {
+                    ExpensesBudget expensesBudget = new ExpensesBudget
+                    {
+                        Active = true,
+                        BudgetTypeId = budgetType.Id,
+                        FinancialAccountId = account.Id,
+                        Value = 0,
+                        ShareOnHousehold = false,
+                        Name = $"{account.Name} - {budgetType.Name} Transactions"
+                    };
+
+                    await _httpHelper.Post(Constants.BUDGETS_URI, expensesBudget);
+                }
+            }
+        }
 
         private async Task<decimal> CalculateDiscounts(decimal total, string userCode, List<Discount> discounts)
         {
@@ -714,6 +754,7 @@ namespace Famnances.Controllers
 
             return total;
         }
+        
         #endregion
     }
 }

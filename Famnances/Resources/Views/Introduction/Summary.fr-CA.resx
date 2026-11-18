@@ -153,4 +153,7 @@
   <data name="Title" xml:space="preserve">
     <value>Votre configuration est prête</value>
   </data>
+  <data name="CurrentMoney" xml:space="preserve">
+    <value>Somme de vos comptes</value>
+  </data>
 </root>

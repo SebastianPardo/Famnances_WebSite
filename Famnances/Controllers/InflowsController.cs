@@ -5,6 +5,7 @@ using Famnances.DataCore.ServicesModels;
 using Famnances.Helpers;
 using Famnances.Helpers.Interfaces;
 using Famnances.Models.ViewModels;
+using Famnances.Resources.Views.Introduction;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,10 @@ namespace Famnances.Controllers
         // GET: Inflows/Create
         public async Task<IActionResult> Create()
         {
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
             var discounts = await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}");
+
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewData["Discounts"] = new SelectList(discounts, "Id", "Description");
             return View();
         }
@@ -49,14 +53,17 @@ namespace Famnances.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IncomeTransactionModel inflow)
         {
-            //if (ModelState.IsValid)
-            //{
-            inflow.Income.Id = Guid.NewGuid();
-            inflow.Income.FinancialAccountId = Guid.Empty;
-            inflow = await _httpHelper.Post<IncomeTransactionModel>($"{Constants.INFLOWS_URI}", inflow);
-            return RedirectToAction(nameof(Index));
-            //}
+            if (ModelState.IsValid)
+            {
+                inflow.Income.Id = Guid.NewGuid();
+                inflow = await _httpHelper.Post<IncomeTransactionModel>($"{Constants.INFLOWS_URI}", inflow);
+                return RedirectToAction(nameof(Index));
+            }
+
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
             var discounts = await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}");
+
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewData["Discounts"] = new SelectList(discounts, "Id", "Address");
             return View(inflow);
         }
@@ -82,7 +89,11 @@ namespace Famnances.Controllers
                 SelectedIncomeDiscountIds = inflow.InflowByDiscount?.Select(e => e.IncomeDiscountId).ToList() ?? new List<Guid>()
             };
 
-            ViewBag.Discounts = new SelectList(await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}"), "Id", "Description");
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            var discounts = await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}");
+
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name", inflow.FinancialAccountId);
+            ViewBag.Discounts = new SelectList(discounts, "Id", "Description");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(incomeTransactionModel);
         }
@@ -120,7 +131,11 @@ namespace Famnances.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["UserId"] = new SelectList(_context.User, "Id", "Address", inflow.UserId);
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            var discounts = await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}");
+
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name", inflow.Income.FinancialAccountId);
+            ViewBag.Discounts = new SelectList(discounts, "Id", "Description");
             return View(inflow);
         }
 

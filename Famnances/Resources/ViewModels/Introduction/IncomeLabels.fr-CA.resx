@@ -123,6 +123,9 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="FinancialAccount" xml:space="preserve">
+    <value>Compte</value>
+  </data>
   <data name="FirstPayDate" xml:space="preserve">
     <value>À quand remonte la dernière fois que vous avez reçu ce revenu ?</value>
   </data>

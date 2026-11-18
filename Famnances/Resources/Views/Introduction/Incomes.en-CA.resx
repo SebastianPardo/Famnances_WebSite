@@ -147,4 +147,7 @@
   <data name="Select" xml:space="preserve">
     <value>Select . . .</value>
   </data>
+  <data name="FinancialAccount" xml:space="preserve">
+    <value>Account</value>
+  </data>
 </root>

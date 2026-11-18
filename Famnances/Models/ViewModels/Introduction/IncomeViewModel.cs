@@ -26,6 +26,7 @@ namespace Famnances.Models.ViewModels.Introduction
                 Value = fixedIncome.Value;
                 ValuePeriodId = fixedIncome.ValuePeriodId;
                 Type = IncomeType.Fixed;
+                FinancialAccountId = fixedIncome.FinancialAccountId;
             }
 
             [Display(Name = nameof(IncomeLabels.Description), ResourceType = typeof(IncomeLabels))]
@@ -47,6 +48,9 @@ namespace Famnances.Models.ViewModels.Introduction
 
             [Display(Name = nameof(IncomeLabels.Type), ResourceType = typeof(IncomeLabels))]
             public IncomeType Type { get; set; }
+
+            [Display(Name = nameof(IncomeLabels.FinancialAccount), ResourceType = typeof(IncomeLabels))]
+            public Guid FinancialAccountId { get; set; }
 
         }
     }
