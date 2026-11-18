@@ -26,6 +26,8 @@ namespace Famnances.Controllers
             _utilities = utilities;
         }
 
+        #region Inflows
+
         [ServiceFilter(typeof(HeaderSummaryFilter))]
         public async Task<IActionResult> Index()
         {
@@ -151,7 +153,7 @@ namespace Famnances.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-
+        #endregion
 
         #region FixedIncome
 
@@ -166,6 +168,8 @@ namespace Famnances.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateFixedIncomes()
         {
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Discounts = new SelectList(await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}"), "Id", "Description");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View();
@@ -189,6 +193,8 @@ namespace Famnances.Controllers
                 SelectedIncomeDiscountIds = fixedIncome.FixedIncomeByDiscount.Select(e => e.IncomeDiscountId).ToList()
             };
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Discounts = new SelectList(await _httpHelper.Get<List<IncomeDiscount>>($"{Constants.INCOME_DISCOUNTS_URI}"), "Id", "Description");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(fixedIncomeVM);

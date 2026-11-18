@@ -235,6 +235,9 @@ namespace Famnances.Controllers
             var from = HttpContext.Session.GetString(Constants.DATE_FROM);
             var to = HttpContext.Session.GetString(Constants.DATE_TO);
             var fixedExpense = await _httpHelper.Get<FixedExpense>($"{Constants.FIXED_EXPENSES_URI}/{id}/{from}/{to}");
+
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString(), fixedExpense.PeriodId);
             return View(fixedExpense);
         }
@@ -242,6 +245,8 @@ namespace Famnances.Controllers
         // GET: FixedExpenses/Create
         public async Task<IActionResult> CreateFixedExpenses()
         {
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View();
         }
@@ -251,7 +256,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateFixedExpenses([Bind("Id,Name,Value,StartDate,EndDate,Active,PeriodId,ShareOnHousehold")] FixedExpense fixedExpense)
+        public async Task<IActionResult> CreateFixedExpenses([Bind("Id,Name,Value,StartDate,EndDate,Active,FinancialAccountId,PeriodId,ShareOnHousehold")] FixedExpense fixedExpense)
         {
             if (ModelState.IsValid)
             {
@@ -260,6 +265,8 @@ namespace Famnances.Controllers
                 return RedirectToAction(nameof(IndexFixedExpenses));
             }
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(fixedExpense);
         }
@@ -278,6 +285,8 @@ namespace Famnances.Controllers
                 return NotFound();
             }
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(fixedExpense);
         }
@@ -287,7 +296,7 @@ namespace Famnances.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditFixedExpenses(Guid id, [Bind("Id,Name,Value,StartDate,EndDate,Active,PeriodId,ShareOnHousehold")] FixedExpense fixedExpense)
+        public async Task<IActionResult> EditFixedExpenses(Guid id, [Bind("Id,Name,Value,StartDate,EndDate,Active, FinancialAccountId,PeriodId,ShareOnHousehold")] FixedExpense fixedExpense)
         {
             if (id != fixedExpense.Id)
             {
@@ -314,6 +323,8 @@ namespace Famnances.Controllers
                 return RedirectToAction(nameof(IndexFixedExpenses));
             }
 
+            var financialAccounts = await _httpHelper.Get<List<FinancialAccount>>($"{Constants.FINANCIAL_ACCOUNTS_URI}/GetByFinancialAccountType/CA");
+            ViewBag.FinancialAccounts = new SelectList(financialAccounts, "Id", "Name");
             ViewBag.Periods = await _utilities.GetPeriodDropdown(Thread.CurrentThread.CurrentUICulture.ToString());
             return View(fixedExpense);
         }
